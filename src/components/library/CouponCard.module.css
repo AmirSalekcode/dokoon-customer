@@ -1,0 +1,66 @@
+.c {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding-block: var(--sp-3);
+  padding-inline: var(--sp-4) var(--sp-3);
+  background: var(--sf);
+  border-radius: var(--r-lg);
+  box-shadow: var(--sh-card);
+  color: var(--ink);
+}
+.pc {
+  width: 64px;
+  height: 64px;
+  flex: none;
+  border-radius: var(--r-lg);
+  background: var(--soft);
+  color: var(--pr2);
+  display: grid;
+  place-items: center;
+  font-size: var(--fs-20);
+  font-weight: var(--fw-xbold);
+}
+.tx {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.t {
+  font-size: var(--fs-14);
+  font-weight: var(--fw-bold);
+  line-height: 1.6;
+}
+.s {
+  font-size: var(--fs-12);
+  color: var(--mu);
+  line-height: 1.7;
+}
+.cd {
+  margin-top: var(--sp-1);
+  padding: 0 var(--sp-2);
+  border: 1.5px dashed var(--primary);
+  border-radius: var(--r-md);
+  font-size: var(--fs-12);
+  font-weight: var(--fw-bold);
+  color: var(--pr2);
+  direction: ltr;
+  line-height: 1.8;
+}
+.b {
+  flex: none;
+  min-height: var(--touch);
+  padding: 0 var(--sp-4);
+  border: 0;
+  border-radius: var(--r-pill);
+  background: var(--primary);
+  color: var(--white);
+  font-size: var(--fs-13);
+  font-weight: var(--fw-bold);
+  cursor: pointer;
+}
+.b:hover {
+  background: var(--primary-strong);
+}

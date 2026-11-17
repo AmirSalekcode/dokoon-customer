@@ -1,0 +1,14 @@
+node_modules
+dist
+dev-dist
+storybook-static
+android
+prototype
+docs
+contract
+design-tokens
+assets
+public/mockServiceWorker.js
+src/api/schema.d.ts
+package-lock.json
+*.md

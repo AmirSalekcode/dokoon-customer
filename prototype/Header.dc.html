@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>هدر خانه</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+.Header_hd{display:flex;align-items:center;gap:8px;padding:20px 16px 8px;background:linear-gradient(180deg,var(--soft,#FCE3D0) 0%,rgba(251,240,230,0) 100%);font-family:'Yekan Bakh',Tahoma,sans-serif;color:var(--ink,#1F1A17)}.Header_hb{position:relative;width:48px;height:48px;flex:none;border:0;border-radius:12px;background:var(--sf,#fff);box-shadow:0 4px 16px rgba(31,26,23,.06);display:grid;place-items:center;cursor:pointer;color:var(--ink,#1F1A17);padding:0;transition:transform .2s ease-out}.Header_hb:hover{transform:translateY(-2px)}.Header_hb:focus-visible,.Header_ch:focus-visible{outline:3px solid #E4501E;outline-offset:2px}.Header_ch{flex:1;min-width:0;height:48px;display:flex;align-items:center;gap:8px;padding:0 16px;border:0;border-radius:999px;background:rgba(255,255,255,.6);box-shadow:0 2px 8px rgba(31,26,23,.04);cursor:pointer;font-family:inherit;font-size:12px;color:var(--mu,#7A6E66)}.Header_ch b{flex:1;min-width:0;text-align:right;font-size:14px;font-weight:700;color:var(--ink,#1F1A17);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.Header_ch .Header_pin{stroke:#E4501E;animation:bob 2.2s ease-in-out infinite}.Header_lg{width:88px;height:24px;flex:none;display:block}.Header_cn{position:absolute;top:-4px;right:-4px;min-width:20px;height:20px;border-radius:999px;background:#E4501E;color:#fff;font-size:12px;font-weight:700;display:grid;place-items:center;padding:0 4px;animation:pulse 2.4s ease-in-out infinite}.Header_ic{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+</style>
+</helmet>
+<header class="Header_hd" dir="rtl"><button class="Header_hb" aria-label="منو" onClick="{{ menu }}"><svg class="Header_ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h10"></path></svg></button><button class="Header_ch" aria-label="انتخاب آدرس تحویل" onClick="{{ addr }}"><svg class="Header_ic Header_pin" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11zM12 7.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5z"></path></svg><b>{{ address }}</b><svg class="Header_ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg></button><svg class="Header_lg" viewBox="0 0 902.92 251.16" role="img" aria-label="دکون Dokoon"><use href="#dk-logo"></use></svg></header>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"cartCount": {"editor": null}, "hasCart": {"editor": null}, "address": {"editor": null}, "onMenu": {"editor": null}, "onCart": {"editor": null}, "onAddress": {"editor": null}}'>
+class Component extends DCLogic {
+renderVals() {
+const P = this.props;
+return { cartCount: P.cartCount ?? '', hasCart: !!P.hasCart, address: P.address ?? '', menu: (e)=>{ if(e&&e.stopPropagation) e.stopPropagation(); if(P.onMenu) P.onMenu(); }, cart: (e)=>{ if(e&&e.stopPropagation) e.stopPropagation(); if(P.onCart) P.onCart(); }, addr: (e)=>{ if(e&&e.stopPropagation) e.stopPropagation(); if(P.onAddress) P.onAddress(); } };
+}
+}
+</script>
+</body>
+</html>

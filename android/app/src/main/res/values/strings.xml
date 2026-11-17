@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">دکون</string>
+    <string name="title_activity_main">دکون</string>
+    <string name="package_name">ir.dokoon.customer</string>
+    <string name="custom_url_scheme">ir.dokoon.customer</string>
+</resources>

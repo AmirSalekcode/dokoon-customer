@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>انتخاب روی نقشه</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+.MapPicker_mp{position:relative;aspect-ratio:358/240;border-radius:28px;overflow:hidden;background:var(--bg,#FBF0E6);box-shadow:0 4px 16px rgba(31,26,23,.06);cursor:crosshair;font-family:'Yekan Bakh',Tahoma,sans-serif;color:var(--ink,#1F1A17)}
+.MapPicker_map{position:absolute;inset:0;width:100%;height:100%;display:block}
+.MapPicker_pin{position:absolute;width:40px;height:40px;margin:-40px 0 0 -20px;pointer-events:none;animation:MapPicker_drop .5s cubic-bezier(.2,.8,.2,1) both;filter:drop-shadow(0 6px 6px rgba(31,26,23,.3))}
+.MapPicker_pin svg{width:100%;height:100%;display:block}
+@keyframes MapPicker_drop{from{opacity:0;transform:translateY(-24px) scale(.8)}to{opacity:1;transform:none}}
+.MapPicker_ring{position:absolute;width:56px;height:56px;margin:-28px 0 0 -28px;border-radius:50%;border:2px solid #E4501E;pointer-events:none;animation:MapPicker_ping 1s ease-out infinite}
+@keyframes MapPicker_ping{from{opacity:.9;transform:scale(.4)}to{opacity:0;transform:scale(1.6)}}
+.MapPicker_hint{position:absolute;top:12px;left:12px;right:12px;text-align:center;font-size:12px;line-height:1.7;background:rgba(255,255,255,.9);border-radius:999px;padding:4px 12px;pointer-events:none}
+.MapPicker_loc{position:absolute;left:12px;bottom:12px;height:48px;display:flex;align-items:center;gap:8px;padding:0 16px;border:0;border-radius:999px;background:var(--sf,#fff);box-shadow:0 8px 24px rgba(31,26,23,.16);cursor:pointer;font-family:inherit;font-size:14px;font-weight:700;color:var(--pr2,#C2410C);transition:transform .2s ease-out}
+.MapPicker_loc:hover{transform:scale(1.04)}.MapPicker_loc:focus-visible{outline:3px solid #E4501E;outline-offset:2px}
+.MapPicker_loc svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.MapPicker_loc.MapPicker__busy svg{animation:MapPicker_spin 1s linear infinite}
+@keyframes MapPicker_spin{to{transform:rotate(360deg)}}
+.MapPicker_zn{position:absolute;right:12px;bottom:12px;display:flex;align-items:center;gap:8px;font-size:12px;line-height:1.7;background:rgba(255,255,255,.9);border-radius:999px;padding:4px 12px;pointer-events:none}
+.MapPicker_zn i{display:block;width:16px;height:0;border-top:2px dashed #E4501E}
+</style>
+</helmet>
+<div class="MapPicker_mp" dir="rtl" data-mp="1" role="application" aria-label="نقشه برای انتخاب محل تحویل" onClick="{{ click }}"><svg class="MapPicker_map" viewBox="0 0 358 240" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="358" height="240" fill="#FBF0E6"></rect>
+<g fill="#FFFFFF" stroke="#F0DFD0" stroke-width="1.5"><rect x="10" y="10" width="72" height="44" rx="10"></rect><rect x="104" y="10" width="86" height="44" rx="10"></rect><rect x="212" y="10" width="70" height="44" rx="10"></rect><rect x="304" y="10" width="44" height="44" rx="10"></rect><rect x="10" y="76" width="72" height="62" rx="10"></rect><rect x="104" y="76" width="86" height="62" rx="10"></rect><rect x="212" y="76" width="70" height="62" rx="10"></rect><rect x="304" y="76" width="44" height="62" rx="10"></rect><rect x="10" y="160" width="72" height="70" rx="10"></rect><rect x="104" y="160" width="86" height="70" rx="10"></rect><rect x="212" y="160" width="70" height="70" rx="10"></rect><rect x="304" y="160" width="44" height="70" rx="10"></rect></g>
+<g stroke="#FCE3D0" stroke-width="12" stroke-linecap="round" fill="none"><path d="M0 65H358M0 149H358M93 0V240M201 0V240M293 0V240"></path><path d="M0 230L120 100L260 0" stroke-width="8"></path></g>
+<g font-size="11" fill="#7A6E66" text-anchor="middle"><text x="145" y="145">خیابان امام</text><text x="247" y="107">میدان انقلاب</text><text x="47" y="107">بازار</text><text x="321" y="107">پارک</text></g>
+<circle cx="179" cy="120" r="82" fill="rgba(228,80,30,.08)" stroke="#E4501E" stroke-width="1.5" stroke-dasharray="6 6"></circle></svg><sc-if value="{{ hasPin }}" hint-placeholder-val="{{ false }}"><span class="MapPicker_ring" style="left: {{ px }}%; top: {{ py }}%"></span><span class="MapPicker_pin" style="left: {{ px }}%; top: {{ py }}%"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 23s8-7 8-13a8 8 0 1 0-16 0c0 6 8 13 8 13z" fill="{{ pinColor }}"></path><circle cx="12" cy="10" r="3.2" fill="#fff"></circle></svg></span></sc-if><sc-if value="{{ noPin }}" hint-placeholder-val="{{ true }}"><div class="MapPicker_hint">روی نقشه ضربه بزنید تا محل تحویل را مشخص کنید</div></sc-if><button class="MapPicker_loc {{ busyCls }}" onClick="{{ locate }}"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3.5"></circle><path d="M12 2v4M12 18v4M2 12h4M18 12h4"></path></svg>{{ locLabel }}</button><div class="MapPicker_zn"><i></i>محدوده‌ی ارسال</div></div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"pinX": {"editor": null}, "pinY": {"editor": null}, "inZone": {"editor": null}, "locating": {"editor": null}, "onPick": {"editor": null}, "onLocate": {"editor": null}, "$preview": {"width": 358, "height": 240}}'>
+class Component extends DCLogic {
+renderVals() {
+const P = this.props;
+const x = Number(P.pinX), y = Number(P.pinY); const has = x >= 0 && y >= 0;
+return { hasPin: has, noPin: !has, px: has ? x : 0, py: has ? y : 0, pinColor: P.inZone === false ? '#C8281E' : '#E4501E', busyCls: P.locating ? 'MapPicker__busy' : '', locLabel: P.locating ? 'در حال یافتن موقعیت…' : 'موقعیت فعلی من',
+click: (e) => { const el = e && e.currentTarget && e.currentTarget.getBoundingClientRect ? e.currentTarget : (e && e.target && e.target.closest ? e.target.closest('[data-mp]') : null); if (!el || !P.onPick) return; const r = el.getBoundingClientRect(); P.onPick(Math.round(((e.clientX - r.left) / r.width) * 1000) / 10, Math.round(((e.clientY - r.top) / r.height) * 1000) / 10); },
+locate: (e) => { if (e && e.stopPropagation) e.stopPropagation(); if (P.onLocate) P.onLocate(); } };
+}
+}
+</script>
+</body>
+</html>

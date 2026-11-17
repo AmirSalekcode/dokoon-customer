@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>کارت انتخاب</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+.SelectCard_sc{display:flex;align-items:center;gap:8px;background:var(--sf,#fff);border:1.5px solid var(--ln,#F0DFD0);border-radius:20px;box-shadow:0 4px 16px rgba(31,26,23,.06);padding:4px 4px 4px 8px;font-family:'Yekan Bakh',Tahoma,sans-serif;color:var(--ink,#1F1A17);transition:border-color .2s ease-out,background .2s ease-out}.SelectCard__on{border-color:#E4501E;background:var(--sf,#fff)}.SelectCard_mn{flex:1;min-width:0;display:flex;align-items:center;gap:12px;min-height:64px;padding:4px 8px;border:0;background:none;cursor:pointer;font-family:inherit;text-align:right;color:inherit}.SelectCard_mn:focus-visible,.SelectCard_ac:focus-visible{outline:3px solid #E4501E;outline-offset:2px;border-radius:12px}.SelectCard_ib{width:40px;height:40px;flex:none;border-radius:12px;background:var(--soft,#FCE3D0);color:var(--pr2,#C2410C);display:grid;place-items:center}.SelectCard_tx{flex:1;min-width:0}.SelectCard_tx b{display:block;font-size:14px;font-weight:700;line-height:1.6}.SelectCard_tx small{display:block;font-size:12px;color:var(--mu,#7A6E66);line-height:1.6}.SelectCard_mk{width:24px;height:24px;flex:none;border:2px solid var(--ln,#F0DFD0);border-radius:50%;display:grid;place-items:center;transition:all .2s ease-out}.SelectCard_mk::after{content:"";width:10px;height:10px;border-radius:50%;background:var(--sf,#fff);transform:scale(0);transition:transform .2s cubic-bezier(.2,.8,.2,1)}.SelectCard__on .SelectCard_mk{background:#E4501E;border-color:#E4501E}.SelectCard__on .SelectCard_mk::after{transform:scale(1)}.SelectCard_ac{height:48px;padding:0 12px;border:0;background:none;color:var(--pr2,#C2410C);font-family:inherit;font-size:14px;font-weight:700;cursor:pointer}.SelectCard_ic{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+</style>
+</helmet>
+<div class="SelectCard_sc {{ cls }}" dir="rtl"><button class="SelectCard_mn" role="{{ role }}" aria-checked="{{ selected }}" onClick="{{ pick }}"><span class="SelectCard_ib"><svg class="SelectCard_ic" viewBox="0 0 24 24" aria-hidden="true"><path d="{{ icon }}"></path></svg></span><span class="SelectCard_tx"><b>{{ title }}</b><small>{{ sub }}</small></span><sc-if value="{{ radio }}" hint-placeholder-val="{{ true }}"><span class="SelectCard_mk"></span></sc-if></button><sc-if value="{{ hasAction }}" hint-placeholder-val="{{ false }}"><button class="SelectCard_ac" onClick="{{ action }}">{{ actionLabel }}</button></sc-if></div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"title": {"editor": null}, "sub": {"editor": null}, "icon": {"editor": null}, "selected": {"editor": null}, "radio": {"editor": null}, "actionLabel": {"editor": null}, "onPick": {"editor": null}, "onAction": {"editor": null}, "$preview": {"width": 358, "height": 88}}'>
+class Component extends DCLogic {
+renderVals() {
+const P = this.props;
+return { title: P.title ?? '', sub: P.sub ?? '', icon: P.icon ?? '', selected: !!P.selected, radio: !!P.radio, role: P.radio ? 'radio' : 'group', cls: P.selected ? 'SelectCard__on' : '', hasAction: !!P.actionLabel, actionLabel: P.actionLabel ?? '', pick: (e)=>{ if(e&&e.stopPropagation) e.stopPropagation(); if(P.onPick) P.onPick(); }, action: (e)=>{ if(e&&e.stopPropagation) e.stopPropagation(); if(P.onAction) P.onAction(); } };
+}
+}
+</script>
+</body>
+</html>

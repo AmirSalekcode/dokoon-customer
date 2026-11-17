@@ -1,0 +1,120 @@
+{
+  "version": "v48",
+  "base": {
+    "frame": [
+      390,
+      844
+    ],
+    "gutter": 16,
+    "touch": 48,
+    "font": "Yekan Bakh",
+    "dir": "rtl",
+    "numerals": "fa"
+  },
+  "color": {
+    "brand": {
+      "primary": "#E4501E",
+      "primaryStrong": "#C2410C",
+      "primaryTint": "#FCE3D0",
+      "brandDark": "#8B2313"
+    },
+    "status": {
+      "danger": "#C8281E",
+      "dangerAlt": "#DC2626",
+      "warning": "#F5B32F",
+      "success": "#16A34A"
+    },
+    "fixed": {
+      "white": "#FFFFFF",
+      "dock": "#1F1A17"
+    },
+    "light": {
+      "bg": "#FBF0E6",
+      "surface": "#FFFFFF",
+      "ink": "#1F1A17",
+      "muted": "#7A6E66",
+      "line": "#F0DFD0",
+      "soft": "#FCE3D0",
+      "accentText": "#C2410C",
+      "successBg": "#E6F6EC",
+      "logo1": "#172b50",
+      "logo2": "#0f1b35"
+    },
+    "dark": {
+      "bg": "#17120F",
+      "surface": "#241C17",
+      "ink": "#F6EEE8",
+      "muted": "#B3A59B",
+      "line": "#3A2E27",
+      "soft": "#3B2117",
+      "accentText": "#FF8A5C",
+      "successBg": "#10301C",
+      "logo1": "#F6EEE8",
+      "logo2": "#E7DCD2"
+    }
+  },
+  "fontSize": [
+    12,
+    13,
+    14,
+    15,
+    16,
+    20,
+    22,
+    24,
+    48
+  ],
+  "fontWeight": [
+    300,
+    400,
+    500,
+    700,
+    800
+  ],
+  "spacing": [
+    4,
+    8,
+    12,
+    16,
+    20,
+    24,
+    32
+  ],
+  "radius": {
+    "sm": 8,
+    "md": 12,
+    "lg": 20,
+    "xl": 28,
+    "pill": 999,
+    "circle": "50%"
+  },
+  "size": {
+    "touch": 48,
+    "topbar": 56,
+    "input": 52,
+    "chip": 40,
+    "bottomnav": 72,
+    "actionbar": 88
+  },
+  "shadow": {
+    "card": "0 4px 16px rgba(31,26,23,.06)",
+    "cardHi": "0 4px 16px rgba(31,26,23,.12)",
+    "cta": "0 8px 24px rgba(228,80,30,.25)",
+    "bar": "0 -8px 24px rgba(31,26,23,.12)",
+    "sheet": "0 -12px 32px rgba(0,0,0,.25)",
+    "avatarRing": "0 0 0 3px var(--sf),0 0 0 5px #E4501E"
+  },
+  "motion": {
+    "fast": ".2s ease-out",
+    "med": ".25s ease-out",
+    "spring": ".2s cubic-bezier(.2,.8,.2,1)"
+  },
+  "zIndex": {
+    "base": 1,
+    "sticky": 10,
+    "nav": 20,
+    "sheet": 30,
+    "scrim": 35,
+    "dialog": 40
+  }
+}

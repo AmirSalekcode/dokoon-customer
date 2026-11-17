@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>انتخاب تعداد</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+.QuantityStepper_qs{display:inline-flex;align-items:center;gap:4px;background:var(--sf,#fff);border-radius:999px;padding:4px;box-shadow:0 4px 16px rgba(31,26,23,.06);font-family:'Yekan Bakh',Tahoma,sans-serif;}.QuantityStepper_qb{width:40px;height:40px;border-radius:50%;background:var(--soft,#FCE3D0);color:var(--pr2,#C2410C);display:grid;place-items:center;border:0;padding:0;cursor:pointer;transition:transform .15s ease-out}.QuantityStepper_qb:active{transform:scale(.88)}.QuantityStepper_qb:focus-visible{outline:3px solid #E4501E;outline-offset:2px}.QuantityStepper_qv{min-width:32px;text-align:center;font-size:16px;font-weight:700;color:var(--ink,#1F1A17)}.QuantityStepper_ic{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+</style>
+</helmet>
+<div class="QuantityStepper_qs" dir="rtl"><button class="QuantityStepper_qb" aria-label="افزودن" onClick="{{ inc }}"><svg class="QuantityStepper_ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg></button><b class="QuantityStepper_qv">{{ value }}</b><button class="QuantityStepper_qb" aria-label="کم کردن" onClick="{{ dec }}"><svg class="QuantityStepper_ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"></path></svg></button></div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"value": {"editor": null}, "onInc": {"editor": null}, "onDec": {"editor": null}}'>
+class Component extends DCLogic {
+renderVals() {
+const P = this.props;
+return { value: P.value ?? '۱', inc: (e)=>{ if(e&&e.stopPropagation) e.stopPropagation(); if(P.onInc) P.onInc(); }, dec: (e)=>{ if(e&&e.stopPropagation) e.stopPropagation(); if(P.onDec) P.onDec(); } };
+}
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+.bg {
+  display: inline-block;
+  padding: 0 var(--sp-3);
+  border-radius: var(--r-pill);
+  font-size: var(--fs-12);
+  font-weight: var(--fw-bold);
+  line-height: 1.6;
+  white-space: nowrap;
+  color: var(--white);
+}
+.red {
+  background: var(--danger);
+}
+.amber {
+  background: var(--warning);
+  color: var(--dock);
+}
+.green {
+  background: var(--success);
+}
+.ink {
+  background: var(--dock);
+}

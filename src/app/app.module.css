@@ -1,0 +1,25 @@
+.screen {
+  position: absolute;
+  inset: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: none;
+  background: var(--bg);
+  outline: none;
+}
+.screen::-webkit-scrollbar {
+  display: none;
+}
+.screen[hidden] {
+  display: block !important;
+  visibility: hidden;
+  pointer-events: none;
+}
+.nav {
+  position: absolute;
+  inset-inline: var(--gutter);
+  bottom: calc(var(--gutter) + env(safe-area-inset-bottom));
+  z-index: var(--z-nav);
+  animation: rise 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}

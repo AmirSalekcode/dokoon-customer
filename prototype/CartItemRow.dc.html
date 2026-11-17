@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>ردیف سبد</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+.CartItemRow_ci{display:flex;gap:12px;background:var(--sf,#fff);border-radius:20px;box-shadow:0 4px 16px rgba(31,26,23,.06);padding:12px;font-family:'Yekan Bakh',Tahoma,sans-serif;color:var(--ink,#1F1A17)}.CartItemRow_th{width:72px;height:72px;flex:none;border-radius:12px;background:radial-gradient(circle at 50% 62%,var(--sf,#FFFFFF),var(--soft,#FCE3D0));display:grid;place-items:center}.CartItemRow_th svg{width:56px;height:56px;filter:drop-shadow(0 4px 4px rgba(120,50,10,.28));animation:bob 3.2s ease-in-out infinite}.CartItemRow_bd{flex:1;min-width:0}.CartItemRow_nm{margin:0;font-size:16px;font-weight:700;line-height:1.5}.CartItemRow_op{margin:0;font-size:12px;color:var(--mu,#7A6E66);line-height:1.6}.CartItemRow_bt{display:flex;justify-content:space-between;align-items:center;margin-top:8px}
+</style>
+</helmet>
+<div class="CartItemRow_ci" dir="rtl"><div class="CartItemRow_th"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#{{ art }}"></use></svg></div><div class="CartItemRow_bd"><h4 class="CartItemRow_nm">{{ name }}</h4><sc-if value="{{ hasOptions }}" hint-placeholder-val="{{ true }}"><p class="CartItemRow_op">{{ optionsText }}</p></sc-if><sc-if value="{{ hasNote }}" hint-placeholder-val="{{ false }}"><p class="CartItemRow_op">یادداشت: {{ note }}</p></sc-if><div class="CartItemRow_bt"><dc-import name="Price" price="{{ totalText }}" old="" hint-size="110px,20px"></dc-import><dc-import name="QuantityStepper" value="{{ qtyText }}" on-inc="{{ onInc }}" on-dec="{{ onDec }}" hint-size="136px,48px"></dc-import></div></div></div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"item": {"editor": null}, "qtyText": {"editor": null}, "onInc": {"editor": null}, "onDec": {"editor": null}, "$preview": {"width": 358, "height": 120}}'>
+class Component extends DCLogic {
+renderVals() {
+const P = this.props;
+const i = P.item || {}; return { art: i.art ?? '', name: i.name ?? '', optionsText: i.optionsText ?? '', hasOptions: !!i.optionsText, note: i.note ?? '', hasNote: !!i.note, totalText: i.totalText ?? '', qtyText: P.qtyText ?? '۱', onInc: P.onInc, onDec: P.onDec };
+}
+}
+</script>
+</body>
+</html>

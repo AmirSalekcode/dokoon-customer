@@ -1,0 +1,45 @@
+.ci {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-2);
+  width: 72px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--ink);
+  font-size: var(--fs-12);
+  font-weight: var(--fw-regular);
+  line-height: 1.6;
+  cursor: pointer;
+}
+.ci:focus-visible {
+  outline-offset: 4px;
+  border-radius: var(--r-md);
+}
+.cc {
+  display: grid;
+  place-items: center;
+  width: 72px;
+  height: 72px;
+  padding: var(--sp-3);
+  overflow: hidden;
+  border-radius: var(--r-circle);
+  background: var(--sf);
+  box-shadow: var(--sh-card);
+  transition:
+    background var(--t-fast),
+    transform var(--t-med);
+}
+.art {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.on {
+  font-weight: var(--fw-bold);
+  color: var(--pr2);
+}
+.on .cc {
+  background: var(--soft);
+}

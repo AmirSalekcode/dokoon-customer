@@ -1,0 +1,309 @@
+{
+ "v": 3,
+ "attachments": {},
+ "boards": {
+  "App.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "title": "اپ مشتری دکون (قاب یکپارچه)",
+   "w": 390,
+   "x": 0,
+   "y": 0
+  },
+  "Badge.dc.html": {
+   "h": 600,
+   "w": 800,
+   "x": 2820,
+   "y": 0
+  },
+  "BottomNav.dc.html": {
+   "h": 600,
+   "w": 800,
+   "x": 3700,
+   "y": 0
+  },
+  "CartSummary.dc.html": {
+   "h": 600,
+   "w": 800,
+   "x": 4580,
+   "y": 0
+  },
+  "CategoryItem.dc.html": {
+   "h": 600,
+   "w": 800,
+   "x": 5460,
+   "y": 0
+  },
+  "EmptyState.dc.html": {
+   "h": 600,
+   "w": 800,
+   "x": 6340,
+   "y": 0
+  },
+  "ErrorState.dc.html": {
+   "h": 600,
+   "w": 800,
+   "x": 7220,
+   "y": 0
+  },
+  "FilterChip.dc.html": {
+   "h": 600,
+   "w": 800,
+   "x": 8100,
+   "y": 0
+  },
+  "FilterSheet.dc.html": {
+   "h": 600,
+   "w": 800,
+   "x": 8980,
+   "y": 0
+  },
+  "FoodCard.dc.html": {
+   "h": 600,
+   "w": 800,
+   "x": 9860,
+   "y": 0
+  },
+  "FoodDetails.dc.html": {
+   "h": 600,
+   "w": 800,
+   "x": 10740,
+   "y": 0
+  },
+  "Header.dc.html": {
+   "h": 600,
+   "w": 800,
+   "x": 11620,
+   "y": 0
+  },
+  "LoadingState.dc.html": {
+   "h": 600,
+   "w": 800,
+   "x": 12500,
+   "y": 0
+  },
+  "MenuDrawer.dc.html": {
+   "h": 600,
+   "w": 800,
+   "x": 13380,
+   "y": 0
+  },
+  "Price.dc.html": {
+   "h": 600,
+   "w": 800,
+   "x": 14260,
+   "y": 0
+  },
+  "QuantityStepper.dc.html": {
+   "h": 600,
+   "w": 800,
+   "x": 15140,
+   "y": 0
+  },
+  "Rating.dc.html": {
+   "h": 600,
+   "w": 800,
+   "x": 16020,
+   "y": 0
+  },
+  "RestaurantCard.dc.html": {
+   "h": 600,
+   "w": 800,
+   "x": 16900,
+   "y": 0
+  },
+  "RestaurantHeader.dc.html": {
+   "h": 600,
+   "w": 800,
+   "x": 17780,
+   "y": 0
+  },
+  "SearchBar.dc.html": {
+   "h": 600,
+   "w": 800,
+   "x": 18660,
+   "y": 0
+  },
+  "TopBar.dc.html": {
+   "x": 0,
+   "y": 2000,
+   "w": 390,
+   "h": 80
+  },
+  "ActionBar.dc.html": {
+   "x": 470,
+   "y": 2000,
+   "w": 390,
+   "h": 88
+  },
+  "CartItemRow.dc.html": {
+   "x": 940,
+   "y": 2000,
+   "w": 358,
+   "h": 120
+  },
+  "PriceSummary.dc.html": {
+   "x": 1378,
+   "y": 2000,
+   "w": 358,
+   "h": 200
+  },
+  "PromoCodeInput.dc.html": {
+   "x": 1816,
+   "y": 2000,
+   "w": 358,
+   "h": 88
+  },
+  "SelectCard.dc.html": {
+   "x": 2254,
+   "y": 2000,
+   "w": 358,
+   "h": 88
+  },
+  "ChoiceSheet.dc.html": {
+   "x": 2692,
+   "y": 2000,
+   "w": 390,
+   "h": 420
+  },
+  "MapPicker.dc.html": {
+   "x": 0,
+   "y": 2400,
+   "w": 358,
+   "h": 240
+  },
+  "ReviewSheet.dc.html": {
+   "x": 440,
+   "y": 2400,
+   "w": 390,
+   "h": 420
+  },
+  "StepBar.dc.html": {
+   "x": 1000,
+   "y": 2400,
+   "w": 358,
+   "h": 340
+  },
+  "ContactRow.dc.html": {
+   "x": 1438,
+   "y": 2400,
+   "w": 358,
+   "h": 96
+  },
+  "InfoList.dc.html": {
+   "x": 1876,
+   "y": 2400,
+   "w": 358,
+   "h": 220
+  },
+  "MenuList.dc.html": {
+   "x": 2314,
+   "y": 2400,
+   "w": 358,
+   "h": 520
+  },
+  "OrderCard.dc.html": {
+   "x": 2752,
+   "y": 2400,
+   "w": 358,
+   "h": 260
+  },
+  "SocialCard.dc.html": {
+   "x": 3190,
+   "y": 2400,
+   "w": 358,
+   "h": 88
+  },
+  "ListRow.dc.html": {
+   "x": 3630,
+   "y": 2400,
+   "w": 358,
+   "h": 72
+  },
+  "ToggleRow.dc.html": {
+   "x": 4068,
+   "y": 2400,
+   "w": 358,
+   "h": 72
+  },
+  "FaqItem.dc.html": {
+   "x": 4506,
+   "y": 2400,
+   "w": 358,
+   "h": 56
+  },
+  "CouponCard.dc.html": {
+   "x": 4944,
+   "y": 2400,
+   "w": 358,
+   "h": 100
+  },
+  "StarPicker.dc.html": {
+   "x": 5382,
+   "y": 2400,
+   "w": 358,
+   "h": 80
+  },
+  "ErrorPage.dc.html": {
+   "x": 0,
+   "y": 2800,
+   "w": 390,
+   "h": 640
+  }
+ },
+ "createdOnFiles": {
+  "at": "2026-11-14T12:00:00Z",
+  "v": 1
+ },
+ "designSystems": [],
+ "launch": {
+  "file": "App.dc.html",
+  "view": "focused"
+ },
+ "notes": {},
+ "order": [
+  "App.dc.html",
+  "Badge.dc.html",
+  "BottomNav.dc.html",
+  "CartSummary.dc.html",
+  "CategoryItem.dc.html",
+  "EmptyState.dc.html",
+  "ErrorState.dc.html",
+  "FilterChip.dc.html",
+  "FilterSheet.dc.html",
+  "FoodCard.dc.html",
+  "FoodDetails.dc.html",
+  "Header.dc.html",
+  "LoadingState.dc.html",
+  "MenuDrawer.dc.html",
+  "Price.dc.html",
+  "QuantityStepper.dc.html",
+  "Rating.dc.html",
+  "RestaurantCard.dc.html",
+  "RestaurantHeader.dc.html",
+  "SearchBar.dc.html",
+  "TopBar.dc.html",
+  "ActionBar.dc.html",
+  "CartItemRow.dc.html",
+  "PriceSummary.dc.html",
+  "PromoCodeInput.dc.html",
+  "SelectCard.dc.html",
+  "ChoiceSheet.dc.html",
+  "MapPicker.dc.html",
+  "ReviewSheet.dc.html",
+  "StepBar.dc.html",
+  "ContactRow.dc.html",
+  "InfoList.dc.html",
+  "MenuList.dc.html",
+  "OrderCard.dc.html",
+  "SocialCard.dc.html",
+  "ListRow.dc.html",
+  "ToggleRow.dc.html",
+  "FaqItem.dc.html",
+  "CouponCard.dc.html",
+  "StarPicker.dc.html",
+  "ErrorPage.dc.html"
+ ],
+ "pages": [],
+ "title": "دکون | صفحه خانه اپ مشتری"
+}

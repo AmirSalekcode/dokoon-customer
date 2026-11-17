@@ -1,0 +1,21 @@
+node_modules/
+dist/
+dev-dist/
+storybook-static/
+coverage/
+test-results/
+playwright-report/
+*.local
+.env*.local
+.DS_Store
+Thumbs.db
+# Android build outputs (the android/ project itself is committed)
+android/app/build/
+android/build/
+android/.gradle/
+android/local.properties
+android/app/src/main/assets/public/
+android/capacitor-cordova-android-plugins/
+android/.idea/
+*.keystore
+*.jks

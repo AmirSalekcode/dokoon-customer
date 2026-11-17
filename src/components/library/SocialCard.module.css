@@ -1,0 +1,55 @@
+.c {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: var(--sp-3);
+  background: var(--sf);
+  border-radius: var(--r-lg);
+  box-shadow: var(--sh-card);
+  color: var(--ink);
+}
+.ib {
+  width: var(--touch);
+  height: var(--touch);
+  flex: none;
+  border-radius: var(--r-md);
+  background: var(--soft);
+  color: var(--pr2);
+  display: grid;
+  place-items: center;
+}
+.tx {
+  flex: 1;
+  min-width: 0;
+}
+.n {
+  font-size: var(--fs-14);
+  font-weight: var(--fw-bold);
+  line-height: 1.6;
+}
+.s {
+  font-size: var(--fs-12);
+  color: var(--mu);
+  line-height: 1.6;
+}
+.h {
+  font-size: var(--fs-12);
+  color: var(--mu);
+  text-align: right;
+  line-height: 1.6;
+}
+.b {
+  flex: none;
+  min-height: var(--touch);
+  padding: 0 var(--sp-4);
+  border: 0;
+  border-radius: var(--r-pill);
+  background: var(--primary);
+  color: var(--white);
+  font-size: var(--fs-13);
+  font-weight: var(--fw-bold);
+  cursor: pointer;
+}
+.b:hover {
+  background: var(--primary-strong);
+}

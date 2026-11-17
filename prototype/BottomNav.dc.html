@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>نوار پایین</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+.BottomNav_bn{display:flex;align-items:center;justify-content:space-around;height:72px;background:var(--sf,#fff);border-radius:28px;box-shadow:0 8px 24px rgba(31,26,23,.14);padding:0 8px;font-family:'Yekan Bakh',Tahoma,sans-serif;}.BottomNav_it{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;min-width:56px;height:56px;border:0;background:none;padding:0;cursor:pointer;font-family:inherit;font-size:12px;font-weight:400;line-height:1.2;color:var(--mu,#7A6E66);transition:transform .2s ease-out}.BottomNav_it:hover{transform:translateY(-2px)}.BottomNav_it:focus-visible{outline:3px solid #E4501E;outline-offset:2px;border-radius:12px}.BottomNav_it.BottomNav__on{color:var(--pr2,#C2410C);font-weight:700}.BottomNav_md{position:relative;width:64px;height:64px;min-width:64px;margin-top:-32px;border-radius:50%;background:#E4501E;color:#fff;border:4px solid var(--bg,#FBF0E6);box-shadow:0 8px 24px rgba(228,80,30,.25);animation:glow 2.6s ease-in-out infinite}.BottomNav_bd{position:absolute;top:-4px;right:-4px;min-width:24px;height:24px;border-radius:50%;background:var(--sf,#fff);color:var(--pr2,#C2410C);font-size:12px;font-weight:700;display:grid;place-items:center;box-shadow:0 2px 8px rgba(0,0,0,.2)}.BottomNav_ic{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+</style>
+</helmet>
+<nav class="BottomNav_bn" dir="rtl" aria-label="منوی اصلی"><sc-for list="{{ items }}" as="it" hint-placeholder-count="5"><sc-if value="{{ it.center }}" hint-placeholder-val="{{ false }}"><button class="BottomNav_it BottomNav_md" aria-label="{{ it.label }}" onClick="{{ it.pick }}"><svg class="BottomNav_ic" viewBox="0 0 24 24" aria-hidden="true"><path d="{{ it.d }}"></path></svg><sc-if value="{{ it.hasBadge }}" hint-placeholder-val="{{ false }}"><span class="BottomNav_bd">{{ it.badge }}</span></sc-if></button></sc-if><sc-if value="{{ it.normal }}" hint-placeholder-val="{{ true }}"><button class="BottomNav_it {{ it.cls }}" onClick="{{ it.pick }}"><svg class="BottomNav_ic" viewBox="0 0 24 24" aria-hidden="true"><path d="{{ it.d }}"></path></svg>{{ it.label }}</button></sc-if></sc-for></nav>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"active": {"editor": null}, "cartBadge": {"editor": null}, "onPick": {"editor": null}}'>
+class Component extends DCLogic {
+renderVals() {
+const P = this.props;
+const act = P.active ?? 'home'; const defs = [['home','خانه','M4 11l8-7 8 7v8a1 1 0 0 1-1 1h-4v-6h-6v6H5a1 1 0 0 1-1-1z'],['restaurants','رستوران‌ها','M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z'],['cart','سبد خرید','M5 8h14l-1 12H6zM9 8a3 3 0 0 1 6 0'],['offers','تخفیف‌ها','M3 12V4h8l10 10-8 8zM7.5 8.5h.01'],['profile','حساب','M12 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8zM4 21a8 8 0 0 1 16 0']];
+return { items: defs.map((x) => ({ key: x[0], label: x[1], d: x[2], center: x[0] === 'cart', normal: x[0] !== 'cart', cls: x[0] === act ? 'BottomNav__on' : '', hasBadge: x[0] === 'cart' && !!P.cartBadge, badge: P.cartBadge ?? '', pick: () => { if (P.onPick) P.onPick(x[0]); } })) };
+}
+}
+</script>
+</body>
+</html>

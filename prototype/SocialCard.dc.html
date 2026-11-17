@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>کارت شبکه اجتماعی</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+.SocialCard_c{display:flex;align-items:center;gap:12px;background:var(--sf,#fff);border-radius:20px;box-shadow:0 4px 16px rgba(31,26,23,.06);padding:12px;font-family:'Yekan Bakh',Tahoma,sans-serif;color:var(--ink,#1F1A17);transition:transform .2s ease-out}
+.SocialCard_c:hover{transform:translateY(-2px)}
+.SocialCard_ib{width:48px;height:48px;border-radius:12px;background:var(--soft,#FCE3D0);color:var(--pr2,#C2410C);display:grid;place-items:center;flex:none}
+.SocialCard_ic{width:26px;height:26px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.SocialCard_tx{flex:1;min-width:0}.SocialCard_n{font-size:14px;font-weight:700;line-height:1.6}
+.SocialCard_h{font-size:12px;color:var(--mu,#7A6E66);direction:ltr;text-align:right;line-height:1.6}
+.SocialCard_s{font-size:12px;color:var(--mu,#7A6E66);line-height:1.6}
+.SocialCard_b{flex:none;min-height:40px;padding:0 16px;border:0;border-radius:999px;background:#E4501E;color:#fff;font-family:inherit;font-size:13px;font-weight:700;cursor:pointer;transition:background .2s ease-out}
+.SocialCard_b:hover{background:#C2410C}.SocialCard_b:focus-visible{outline:3px solid #E4501E;outline-offset:2px}
+</style>
+</helmet>
+<div class="SocialCard_c" dir="rtl"><span class="SocialCard_ib"><svg class="SocialCard_ic" viewBox="0 0 24 24" aria-hidden="true"><path d="{{ d }}"></path></svg></span><div class="SocialCard_tx"><div class="SocialCard_n">{{ title }}</div><div class="SocialCard_s">{{ sub }}</div><div class="SocialCard_h">{{ handle }}</div></div><button class="SocialCard_b" onClick="{{ onOpen }}">{{ cta }}</button></div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"title": {"editor": null}, "sub": {"editor": null}, "handle": {"editor": null}, "d": {"editor": null}, "cta": {"editor": null}, "onOpen": {"editor": null}, "$preview": {"width": 358, "height": 88}}'>
+class Component extends DCLogic {
+renderVals() {
+const P = this.props;
+return { title: P.title || '', sub: P.sub || '', handle: P.handle || '', d: P.d || '', cta: P.cta || 'دنبال کردن', onOpen: P.onOpen || (() => {}) };
+}
+}
+</script>
+</body>
+</html>

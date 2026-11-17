@@ -1,0 +1,33 @@
+.ps {
+  padding: var(--sp-2) var(--sp-4);
+  background: var(--sf);
+  border-radius: var(--r-lg);
+  box-shadow: var(--sh-card);
+  color: var(--ink);
+}
+.r {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 44px;
+  font-size: var(--fs-14);
+  line-height: 1.7;
+}
+.r span {
+  color: var(--mu);
+}
+.r b {
+  font-weight: var(--fw-bold);
+}
+.good {
+  color: var(--success);
+}
+.t {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 56px;
+  border-top: 1px solid var(--ln);
+  font-size: var(--fs-16);
+  font-weight: var(--fw-xbold);
+}

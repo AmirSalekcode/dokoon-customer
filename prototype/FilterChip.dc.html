@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>چیپ فیلتر</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+.FilterChip_fc{display:inline-flex;align-items:center;gap:8px;height:48px;padding:0 20px;border-radius:999px;background:var(--sf,#fff);border:1.5px solid var(--ln,#F0DFD0);font-family:'Yekan Bakh',Tahoma,sans-serif;font-size:14px;font-weight:400;color:var(--ink,#1F1A17);cursor:pointer;white-space:nowrap;transition:background .2s ease-out,border-color .2s ease-out,transform .2s ease-out}.FilterChip_fc:hover{border-color:#E4501E}.FilterChip_fc:focus-visible{outline:3px solid #E4501E;outline-offset:2px}.FilterChip_fc.FilterChip__on{background:var(--soft,#FCE3D0);border-color:#E4501E;color:var(--pr2,#C2410C);font-weight:700;animation:pop .35s ease-out}.FilterChip_fi{width:32px;height:32px;margin-inline-start:-8px;flex:none;filter:drop-shadow(0 2px 2px rgba(120,50,10,.25))}
+</style>
+</helmet>
+<button class="FilterChip_fc {{ cls }}" dir="rtl" aria-pressed="{{ selected }}" onClick="{{ pick }}"><sc-if value="{{ hasArt }}" hint-placeholder-val="{{ true }}"><svg class="FilterChip_fi" viewBox="0 0 100 100" aria-hidden="true"><use href="#{{ art }}"></use></svg></sc-if>{{ label }}</button>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"label": {"editor": null}, "selected": {"editor": null}, "art": {"editor": null}, "onPick": {"editor": null}}'>
+class Component extends DCLogic {
+renderVals() {
+const P = this.props;
+return { label: P.label ?? '', selected: !!P.selected, cls: P.selected ? 'FilterChip__on' : '', art: P.art ?? '', hasArt: !!P.art, pick: (e)=>{ if(e&&e.stopPropagation) e.stopPropagation(); if(P.onPick) P.onPick(); } };
+}
+}
+</script>
+</body>
+</html>

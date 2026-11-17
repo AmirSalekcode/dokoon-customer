@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>امتیاز</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+.Rating_rt{display:inline-flex;align-items:center;gap:4px;font-family:'Yekan Bakh',Tahoma,sans-serif;font-size:12px;font-weight:700;line-height:1.6;color:var(--ink,#1F1A17)}.Rating_rs{color:#F5B32F;animation:twinkle 2.4s ease-in-out infinite}.Rating_rc{color:var(--mu,#7A6E66);font-weight:400}
+</style>
+</helmet>
+<span class="Rating_rt" dir="rtl"><b class="Rating_rs">★</b><span>{{ value }}</span><span class="Rating_rc">({{ count }})</span></span>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"value": {"editor": null}, "count": {"editor": null}}'>
+class Component extends DCLogic {
+renderVals() {
+const P = this.props;
+return { value: P.value ?? '', count: P.count ?? '' };
+}
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+.ld {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+  padding: var(--sp-4);
+}
+.sk {
+  border-radius: var(--r-lg);
+  background: linear-gradient(90deg, var(--ln) 25%, var(--soft) 50%, var(--ln) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s linear infinite;
+}
+.r {
+  display: flex;
+  gap: var(--sp-3);
+}
+.banner {
+  height: 200px;
+  border-radius: var(--r-xl);
+}
+.circle {
+  width: 72px;
+  height: 72px;
+  border-radius: var(--r-circle);
+}
+.card {
+  flex: 1;
+  height: 220px;
+}
+.row {
+  height: 88px;
+}

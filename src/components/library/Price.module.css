@@ -1,0 +1,19 @@
+.pc {
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--sp-1);
+  color: var(--ink);
+}
+.pc b {
+  font-size: var(--fs-15);
+  font-weight: var(--fw-xbold);
+  line-height: 1.2;
+}
+.pc small,
+.pc s {
+  font-size: var(--fs-12);
+  color: var(--mu);
+}
+.pc s {
+  margin-inline-start: var(--sp-1);
+}

@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>خلاصه سبد</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+.CartSummary_dock{padding:12px 16px 16px;background:var(--sf,#fff);border-radius:28px 28px 0 0;box-shadow:0 -8px 24px rgba(31,26,23,.12);font-family:'Yekan Bakh',Tahoma,sans-serif;}.CartSummary_cs{display:flex;align-items:center;justify-content:space-between;width:100%;height:56px;border:0;border-radius:999px;background:#1F1A17;color:#fff;padding:0 8px 0 20px;cursor:pointer;font-family:inherit;transition:transform .2s ease-out}.CartSummary_cs:hover{transform:scale(1.02)}.CartSummary_cs:focus-visible{outline:3px solid #E4501E;outline-offset:2px}.CartSummary_cl{display:flex;align-items:center;gap:12px;font-size:15px;font-weight:700;line-height:1.2}.CartSummary_cn{width:40px;height:40px;border-radius:50%;background:#E4501E;display:grid;place-items:center;font-size:15px;font-weight:700;animation:pulse 2.4s ease-in-out infinite}.CartSummary_cp{font-size:15px;font-weight:800;line-height:1.2;padding-inline-start:16px;border-inline-start:1px solid rgba(255,255,255,.3)}.CartSummary_cp small{font-size:12px;font-weight:400;margin-inline-start:4px}
+</style>
+</helmet>
+<div class="CartSummary_dock" dir="rtl"><button class="CartSummary_cs" onClick="{{ open }}"><span class="CartSummary_cl"><span class="CartSummary_cn">{{ count }}</span>مشاهده سبد خرید</span><span class="CartSummary_cp">{{ total }}<small>تومان</small></span></button></div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"count": {"editor": null}, "total": {"editor": null}, "onOpen": {"editor": null}}'>
+class Component extends DCLogic {
+renderVals() {
+const P = this.props;
+return { count: P.count ?? '', total: P.total ?? '', open: (e)=>{ if(e&&e.stopPropagation) e.stopPropagation(); if(P.onOpen) P.onOpen(); } };
+}
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,19 @@
+/*
+ * Derived tokens — NOT new colors. Every value is a transparency of an existing token
+ * from design-tokens/dokoon-tokens.css (via color-mix), so components never hard-code rgba().
+ * Needs owner sign-off before being merged into dokoon-design-system.md.
+ */
+:root {
+  --scrim: color-mix(in srgb, var(--dock) 52%, transparent);
+  --glass: color-mix(in srgb, var(--white) 90%, transparent);
+  --glass-soft: color-mix(in srgb, var(--white) 60%, transparent);
+  --veil-dark: color-mix(in srgb, var(--dock) 70%, transparent);
+  --veil-bg: color-mix(in srgb, var(--bg) 82%, transparent);
+  --on-dock-line: color-mix(in srgb, var(--white) 30%, transparent);
+  --art-shadow: color-mix(in srgb, var(--brand-dark) 30%, transparent);
+  --halo: color-mix(in srgb, var(--warning) 50%, transparent);
+  --zone-fill: color-mix(in srgb, var(--primary) 8%, transparent);
+  --ring-primary: color-mix(in srgb, var(--primary) 35%, transparent);
+  --ring-primary-0: color-mix(in srgb, var(--primary) 0%, transparent);
+  --focus-ring: 3px solid var(--primary);
+}

@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>کارت سفارش</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+.OrderCard_oc{background:var(--sf,#fff);border-radius:20px;box-shadow:0 4px 16px rgba(31,26,23,.06);padding:16px;font-family:'Yekan Bakh',Tahoma,sans-serif;color:var(--ink,#1F1A17);cursor:pointer;transition:transform .25s ease-out}.OrderCard_oc:hover{transform:translateY(-3px)}.OrderCard_oc:focus-visible{outline:3px solid #E4501E;outline-offset:2px}
+.OrderCard_hd{display:flex;align-items:center;gap:12px}
+.OrderCard_lg{width:48px;height:48px;border-radius:12px;background:radial-gradient(circle at 50% 60%,var(--sf,#FFFFFF),var(--soft,#FCE3D0));display:grid;place-items:center;flex:none}.OrderCard_lg svg{width:36px;height:36px;animation:bob 3s ease-in-out infinite}
+.OrderCard_nm{flex:1;min-width:0}.OrderCard_nm b{display:block;font-size:16px;font-weight:700;line-height:1.5;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.OrderCard_nm small{display:block;font-size:12px;color:var(--mu,#7A6E66);line-height:1.6}
+.OrderCard_it{margin:12px 0 0;font-size:14px;color:var(--mu,#7A6E66);line-height:1.7;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.OrderCard_ft{display:flex;justify-content:space-between;align-items:center;margin-top:12px;padding-top:12px;border-top:1px solid var(--ln,#F0DFD0);font-size:12px;color:var(--mu,#7A6E66)}.OrderCard_ft b{font-size:15px;font-weight:800;color:var(--ink,#1F1A17)}
+.OrderCard_ac{width:100%;height:48px;margin-top:12px;border-radius:999px;font-family:inherit;font-size:15px;font-weight:700;cursor:pointer;transition:transform .2s ease-out}.OrderCard_ac:hover{transform:scale(1.02)}.OrderCard_ac:focus-visible{outline:3px solid #E4501E;outline-offset:2px}
+.OrderCard__pri{border:0;background:#E4501E;color:#fff;box-shadow:0 8px 24px rgba(228,80,30,.25)}.OrderCard__sec{border:1.5px solid #E4501E;background:var(--sf,#fff);color:var(--pr2,#C2410C)}
+</style>
+</helmet>
+<div class="OrderCard_oc" dir="rtl" role="button" tabindex="0" onClick="{{ open }}"><div class="OrderCard_hd"><span class="OrderCard_lg"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#{{ art }}"></use></svg></span><div class="OrderCard_nm"><b>{{ name }}</b><small>کد سفارش {{ no }} · {{ date }}</small></div><dc-import name="Badge" text="{{ statusLabel }}" tone="{{ statusTone }}" hint-size="80px,20px"></dc-import></div><p class="OrderCard_it">{{ items }}</p><div class="OrderCard_ft"><span>{{ footNote }}</span><b>{{ total }} تومان</b></div><sc-if value="{{ hasAction }}" hint-placeholder-val="{{ true }}"><button class="OrderCard_ac {{ actCls }}" onClick="{{ act }}">{{ actionLabel }}</button></sc-if></div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"order": {"editor": null}, "onOpen": {"editor": null}, "onAction": {"editor": null}, "$preview": {"width": 358, "height": 260}}'>
+class Component extends DCLogic {
+renderVals() {
+const P = this.props;
+const o = P.order || {}; return { art: o.art ?? 'dk-all', name: o.name ?? '', no: o.no ?? '', date: o.date ?? '', statusLabel: o.statusLabel ?? '', statusTone: o.statusTone ?? 'ink', items: o.items ?? '', footNote: o.footNote ?? '', total: o.total ?? '', hasAction: !!o.actionLabel, actionLabel: o.actionLabel ?? '', actCls: o.primary ? 'OrderCard__pri' : 'OrderCard__sec', open: (e) => { if (e && e.stopPropagation) e.stopPropagation(); if (P.onOpen) P.onOpen(); }, act: (e) => { if (e && e.stopPropagation) e.stopPropagation(); if (P.onAction) P.onAction(); } };
+}
+}
+</script>
+</body>
+</html>

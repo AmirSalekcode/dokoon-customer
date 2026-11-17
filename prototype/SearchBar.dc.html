@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>نوار جستجو</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+.SearchBar_sr{display:flex;gap:12px;padding:0 16px;font-family:'Yekan Bakh',Tahoma,sans-serif;}.SearchBar_sb{flex:1;min-width:0;height:52px;display:flex;align-items:center;gap:12px;padding:0 20px;border-radius:999px;background:var(--sf,#fff);box-shadow:0 4px 16px rgba(31,26,23,.06);font-size:14px;color:var(--mu,#7A6E66)}.SearchBar_sb input{flex:1;min-width:0;border:0;outline:0;background:none;font-family:inherit;font-size:14px;color:var(--ink,#1F1A17)}.SearchBar_sb:focus-within{outline:3px solid #E4501E}.SearchBar_sb .SearchBar_ic{width:20px;height:20px;color:var(--ink,#1F1A17)}.SearchBar_fb{position:relative;width:52px;height:52px;flex:none;border:0;border-radius:999px;background:var(--sf,#fff);box-shadow:0 4px 16px rgba(31,26,23,.06);display:grid;place-items:center;cursor:pointer;color:var(--ink,#1F1A17);padding:0;transition:transform .2s ease-out}.SearchBar_fb:hover{transform:translateY(-2px)}.SearchBar_fb:focus-visible{outline:3px solid #E4501E;outline-offset:2px}.SearchBar_fb .SearchBar_cn{position:absolute;top:-4px;right:-4px;min-width:20px;height:20px;border-radius:999px;background:#E4501E;color:#fff;font-size:12px;font-weight:700;display:grid;place-items:center;padding:0 4px}.SearchBar_ic{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.SearchBar_ro{flex:1;min-width:0;height:52px;border:0;background:none;padding:0;text-align:right;font-family:inherit;font-size:14px;color:var(--mu,#7A6E66);cursor:pointer}.SearchBar_ro:focus-visible{outline:3px solid #E4501E;outline-offset:4px}
+</style>
+</helmet>
+<div class="SearchBar_sr" dir="rtl"><div class="SearchBar_sb"><svg class="SearchBar_ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg><sc-if value="{{ editable }}" hint-placeholder-val="{{ false }}"><input type="text" placeholder="{{ placeholder }}" value="{{ value }}" onInput="{{ input }}"></sc-if><sc-if value="{{ readonly }}" hint-placeholder-val="{{ true }}"><button class="SearchBar_ro" onClick="{{ tap }}">{{ placeholder }}</button></sc-if></div><sc-if value="{{ showFilter }}" hint-placeholder-val="{{ true }}"><button class="SearchBar_fb" aria-label="فیلتر و مرتب‌سازی" onClick="{{ filter }}"><svg class="SearchBar_ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h10M18 7h2M4 17h2M10 17h10M16 5a2 2 0 1 0 0 4 2 2 0 0 0 0-4zM8 15a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"></path></svg><sc-if value="{{ hasCount }}" hint-placeholder-val="{{ false }}"><span class="SearchBar_cn">{{ count }}</span></sc-if></button></sc-if></div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"placeholder": {"editor": null}, "value": {"editor": null}, "editable": {"editor": null}, "showFilter": {"editor": null}, "filterCount": {"editor": null}, "onInput": {"editor": null}, "onFilter": {"editor": null}, "onTap": {"editor": null}}'>
+class Component extends DCLogic {
+renderVals() {
+const P = this.props;
+return { tap: (e) => { if (e && e.stopPropagation) e.stopPropagation(); if (P.onTap) P.onTap(); }, placeholder: P.placeholder ?? '', value: P.value ?? '', editable: !!P.editable, readonly: !P.editable, showFilter: !!P.showFilter, count: P.filterCount ?? '', hasCount: !!P.filterCount, input: (e) => { if (P.onInput) P.onInput(e && e.target ? e.target.value : ''); }, filter: (e)=>{ if(e&&e.stopPropagation) e.stopPropagation(); if(P.onFilter) P.onFilter(); } };
+}
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+.dock {
+  padding: var(--sp-3) var(--sp-4) calc(var(--sp-4) + env(safe-area-inset-bottom));
+  background: var(--sf);
+  border-radius: var(--r-xl) var(--r-xl) 0 0;
+  box-shadow: var(--sh-bar);
+}
+.cs {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 56px;
+  padding-inline: var(--sp-5) var(--sp-2);
+  border: 0;
+  border-radius: var(--r-pill);
+  background: var(--dock);
+  color: var(--white);
+  cursor: pointer;
+  transition: transform var(--t-fast);
+}
+.cs:active {
+  transform: scale(0.97);
+}
+.cl {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  font-size: var(--fs-15);
+  font-weight: var(--fw-bold);
+  line-height: 1.2;
+}
+.cn {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--r-circle);
+  background: var(--primary);
+  display: grid;
+  place-items: center;
+}
+.cp {
+  padding-inline-start: var(--sp-4);
+  border-inline-start: 1px solid var(--on-dock-line);
+  font-size: var(--fs-15);
+  font-weight: var(--fw-xbold);
+  line-height: 1.2;
+}
+.cp small {
+  margin-inline-start: var(--sp-1);
+  font-size: var(--fs-12);
+  font-weight: var(--fw-regular);
+}

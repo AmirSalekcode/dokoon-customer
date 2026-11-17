@@ -1,0 +1,41 @@
+/* Dokoon design tokens — extracted from the customer-app prototype (v48). Source of truth: dokoon-design-system.md */
+@font-face{font-family:'Yekan Bakh';font-weight:300;font-display:swap;src:url(../assets/fonts/YekanBakh-Light.ttf) format('truetype')}
+@font-face{font-family:'Yekan Bakh';font-weight:400;font-display:swap;src:url(../assets/fonts/YekanBakh-Regular.ttf) format('truetype')}
+@font-face{font-family:'Yekan Bakh';font-weight:500;font-display:swap;src:url(../assets/fonts/YekanBakh-Medium.ttf) format('truetype')}
+@font-face{font-family:'Yekan Bakh';font-weight:700;font-display:swap;src:url(../assets/fonts/YekanBakh-Bold.ttf) format('truetype')}
+@font-face{font-family:'Yekan Bakh';font-weight:800;font-display:swap;src:url(../assets/fonts/YekanBakh-Heavy.ttf) format('truetype')}
+
+:root{
+  /* brand + status (same in both themes) */
+  --primary:#E4501E; --primary-strong:#C2410C; --primary-tint:#FCE3D0; --brand-dark:#8B2313;
+  --danger:#C8281E; --danger-alt:#DC2626; --warning:#F5B32F; --success:#16A34A;
+  --white:#FFFFFF; --dock:#1F1A17;
+  /* font */
+  --font:'Yekan Bakh',Tahoma,sans-serif;
+  --fs-12:12px; --fs-13:13px; --fs-14:14px; --fs-15:15px; --fs-16:16px; --fs-20:20px; --fs-22:22px; --fs-24:24px; --fs-48:48px;
+  --fw-light:300; --fw-regular:400; --fw-medium:500; --fw-bold:700; --fw-xbold:800;
+  /* spacing (4px base) */
+  --sp-1:4px; --sp-2:8px; --sp-3:12px; --sp-4:16px; --sp-5:20px; --sp-6:24px; --sp-8:32px;
+  --gutter:16px; --frame-w:390px; --frame-h:844px;
+  /* radii */
+  --r-sm:8px; --r-md:12px; --r-lg:20px; --r-xl:28px; --r-pill:999px; --r-circle:50%;
+  /* sizes */
+  --touch:48px; --h-topbar:56px; --h-input:52px; --h-chip:40px; --h-bottomnav:72px; --h-actionbar:88px;
+  /* motion */
+  --t-fast:.2s ease-out; --t-med:.25s ease-out; --t-spring:.2s cubic-bezier(.2,.8,.2,1);
+  /* z-index */
+  --z-base:1; --z-sticky:10; --z-nav:20; --z-sheet:30; --z-scrim:35; --z-dialog:40;
+  /* shadows */
+  --sh-card:0 4px 16px rgba(31,26,23,.06); --sh-card-hi:0 4px 16px rgba(31,26,23,.12);
+  --sh-cta:0 8px 24px rgba(228,80,30,.25); --sh-bar:0 -8px 24px rgba(31,26,23,.12); --sh-sheet:0 -12px 32px rgba(0,0,0,.25);
+}
+/* light theme (default) — prototype defines these on .app */
+:root,.app{
+  --bg:#FBF0E6; --sf:#FFFFFF; --ink:#1F1A17; --mu:#7A6E66; --ln:#F0DFD0; --soft:#FCE3D0; --pr2:#C2410C; --okbg:#E6F6EC;
+  --logo1:#172b50; --logo2:#0f1b35;
+}
+/* dark theme — add class "dk" (or data-theme="dark") */
+.app.dk,[data-theme="dark"]{
+  --bg:#17120F; --sf:#241C17; --ink:#F6EEE8; --mu:#B3A59B; --ln:#3A2E27; --soft:#3B2117; --pr2:#FF8A5C; --okbg:#10301C;
+  --logo1:#F6EEE8; --logo2:#E7DCD2;
+}

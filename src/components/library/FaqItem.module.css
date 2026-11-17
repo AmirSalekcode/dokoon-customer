@@ -1,0 +1,43 @@
+.c {
+  overflow: hidden;
+  background: var(--sf);
+  border-radius: var(--r-lg);
+  box-shadow: var(--sh-card);
+  color: var(--ink);
+}
+.q {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  width: 100%;
+  min-height: 56px;
+  padding: var(--sp-2) var(--sp-4);
+  border: 0;
+  background: none;
+  font-size: var(--fs-14);
+  font-weight: var(--fw-bold);
+  line-height: 1.7;
+  text-align: start;
+  cursor: pointer;
+}
+.q:focus-visible {
+  outline-offset: -3px;
+}
+.q span {
+  flex: 1;
+}
+.cv {
+  color: var(--mu);
+  transition: transform var(--t-med);
+}
+.on .cv {
+  transform: rotate(-90deg);
+}
+.a {
+  margin: 0;
+  padding: 0 var(--sp-4) var(--sp-4);
+  font-size: var(--fs-14);
+  line-height: 1.9;
+  color: var(--mu);
+  animation: rise 0.35s ease-out both;
+}

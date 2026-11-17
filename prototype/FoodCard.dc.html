@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>کارت غذا</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+.FoodCard_fd{position:relative;background:var(--sf,#fff);border-radius:20px;box-shadow:0 4px 16px rgba(31,26,23,.06);padding:12px;font-family:'Yekan Bakh',Tahoma,sans-serif;color:var(--ink,#1F1A17);cursor:pointer;transition:transform .25s ease-out}.FoodCard_fd:hover{transform:translateY(-2px)}.FoodCard_fd:focus-visible{outline:3px solid #E4501E;outline-offset:2px}.FoodCard_fd.FoodCard__off{opacity:.72}.FoodCard_fm{display:flex;gap:12px}.FoodCard_ft{flex:1;min-width:0}.FoodCard_fn{margin:4px 0 0;font-size:16px;font-weight:700;line-height:1.5}.FoodCard_fx{margin:0 0 8px;font-size:12px;color:var(--mu,#7A6E66);line-height:1.6;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}.FoodCard_fi{position:relative;width:96px;height:96px;flex:none;border-radius:12px;background:radial-gradient(circle at 50% 62%,var(--sf,#FFFFFF),var(--soft,#FCE3D0));display:grid;place-items:center}.FoodCard_fa{width:72px;height:72px;filter:drop-shadow(0 6px 6px rgba(120,50,10,.28));animation:bob 3.2s ease-in-out infinite}.FoodCard_fb{position:absolute;bottom:-8px;left:-8px;width:48px;height:48px;border:0;background:none;padding:0;display:grid;place-items:center;cursor:pointer}.FoodCard_fb i{width:40px;height:40px;border-radius:50%;background:#E4501E;color:#fff;display:grid;place-items:center;box-shadow:0 8px 24px rgba(228,80,30,.25);transition:transform .2s ease-out}.FoodCard_fb:hover i{transform:scale(1.1) rotate(90deg)}.FoodCard_fb:focus-visible{outline:3px solid #1F1A17;border-radius:50%}.FoodCard_fu{position:absolute;inset:0;border-radius:12px;background:rgba(251,240,230,.82);display:grid;place-items:center;font-size:12px;font-weight:700;color:var(--mu,#7A6E66)}.FoodCard_fq{display:flex;justify-content:space-between;align-items:center;margin-top:12px;padding-top:12px;border-top:1px solid var(--ln,#F0DFD0);font-size:12px;color:var(--mu,#7A6E66)}.FoodCard_fc2{margin-top:8px}.FoodCard_ic{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+</style>
+</helmet>
+<div class="FoodCard_fd {{ cls }}" dir="rtl" role="button" tabindex="0" onClick="{{ open }}"><div class="FoodCard_fm"><div class="FoodCard_ft"><sc-if value="{{ hasBadge }}" hint-placeholder-val="{{ true }}"><dc-import name="Badge" text="{{ badge }}" tone="red" hint-size="64px,20px"></dc-import></sc-if><h4 class="FoodCard_fn">{{ name }}</h4><p class="FoodCard_fx">{{ desc }}</p><dc-import name="Price" price="{{ priceText }}" old="{{ oldText }}" hint-size="140px,20px"></dc-import><sc-if value="{{ hasCartBadge }}" hint-placeholder-val="{{ false }}"><div class="FoodCard_fc2"><dc-import name="Badge" text="{{ cartBadge }}" tone="amber" hint-size="96px,20px"></dc-import></div></sc-if></div><div class="FoodCard_fi"><svg class="FoodCard_fa" viewBox="0 0 100 100" aria-hidden="true"><use href="#{{ art }}"></use></svg><sc-if value="{{ showAdd }}" hint-placeholder-val="{{ true }}"><button class="FoodCard_fb" aria-label="افزودن به سبد" onClick="{{ add }}"><i><svg class="FoodCard_ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg></i></button></sc-if><sc-if value="{{ unavailable }}" hint-placeholder-val="{{ false }}"><span class="FoodCard_fu">ناموجود</span></sc-if></div></div><sc-if value="{{ showStepper }}" hint-placeholder-val="{{ false }}"><div class="FoodCard_fq"><span>در سبد شما</span><dc-import name="QuantityStepper" value="{{ qtyText }}" on-inc="{{ onInc }}" on-dec="{{ onDec }}" hint-size="136px,48px"></dc-import></div></sc-if></div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"f": {"editor": null}, "qtyText": {"editor": null}, "onOpen": {"editor": null}, "onAdd": {"editor": null}, "onInc": {"editor": null}, "onDec": {"editor": null}}'>
+class Component extends DCLogic {
+renderVals() {
+const P = this.props;
+const f = P.f || {}; const q = P.qtyText ?? ''; const hasQ = !!q; const orderable = f.orderable !== false; return { name: f.name ?? '', desc: f.desc ?? '', art: f.art ?? '', priceText: f.priceText ?? '', oldText: f.oldText ?? '', badge: f.badge ?? '', hasBadge: !!f.badge, cls: f.available === false ? 'FoodCard__off' : '', unavailable: f.available === false, showAdd: f.available !== false && orderable && (f.hasGroups || !hasQ), showStepper: hasQ && !f.hasGroups, hasCartBadge: hasQ && !!f.hasGroups, cartBadge: q + ' عدد در سبد', qtyText: q, open: (e)=>{ if(e&&e.stopPropagation) e.stopPropagation(); if(P.onOpen) P.onOpen(); }, add: (e)=>{ if(e&&e.stopPropagation) e.stopPropagation(); if(P.onAdd) P.onAdd(); }, onInc: P.onInc, onDec: P.onDec };
+}
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,74 @@
+.sh {
+  padding: 0 var(--sp-4) calc(var(--sp-4) + env(safe-area-inset-bottom));
+}
+.hd {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--sp-3);
+  margin-top: var(--sp-3);
+}
+.hd h2 {
+  margin: 0;
+  font-size: var(--fs-20);
+  font-weight: var(--fw-bold);
+  line-height: 1.4;
+}
+.hd small {
+  display: block;
+  font-size: var(--fs-12);
+  color: var(--mu);
+  line-height: 1.6;
+}
+.x {
+  width: var(--touch);
+  height: var(--touch);
+  flex: none;
+  padding: 0;
+  border: 0;
+  border-radius: var(--r-circle);
+  background: var(--sf);
+  color: var(--ink);
+  box-shadow: var(--sh-card-hi);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}
+.stars {
+  margin: var(--sp-5) 0 var(--sp-1);
+}
+.nt {
+  width: 100%;
+  height: 96px;
+  margin-top: var(--sp-3);
+  padding: var(--sp-3) var(--sp-4);
+  border: 1.5px solid var(--ln);
+  border-radius: var(--r-lg);
+  background: var(--sf);
+  color: var(--ink);
+  font-size: var(--fs-14);
+  line-height: 1.7;
+  resize: none;
+}
+.nt:focus {
+  outline: var(--focus-ring);
+}
+.ok {
+  width: 100%;
+  height: 56px;
+  margin-top: var(--sp-4);
+  border: 0;
+  border-radius: var(--r-pill);
+  background: var(--primary);
+  color: var(--white);
+  font-size: var(--fs-15);
+  font-weight: var(--fw-bold);
+  cursor: pointer;
+  box-shadow: var(--sh-cta);
+}
+.ok:disabled {
+  background: var(--ln);
+  color: var(--mu);
+  box-shadow: none;
+  cursor: not-allowed;
+}

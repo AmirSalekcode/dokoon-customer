@@ -1,0 +1,32 @@
+import type { components } from './schema';
+
+type S = components['schemas'];
+
+export type ApiErrorBody = S['Error'];
+export type AppConfig = S['AppConfig'];
+export type City = S['City'];
+export type LatLng = S['LatLng'];
+export type AuthResult = S['AuthResult'];
+export type User = S['User'];
+export type Settings = S['Settings'];
+export type AddressInput = S['AddressInput'];
+export type Address = S['Address'];
+export type Home = S['Home'];
+export type RestaurantCard = S['RestaurantCard'];
+export type Restaurant = S['Restaurant'];
+export type RestaurantPage = S['RestaurantPage'];
+export type MenuCategory = S['MenuCategory'];
+export type Food = S['Food'];
+export type OptionGroup = S['OptionGroup'];
+export type Review = S['Review'];
+export type ReviewPage = S['ReviewPage'];
+export type Campaign = S['Campaign'];
+export type Promo = S['Promo'];
+export type OrderDraft = S['OrderDraft'];
+export type Quote = S['Quote'];
+export type PaymentInit = S['PaymentInit'];
+export type CreateOrderResult = S['CreateOrderResult'];
+export type OrderStatus = S['OrderStatus'];
+export type Order = S['Order'];
+export type OrderPage = S['OrderPage'];
+export type NotificationPage = S['NotificationPage'];

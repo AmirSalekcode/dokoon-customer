@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>کد تخفیف</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+.PromoCodeInput_pc{font-family:'Yekan Bakh',Tahoma,sans-serif;color:var(--ink,#1F1A17)}.PromoCodeInput_rw{display:flex;gap:8px;background:var(--sf,#fff);border-radius:20px;box-shadow:0 4px 16px rgba(31,26,23,.06);padding:8px}.PromoCodeInput_in{flex:1;min-width:0;height:48px;border:0;outline:0;background:none;padding:0 12px;font-family:inherit;font-size:14px;color:var(--ink,#1F1A17)}.PromoCodeInput_rw:focus-within{outline:3px solid #E4501E}.PromoCodeInput_ap{height:48px;padding:0 20px;border:0;border-radius:999px;background:var(--soft,#FCE3D0);color:var(--pr2,#C2410C);font-family:inherit;font-size:15px;font-weight:700;cursor:pointer;transition:transform .2s ease-out}.PromoCodeInput_ap:hover{transform:scale(1.04)}.PromoCodeInput_ap:focus-visible{outline:3px solid #E4501E;outline-offset:2px}.PromoCodeInput_ms{margin:8px 12px 0;font-size:12px;line-height:1.6;color:var(--mu,#7A6E66)}.PromoCodeInput__ok{color:#16A34A;font-weight:700}.PromoCodeInput__err{color:#DC2626;font-weight:700}
+</style>
+</helmet>
+<div class="PromoCodeInput_pc" dir="rtl"><div class="PromoCodeInput_rw"><input class="PromoCodeInput_in" type="text" placeholder="کد تخفیف را وارد کنید" value="{{ value }}" onInput="{{ input }}"><button class="PromoCodeInput_ap" onClick="{{ apply }}">اعمال</button></div><sc-if value="{{ hasMsg }}" hint-placeholder-val="{{ false }}"><p class="PromoCodeInput_ms {{ cls }}">{{ message }}</p></sc-if></div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"value": {"editor": null}, "status": {"editor": null}, "message": {"editor": null}, "onInput": {"editor": null}, "onApply": {"editor": null}, "$preview": {"width": 358, "height": 88}}'>
+class Component extends DCLogic {
+renderVals() {
+const P = this.props;
+return { value: P.value ?? '', hasMsg: !!P.message, message: P.message ?? '', cls: P.status === 'ok' ? 'PromoCodeInput__ok' : (P.status === 'err' ? 'PromoCodeInput__err' : ''), input: (e) => { if (P.onInput) P.onInput(e && e.target ? e.target.value : ''); }, apply: (e)=>{ if(e&&e.stopPropagation) e.stopPropagation(); if(P.onApply) P.onApply(); } };
+}
+}
+</script>
+</body>
+</html>

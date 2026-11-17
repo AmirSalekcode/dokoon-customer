@@ -1,0 +1,42 @@
+.qs {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-1);
+  padding: var(--sp-1);
+  background: var(--sf);
+  border-radius: var(--r-pill);
+  box-shadow: var(--sh-card);
+}
+/* 40px visual button inside a 48px-high pill; padding keeps the hit area ≥ 48. */
+.qb {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--r-circle);
+  background: var(--soft);
+  color: var(--pr2);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: transform 0.15s ease-out;
+}
+.qb::before {
+  content: '';
+  position: absolute;
+  inset: -4px;
+}
+.qb:active {
+  transform: scale(0.88);
+}
+.qb:disabled {
+  opacity: 0.4;
+}
+.qv {
+  min-width: 32px;
+  text-align: center;
+  font-size: var(--fs-16);
+  font-weight: var(--fw-bold);
+  color: var(--ink);
+}

@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>فهرست منو</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+.MenuList_gp{background:var(--sf,#fff);border-radius:20px;padding:4px;margin-top:12px;box-shadow:0 4px 16px rgba(31,26,23,.06);font-family:'Yekan Bakh',Tahoma,sans-serif;color:var(--ink,#1F1A17)}.MenuList_gp:first-child{margin-top:0}
+.MenuList_it{display:flex;align-items:center;gap:12px;width:100%;min-height:56px;padding:4px 8px;border:0;border-radius:12px;background:none;cursor:pointer;font-family:inherit;font-size:14px;color:var(--ink,#1F1A17);text-align:right;transition:background .2s ease-out}
+.MenuList_it:hover{background:var(--soft,#FCE3D0)}.MenuList_it:focus-visible{outline:3px solid #E4501E;outline-offset:2px}
+.MenuList_ib{width:40px;height:40px;border-radius:12px;background:var(--soft,#FCE3D0);color:var(--pr2,#C2410C);display:grid;place-items:center;flex:none;transition:transform .25s ease-out}.MenuList_it:hover .MenuList_ib{transform:rotate(-8deg) scale(1.08)}
+.MenuList_lb{flex:1}.MenuList_bg{font-size:12px;font-weight:700;color:#fff;background:#E4501E;border-radius:999px;padding:0 8px;line-height:1.8;animation:pulse 2.4s ease-in-out infinite}.MenuList_cv{color:var(--mu,#7A6E66)}
+.MenuList__out{color:#DC2626}.MenuList__out .MenuList_ib{background:var(--sf,#fff);color:#DC2626}.MenuList_ic{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+</style>
+</helmet>
+<div dir="rtl"><sc-for list="{{ groups }}" as="g" hint-placeholder-count="2"><div class="MenuList_gp"><sc-for list="{{ g.items }}" as="i" hint-placeholder-count="4"><button class="MenuList_it {{ i.cls }}" onClick="{{ i.pick }}"><span class="MenuList_ib"><svg class="MenuList_ic" viewBox="0 0 24 24" aria-hidden="true"><path d="{{ i.d }}"></path></svg></span><span class="MenuList_lb">{{ i.label }}</span><sc-if value="{{ i.hasBadge }}" hint-placeholder-val="{{ false }}"><span class="MenuList_bg">{{ i.badge }}</span></sc-if><svg class="MenuList_ic MenuList_cv" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg></button></sc-for></div></sc-for></div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"groups": {"editor": null}, "$preview": {"width": 358, "height": 520}}'>
+class Component extends DCLogic {
+renderVals() {
+const P = this.props;
+return { groups: P.groups || [] };
+}
+}
+</script>
+</body>
+</html>

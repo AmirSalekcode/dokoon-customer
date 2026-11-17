@@ -1,0 +1,27 @@
+.es {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-2);
+  padding: var(--sp-8);
+  text-align: center;
+  color: var(--ink);
+}
+.art {
+  width: 96px;
+  height: 96px;
+  filter: drop-shadow(0 8px 8px var(--art-shadow));
+  animation: bob 3.4s ease-in-out infinite;
+}
+.es h4 {
+  margin: var(--sp-2) 0 0;
+  font-size: var(--fs-16);
+  font-weight: var(--fw-bold);
+  line-height: 1.5;
+}
+.es p {
+  margin: 0 0 var(--sp-2);
+  font-size: var(--fs-14);
+  color: var(--mu);
+  line-height: 1.7;
+}

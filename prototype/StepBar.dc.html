@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>مراحل سفارش</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+.StepBar_sb{list-style:none;margin:0;padding:8px 16px;background:var(--sf,#fff);border-radius:20px;box-shadow:0 4px 16px rgba(31,26,23,.06);font-family:'Yekan Bakh',Tahoma,sans-serif;color:var(--ink,#1F1A17)}
+.StepBar_st{position:relative;display:flex;gap:16px;min-height:64px;padding:8px 0}
+.StepBar_st::before{content:"";position:absolute;right:15px;top:44px;bottom:-8px;width:2px;background:var(--ln,#F0DFD0)}
+.StepBar_st:last-child::before{display:none}
+.StepBar__done::before{background:#E4501E}
+.StepBar_dot{position:relative;width:32px;height:32px;flex:none;border-radius:50%;border:2px solid var(--ln,#F0DFD0);background:var(--sf,#fff);display:grid;place-items:center;color:#fff;z-index:1}
+.StepBar_dot svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;opacity:0}
+.StepBar__done .StepBar_dot{background:#E4501E;border-color:#E4501E}
+.StepBar__done .StepBar_dot svg{opacity:1}
+.StepBar__cur .StepBar_dot{border-color:#E4501E;background:var(--soft,#FCE3D0);animation:StepBar_p 1.8s ease-in-out infinite}
+.StepBar__cur .StepBar_dot::after{content:"";width:12px;height:12px;border-radius:50%;background:#E4501E}
+@keyframes StepBar_p{0%,100%{box-shadow:0 0 0 0 rgba(228,80,30,.35)}50%{box-shadow:0 0 0 8px rgba(228,80,30,0)}}
+.StepBar_tx b{display:block;font-size:14px;font-weight:700;line-height:1.7;color:var(--mu,#7A6E66)}
+.StepBar_tx small{display:block;font-size:12px;color:var(--mu,#7A6E66);line-height:1.6}
+.StepBar__done .StepBar_tx b,.StepBar__cur .StepBar_tx b{color:var(--ink,#1F1A17)}
+</style>
+</helmet>
+<ol class="StepBar_sb" dir="rtl" aria-label="مراحل سفارش"><sc-for list="{{ steps }}" as="s" hint-placeholder-count="5"><li class="StepBar_st {{ s.cls }}"><span class="StepBar_dot"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5 9-10"></path></svg></span><span class="StepBar_tx"><b>{{ s.label }}</b><small>{{ s.sub }}</small></span></li></sc-for></ol>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"steps": {"editor": null}, "$preview": {"width": 358, "height": 340}}'>
+class Component extends DCLogic {
+renderVals() {
+const P = this.props;
+return { steps: P.steps || [] };
+}
+}
+</script>
+</body>
+</html>

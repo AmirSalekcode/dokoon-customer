@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>کارت رستوران</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+.RestaurantCard_rc{width:176px;height:256px;overflow:hidden;background:var(--sf,#fff);border-radius:20px;box-shadow:0 4px 16px rgba(31,26,23,.06);padding:8px 8px 12px;font-family:'Yekan Bakh',Tahoma,sans-serif;color:var(--ink,#1F1A17);cursor:pointer;transition:transform .25s ease-out}.RestaurantCard_rc:hover{transform:translateY(-4px)}.RestaurantCard_rc:focus-visible{outline:3px solid #E4501E;outline-offset:2px}.RestaurantCard_rp{position:relative;height:108px;border-radius:12px;background:radial-gradient(circle at 50% 62%,var(--sf,#FFFFFF),var(--soft,#FCE3D0));display:grid;place-items:center;overflow:hidden}.RestaurantCard_rf{width:68px;height:68px;filter:drop-shadow(0 8px 8px rgba(120,50,10,.28));animation:bob 3.2s ease-in-out infinite}.RestaurantCard_rb{position:absolute;top:8px;right:8px}.RestaurantCard_rh{position:absolute;top:4px;left:4px;width:48px;height:48px;border:0;background:none;display:grid;place-items:center;cursor:pointer;padding:0}.RestaurantCard_rh i{width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.9);display:grid;place-items:center;color:var(--mu,#7A6E66)}.RestaurantCard_rh.RestaurantCard__on i{color:#E4501E}.RestaurantCard_rh.RestaurantCard__on svg{fill:#E4501E;animation:beat 2.6s ease-in-out infinite}.RestaurantCard_rh:focus-visible{outline:3px solid #E4501E}.RestaurantCard_rx{position:absolute;bottom:0;left:0;right:0;background:rgba(31,26,23,.7);color:#fff;font-size:12px;font-weight:700;text-align:center;line-height:2}.RestaurantCard_rn{margin:12px 4px 0;font-size:16px;font-weight:700;line-height:1.5;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.RestaurantCard_rs{margin:0 4px;font-size:12px;color:var(--mu,#7A6E66);line-height:1.6;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.RestaurantCard_rr{margin:8px 4px 0}.RestaurantCard_rm{display:flex;justify-content:space-between;margin:8px 4px 0;font-size:12px;color:var(--mu,#7A6E66);line-height:1.6}.RestaurantCard_rm strong{color:var(--ink,#1F1A17);font-weight:700}.RestaurantCard_rm strong.RestaurantCard__free{color:#16A34A}.RestaurantCard_ic{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+</style>
+</helmet>
+<div class="RestaurantCard_rc" dir="rtl" role="button" tabindex="0" onClick="{{ open }}"><div class="RestaurantCard_rp"><svg class="RestaurantCard_rf" viewBox="0 0 100 100" aria-hidden="true"><use href="#{{ art }}"></use></svg><sc-if value="{{ hasBadge }}" hint-placeholder-val="{{ true }}"><span class="RestaurantCard_rb"><dc-import name="Badge" text="{{ badge }}" tone="{{ badgeTone }}" hint-size="64px,20px"></dc-import></span></sc-if><button class="RestaurantCard_rh {{ favCls }}" aria-label="علاقه‌مندی" onClick="{{ fav }}"><i><svg class="RestaurantCard_ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"></path></svg></i></button><sc-if value="{{ closed }}" hint-placeholder-val="{{ false }}"><span class="RestaurantCard_rx">بسته است</span></sc-if></div><h4 class="RestaurantCard_rn">{{ name }}</h4><p class="RestaurantCard_rs">{{ sub }} · {{ km }} کیلومتر</p><div class="RestaurantCard_rr"><dc-import name="Rating" value="{{ rating }}" count="{{ reviews }}" hint-size="80px,20px"></dc-import></div><div class="RestaurantCard_rm"><span>{{ eta }} دقیقه</span><strong class="{{ feeCls }}">{{ feeText }}</strong></div></div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"r": {"editor": null}, "onOpen": {"editor": null}, "onFav": {"editor": null}}'>
+class Component extends DCLogic {
+renderVals() {
+const P = this.props;
+const r = P.r || {}; return { art: r.art ?? '', name: r.name ?? '', sub: r.sub ?? '', km: r.km ?? '', rating: r.rating ?? '', reviews: r.reviews ?? '', eta: r.eta ?? '', feeText: r.feeText ?? '', feeCls: r.free ? 'RestaurantCard__free' : '', badge: r.badge ?? '', badgeTone: r.badgeTone ?? 'red', hasBadge: !!r.badge, closed: r.isOpen === false, favCls: r.fav ? 'RestaurantCard__on' : '', open: (e)=>{ if(e&&e.stopPropagation) e.stopPropagation(); if(P.onOpen) P.onOpen(); }, fav: (e)=>{ if(e&&e.stopPropagation) e.stopPropagation(); if(P.onFav) P.onFav(); } };
+}
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,396 @@
+openapi: 3.1.0
+info:
+  title: Dokoon API — Customer app (v1 draft)
+  version: 0.1.0
+  description: |
+    Draft contract derived from the customer-app prototype v48. Restaurant, courier and admin endpoints are listed in dokoon-backend-brief.md (section 9) and still need their own spec.
+    Conventions: JSON, UTF-8. Money = integer TOMAN (no decimals). Times = ISO-8601 UTC. IDs = opaque strings.
+    Numbers are sent as normal ASCII digits; the app formats to Persian digits. Persian/Arabic digits in phone input are normalized by the client AND the server.
+    Every mutating POST that creates money/orders accepts `Idempotency-Key`.
+servers:
+  - url: https://api.dokoon.example/v1
+security:
+  - bearer: []
+tags:
+  - {name: auth}
+  - {name: profile}
+  - {name: discovery}
+  - {name: orders}
+  - {name: content}
+paths:
+  /app/config:
+    get:
+      tags: [content]
+      security: []
+      summary: Boot config (min version, maintenance, feature flags, enabled map providers, payment methods)
+      responses:
+        '200': {description: ok, content: {application/json: {schema: {$ref: '#/components/schemas/AppConfig'}}}}
+  /cities:
+    get:
+      tags: [discovery]
+      security: []
+      summary: Active cities
+      responses:
+        '200': {description: ok, content: {application/json: {schema: {type: array, items: {$ref: '#/components/schemas/City'}}}}}
+  /auth/otp/request:
+    post:
+      tags: [auth]
+      security: []
+      summary: Send SMS code
+      requestBody:
+        required: true
+        content: {application/json: {schema: {type: object, required: [phone], properties: {phone: {type: string, pattern: '^09\d{9}$'}}}}}
+      responses:
+        '200': {description: sent, content: {application/json: {schema: {type: object, properties: {resendAfterSec: {type: integer}, codeLength: {type: integer, example: 4}}}}}}
+        '429': {$ref: '#/components/responses/Error'}
+  /auth/otp/verify:
+    post:
+      tags: [auth]
+      security: []
+      requestBody:
+        required: true
+        content: {application/json: {schema: {type: object, required: [phone, code], properties: {phone: {type: string}, code: {type: string}, deviceId: {type: string}}}}}
+      responses:
+        '200': {description: ok, content: {application/json: {schema: {$ref: '#/components/schemas/AuthResult'}}}}
+        '400': {$ref: '#/components/responses/Error'}
+  /auth/refresh:
+    post:
+      tags: [auth]
+      security: []
+      requestBody: {required: true, content: {application/json: {schema: {type: object, required: [refreshToken], properties: {refreshToken: {type: string}}}}}}
+      responses:
+        '200': {description: ok, content: {application/json: {schema: {$ref: '#/components/schemas/AuthResult'}}}}
+        '401': {$ref: '#/components/responses/Error'}
+  /auth/logout:
+    post: {tags: [auth], summary: Revoke refresh token + push token, responses: {'204': {description: done}}}
+  /me:
+    get: {tags: [profile], responses: {'200': {description: ok, content: {application/json: {schema: {$ref: '#/components/schemas/User'}}}}}}
+    patch:
+      tags: [profile]
+      requestBody: {content: {application/json: {schema: {type: object, properties: {name: {type: string}, referralCode: {type: string}, cityId: {type: string}}}}}}
+      responses: {'200': {description: ok, content: {application/json: {schema: {$ref: '#/components/schemas/User'}}}}}
+    delete: {tags: [profile], summary: Delete account (soft-delete, anonymize after retention period), responses: {'204': {description: done}}}
+  /me/settings:
+    get: {tags: [profile], responses: {'200': {description: ok, content: {application/json: {schema: {$ref: '#/components/schemas/Settings'}}}}}}
+    put:
+      tags: [profile]
+      requestBody: {content: {application/json: {schema: {$ref: '#/components/schemas/Settings'}}}}
+      responses: {'200': {description: ok}}
+  /me/devices:
+    post:
+      tags: [profile]
+      summary: Register push token (FCM / Web Push / alternative provider)
+      requestBody: {content: {application/json: {schema: {type: object, required: [channel, token], properties: {channel: {enum: [fcm, webpush, other]}, token: {type: string}, platform: {enum: [android, ios-pwa, web]}}}}}}
+      responses: {'204': {description: done}}
+  /me/invite:
+    get: {tags: [profile], responses: {'200': {description: ok, content: {application/json: {schema: {type: object, properties: {code: {type: string}, link: {type: string}, text: {type: string}}}}}}}}
+  /addresses:
+    get: {tags: [profile], responses: {'200': {description: ok, content: {application/json: {schema: {type: array, items: {$ref: '#/components/schemas/Address'}}}}}}}
+    post:
+      tags: [profile]
+      requestBody: {content: {application/json: {schema: {$ref: '#/components/schemas/AddressInput'}}}}
+      responses:
+        '201': {description: created, content: {application/json: {schema: {$ref: '#/components/schemas/Address'}}}}
+        '422': {description: outside service zone, content: {application/json: {schema: {$ref: '#/components/schemas/Error'}}}}
+  /addresses/{id}:
+    parameters: [{name: id, in: path, required: true, schema: {type: string}}]
+    patch: {tags: [profile], requestBody: {content: {application/json: {schema: {$ref: '#/components/schemas/AddressInput'}}}}, responses: {'200': {description: ok}}}
+    delete: {tags: [profile], responses: {'204': {description: done}}}
+  /geo/zone-check:
+    get:
+      tags: [discovery]
+      parameters: [{name: lat, in: query, required: true, schema: {type: number}}, {name: lng, in: query, required: true, schema: {type: number}}]
+      responses: {'200': {description: ok, content: {application/json: {schema: {type: object, properties: {inZone: {type: boolean}, cityId: {type: string}}}}}}}
+  /home:
+    get:
+      tags: [discovery]
+      summary: Home sections for city/location
+      parameters: [{name: cityId, in: query, schema: {type: string}}, {name: lat, in: query, schema: {type: number}}, {name: lng, in: query, schema: {type: number}}]
+      responses: {'200': {description: ok, content: {application/json: {schema: {$ref: '#/components/schemas/Home'}}}}}
+  /restaurants:
+    get:
+      tags: [discovery]
+      parameters:
+        - {name: lat, in: query, schema: {type: number}}
+        - {name: lng, in: query, schema: {type: number}}
+        - {name: category, in: query, schema: {type: string}}
+        - {name: sort, in: query, schema: {enum: [recommended, rating, eta, fee, distance]}}
+        - {name: openNow, in: query, schema: {type: boolean}}
+        - {name: hasDiscount, in: query, schema: {type: boolean}}
+        - {name: minRating, in: query, schema: {type: number}}
+        - {name: tags, in: query, schema: {type: array, items: {type: string}}}
+        - {name: cursor, in: query, schema: {type: string}}
+        - {name: limit, in: query, schema: {type: integer, default: 20}}
+      responses: {'200': {description: ok, content: {application/json: {schema: {$ref: '#/components/schemas/RestaurantPage'}}}}}
+  /restaurants/{id}:
+    parameters: [{name: id, in: path, required: true, schema: {type: string}}]
+    get: {tags: [discovery], responses: {'200': {description: ok, content: {application/json: {schema: {$ref: '#/components/schemas/Restaurant'}}}}, '404': {$ref: '#/components/responses/Error'}}}
+  /restaurants/{id}/menu:
+    parameters: [{name: id, in: path, required: true, schema: {type: string}}]
+    get: {tags: [discovery], responses: {'200': {description: ok, content: {application/json: {schema: {type: array, items: {$ref: '#/components/schemas/MenuCategory'}}}}}}}
+  /foods/{id}:
+    parameters: [{name: id, in: path, required: true, schema: {type: string}}]
+    get: {tags: [discovery], responses: {'200': {description: ok, content: {application/json: {schema: {$ref: '#/components/schemas/Food'}}}}}}
+  /foods/{id}/reviews:
+    parameters: [{name: id, in: path, required: true, schema: {type: string}}]
+    get:
+      tags: [discovery]
+      parameters: [{name: cursor, in: query, schema: {type: string}}]
+      responses: {'200': {description: ok, content: {application/json: {schema: {$ref: '#/components/schemas/ReviewPage'}}}}}
+    post:
+      tags: [discovery]
+      requestBody: {content: {application/json: {schema: {type: object, required: [stars], properties: {stars: {type: integer, minimum: 1, maximum: 5}, text: {type: string, maxLength: 500}}}}}}
+      responses: {'201': {description: created}}
+  /search:
+    get:
+      tags: [discovery]
+      parameters: [{name: q, in: query, required: true, schema: {type: string}}, {name: lat, in: query, schema: {type: number}}, {name: lng, in: query, schema: {type: number}}]
+      responses: {'200': {description: ok, content: {application/json: {schema: {type: object, properties: {restaurants: {type: array, items: {$ref: '#/components/schemas/RestaurantCard'}}, foods: {type: array, items: {$ref: '#/components/schemas/FoodHit'}}}}}}}}
+  /search/suggestions:
+    get: {tags: [discovery], summary: recent (per user) and popular queries, responses: {'200': {description: ok, content: {application/json: {schema: {type: object, properties: {recent: {type: array, items: {type: string}}, popular: {type: array, items: {type: string}}}}}}}}}
+  /favorites/restaurants:
+    get: {tags: [profile], responses: {'200': {description: ok, content: {application/json: {schema: {type: array, items: {$ref: '#/components/schemas/RestaurantCard'}}}}}}}
+  /favorites/restaurants/{id}:
+    parameters: [{name: id, in: path, required: true, schema: {type: string}}]
+    put: {tags: [profile], responses: {'204': {description: done}}}
+    delete: {tags: [profile], responses: {'204': {description: done}}}
+  /campaigns:
+    get: {tags: [discovery], responses: {'200': {description: ok, content: {application/json: {schema: {type: array, items: {$ref: '#/components/schemas/Campaign'}}}}}}}
+  /campaigns/{id}:
+    parameters: [{name: id, in: path, required: true, schema: {type: string}}]
+    get: {tags: [discovery], responses: {'200': {description: ok, content: {application/json: {schema: {$ref: '#/components/schemas/Campaign'}}}}}}
+  /promos:
+    get: {tags: [discovery], summary: Codes visible to this user, responses: {'200': {description: ok, content: {application/json: {schema: {type: array, items: {$ref: '#/components/schemas/Promo'}}}}}}}
+  /checkout/quote:
+    post:
+      tags: [orders]
+      summary: Server-side price check of the client cart (authoritative totals, availability, min order, promo, allowed payment methods)
+      requestBody: {required: true, content: {application/json: {schema: {$ref: '#/components/schemas/OrderDraft'}}}}
+      responses:
+        '200': {description: ok, content: {application/json: {schema: {$ref: '#/components/schemas/Quote'}}}}
+        '409': {description: items changed / restaurant closed, content: {application/json: {schema: {$ref: '#/components/schemas/Error'}}}}
+  /orders:
+    get:
+      tags: [orders]
+      parameters: [{name: tab, in: query, schema: {enum: [active, past]}}, {name: cursor, in: query, schema: {type: string}}]
+      responses: {'200': {description: ok, content: {application/json: {schema: {$ref: '#/components/schemas/OrderPage'}}}}}
+    post:
+      tags: [orders]
+      summary: Create order. payMethod=cash -> order PLACED immediately. payMethod=online -> order PENDING_PAYMENT and `payment.redirectUrl` returned.
+      parameters: [{name: Idempotency-Key, in: header, required: true, schema: {type: string}}]
+      requestBody: {required: true, content: {application/json: {schema: {$ref: '#/components/schemas/OrderDraft'}}}}
+      responses:
+        '201': {description: created, content: {application/json: {schema: {$ref: '#/components/schemas/CreateOrderResult'}}}}
+        '409': {description: price/availability changed, content: {application/json: {schema: {$ref: '#/components/schemas/Error'}}}}
+  /orders/{id}:
+    parameters: [{name: id, in: path, required: true, schema: {type: string}}]
+    get: {tags: [orders], responses: {'200': {description: ok, content: {application/json: {schema: {$ref: '#/components/schemas/Order'}}}}}}
+  /orders/{id}/events:
+    parameters: [{name: id, in: path, required: true, schema: {type: string}}]
+    get: {tags: [orders], summary: 'Server-Sent Events stream of status/ETA changes (fallback: poll GET /orders/ID every 15s)', responses: {'200': {description: text/event-stream}}}
+  /orders/{id}/cancel:
+    parameters: [{name: id, in: path, required: true, schema: {type: string}}]
+    post:
+      tags: [orders]
+      summary: Only allowed while status = PLACED
+      requestBody: {content: {application/json: {schema: {type: object, required: [reasonId], properties: {reasonId: {type: string}, text: {type: string}}}}}}
+      responses: {'200': {description: ok}, '409': {$ref: '#/components/responses/Error'}}
+  /orders/{id}/report:
+    parameters: [{name: id, in: path, required: true, schema: {type: string}}]
+    post:
+      tags: [orders]
+      requestBody: {content: {application/json: {schema: {type: object, required: [typeId, text], properties: {typeId: {type: string}, text: {type: string}, photoUploadIds: {type: array, items: {type: string}}}}}}}
+      responses: {'201': {description: created}}
+  /orders/{id}/rating:
+    parameters: [{name: id, in: path, required: true, schema: {type: string}}]
+    post:
+      tags: [orders]
+      summary: One rating per order, only after DELIVERED
+      requestBody: {content: {application/json: {schema: {type: object, required: [restaurantStars], properties: {restaurantStars: {type: integer}, courierStars: {type: integer}, text: {type: string}}}}}}
+      responses: {'201': {description: created}, '409': {$ref: '#/components/responses/Error'}}
+  /orders/{id}/reorder:
+    parameters: [{name: id, in: path, required: true, schema: {type: string}}]
+    get: {tags: [orders], summary: Lines of an old order with CURRENT price/availability, responses: {'200': {description: ok, content: {application/json: {schema: {$ref: '#/components/schemas/Quote'}}}}}}
+  /orders/{id}/payment/retry:
+    parameters: [{name: id, in: path, required: true, schema: {type: string}}]
+    post: {tags: [orders], summary: New payment attempt for a PENDING_PAYMENT order (within expiry), responses: {'200': {description: ok, content: {application/json: {schema: {$ref: '#/components/schemas/PaymentInit'}}}}}}
+  /payments/callback/{provider}:
+    get:
+      tags: [orders]
+      security: []
+      summary: Gateway return URL (server). Server verifies with the gateway, updates order, then redirects the user to the app deep link/PWA url ?orderId=&result=ok|fail. NEVER trust the query result without server-side verify.
+      parameters: [{name: provider, in: path, required: true, schema: {enum: [zibal, zarinpal]}}]
+      responses: {'302': {description: redirect to app}}
+  /notifications:
+    get: {tags: [profile], parameters: [{name: cursor, in: query, schema: {type: string}}], responses: {'200': {description: ok, content: {application/json: {schema: {$ref: '#/components/schemas/NotificationPage'}}}}}}
+  /notifications/read:
+    post: {tags: [profile], requestBody: {content: {application/json: {schema: {type: object, properties: {ids: {type: array, items: {type: string}}, all: {type: boolean}}}}}}, responses: {'204': {description: done}}}
+  /content/{key}:
+    parameters: [{name: key, in: path, required: true, schema: {enum: [about, terms, privacy]}}]
+    get: {tags: [content], security: [], responses: {'200': {description: ok, content: {application/json: {schema: {type: object, properties: {title: {type: string}, body: {type: string}, version: {type: string}}}}}}}}
+  /support/info:
+    get: {tags: [content], security: [], summary: contacts + FAQs + social links, responses: {'200': {description: ok, content: {application/json: {schema: {type: object, properties: {contacts: {type: array, items: {type: object}}, faqs: {type: array, items: {type: object, properties: {q: {type: string}, a: {type: string}}}}, socials: {type: array, items: {type: object, properties: {title: {type: string}, handle: {type: string}, url: {type: string}}}}}}}}}}}
+  /support/messages:
+    post: {tags: [content], requestBody: {content: {application/json: {schema: {type: object, required: [text], properties: {text: {type: string}, orderId: {type: string}}}}}}, responses: {'201': {description: created}}}
+  /partner-requests:
+    post:
+      tags: [content]
+      security: []
+      summary: Restaurant / courier application (auth optional; rate-limited per IP+phone)
+      requestBody: {content: {application/json: {schema: {type: object, required: [kind, name, phone, cityId], properties: {kind: {enum: [restaurant, courier]}, name: {type: string}, phone: {type: string}, cityId: {type: string}, extra: {type: object}}}}}}
+      responses: {'201': {description: created}}
+  /uploads:
+    post: {tags: [content], summary: image upload (multipart; jpeg/png/webp, max 5MB; server re-encodes + strips EXIF), responses: {'201': {description: ok, content: {application/json: {schema: {type: object, properties: {id: {type: string}, url: {type: string}}}}}}}}
+components:
+  securitySchemes:
+    bearer: {type: http, scheme: bearer, bearerFormat: JWT}
+  responses:
+    Error: {description: error, content: {application/json: {schema: {$ref: '#/components/schemas/Error'}}}}
+  schemas:
+    Error:
+      type: object
+      required: [code, message]
+      properties:
+        code: {type: string, description: 'machine code e.g. OTP_INVALID, RATE_LIMITED, OUT_OF_ZONE, RESTAURANT_CLOSED, PRICE_CHANGED, MIN_ORDER, PROMO_INVALID, CANCEL_NOT_ALLOWED'}
+        message: {type: string, description: Persian user-facing text}
+        details: {type: object}
+    AppConfig:
+      type: object
+      properties:
+        minVersion: {type: string}
+        maintenance: {type: boolean}
+        maps: {type: array, items: {enum: [neshan, balad]}}
+        defaultMap: {enum: [neshan, balad]}
+        features: {type: object, additionalProperties: {type: boolean}}
+    City: {type: object, properties: {id: {type: string}, name: {type: string}, center: {$ref: '#/components/schemas/LatLng'}}}
+    LatLng: {type: object, required: [lat, lng], properties: {lat: {type: number}, lng: {type: number}}}
+    AuthResult:
+      type: object
+      properties:
+        accessToken: {type: string}
+        refreshToken: {type: string}
+        expiresInSec: {type: integer}
+        isNewUser: {type: boolean}
+        user: {$ref: '#/components/schemas/User'}
+    User: {type: object, properties: {id: {type: string}, phone: {type: string}, name: {type: string}, cityId: {type: string}, unreadNotifications: {type: integer}, activeOrders: {type: integer}}}
+    Settings: {type: object, properties: {notifyOrders: {type: boolean}, notifyPromos: {type: boolean}, notifyNews: {type: boolean}}}
+    AddressInput:
+      type: object
+      required: [title, fullText, location, recipientName, recipientPhone]
+      properties: {title: {type: string}, fullText: {type: string}, plaque: {type: string}, unit: {type: string}, location: {$ref: '#/components/schemas/LatLng'}, recipientName: {type: string}, recipientPhone: {type: string}}
+    Address: {allOf: [{$ref: '#/components/schemas/AddressInput'}, {type: object, properties: {id: {type: string}, inZone: {type: boolean}}}]}
+    Home:
+      type: object
+      properties:
+        banners: {type: array, items: {$ref: '#/components/schemas/Campaign'}}
+        categories: {type: array, items: {type: object, properties: {id: {type: string}, title: {type: string}, imageUrl: {type: string}}}}
+        sections: {type: array, items: {type: object, properties: {id: {type: string}, title: {type: string}, restaurants: {type: array, items: {$ref: '#/components/schemas/RestaurantCard'}}}}}
+    RestaurantCard:
+      type: object
+      properties:
+        id: {type: string}
+        name: {type: string}
+        sub: {type: string}
+        coverUrl: {type: string}
+        rating: {type: number}
+        reviews: {type: integer}
+        etaMin: {type: integer, description: set by restaurant owner}
+        etaMax: {type: integer}
+        fee: {type: integer}
+        minOrder: {type: integer}
+        distanceKm: {type: number}
+        open: {type: boolean}
+        opensNext: {type: string}
+        badge: {type: object, properties: {text: {type: string}, tone: {enum: [red, amber, green, ink]}}}
+        offer: {type: string}
+        isFavorite: {type: boolean}
+    Restaurant:
+      allOf:
+        - $ref: '#/components/schemas/RestaurantCard'
+        - type: object
+          properties:
+            address: {type: string}
+            location: {$ref: '#/components/schemas/LatLng'}
+            hours: {type: string}
+            phone: {type: string}
+            allowExtras: {type: boolean}
+            allowCash: {type: boolean}
+            hasMenu: {type: boolean}
+    RestaurantPage: {type: object, properties: {items: {type: array, items: {$ref: '#/components/schemas/RestaurantCard'}}, nextCursor: {type: [string, 'null']}}}
+    MenuCategory: {type: object, properties: {id: {type: string}, title: {type: string}, foods: {type: array, items: {$ref: '#/components/schemas/Food'}}}}
+    Food:
+      type: object
+      properties:
+        id: {type: string}
+        restaurantId: {type: string}
+        title: {type: string}
+        desc: {type: string}
+        price: {type: integer}
+        oldPrice: {type: [integer, 'null']}
+        imageUrl: {type: string}
+        available: {type: boolean}
+        rating: {type: number}
+        reviews: {type: integer}
+        optionGroups: {type: array, items: {$ref: '#/components/schemas/OptionGroup'}}
+    OptionGroup:
+      type: object
+      properties: {id: {type: string}, title: {type: string}, required: {type: boolean}, min: {type: integer}, max: {type: integer}, isExtra: {type: boolean, description: hidden when restaurant allowExtras=false}, options: {type: array, items: {type: object, properties: {id: {type: string}, title: {type: string}, priceDelta: {type: integer}, available: {type: boolean}}}}}
+    FoodHit: {type: object, properties: {food: {$ref: '#/components/schemas/Food'}, restaurant: {$ref: '#/components/schemas/RestaurantCard'}}}
+    Review: {type: object, properties: {id: {type: string}, userName: {type: string}, stars: {type: integer}, text: {type: string}, createdAt: {type: string, format: date-time}}}
+    ReviewPage: {type: object, properties: {average: {type: number}, count: {type: integer}, distribution: {type: array, items: {type: integer}, description: 'count for 5..1 stars'}, items: {type: array, items: {$ref: '#/components/schemas/Review'}}, nextCursor: {type: [string, 'null']}}}
+    Campaign: {type: object, properties: {id: {type: string}, title: {type: string}, text: {type: string}, imageUrl: {type: string}, restaurantIds: {type: array, items: {type: string}}}}
+    Promo: {type: object, properties: {code: {type: string}, title: {type: string}, sub: {type: string}, badge: {type: string}, expiresAt: {type: string, format: date-time}}}
+    OrderLineInput: {type: object, required: [foodId, qty], properties: {foodId: {type: string}, qty: {type: integer, minimum: 1}, optionIds: {type: array, items: {type: string}}, clientUnitPrice: {type: integer, description: for mismatch detection only; server price wins}}}
+    OrderDraft:
+      type: object
+      required: [restaurantId, lines, addressId, payMethod]
+      properties:
+        restaurantId: {type: string}
+        lines: {type: array, items: {$ref: '#/components/schemas/OrderLineInput'}}
+        addressId: {type: string}
+        recipient: {type: object, properties: {mode: {enum: [self, other]}, name: {type: string}, phone: {type: string}}}
+        promoCode: {type: string}
+        note: {type: string, maxLength: 300}
+        payMethod: {enum: [online, cash]}
+    Quote:
+      type: object
+      properties:
+        lines: {type: array, items: {type: object, properties: {foodId: {type: string}, title: {type: string}, qty: {type: integer}, unitPrice: {type: integer}, total: {type: integer}, available: {type: boolean}}}}
+        itemsTotal: {type: integer}
+        deliveryFee: {type: integer}
+        discount: {type: integer}
+        total: {type: integer}
+        minOrder: {type: integer}
+        belowMinBy: {type: integer}
+        promo: {type: object, properties: {status: {enum: [none, ok, err]}, message: {type: string}}}
+        etaMin: {type: integer}
+        etaMax: {type: integer}
+        payMethods: {type: array, items: {enum: [online, cash]}}
+    PaymentInit: {type: object, properties: {provider: {enum: [zibal, zarinpal]}, redirectUrl: {type: string}, expiresAt: {type: string, format: date-time}}}
+    CreateOrderResult: {type: object, properties: {order: {$ref: '#/components/schemas/Order'}, payment: {oneOf: [{$ref: '#/components/schemas/PaymentInit'}, {type: 'null'}]}}}
+    OrderStatus:
+      type: string
+      enum: [PENDING_PAYMENT, PLACED, ACCEPTED, PREPARING, READY, ON_THE_WAY, DELIVERED, CANCELED_BY_CUSTOMER, REJECTED, EXPIRED, PAYMENT_FAILED]
+    Order:
+      type: object
+      properties:
+        id: {type: string}
+        number: {type: string}
+        status: {$ref: '#/components/schemas/OrderStatus'}
+        step: {type: integer, minimum: 0, maximum: 4, description: '0 placed, 1 confirmed, 2 preparing, 3 on the way, 4 delivered (for StepBar)'}
+        restaurant: {$ref: '#/components/schemas/RestaurantCard'}
+        courier: {type: [object, 'null'], properties: {name: {type: string}, phone: {type: string}}}
+        lines: {type: array, items: {type: object}}
+        address: {$ref: '#/components/schemas/Address'}
+        recipient: {type: object}
+        note: {type: string}
+        payMethod: {enum: [online, cash]}
+        paymentStatus: {enum: [none, pending, paid, failed, refunded, cash_due, cash_collected]}
+        totals: {type: object, properties: {items: {type: integer}, fee: {type: integer}, discount: {type: integer}, total: {type: integer}}}
+        etaMin: {type: integer}
+        etaMax: {type: integer}
+        placedAt: {type: string, format: date-time}
+        canCancel: {type: boolean}
+        canRate: {type: boolean}
+    OrderPage: {type: object, properties: {items: {type: array, items: {$ref: '#/components/schemas/Order'}}, nextCursor: {type: [string, 'null']}}}
+    NotificationPage: {type: object, properties: {items: {type: array, items: {type: object, properties: {id: {type: string}, title: {type: string}, body: {type: string}, read: {type: boolean}, createdAt: {type: string, format: date-time}, target: {type: object, description: 'deep link: {screen, id}'}}}}, nextCursor: {type: [string, 'null']}}}

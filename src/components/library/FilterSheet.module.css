@@ -1,0 +1,123 @@
+.hd {
+  padding: 0 var(--sp-4) var(--sp-3);
+  border-bottom: 1px solid var(--ln);
+}
+.hr {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: var(--sp-3);
+}
+.hr h2 {
+  margin: 0;
+  font-size: var(--fs-20);
+  font-weight: var(--fw-bold);
+  line-height: 1.4;
+}
+.cl {
+  height: var(--touch);
+  padding: 0 var(--sp-2);
+  border: 0;
+  background: none;
+  color: var(--pr2);
+  font-size: var(--fs-14);
+  font-weight: var(--fw-bold);
+  cursor: pointer;
+}
+.bd {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0 var(--sp-4) var(--sp-4);
+  scrollbar-width: none;
+}
+.h {
+  margin: var(--sp-5) 0 var(--sp-3);
+  font-size: var(--fs-16);
+  font-weight: var(--fw-bold);
+  line-height: 1.5;
+}
+.wr {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-2);
+}
+.box {
+  padding: 0 var(--sp-4);
+  background: var(--sf);
+  border-radius: var(--r-lg);
+  box-shadow: var(--sh-card);
+}
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-3);
+  width: 100%;
+  min-height: 64px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--ink);
+  text-align: start;
+  cursor: pointer;
+}
+.row + .row {
+  border-top: 1px solid var(--ln);
+}
+.row b {
+  display: block;
+  font-size: var(--fs-14);
+  font-weight: var(--fw-bold);
+  line-height: 1.7;
+}
+.row small {
+  display: block;
+  font-size: var(--fs-12);
+  color: var(--mu);
+  line-height: 1.6;
+}
+.sw {
+  position: relative;
+  width: 52px;
+  height: 32px;
+  flex: none;
+  border-radius: var(--r-pill);
+  background: var(--ln);
+  transition: background var(--t-med);
+}
+.sw::after {
+  content: '';
+  position: absolute;
+  top: 4px;
+  inset-inline-start: 4px;
+  width: 24px;
+  height: 24px;
+  border-radius: var(--r-circle);
+  background: var(--white);
+  box-shadow: var(--sh-card-hi);
+  transition: inset-inline-start var(--t-med);
+}
+.on .sw {
+  background: var(--primary);
+}
+.on .sw::after {
+  inset-inline-start: 24px;
+}
+.ft {
+  padding: var(--sp-3) var(--sp-4) var(--sp-4);
+  background: var(--sf);
+  border-radius: var(--r-xl) var(--r-xl) 0 0;
+  box-shadow: var(--sh-bar);
+}
+.ap {
+  width: 100%;
+  height: 56px;
+  border: 0;
+  border-radius: var(--r-pill);
+  background: var(--primary);
+  color: var(--white);
+  font-size: var(--fs-15);
+  font-weight: var(--fw-bold);
+  cursor: pointer;
+  box-shadow: var(--sh-cta);
+}

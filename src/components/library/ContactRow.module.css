@@ -1,0 +1,52 @@
+.cr {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  min-height: 72px;
+  padding: var(--sp-3) var(--sp-4);
+  background: var(--sf);
+  border-radius: var(--r-lg);
+  box-shadow: var(--sh-card);
+  text-decoration: none;
+  color: var(--ink);
+}
+.ib {
+  width: var(--touch);
+  height: var(--touch);
+  flex: none;
+  border-radius: var(--r-circle);
+  background: var(--soft);
+  display: grid;
+  place-items: center;
+}
+.art {
+  width: 32px;
+  height: 32px;
+}
+.tx {
+  flex: 1;
+  min-width: 0;
+}
+.tx b {
+  display: block;
+  font-size: var(--fs-14);
+  font-weight: var(--fw-bold);
+  line-height: 1.7;
+}
+.tx small {
+  display: block;
+  font-size: var(--fs-12);
+  color: var(--mu);
+  line-height: 1.6;
+}
+.call {
+  width: var(--touch);
+  height: var(--touch);
+  flex: none;
+  border-radius: var(--r-circle);
+  background: var(--primary);
+  color: var(--white);
+  display: grid;
+  place-items: center;
+  box-shadow: var(--sh-cta);
+}

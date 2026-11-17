@@ -1,0 +1,93 @@
+.sb {
+  margin: 0;
+  padding: var(--sp-2) var(--sp-4);
+  list-style: none;
+  background: var(--sf);
+  border-radius: var(--r-lg);
+  box-shadow: var(--sh-card);
+  color: var(--ink);
+}
+.st {
+  position: relative;
+  display: flex;
+  gap: var(--sp-4);
+  min-height: 64px;
+  padding: var(--sp-2) 0;
+}
+.st::before {
+  content: '';
+  position: absolute;
+  inset-inline-start: 15px;
+  top: 44px;
+  bottom: -8px;
+  width: 2px;
+  background: var(--ln);
+}
+.st:last-child::before {
+  display: none;
+}
+.done::before {
+  background: var(--primary);
+}
+.dot {
+  position: relative;
+  z-index: 1;
+  width: 32px;
+  height: 32px;
+  flex: none;
+  border-radius: var(--r-circle);
+  border: 2px solid var(--ln);
+  background: var(--sf);
+  color: var(--white);
+  display: grid;
+  place-items: center;
+}
+.dot svg {
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0;
+}
+.done .dot {
+  background: var(--primary);
+  border-color: var(--primary);
+}
+.done .dot svg {
+  opacity: 1;
+}
+.cur .dot {
+  border-color: var(--primary);
+  background: var(--soft);
+  animation: glow 1.8s ease-in-out infinite;
+}
+.cur .dot::after {
+  content: '';
+  width: 12px;
+  height: 12px;
+  border-radius: var(--r-circle);
+  background: var(--primary);
+}
+.cur .dot svg {
+  display: none;
+}
+.tx b {
+  display: block;
+  font-size: var(--fs-14);
+  font-weight: var(--fw-bold);
+  line-height: 1.7;
+  color: var(--mu);
+}
+.tx small {
+  display: block;
+  font-size: var(--fs-12);
+  color: var(--mu);
+  line-height: 1.6;
+}
+.done .tx b,
+.cur .tx b {
+  color: var(--ink);
+}

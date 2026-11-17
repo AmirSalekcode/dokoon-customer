@@ -1,0 +1,42 @@
+.w {
+  color: var(--ink);
+}
+.st {
+  display: flex;
+  justify-content: center;
+  gap: var(--sp-2);
+  direction: ltr;
+}
+.s {
+  width: var(--touch);
+  height: var(--touch);
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  transition: transform var(--t-fast);
+}
+.s svg {
+  width: 100%;
+  height: 100%;
+  fill: var(--ln);
+  stroke: var(--ln);
+  stroke-width: 1;
+  stroke-linejoin: round;
+  transition:
+    fill var(--t-fast),
+    stroke var(--t-fast);
+}
+.on svg {
+  fill: var(--warning);
+  stroke: var(--warning);
+  animation: pop 0.3s ease-out;
+}
+.lb {
+  min-height: 24px;
+  text-align: center;
+  font-size: var(--fs-14);
+  font-weight: var(--fw-bold);
+  color: var(--pr2);
+  line-height: 1.7;
+}

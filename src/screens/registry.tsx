@@ -1,0 +1,52 @@
+import type { ComponentType } from 'react';
+import type { Route, ScreenId } from '@/nav/types';
+import { ErrorScreen } from './ErrorScreen';
+import { HomeScreen } from './HomeScreen';
+import { RestaurantScreen } from './RestaurantScreen';
+import { CartScreen } from './CartScreen';
+import { AccountScreen } from './AccountScreen';
+import { PlaceholderScreen } from './PlaceholderScreen';
+import { FoundationLab } from './FoundationLab';
+
+export interface ScreenProps {
+  route: Route;
+}
+
+/**
+ * Phase 1 = foundation only. Home / restaurant / cart are thin demo screens that exercise the
+ * API client, mock server, cart and navigation; full screens are built per spec in phase 2.
+ */
+const SCREENS: Partial<Record<ScreenId, ComponentType<ScreenProps>>> = {
+  home: HomeScreen,
+  restaurant: RestaurantScreen,
+  cart: CartScreen,
+  account: AccountScreen,
+  settings: FoundationLab,
+  error: ErrorScreen,
+};
+
+export function screenFor(id: ScreenId): ComponentType<ScreenProps> {
+  return SCREENS[id] ?? PlaceholderScreen;
+}
+
+/** Persian titles for placeholder screens. */
+export const TITLES: Partial<Record<ScreenId, string>> = {
+  restaurants: 'رستوران‌ها',
+  offers: 'تخفیف‌ها',
+  search: 'جستجو',
+  login: 'ورود',
+  orders: 'سفارش‌ها',
+  support: 'پشتیبانی',
+  restinfo: 'اطلاعات رستوران',
+  checkout: 'تکمیل سفارش',
+  favs: 'علاقه‌مندی‌ها',
+  notifs: 'اعلان‌ها',
+  addresses: 'آدرس‌های من',
+  promos: 'کدهای تخفیف',
+  about: 'درباره ما',
+  invite: 'دعوت از دوستان',
+  social: 'شبکه‌های اجتماعی',
+  rateapp: 'امتیاز به دکون',
+  apply: 'همکاری با دکون',
+  settings: 'تنظیمات',
+};

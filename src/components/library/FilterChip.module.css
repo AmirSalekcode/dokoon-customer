@@ -1,0 +1,35 @@
+.fc {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  height: var(--touch);
+  padding: 0 var(--sp-5);
+  border: 1.5px solid var(--ln);
+  border-radius: var(--r-pill);
+  background: var(--sf);
+  color: var(--ink);
+  font-size: var(--fs-14);
+  font-weight: var(--fw-regular);
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    background var(--t-fast),
+    border-color var(--t-fast);
+}
+.fc:hover {
+  border-color: var(--primary);
+}
+.on {
+  background: var(--soft);
+  border-color: var(--primary);
+  color: var(--pr2);
+  font-weight: var(--fw-bold);
+  animation: pop 0.35s ease-out;
+}
+.fi {
+  width: 32px;
+  height: 32px;
+  margin-inline-start: calc(-1 * var(--sp-2));
+  flex: none;
+  filter: drop-shadow(0 2px 2px var(--art-shadow));
+}

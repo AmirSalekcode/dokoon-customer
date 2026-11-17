@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>انتخاب از لیست</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+.ChoiceSheet_sh{position:absolute;left:0;right:0;bottom:0;max-height:70%;display:flex;flex-direction:column;background:var(--bg,#FBF0E6);border-radius:28px 28px 0 0;box-shadow:0 -12px 32px rgba(0,0,0,.25);animation:slideU .55s cubic-bezier(.2,.8,.2,1) both;font-family:'Yekan Bakh',Tahoma,sans-serif;color:var(--ink,#1F1A17)}.ChoiceSheet_hl{display:block;width:48px;height:4px;border-radius:99px;background:var(--ln,#F0DFD0);margin:8px auto 0}.ChoiceSheet_hd{display:flex;align-items:center;justify-content:space-between;padding:12px 16px}.ChoiceSheet_hd h2{margin:0;font-size:20px;font-weight:700;line-height:1.4}.ChoiceSheet_x{width:48px;height:48px;border:0;border-radius:50%;background:var(--sf,#fff);box-shadow:0 4px 16px rgba(31,26,23,.06);display:grid;place-items:center;cursor:pointer;color:var(--ink,#1F1A17);padding:0}.ChoiceSheet_x:focus-visible{outline:3px solid #E4501E;outline-offset:2px}.ChoiceSheet_ls{display:flex;flex-direction:column;gap:12px;overflow-y:auto;padding:0 16px 24px}.ChoiceSheet_ic{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.ChoiceSheet_acts{display:flex;gap:8px;align-items:center}.ChoiceSheet_p{width:48px;height:48px;border:0;border-radius:50%;background:var(--soft,#FCE3D0);color:var(--pr2,#C2410C);display:grid;place-items:center;cursor:pointer;padding:0;transition:transform .2s ease-out}.ChoiceSheet_p:hover{transform:scale(1.08) rotate(90deg)}.ChoiceSheet_p:focus-visible,.ChoiceSheet_ad:focus-visible{outline:3px solid #E4501E;outline-offset:2px}.ChoiceSheet_ad{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;height:72px;border:1.5px dashed #E4501E;border-radius:20px;background:transparent;color:var(--pr2,#C2410C);font-family:inherit;font-size:15px;font-weight:700;cursor:pointer;transition:background .2s ease-out}.ChoiceSheet_ad:hover{background:rgba(252,227,208,.5)}
+.ChoiceSheet_row{display:flex;align-items:center;gap:8px}.ChoiceSheet_row>:first-child{flex:1;min-width:0}.ChoiceSheet_del{width:48px;height:48px;flex:none;border:0;border-radius:50%;background:var(--sf,#fff);color:#DC2626;display:grid;place-items:center;cursor:pointer;padding:0;box-shadow:0 4px 16px rgba(31,26,23,.06);transition:transform .2s ease-out}.ChoiceSheet_del:hover{transform:scale(1.1)}.ChoiceSheet_del:focus-visible{outline:3px solid #DC2626;outline-offset:2px}
+</style>
+</helmet>
+<div class="ChoiceSheet_sh" dir="rtl" role="dialog" aria-label="{{ title }}"><i class="ChoiceSheet_hl"></i><div class="ChoiceSheet_hd"><h2>{{ title }}</h2><div class="ChoiceSheet_acts"><sc-if value="{{ hasAdd }}" hint-placeholder-val="{{ false }}"><button class="ChoiceSheet_p" aria-label="{{ addLabel }}" onClick="{{ add }}"><svg class="ChoiceSheet_ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg></button></sc-if><button class="ChoiceSheet_x" aria-label="بستن" onClick="{{ close }}"><svg class="ChoiceSheet_ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg></button></div></div><div class="ChoiceSheet_ls"><sc-for list="{{ options }}" as="o" hint-placeholder-count="3"><div class="ChoiceSheet_row"><dc-import name="SelectCard" title="{{ o.title }}" sub="{{ o.sub }}" icon="{{ o.icon }}" selected="{{ o.selected }}" radio="{{ true }}" on-pick="{{ o.pick }}" hint-size="100%,72px"></dc-import><sc-if value="{{ o.canDel }}" hint-placeholder-val="{{ false }}"><button class="ChoiceSheet_del" aria-label="حذف" onClick="{{ o.del }}"><svg class="ChoiceSheet_ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1l1-12M9 7V4h6v3"></path></svg></button></sc-if></div></sc-for><sc-if value="{{ hasAdd }}" hint-placeholder-val="{{ false }}"><button class="ChoiceSheet_ad" onClick="{{ add }}"><svg class="ChoiceSheet_ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>{{ addLabel }}</button></sc-if></div></div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"title": {"editor": null}, "options": {"editor": null}, "onClose": {"editor": null}, "$preview": {"width": 390, "height": 420}, "addLabel": {"editor": null}, "onAdd": {"editor": null}}'>
+class Component extends DCLogic {
+renderVals() {
+const P = this.props;
+return { hasAdd: !!P.onAdd, addLabel: P.addLabel ?? '', add: (e) => { if (e && e.stopPropagation) e.stopPropagation(); if (P.onAdd) P.onAdd(); }, title: P.title ?? '', options: P.options || [], close: (e)=>{ if(e&&e.stopPropagation) e.stopPropagation(); if(P.onClose) P.onClose(); } };
+}
+}
+</script>
+</body>
+</html>

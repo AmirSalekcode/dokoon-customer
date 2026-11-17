@@ -1,0 +1,1170 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>اپ مشتری دکون</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:300;font-display:swap;src:url(/_blob/312bae9fa5e4e09704cb9f8b27368ff2) format('truetype')}
+@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:400;font-display:swap;src:url(/_blob/cf87b4df84e9278e967b43e2df360e82) format('truetype')}
+@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:500;font-display:swap;src:url(/_blob/3c8339f708f0fccf98d32fd1e578b71f) format('truetype')}
+@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:700;font-display:swap;src:url(/_blob/b42d915a9b4b97d02291e88be517e69b) format('truetype')}
+@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:800;font-display:swap;src:url(/_blob/0d64d14320dc47de38d6b3dbfbd6a82f) format('truetype')}
+html,body{height:100%}body{margin:0;background:#EADBCB}
+.app{--bg:#FBF0E6;--sf:#FFFFFF;--ink:#1F1A17;--mu:#7A6E66;--ln:#F0DFD0;--soft:#FCE3D0;--pr2:#C2410C;--okbg:#E6F6EC;--logo1:#172b50;--logo2:#0f1b35}
+.app.dk{--bg:#17120F;--sf:#241C17;--ink:#F6EEE8;--mu:#B3A59B;--ln:#3A2E27;--soft:#3B2117;--pr2:#FF8A5C;--okbg:#10301C;--logo1:#F6EEE8;--logo2:#E7DCD2;color-scheme:dark}
+.app{font-family:'Yekan Bakh',Tahoma,sans-serif;color:var(--ink,#1F1A17);background:var(--bg,#FBF0E6);position:relative;overflow:hidden;width:100%;max-width:430px;margin:0 auto;height:100%;min-height:844px;font-size:14px;line-height:1.7}
+.app *{box-sizing:border-box}
+.app button{font-family:inherit}
+@keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+@keyframes float{0%,100%{transform:translateY(0) rotate(-6deg)}50%{transform:translateY(-8px) rotate(-2deg)}}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.18)}}
+@keyframes beat{0%,70%,100%{transform:scale(1)}80%{transform:scale(1.3)}90%{transform:scale(1.05)}}
+@keyframes twinkle{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.6;transform:scale(1.25)}}
+@keyframes wob{0%,100%{transform:rotate(8deg)}50%{transform:rotate(-8deg)}}
+@keyframes pop{0%{transform:scale(.92)}60%{transform:scale(1.07)}100%{transform:scale(1)}}
+@keyframes glow{0%,100%{box-shadow:0 8px 24px rgba(228,80,30,.25),0 0 0 0 rgba(228,80,30,.35)}50%{box-shadow:0 8px 24px rgba(228,80,30,.25),0 0 0 12px rgba(228,80,30,0)}}
+@keyframes sweep{0%{transform:translateX(120%) skewX(-20deg)}60%,100%{transform:translateX(-220%) skewX(-20deg)}}
+@keyframes slideU{from{transform:translateY(100%)}to{transform:none}}
+@keyframes slideR{from{transform:translateX(100%)}to{transform:none}}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+@keyframes slides{0%,28%{transform:translateX(0)}33.33%,61%{transform:translateX(33.333%)}66.66%,94%{transform:translateX(66.666%)}100%{transform:translateX(0)}}
+@keyframes dot{0%,28%{width:20px;background:#E4501E}33%,100%{width:8px;background:var(--ln,#F0DFD0)}}
+.ent{animation:rise .6s cubic-bezier(.2,.8,.2,1) both}
+.d1{animation-delay:.1s}.d2{animation-delay:.2s}.d3{animation-delay:.3s}.d4{animation-delay:.4s}
+.scr{position:absolute;inset:0;background:rgba(31,26,23,.52);animation:fade .4s ease-out both;z-index:20}
+.ov{position:absolute;inset:0;z-index:30;pointer-events:none}.ov>*{pointer-events:auto}
+.sc{position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;scrollbar-width:none}
+.sc::-webkit-scrollbar{display:none}
+.home{padding-bottom:120px}
+.nv{position:absolute;left:16px;right:16px;bottom:16px;z-index:10;animation:rise .7s cubic-bezier(.2,.8,.2,1) .5s both}
+.sp{height:16px}
+.hv{position:relative;margin:16px 16px 0;border-radius:28px;overflow:hidden;aspect-ratio:8/5}
+.ht{display:flex;width:300%;height:100%;animation:slides 15s cubic-bezier(.65,0,.35,1) infinite}
+.sl{position:relative;width:33.333%;flex:none;overflow:hidden;color:#fff;padding:20px;display:flex;flex-direction:column;align-items:flex-start}
+.sl::before{content:"";position:absolute;left:-8%;bottom:-24%;width:74%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,rgba(245,179,47,.5),transparent 66%);animation:bob 5s ease-in-out infinite}
+.sl h2{margin:12px 0 4px;max-width:52%;font-size:24px;font-weight:800;line-height:1.4;position:relative}
+.sl p{margin:0;max-width:50%;font-size:14px;line-height:1.7;opacity:.92;position:relative}
+.sl .ad{position:absolute;top:20px;left:20px;font-size:12px;opacity:.8}
+.cta{position:relative;overflow:hidden;margin-top:auto;display:inline-flex;align-items:center;gap:8px;height:48px;padding:0 8px 0 20px;border:0;border-radius:999px;background:#E4501E;color:#fff;font-size:15px;font-weight:700;cursor:pointer;transition:transform .2s ease-out}
+.cta:hover{transform:scale(1.04)}
+.cta:focus-visible,.pr:focus-visible,.cf:focus-visible,.cc:focus-visible{outline:3px solid #fff;outline-offset:2px}
+.cta::after{content:"";position:absolute;top:0;bottom:0;width:28px;background:rgba(255,255,255,.35);animation:sweep 3.4s ease-in-out infinite}
+.cta i{width:32px;height:32px;border-radius:50%;background:var(--sf,#fff);display:grid;place-items:center}
+.cta svg{width:16px;height:16px;fill:none;stroke:#E4501E;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.sl .art{position:absolute;left:-3%;bottom:-8%;width:58%;aspect-ratio:1;filter:drop-shadow(0 12px 12px rgba(0,0,0,.4));animation:float 4.5s ease-in-out infinite}
+.dots{display:flex;justify-content:center;gap:8px;margin-top:12px}
+.dots i{display:block;height:8px;width:8px;border-radius:999px;background:var(--ln,#F0DFD0);animation:dot 15s infinite}
+.cats{display:flex;justify-content:space-between;padding:16px 20px 8px}
+.st{display:flex;justify-content:space-between;align-items:center;margin:20px 16px 12px}
+.st h3{margin:0;font-size:20px;font-weight:700;line-height:1.4}
+.rw{display:flex;gap:12px;overflow-x:auto;padding:4px 16px 16px;scrollbar-width:none}
+.rw::-webkit-scrollbar{display:none}
+.rw>*{flex:none}
+.promo{position:relative;margin:4px 16px 0;height:164px;border-radius:28px;background:var(--soft,#FCE3D0);padding:20px;overflow:hidden}
+.promo small{color:#C8281E;font-size:14px;font-weight:700}
+.promo h3{margin:0;font-size:24px;font-weight:800;line-height:1.4}
+.promo p{margin:0;font-size:14px;color:var(--mu,#7A6E66)}
+.pr{display:inline-flex;align-items:center;margin-top:12px;height:48px;padding:0 20px;border:1.5px solid #E4501E;border-radius:999px;background:var(--sf,#fff);color:var(--pr2,#C2410C);font-size:15px;font-weight:700;cursor:pointer;transition:transform .2s ease-out}
+.pr:hover{transform:scale(1.04)}
+.promo .art{position:absolute;left:72px;bottom:-8px;width:112px;aspect-ratio:1;filter:drop-shadow(0 8px 8px rgba(120,50,10,.3));animation:float 4.5s ease-in-out infinite}
+.sticker{position:absolute;top:16px;left:16px;width:64px;height:64px;border-radius:50%;background:#C8281E;color:#fff;display:grid;place-items:center;text-align:center;font-size:16px;font-weight:800;line-height:1.2;animation:wob 3s ease-in-out infinite}
+.sticker small{display:block;color:#fff;font-size:12px;font-weight:700}
+.rest{padding-bottom:128px}
+.tabs{position:sticky;top:0;z-index:5;display:flex;gap:8px;overflow-x:auto;margin-top:16px;padding:12px 16px;background:var(--bg,#FBF0E6);border-bottom:1px solid var(--ln,#F0DFD0);box-shadow:0 4px 16px rgba(31,26,23,.06);scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tabs>*{flex:none}
+.sh{margin:20px 16px 12px;font-size:20px;font-weight:700;line-height:1.4;scroll-margin-top:84px}
+.fl{padding:0 16px 12px}
+.dockw{position:absolute;left:0;right:0;bottom:0;z-index:10;animation:rise .7s cubic-bezier(.2,.8,.2,1) both}
+.cf{position:absolute;left:24px;right:24px;top:50%;transform:translateY(-50%);z-index:40;background:var(--sf,#fff);border-radius:28px;padding:24px;box-shadow:0 8px 24px rgba(31,26,23,.25);animation:rise .4s cubic-bezier(.2,.8,.2,1) both}
+.cf h4{margin:0 0 8px;font-size:16px;font-weight:700;line-height:1.5}
+.cf p{margin:0 0 20px;font-size:14px;color:var(--mu,#7A6E66);line-height:1.7}
+.cf .b1{width:100%;height:52px;border:0;border-radius:999px;background:#E4501E;color:#fff;font-size:15px;font-weight:700;cursor:pointer}
+.cf .b2{width:100%;height:48px;margin-top:8px;border:0;border-radius:999px;background:none;color:var(--pr2,#C2410C);font-size:15px;font-weight:700;cursor:pointer}
+.cf button:focus-visible{outline:3px solid #E4501E;outline-offset:2px}
+@media(prefers-reduced-motion:reduce){.app *,.app *::after,.app *::before{animation:none!important;transition:none!important}}
+
+.pg{padding-bottom:128px}.pad16{padding:0 16px}.stk{display:flex;flex-direction:column;gap:8px}.crow{margin-bottom:12px}.cen{display:flex;justify-content:center;padding-bottom:24px}
+.csh{margin:20px 16px 8px;font-size:16px;font-weight:700;line-height:1.5}
+.crest{display:flex;align-items:center;gap:12px;margin:0 16px 12px;padding:12px;background:var(--sf,#fff);border-radius:20px;box-shadow:0 4px 16px rgba(31,26,23,.06)}
+.clg{width:48px;height:48px;border-radius:12px;background:radial-gradient(circle at 50% 60%,var(--sf,#FFFFFF),var(--soft,#FCE3D0));display:grid;place-items:center;flex:none}.clg svg{width:36px;height:36px;animation:bob 3s ease-in-out infinite}
+.cinf{flex:1;min-width:0}.cinf b{display:block;font-size:16px;font-weight:700;line-height:1.5}.cinf small{font-size:12px;color:var(--mu,#7A6E66)}
+.cmore{height:48px;padding:0 12px;border:0;background:none;color:var(--pr2,#C2410C);font-size:14px;font-weight:700;cursor:pointer}.cmore:focus-visible{outline:3px solid #E4501E;outline-offset:2px}
+.warn{margin:0 16px 12px;padding:12px 16px;border-radius:20px;background:var(--soft,#FCE3D0);color:var(--pr2,#C2410C);font-size:14px;font-weight:700;line-height:1.7}.warn.dk{background:#1F1A17;color:#fff}
+.nt2{width:100%;height:80px;border:1.5px solid var(--ln,#F0DFD0);border-radius:20px;background:var(--sf,#fff);padding:12px 16px;font-family:inherit;font-size:14px;line-height:1.7;resize:none;color:var(--ink,#1F1A17)}.nt2:focus{outline:3px solid #E4501E}
+.chp{display:flex;gap:8px}.two{display:flex;gap:12px;margin-top:12px}
+.inp{flex:1;min-width:0;height:52px;border:1.5px solid var(--ln,#F0DFD0);border-radius:20px;background:var(--sf,#fff);padding:0 16px;font-family:inherit;font-size:14px;color:var(--ink,#1F1A17)}.inp:focus{outline:3px solid #E4501E}
+.gw{display:flex;flex-direction:column;align-items:center;padding:32px 16px 128px}.lgo{height:32px;width:auto;margin-bottom:24px;display:block}
+.gcard{width:100%;background:var(--sf,#fff);border-radius:28px;padding:32px 24px;text-align:center;box-shadow:0 4px 16px rgba(31,26,23,.06)}
+.gcard h2{margin:16px 0 8px;font-size:20px;font-weight:700;line-height:1.5}.gcard p{margin:0;font-size:14px;color:var(--mu,#7A6E66);line-height:1.7}
+.shield{width:88px;height:88px;margin:0 auto;border-radius:50%;background:var(--soft,#FCE3D0);display:grid;place-items:center;position:relative;animation:pulse 2s ease-in-out infinite}
+.shield svg{width:44px;height:44px;fill:none;stroke:var(--pr2,#C2410C);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.shield::after{content:"";position:absolute;inset:-6px;border-radius:50%;border:3px solid transparent;border-top-color:#E4501E;animation:spin 1.1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}@keyframes draw{from{stroke-dashoffset:60}to{stroke-dashoffset:0}}
+.amt{margin:24px 0 8px;padding:16px;border-radius:20px;background:var(--bg,#FBF0E6)}.amt small{display:block;font-size:12px;color:var(--mu,#7A6E66)}.amt b{font-size:24px;font-weight:800;line-height:1.5}.rst{font-size:12px;color:var(--mu,#7A6E66)}
+.sim{width:100%;margin-top:16px;display:flex;flex-direction:column;gap:8px;text-align:center}.sim small{font-size:12px;color:var(--mu,#7A6E66);line-height:1.7}
+.b1,.b3{width:100%;height:52px;border:0;border-radius:999px;font-size:15px;font-weight:700;cursor:pointer;transition:transform .2s ease-out}.b1{background:#E4501E;color:#fff;box-shadow:0 8px 24px rgba(228,80,30,.25)}.b3{background:var(--sf,#fff);color:#DC2626;border:1.5px solid #DC2626}.b1:hover,.b3:hover{transform:scale(1.02)}.b1.w{margin-top:24px}
+.b2{width:100%;height:48px;margin-top:8px;border:0;background:none;color:var(--pr2,#C2410C);font-size:15px;font-weight:700;cursor:pointer}.b1:focus-visible,.b2:focus-visible,.b3:focus-visible{outline:3px solid #E4501E;outline-offset:2px}
+.okc,.erc{width:88px;height:88px;margin:0 auto}.okc svg,.erc svg{width:100%;height:100%;fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.okc circle{stroke:#16A34A;fill:var(--sf,#FFFFFF)}.okc path{stroke:#16A34A;stroke-dasharray:60;animation:draw .7s ease-out .2s both}.erc circle{stroke:#DC2626;fill:var(--sf,#FFFFFF)}.erc path{stroke:#DC2626;stroke-dasharray:60;animation:draw .7s ease-out .2s both}
+.rcp{margin-top:24px;text-align:right}.rcp div{display:flex;justify-content:space-between;gap:12px;padding:12px 0;border-top:1px solid var(--ln,#F0DFD0);font-size:14px}.rcp span{color:var(--mu,#7A6E66)}.rcp b{font-weight:700}
+.dash{display:flex;align-items:center;justify-content:center;width:100%;height:72px;border:1.5px dashed #E4501E;border-radius:20px;background:transparent;color:var(--pr2,#C2410C);font-size:15px;font-weight:700;cursor:pointer}.dash:focus-visible{outline:3px solid #E4501E;outline-offset:2px}
+.nbox{margin-bottom:12px;padding:12px 16px;background:var(--sf,#fff);border-radius:20px;box-shadow:0 4px 16px rgba(31,26,23,.06)}.nbox small{display:block;font-size:12px;color:var(--mu,#7A6E66)}.nbox p{margin:0;font-size:14px;line-height:1.7}
+.cf .b1.dn{background:#DC2626}
+.b1.dis:disabled{background:var(--ln,#F0DFD0);color:var(--mu,#7A6E66);box-shadow:none;cursor:not-allowed}.b1.dn.dis:not(:disabled){background:#DC2626;box-shadow:none}
+.au{display:flex;flex-direction:column;align-items:center;text-align:center;padding:48px 24px 32px;min-height:100%;box-sizing:border-box;background:var(--bg,#FBF0E6)}
+.au h1{margin:24px 0 8px;font-size:24px;font-weight:800;line-height:1.5}.au p{margin:0;font-size:14px;color:var(--mu,#7A6E66);line-height:1.8}
+.lgo.big{height:56px;margin-bottom:0;animation:bob 4s ease-in-out infinite}.aufoot{margin-top:auto;width:100%;padding-top:24px;display:flex;flex-direction:column;gap:8px;align-items:center}
+.verl{font-size:12px;color:var(--mu,#7A6E66)}.ldots{display:flex;gap:8px;justify-content:center;margin-top:24px}.ldots i{width:10px;height:10px;border-radius:50%;background:#E4501E;animation:pulse 1.2s ease-in-out infinite}.ldots i:nth-child(2){animation-delay:.2s}.ldots i:nth-child(3){animation-delay:.4s}
+.skip{align-self:flex-start;height:48px;padding:0 8px;border:0;background:none;color:var(--mu,#7A6E66);font-family:inherit;font-size:14px;cursor:pointer}.skip:focus-visible,.lnk:focus-visible,.cb:focus-visible{outline:3px solid #E4501E;outline-offset:2px}
+.obart{width:220px;height:220px;margin-top:24px;filter:drop-shadow(0 16px 16px rgba(120,50,10,.3));animation:float 4.5s ease-in-out infinite}
+.dots2{display:flex;gap:6px;justify-content:center;margin:24px 0 0}.dots2 i{width:8px;height:8px;border-radius:99px;background:var(--ln,#F0DFD0);transition:width .3s ease-out,background .3s ease-out}.dots2 i.on{width:24px;background:#E4501E}
+.w100{width:100%;text-align:right}.fld{display:flex;flex-direction:column}.lbl{margin:0 0 4px;font-size:13px;color:var(--mu,#7A6E66)}.frm{display:flex;flex-direction:column;gap:12px;padding:0 16px}
+.err{margin-top:6px;font-size:12px;color:#DC2626;line-height:1.7}.hintd{display:block;margin-top:12px;font-size:12px;color:var(--mu,#7A6E66);line-height:1.7}
+.inp.code{text-align:center;letter-spacing:12px;font-size:24px;font-weight:800;direction:ltr}.inp:disabled{background:var(--bg,#FBF0E6);color:var(--mu,#7A6E66)}
+.chk{display:flex;gap:12px;align-items:flex-start;font-size:13px;line-height:1.8;color:var(--mu,#7A6E66)}.cb{width:24px;height:24px;border-radius:8px;border:1.5px solid var(--ln,#F0DFD0);background:var(--sf,#fff);flex:none;display:grid;place-items:center;cursor:pointer;padding:0;transition:background .2s ease-out}
+.cb svg{width:16px;height:16px;stroke:#fff;fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;opacity:0}.cb.on{background:#E4501E;border-color:#E4501E}.cb.on svg{opacity:1}.lnk{border:0;background:none;padding:0;color:var(--pr2,#C2410C);font-family:inherit;font-size:inherit;font-weight:700;cursor:pointer}
+.otpbk{align-self:stretch;margin:-48px -24px 0}.rhd{display:flex;align-items:center;justify-content:space-between;padding:0 16px;margin-top:20px}.wrap{flex-wrap:wrap}
+.sgrid{display:grid;grid-template-columns:repeat(2,176px);gap:6px;justify-content:center;margin-top:12px}
+.camph{position:relative;overflow:hidden;margin:0 16px;padding:24px;min-height:200px;border-radius:28px;color:#fff;box-sizing:border-box}.camph h2{margin:0 0 8px;max-width:60%;font-size:22px;font-weight:800;line-height:1.5}.camph p{margin:0;max-width:60%;font-size:14px;line-height:1.8}.camph .art{position:absolute;left:4%;bottom:8%;width:42%;filter:drop-shadow(0 14px 14px rgba(0,0,0,.4));animation:float 4.5s ease-in-out infinite}
+.mtxt{margin:0 16px;padding:16px;background:var(--sf,#fff);border-radius:20px;box-shadow:0 4px 16px rgba(31,26,23,.06);font-size:14px;line-height:1.9}
+.inv{position:relative;background:linear-gradient(260deg,#8B2313 30%,#E4501E);color:#fff;border-radius:28px;padding:24px;text-align:center;overflow:hidden}.invart{width:88px;height:88px;filter:drop-shadow(0 10px 10px rgba(0,0,0,.3));animation:float 4.5s ease-in-out infinite}.inv h2{margin:8px 0;font-size:20px;font-weight:800;line-height:1.5}.inv p{margin:0;font-size:14px;line-height:1.8}
+.inv .code{margin:16px 0;padding:12px;border:1.5px dashed rgba(255,255,255,.7);border-radius:20px;font-size:22px;font-weight:800;letter-spacing:2px;direction:ltr}.inv .cp{height:48px;padding:0 24px;border:0;border-radius:999px;background:var(--sf,#fff);color:var(--pr2,#C2410C);font-family:inherit;font-size:15px;font-weight:700;cursor:pointer}.inv .cp:focus-visible{outline:3px solid #fff;outline-offset:2px}
+.infob{display:flex;align-items:center;justify-content:center;gap:8px;width:calc(100% - 32px);margin:12px 16px 0;height:48px;border:0;border-radius:20px;background:var(--sf,#fff);box-shadow:0 4px 16px rgba(31,26,23,.06);color:var(--pr2,#C2410C);font-family:inherit;font-size:14px;font-weight:700;cursor:pointer}.infob:focus-visible{outline:3px solid #E4501E;outline-offset:2px}
+.photo{display:flex;align-items:center;justify-content:center;height:48px;margin-top:12px;border:1.5px dashed #E4501E;border-radius:20px;color:var(--pr2,#C2410C);font-size:14px;font-weight:700;cursor:pointer;position:relative;overflow:hidden}.photo input{position:absolute;inset:0;opacity:0;cursor:pointer}
+.etab{display:flex;align-items:center;gap:12px;padding:12px 16px;background:var(--sf,#fff);border-radius:20px;box-shadow:0 4px 16px rgba(31,26,23,.06)}.etic{width:48px;height:48px;border-radius:12px;background:var(--soft,#FCE3D0);color:var(--pr2,#C2410C);display:grid;place-items:center;flex:none}.etic svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}.etab b{display:block;font-size:14px;font-weight:700;line-height:1.7}.etab small{font-size:12px;color:var(--mu,#7A6E66)}
+.sdesc{margin:0;padding:0 16px 16px;font-size:14px;line-height:1.8;color:var(--mu,#7A6E66)}
+.pgt{margin:0;padding:24px 16px 12px;font-size:24px;font-weight:800;line-height:1.4}
+.acchd{display:flex;align-items:center;gap:16px;background:var(--sf,#fff);border-radius:28px;padding:16px;box-shadow:0 4px 16px rgba(31,26,23,.06)}.acin{flex:1;min-width:0}.acin h2{margin:0;font-size:16px;font-weight:700;line-height:1.5}.acin p{margin:0;font-size:12px;color:var(--mu,#7A6E66);direction:ltr;text-align:right}
+.accav{width:64px;height:64px;border-radius:50%;background:var(--soft,#FCE3D0);color:var(--pr2,#C2410C);font-size:24px;font-weight:800;display:grid;place-items:center;flex:none;box-shadow:0 0 0 3px var(--sf,#fff),0 0 0 5px #E4501E}
+.accft{display:flex;flex-direction:column;align-items:center;gap:4px;padding:24px 16px}.accft .lgo{height:28px;margin:0;animation:bob 4s ease-in-out infinite}.accft small{font-size:12px;color:var(--mu,#7A6E66)}
+.tkh{background:var(--sf,#fff);border-radius:28px;padding:24px;text-align:center;box-shadow:0 4px 16px rgba(31,26,23,.06)}.tkh h2{margin:16px 0 4px;font-size:20px;font-weight:700;line-height:1.5}.tkh p{margin:0;font-size:14px;color:var(--mu,#7A6E66);line-height:1.7}
+.tka{width:96px;height:96px;filter:drop-shadow(0 10px 10px rgba(120,50,10,.3));animation:float 4.5s ease-in-out infinite}
+.eta{margin-top:16px;padding:12px;border-radius:20px;background:var(--bg,#FBF0E6)}.eta small{display:block;font-size:12px;color:var(--mu,#7A6E66)}.eta b{font-size:20px;font-weight:800;line-height:1.5}
+.w2{margin-top:0}.adv{margin-top:0}
+</style>
+</helmet>
+
+<div class="app {{ themeCls }}" dir="rtl" lang="fa">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<linearGradient id="gBun" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F9BE5C"></stop><stop offset="1" stop-color="#C77A24"></stop></linearGradient>
+<linearGradient id="gBun2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#EBA640"></stop><stop offset="1" stop-color="#B5651A"></stop></linearGradient>
+<linearGradient id="gLet" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8ACB4B"></stop><stop offset="1" stop-color="#3F8A25"></stop></linearGradient>
+<linearGradient id="gChe" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFDA5A"></stop><stop offset="1" stop-color="#EFA21A"></stop></linearGradient>
+<linearGradient id="gPat" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7A4228"></stop><stop offset="1" stop-color="#3A1D10"></stop></linearGradient>
+<linearGradient id="gTom" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F25C40"></stop><stop offset="1" stop-color="#B0221A"></stop></linearGradient>
+<radialGradient id="gCh2" cx=".5" cy=".4" r=".7"><stop offset="0" stop-color="#FFE79C"></stop><stop offset="1" stop-color="#F0A92E"></stop></radialGradient>
+<linearGradient id="gCr" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F7D18C"></stop><stop offset="1" stop-color="#C9863A"></stop></linearGradient>
+<radialGradient id="gMeat" cx=".35" cy=".3" r=".9"><stop offset="0" stop-color="#C45A35"></stop><stop offset="1" stop-color="#5A2411"></stop></radialGradient>
+<linearGradient id="gCup" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFFFFF"></stop><stop offset="1" stop-color="#E3D6C9"></stop></linearGradient>
+<radialGradient id="gCof" cx=".4" cy=".4" r=".8"><stop offset="0" stop-color="#7A4D35"></stop><stop offset="1" stop-color="#2E1A10"></stop></radialGradient>
+<linearGradient id="gSp" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFEBB9"></stop><stop offset="1" stop-color="#EDBB62"></stop></linearGradient>
+<linearGradient id="gCr2" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#FFE3EC"></stop><stop offset="1" stop-color="#FFB9CF"></stop></linearGradient>
+<radialGradient id="gStr" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#FF6A4D"></stop><stop offset="1" stop-color="#B01E1E"></stop></radialGradient>
+<symbol id="dk-burger" viewBox="0 0 100 100"><ellipse cx="50" cy="93" rx="38" ry="5" fill="#000" opacity=".16"></ellipse><path d="M50 91c-28 0-38-2-38-14h76c0 12-10 14-38 14z" fill="url(#gBun2)"></path><rect x="11" y="64" width="78" height="9" rx="4.5" fill="url(#gTom)"></rect><rect x="10" y="52" width="80" height="14" rx="7" fill="url(#gPat)"></rect><path d="M10 51l8 9 10-8 10 9 12-9 12 9 10-8 8 8V48H10z" fill="url(#gChe)"></path><path d="M8 45q5 8 11 1t11 1 11-1 11 1 11-1 11 1 8-1v5H8z" fill="url(#gLet)"></path><path d="M12 45C12 25 28 12 50 12s38 13 38 33z" fill="url(#gBun)"></path><path d="M22 31C26 23 36 18 48 17" stroke="#fff" stroke-opacity=".55" stroke-width="3.5" fill="none" stroke-linecap="round"></path><g fill="#FFF3D2"><ellipse cx="38" cy="26" rx="3" ry="1.6" transform="rotate(-25 38 26)"></ellipse><ellipse cx="52" cy="22" rx="3" ry="1.6" transform="rotate(10 52 22)"></ellipse><ellipse cx="66" cy="28" rx="3" ry="1.6" transform="rotate(30 66 28)"></ellipse><ellipse cx="58" cy="35" rx="3" ry="1.6"></ellipse><ellipse cx="44" cy="35" rx="3" ry="1.6" transform="rotate(-15 44 35)"></ellipse><ellipse cx="74" cy="38" rx="3" ry="1.6" transform="rotate(40 74 38)"></ellipse></g></symbol>
+<symbol id="dk-pizza" viewBox="0 0 100 100"><ellipse cx="52" cy="94" rx="24" ry="4" fill="#000" opacity=".16"></ellipse><path d="M50 92L8 26Q50 8 92 26z" fill="url(#gCh2)"></path><path d="M6 24Q50 3 94 24L90 35Q50 17 10 35z" fill="url(#gCr)"></path><path d="M12 28Q50 10 88 28" stroke="#fff" stroke-opacity=".5" stroke-width="2.5" fill="none" stroke-linecap="round"></path><circle cx="38" cy="47" r="8.5" fill="url(#gMeat)"></circle><circle cx="62" cy="45" r="7.5" fill="url(#gMeat)"></circle><circle cx="50" cy="68" r="7" fill="url(#gMeat)"></circle><g fill="#fff" opacity=".4"><circle cx="35" cy="44" r="2"></circle><circle cx="59" cy="42" r="2"></circle><circle cx="47" cy="65" r="1.8"></circle></g><path d="M48 52q8-8 14 0-6 6-14 0zM30 62q6-6 11 0-5 5-11 0z" fill="url(#gLet)"></path><path d="M44 78q3 10 6 12" stroke="#FFD66B" stroke-width="3" fill="none" stroke-linecap="round"></path></symbol>
+<symbol id="dk-kebab" viewBox="0 0 100 100"><ellipse cx="50" cy="90" rx="38" ry="4" fill="#000" opacity=".14"></ellipse><g transform="rotate(-26 50 50)"><rect x="1" y="48" width="98" height="3.6" rx="1.8" fill="#C9CED6"></rect><circle cx="96" cy="49.8" r="3.4" fill="#9AA1AB"></circle><rect x="8" y="31" width="21" height="38" rx="10" fill="url(#gMeat)"></rect><rect x="31" y="35" width="13" height="30" rx="6" fill="url(#gLet)"></rect><rect x="46" y="31" width="21" height="38" rx="10" fill="url(#gMeat)"></rect><rect x="69" y="35" width="13" height="30" rx="6.5" fill="url(#gTom)"></rect><g stroke="#fff" stroke-opacity=".45" stroke-width="2.4" stroke-linecap="round"><path d="M13 38v10M51 38v10M35 40v8M73 40v8"></path></g><g stroke="#2A1208" stroke-opacity=".5" stroke-width="2" stroke-linecap="round"><path d="M18 56v7M24 55v8M56 56v7M62 55v8"></path></g></g></symbol>
+<symbol id="dk-cafe" viewBox="0 0 100 100"><ellipse cx="50" cy="88" rx="40" ry="7" fill="url(#gCup)"></ellipse><ellipse cx="50" cy="90" rx="40" ry="5" fill="#000" opacity=".1"></ellipse><path d="M72 52h5a8.5 8.5 0 0 1 0 17H70" stroke="#E4D8CC" stroke-width="5.5" fill="none" stroke-linecap="round"></path><path d="M24 46h52v16c0 14-11 24-26 24S24 76 24 62z" fill="url(#gCup)"></path><ellipse cx="50" cy="46" rx="26" ry="7" fill="#F0E6DB"></ellipse><ellipse cx="50" cy="47" rx="22" ry="5" fill="url(#gCof)"></ellipse><path d="M34 46q8 3 18 0" stroke="#C99A72" stroke-width="1.6" fill="none" opacity=".7"></path><path d="M30 56v12" stroke="#fff" stroke-width="3" stroke-linecap="round" opacity=".8"></path></symbol>
+<symbol id="dk-cake" viewBox="0 0 100 100"><ellipse cx="50" cy="90" rx="42" ry="5" fill="#000" opacity=".14"></ellipse><path d="M10 58h64v28H10z" fill="url(#gSp)"></path><path d="M10 68h64v5H10z" fill="#FFFFFF"></path><path d="M10 74h64v4H10z" fill="#C8281E" opacity=".85"></path><path d="M10 58l22-18h66L74 58z" fill="url(#gCr2)"></path><path d="M74 58l24-18v28L74 86z" fill="#E7B060"></path><path d="M10 58h64v6q-6 6-12 0t-12 0-12 0-12 0-8 0z" fill="#fff"></path><ellipse cx="52" cy="38" rx="9" ry="10" fill="url(#gStr)"></ellipse><path d="M45 31q7-5 14 0-7 3-14 0z" fill="url(#gLet)"></path><g fill="#FFE9A8"><circle cx="49" cy="38" r="1"></circle><circle cx="55" cy="36" r="1"></circle><circle cx="52" cy="43" r="1"></circle></g></symbol>
+<symbol id="dk-all" viewBox="0 0 100 100"><ellipse cx="50" cy="90" rx="42" ry="5" fill="#000" opacity=".14"></ellipse><ellipse cx="50" cy="64" rx="44" ry="26" fill="url(#gCup)"></ellipse><ellipse cx="50" cy="62" rx="32" ry="18" fill="#F7EFE7" stroke="#E1D4C6" stroke-width="2"></ellipse><use href="#dk-burger" x="26" y="22" width="48" height="48"></use></symbol>
+<linearGradient id="gN" x1="126.54" y1="251.16" x2="126.54" y2="0" gradientUnits="userSpaceOnUse"><stop offset=".01" style="stop-color:var(--logo1,#172b50)"></stop><stop offset="1" style="stop-color:var(--logo2,#0f1b35)"></stop></linearGradient><linearGradient id="gO" x1="124.91" y1="251.16" x2="124.91" y2="61.89" gradientUnits="userSpaceOnUse"><stop offset=".01" stop-color="#f36b00"></stop><stop offset="1" stop-color="#ff9d00"></stop></linearGradient><linearGradient id="gW" x1="0" y1="172.27" x2="0" y2="78.89" gradientUnits="userSpaceOnUse"><stop offset=".01" style="stop-color:var(--logo1,#172b50)"></stop><stop offset="1" style="stop-color:var(--logo2,#0f1b35)"></stop></linearGradient><linearGradient id="gOA" x1="0" y1="123.3" x2="0" y2="78.89" gradientUnits="userSpaceOnUse"><stop offset=".01" stop-color="#f36b00"></stop><stop offset="1" stop-color="#ff9d00"></stop></linearGradient><symbol id="dk-mark" viewBox="0 0 253.08 251.16"><path fill="url(#gN)" d="M253.08,86.93v77.3c0,19.64-6.3,37.76-16.94,52.3-4.04,5.52-8.68,10.53-13.85,14.89-14.53,12.33-33.13,19.74-53.41,19.74h-78.81v-34.63c0,1.98,56.55-.8,61.88-1.75,20.39-3.65,38.48-13.8,51.58-30.49,23.68-30.16,25.56-78.32,4.81-110.64-5.8-9.04-13.22-16.96-21.81-23.2-15.05-10.95-33.83-14.53-51.93-16.09-19.33-1.67-41.56-.94-59.87,6.33-7.89,3.21-15.19,7.95-21.42,13.89-12.68,12.07-20.62,28.9-21.96,46.65-.14,1.86-.21,3.72-.21,5.58v67.48c0,7.11,0,14.21,0,21.32,0,6.73,1.42,13.46-.55,19.96-1.97,6.5-5.58,12.41-10,17.44-5.25,5.98-12.75,13.03-20.07,16.04-1.07-5.12-.17-11.63-.17-16.94v-111.63c0-14.65,0-29.3,0-43.95,0-.03,0-.07,0-.1,0-15.43,4.43-29.79,12.06-41.81,4.99-7.88,11.36-14.74,18.73-20.24C43.31,5.34,58.25,0,74.39,0h94.48c20.27,0,38.88,7.4,53.41,19.72,19.37,16.39,30.79,41.36,30.79,67.21Z"></path><path fill="url(#gO)" d="M193.98,107.42c0,13.12,1.1,26.82-.02,39.84-.83-13.16-6.6-25.37-16.08-34.22-5.52-5.15-11.79-9.36-18.51-12.64-7.97-3.89-16.74-5.97-25.56-5.97-2.45,0-4.87.15-7.25.44-7.53.94-14.65,3.32-21.06,6.85-12.23,6.76-21.93,17.73-27.28,31.05-2.94,7.31-4.56,15.33-4.56,23.75v94.63h-18.29V98.39c0-13.82,7.38-25.87,18.29-32.16,3.82-2.22,8.08-3.72,12.61-4.34h68.64c22.02,2.72,39.07,22.07,39.07,45.52Z"></path></symbol><symbol id="dk-logo" viewBox="0 0 902.92 251.16"><use href="#dk-mark" width="253.08" height="251.16"></use><path fill="url(#gW)" d="M423.97,100.16c-8.32-12.8-22.76-21.26-39.17-21.26h-42.74c-1.57,0-2.85,1.28-2.85,2.85v90.52h45.59c16.41,0,30.85-8.46,39.17-21.27,4.76-7.31,7.53-16.04,7.53-25.42s-2.77-18.1-7.53-25.42ZM390.14,150.93c-2.53.27-5.15.06-7.65.06h-17.31c-.24,0-4.46,0-4.46,0v-50.84h23.48c14.18,0,26.14,11.23,26.3,25.41.09,7.89-3.54,15.5-9.71,20.41-2.34,1.86-5.01,3.56-7.93,4.42-.89.26-1.8.43-2.72.53Z"></path><path fill="url(#gW)" d="M525.73,100.16c-8.31-12.48-22.52-20.71-38.64-20.71s-30.33,8.22-38.64,20.71c-4.9,7.36-7.76,16.2-7.76,25.71s2.72,17.89,7.39,25.13c8.26,12.8,22.65,21.27,39.01,21.27s30.75-8.47,39.01-21.27c4.67-7.24,7.39-15.86,7.39-25.13s-2.86-18.34-7.76-25.71ZM492.43,151c-1.72.37-3.51.56-5.34.56s-3.62-.19-5.34-.56c-11.63-2.45-20.36-12.77-20.36-25.13,0-14.2,11.51-25.71,25.71-25.71s25.71,11.51,25.71,25.71c0,12.36-8.73,22.68-20.36,25.13Z"></path><path fill="url(#gW)" d="M629.51,172.27h-29.07l-19.35-21.27-5.21-5.73-10.8-11.87v38.88h-21.51v-91.01c0-1.3,1.06-2.36,2.36-2.36h19.15v45.29l9.6-12.21,9.31-11.82,16.73-21.26h27.37l-16.73,21.26-22,27.97,20.79,22.87,19.35,21.27Z"></path><path fill="url(#gW)" d="M705.57,100.16c-8.31-12.48-22.52-20.71-38.64-20.71s-30.33,8.22-38.64,20.71c-4.9,7.36-7.76,16.2-7.76,25.71s2.72,17.89,7.39,25.13c8.26,12.8,22.65,21.27,39.01,21.27s30.75-8.47,39.01-21.27c4.67-7.24,7.39-15.86,7.39-25.13s-2.86-18.34-7.76-25.71ZM672.27,151c-1.72.37-3.51.56-5.34.56s-3.62-.19-5.34-.56c-11.63-2.45-20.36-12.77-20.36-25.13,0-14.2,11.51-25.71,25.71-25.71s25.71,11.51,25.71,25.71c0,12.36-8.73,22.68-20.36,25.13Z"></path><path fill="url(#gW)" d="M805.4,100.16c-8.31-12.48-22.52-20.71-38.64-20.71s-30.33,8.22-38.65,20.71c-4.9,7.36-7.76,16.2-7.76,25.71s2.72,17.89,7.39,25.13c8.27,12.8,22.66,21.27,39.02,21.27s30.75-8.47,39.01-21.27c4.67-7.24,7.39-15.86,7.39-25.13s-2.86-18.34-7.76-25.71ZM772.11,151c-1.72.37-3.51.56-5.34.56s-3.62-.19-5.34-.56c-11.63-2.45-20.36-12.77-20.36-25.13,0-14.2,11.51-25.71,25.71-25.71s25.7,11.51,25.7,25.71c0,12.36-8.73,22.68-20.35,25.13Z"></path><path fill="url(#gW)" d="M902.66,154.86v17.41h-5.66c-2.63,0-5.13-1.14-6.85-3.13l-15.69-18.14-30.4-35.15v56.42h-21.5v-90.81c0-1.42,1.15-2.56,2.56-2.56h12.47c1.88,0,3.67.82,4.9,2.24l1.58,1.82,14.88,17.2,40.98,47.39c1.76,2.03,2.72,4.63,2.72,7.31Z"></path><path fill="url(#gOA)" d="M902.66,84.55v38.75l-20.01-23.14-18.39-21.26h32.74c3.13,0,5.66,2.53,5.66,5.66Z"></path><line x1="295.15" y1="61.39" x2="295.15" y2="189.77" stroke="#101d38" stroke-width="2"></line></symbol><radialGradient id="gRice" cx=".4" cy=".3" r=".9"><stop offset="0" stop-color="#FFFFFF"></stop><stop offset="1" stop-color="#EBDDBE"></stop></radialGradient><symbol id="dk-rice" viewBox="0 0 100 100"><ellipse cx="50" cy="90" rx="42" ry="5" fill="#000" opacity=".14"></ellipse><ellipse cx="50" cy="70" rx="44" ry="22" fill="url(#gCup)"></ellipse><ellipse cx="50" cy="67" rx="32" ry="14" fill="#F7EFE7" stroke="#E1D4C6" stroke-width="2"></ellipse><path d="M20 66Q22 28 50 26Q78 28 80 66Q50 80 20 66z" fill="url(#gRice)"></path><g fill="#FFD25E" opacity=".9"><ellipse cx="38" cy="46" rx="6" ry="3"></ellipse><ellipse cx="58" cy="42" rx="6" ry="3"></ellipse><ellipse cx="66" cy="54" rx="5" ry="2.6"></ellipse></g><rect x="43" y="24" width="14" height="9" rx="3" fill="#FFE79C"></rect><path d="M30 40Q36 32 46 30" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round" opacity=".8"></path></symbol><symbol id="dk-chelo" viewBox="0 0 100 100"><use href="#dk-rice" width="100" height="100"></use><use href="#dk-kebab" x="6" y="14" width="88" height="84"></use></symbol><symbol id="dk-mix" viewBox="0 0 100 100"><use href="#dk-chelo" x="18" y="0" width="64" height="64"></use><use href="#dk-burger" x="-2" y="40" width="54" height="54"></use><use href="#dk-cafe" x="46" y="42" width="54" height="54"></use></symbol><radialGradient id="gStew" cx=".4" cy=".4" r=".8"><stop offset="0" stop-color="#6B8A32"/><stop offset="1" stop-color="#2C3F14"/></radialGradient><linearGradient id="gCola" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8A4620"/><stop offset="1" stop-color="#2A1208"/></linearGradient><symbol id="dk-stew" viewBox="0 0 100 100"><ellipse cx="50" cy="90" rx="40" ry="5" fill="#000" opacity=".14"/><path d="M10 48h80c0 26-17 42-40 42S10 74 10 48z" fill="url(#gCup)"/><ellipse cx="50" cy="48" rx="40" ry="11" fill="#EFE3D6"/><ellipse cx="50" cy="49" rx="35" ry="8.5" fill="url(#gStew)"/><g fill="url(#gMeat)"><circle cx="38" cy="48" r="5.5"/><circle cx="58" cy="51" r="5"/><circle cx="48" cy="54" r="4"/></g><g fill="#9BC24A"><ellipse cx="30" cy="51" rx="4" ry="1.8"/><ellipse cx="66" cy="47" rx="4" ry="1.8"/><ellipse cx="50" cy="45" rx="3.5" ry="1.6"/></g><path d="M22 62q28 16 56 0" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round" opacity=".6"/></symbol><symbol id="dk-salad" viewBox="0 0 100 100"><ellipse cx="50" cy="90" rx="40" ry="5" fill="#000" opacity=".14"/><path d="M10 54h80c0 22-17 36-40 36S10 76 10 54z" fill="url(#gCup)"/><path d="M12 54Q14 32 30 34 36 20 52 22 68 20 74 34 88 34 88 54z" fill="url(#gLet)"/><circle cx="36" cy="42" r="8" fill="url(#gTom)"/><circle cx="62" cy="40" r="7" fill="url(#gTom)"/><circle cx="50" cy="48" r="6" fill="url(#gTom)"/><g fill="#C6E88A" stroke="#6FA83A" stroke-width="1.5"><circle cx="26" cy="48" r="5"/><circle cx="73" cy="48" r="5"/><circle cx="48" cy="34" r="4.5"/></g><path d="M20 44q4-6 10-6" stroke="#fff" stroke-width="2.4" fill="none" stroke-linecap="round" opacity=".6"/></symbol><symbol id="dk-drink" viewBox="0 0 100 100"><ellipse cx="50" cy="92" rx="26" ry="4" fill="#000" opacity=".16"/><path d="M56 26l12-20" stroke="#E4501E" stroke-width="5" stroke-linecap="round"/><path d="M28 22h44l-5 66a4 4 0 0 1-4 4H37a4 4 0 0 1-4-4z" fill="url(#gCola)"/><path d="M28 22h44l-.8 10H28.8z" fill="#E9C9A0"/><g fill="#fff" opacity=".3"><rect x="36" y="42" width="16" height="14" rx="4" transform="rotate(-10 44 49)"/><rect x="52" y="56" width="14" height="14" rx="4" transform="rotate(12 59 63)"/></g><path d="M35 34l4 50" stroke="#fff" stroke-width="3" stroke-linecap="round" opacity=".45"/></symbol><symbol id="dk-fries" viewBox="0 0 100 100"><ellipse cx="50" cy="92" rx="30" ry="4" fill="#000" opacity=".16"/><g fill="#FFC93C" stroke="#E5A416" stroke-width="1"><rect x="28" y="14" width="9" height="42" rx="3" transform="rotate(-12 32 35)"/><rect x="38" y="8" width="9" height="46" rx="3"/><rect x="49" y="12" width="9" height="44" rx="3" transform="rotate(6 53 34)"/><rect x="60" y="16" width="9" height="40" rx="3" transform="rotate(14 64 36)"/></g><path d="M24 48h52l-6 42H30z" fill="url(#gTom)"/><ellipse cx="50" cy="68" rx="11" ry="9" fill="#fff" opacity=".9"/><path d="M24 48h52" stroke="#8E1A12" stroke-width="3"/></symbol></defs></svg>
+<sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+<div class="sc home">
+<dc-import name="Header" address="{{ address }}" on-menu="{{ openMenu }}" on-address="{{ openAddress }}" hint-size="100%,76px"></dc-import>
+<div class="sp"></div>
+<dc-import name="SearchBar" placeholder="دنبال چه رستوران یا غذایی؟" show-filter="{{ true }}" on-tap="{{ openSearch }}" filter-count="{{ filterCountText }}" on-filter="{{ openFilter }}" hint-size="100%,52px"></dc-import>
+<sc-if value="{{ isLoading }}" hint-placeholder-val="{{ false }}"><dc-import name="LoadingState" hint-size="100%,520px"></dc-import></sc-if>
+<sc-if value="{{ isError }}" hint-placeholder-val="{{ false }}"><dc-import name="ErrorState" on-retry="{{ retry }}" hint-size="100%,320px"></dc-import></sc-if>
+<sc-if value="{{ isReady }}" hint-placeholder-val="{{ true }}">
+<section class="hv ent d1" aria-label="پیشنهادهای ویژه"><div class="ht"><sc-for list="{{ banners }}" as="b" hint-placeholder-count="3"><article class="sl" style="background: {{ b.bg }}"><dc-import name="Badge" text="{{ b.tag }}" tone="ink" hint-size="64px,20px"></dc-import><span class="ad">تبلیغ</span><h2>{{ b.title }}</h2><p>{{ b.sub }}</p><button class="cta" onClick="{{ b.go }}">سفارش بده<i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg></i></button><svg class="art" viewBox="0 0 100 100" aria-hidden="true"><use href="#{{ b.art }}"></use></svg></article></sc-for></div></section>
+<div class="dots"><sc-for list="{{ dots }}" as="d" hint-placeholder-count="3"><i style="animation-delay: {{ d.delay }}"></i></sc-for></div>
+<nav class="cats ent d2" aria-label="دسته‌بندی‌ها"><sc-for list="{{ categories }}" as="c" hint-placeholder-count="4"><dc-import name="CategoryItem" title="{{ c.title }}" art="{{ c.art }}" selected="{{ c.selected }}" on-pick="{{ c.pick }}" hint-size="72px,108px"></dc-import></sc-for></nav>
+<sc-if value="{{ hasResults }}" hint-placeholder-val="{{ true }}">
+<div class="st"><h3>نزدیک شما</h3></div>
+<div class="rw ent d3"><sc-for list="{{ nearby }}" as="c" hint-placeholder-count="3"><dc-import name="RestaurantCard" r="{{ c.r }}" on-open="{{ c.open }}" on-fav="{{ c.fav }}" hint-size="176px,250px"></dc-import></sc-for></div>
+<div class="st"><h3>رستوران‌های محبوب</h3></div>
+<div class="rw ent d4"><sc-for list="{{ popular }}" as="c" hint-placeholder-count="3"><dc-import name="RestaurantCard" r="{{ c.r }}" on-open="{{ c.open }}" on-fav="{{ c.fav }}" hint-size="176px,250px"></dc-import></sc-for></div>
+<section class="promo ent d4"><small>{{ promo.label }}</small><h3>{{ promo.title }}</h3><p>{{ promo.sub }}</p><button class="pr" onClick="{{ promo.go }}">سفارش بده</button><svg class="art" viewBox="0 0 100 100" aria-hidden="true"><use href="#{{ promo.art }}"></use></svg><div class="sticker"><div>{{ promo.sticker }}<small>تخفیف</small></div></div></section>
+</sc-if>
+<sc-if value="{{ noResults }}" hint-placeholder-val="{{ false }}"><dc-import name="EmptyState" art="dk-all" title="رستورانی پیدا نشد" text="فیلترها یا دسته‌بندی را تغییر دهید." hint-size="100%,260px"></dc-import></sc-if>
+</sc-if>
+</div>
+<div class="nv"><dc-import name="BottomNav" active="home" cart-badge="{{ cartBadge }}" on-pick="{{ navPick }}" hint-size="100%,72px"></dc-import></div>
+</sc-if>
+
+<sc-if value="{{ isRestaurant }}" hint-placeholder-val="{{ false }}">
+<div class="sc rest" id="scRest">
+<dc-import name="RestaurantHeader" r="{{ rest }}" on-back="{{ back }}" on-fav="{{ restFav }}" on-share="{{ noop }}" hint-size="100%,520px"></dc-import>
+<button class="infob" onClick="{{ restInfo }}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM12 11v5M12 8h.01"></path></svg>اطلاعات رستوران و ساعت کاری</button>
+<div class="sp"></div>
+<sc-if value="{{ hasMenu }}" hint-placeholder-val="{{ true }}">
+<dc-import name="SearchBar" placeholder="جستجو در منوی رستوران" editable="{{ true }}" value="{{ query }}" on-input="{{ onQuery }}" hint-size="100%,52px"></dc-import>
+<nav class="tabs" aria-label="دسته‌بندی منو"><sc-for list="{{ tabs }}" as="t" hint-placeholder-count="5"><dc-import name="FilterChip" label="{{ t.label }}" art="{{ t.art }}" selected="{{ t.selected }}" on-pick="{{ t.pick }}" hint-size="120px,48px"></dc-import></sc-for></nav>
+<sc-for list="{{ sections }}" as="s" hint-placeholder-count="2"><h3 class="sh" id="cat-{{ s.id }}">{{ s.title }}</h3><div class="fl"><sc-for list="{{ s.foods }}" as="x" hint-placeholder-count="2"><div style="margin-bottom:12px"><dc-import name="FoodCard" f="{{ x.f }}" qty-text="{{ x.qtyText }}" on-open="{{ x.open }}" on-add="{{ x.add }}" on-inc="{{ x.inc }}" on-dec="{{ x.dec }}" hint-size="100%,140px"></dc-import></div></sc-for></div></sc-for>
+<sc-if value="{{ noMatch }}" hint-placeholder-val="{{ false }}"><dc-import name="EmptyState" art="dk-all" title="غذایی پیدا نشد" text="عبارت دیگری را جستجو کنید." hint-size="100%,260px"></dc-import></sc-if>
+</sc-if>
+<sc-if value="{{ noMenu }}" hint-placeholder-val="{{ false }}"><dc-import name="EmptyState" art="dk-cafe" title="منو به‌زودی اضافه می‌شود" text="این رستوران هنوز منوی خود را کامل نکرده است." hint-size="100%,260px"></dc-import></sc-if>
+</div>
+<sc-if value="{{ showDock }}" hint-placeholder-val="{{ false }}"><div class="dockw"><dc-import name="CartSummary" count="{{ cartCountText }}" total="{{ cartTotalText }}" on-open="{{ openCart }}" hint-size="100%,88px"></dc-import></div></sc-if>
+</sc-if>
+
+<sc-if value="{{ isCart }}" hint-placeholder-val="{{ false }}">
+<div class="sc pg">
+<dc-import name="TopBar" title="سبد خرید" on-back="{{ back }}" hint-size="100%,80px"></dc-import>
+<sc-if value="{{ cartEmpty }}" hint-placeholder-val="{{ false }}"><dc-import name="EmptyState" art="dk-all" title="سبد خرید شما خالی است" text="از رستوران‌ها غذای دلخواه خود را انتخاب کنید." hint-size="100%,260px"></dc-import><div class="cen"><button class="pr" onClick="{{ goHome }}">دیدن رستوران‌ها</button></div></sc-if>
+<sc-if value="{{ cartFull }}" hint-placeholder-val="{{ true }}">
+<div class="crest ent"><span class="clg"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#{{ cartRest.art }}"></use></svg></span><div class="cinf"><b>{{ cartRest.name }}</b><small>{{ cartRest.minText }}</small></div><button class="cmore" onClick="{{ addMore }}">افزودن غذا</button></div>
+<sc-if value="{{ cartClosed }}" hint-placeholder-val="{{ false }}"><div class="warn dk">{{ closedText }}</div></sc-if>
+<div class="pad16 ent d1"><sc-for list="{{ cartItems }}" as="ci" hint-placeholder-count="2"><div class="crow"><dc-import name="CartItemRow" item="{{ ci.item }}" qty-text="{{ ci.qtyText }}" on-inc="{{ ci.inc }}" on-dec="{{ ci.dec }}" hint-size="100%,120px"></dc-import></div></sc-for></div>
+<sc-if value="{{ hasBelow }}" hint-placeholder-val="{{ false }}"><div class="warn">{{ belowText }}</div></sc-if>
+<h3 class="csh">یادداشت برای رستوران</h3><div class="pad16"><textarea class="nt2" placeholder="مثلاً: بدون پیاز، لطفاً کیسه‌ی جدا" value="{{ cartNote }}" onInput="{{ onCartNote }}"></textarea></div>
+<h3 class="csh">کد تخفیف</h3><div class="pad16"><dc-import name="PromoCodeInput" value="{{ promoInput }}" status="{{ promoStatus }}" message="{{ promoMsg }}" on-input="{{ onPromoInput }}" on-apply="{{ applyPromo }}" hint-size="100%,88px"></dc-import></div>
+<h3 class="csh">خلاصه‌ی هزینه</h3><div class="pad16"><dc-import name="PriceSummary" rows="{{ sumRows }}" total-label="مبلغ قابل پرداخت" total-value="{{ sumTotal }}" hint-size="100%,200px"></dc-import></div>
+</sc-if>
+</div>
+<sc-if value="{{ cartFull }}" hint-placeholder-val="{{ true }}"><div class="dockw"><dc-import name="ActionBar" label="{{ cartCta }}" value-text="{{ payableText }}" disabled="{{ cartOff }}" on-tap="{{ toCheckout }}" hint-size="100%,88px"></dc-import></div></sc-if>
+</sc-if>
+<sc-if value="{{ isCheckout }}" hint-placeholder-val="{{ false }}">
+<div class="sc pg">
+<dc-import name="TopBar" title="تکمیل سفارش" on-back="{{ back }}" hint-size="100%,80px"></dc-import>
+<h3 class="csh">گیرنده‌ی سفارش</h3>
+<div class="pad16 chp"><sc-for list="{{ rcModes }}" as="t" hint-placeholder-count="2"><dc-import name="FilterChip" label="{{ t.label }}" selected="{{ t.selected }}" on-pick="{{ t.pick }}" hint-size="140px,48px"></dc-import></sc-for></div>
+<div class="pad16 two"><input class="inp" placeholder="نام و نام خانوادگی گیرنده" value="{{ rcName }}" onInput="{{ onRcName }}"><input class="inp" placeholder="شماره‌ی تماس" inputmode="tel" value="{{ rcPhone }}" onInput="{{ onRcPhone }}"></div>
+<sc-if value="{{ hasRcErr }}" hint-placeholder-val="{{ false }}"><div class="warn" style="margin-top:12px">{{ rcErr }}</div></sc-if>
+<h3 class="csh">آدرس تحویل</h3>
+<sc-if value="{{ hasAddr }}" hint-placeholder-val="{{ true }}"><div class="pad16"><dc-import name="SelectCard" title="{{ addr.title }}" sub="{{ addr.sub }}" icon="{{ addr.icon }}" action-label="تغییر" on-action="{{ openAddress }}" hint-size="100%,88px"></dc-import></div></sc-if>
+<sc-if value="{{ noAddr }}" hint-placeholder-val="{{ false }}"><div class="pad16"><button class="dash" onClick="{{ addAddress }}">افزودن آدرس جدید</button></div></sc-if>
+<sc-if value="{{ outOfZone }}" hint-placeholder-val="{{ false }}"><div class="warn" style="margin-top:12px">این آدرس خارج از محدوده‌ی ارسال رستوران است. آدرس دیگری انتخاب کنید.</div></sc-if>
+<h3 class="csh">زمان تحویل</h3>
+<div class="pad16"><div class="etab"><span class="etic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM12 7v5l3 2"></path></svg></span><div><b>{{ timeInfo.title }}</b><small>{{ timeInfo.sub }}</small></div></div></div>
+<h3 class="csh">روش پرداخت</h3><div class="pad16 stk"><sc-for list="{{ payOpts }}" as="p" hint-placeholder-count="2"><dc-import name="SelectCard" title="{{ p.title }}" sub="{{ p.sub }}" icon="{{ p.icon }}" selected="{{ p.selected }}" radio="{{ true }}" on-pick="{{ p.pick }}" hint-size="100%,72px"></dc-import></sc-for></div>
+<h3 class="csh">خلاصه‌ی سفارش</h3><div class="pad16"><sc-if value="{{ hasNote }}" hint-placeholder-val="{{ false }}"><div class="nbox"><small>یادداشت شما برای رستوران</small><p>{{ cartNote }}</p></div></sc-if><dc-import name="PriceSummary" rows="{{ sumRows }}" total-label="مبلغ قابل پرداخت" total-value="{{ sumTotal }}" hint-size="100%,200px"></dc-import></div>
+</div>
+<div class="dockw"><dc-import name="ActionBar" label="{{ placeCta }}" value-text="{{ payableText }}" disabled="{{ placeOff }}" on-tap="{{ placeOrder }}" hint-size="100%,88px"></dc-import></div>
+</sc-if>
+<sc-if value="{{ isOrders }}" hint-placeholder-val="{{ false }}">
+<div class="sc pg">
+<dc-import name="TopBar" title="سفارش‌ها" on-back="{{ back }}" hint-size="100%,80px"></dc-import>
+<div class="pad16 chp"><sc-for list="{{ ordTabs }}" as="t" hint-placeholder-count="2"><dc-import name="FilterChip" label="{{ t.label }}" selected="{{ t.selected }}" on-pick="{{ t.pick }}" hint-size="120px,48px"></dc-import></sc-for></div>
+<div class="pad16 stk ent" style="margin-top:16px"><sc-for list="{{ ordList }}" as="o" hint-placeholder-count="2"><dc-import name="OrderCard" order="{{ o.order }}" on-open="{{ o.open }}" on-action="{{ o.act }}" hint-size="100%,260px"></dc-import></sc-for></div>
+<sc-if value="{{ ordEmpty }}" hint-placeholder-val="{{ false }}"><dc-import name="EmptyState" art="dk-cafe" title="{{ ordEmptyTitle }}" text="{{ ordEmptyText }}" hint-size="100%,260px"></dc-import></sc-if>
+</div>
+</sc-if>
+<sc-if value="{{ isTrack }}" hint-placeholder-val="{{ false }}">
+<div class="sc pg">
+<dc-import name="TopBar" title="پیگیری سفارش" on-back="{{ back }}" hint-size="100%,80px"></dc-import>
+<sc-if value="{{ trkNone }}" hint-placeholder-val="{{ false }}"><dc-import name="EmptyState" art="dk-cafe" title="سفارشی پیدا نشد" text="از بخش سفارش‌ها یک سفارش را انتخاب کنید." hint-size="100%,260px"></dc-import></sc-if>
+<sc-if value="{{ hasSteps }}" hint-placeholder-val="{{ true }}">
+<div class="pad16"><div class="tkh ent"><sc-if value="{{ trkDone }}" hint-placeholder-val="{{ false }}"><div class="okc"><svg viewBox="0 0 52 52" aria-hidden="true"><circle cx="26" cy="26" r="23"></circle><path d="M15 27l8 8 14-16"></path></svg></div></sc-if><sc-if value="{{ hasEta }}" hint-placeholder-val="{{ true }}"><svg class="tka" viewBox="0 0 100 100" aria-hidden="true"><use href="#{{ trk.art }}"></use></svg></sc-if><h2>{{ trk.title }}</h2><p>{{ trk.sub }}</p><sc-if value="{{ hasEta }}" hint-placeholder-val="{{ true }}"><div class="eta"><small>زمان تقریبی تحویل</small><b>{{ trk.eta }}</b></div></sc-if></div></div>
+<div class="pad16" style="margin-top:12px"><dc-import name="StepBar" steps="{{ trkSteps }}" hint-size="100%,340px"></dc-import></div>
+</sc-if>
+<sc-if value="{{ trkCancel }}" hint-placeholder-val="{{ false }}"><div class="pad16"><div class="tkh ent"><div class="erc"><svg viewBox="0 0 52 52" aria-hidden="true"><circle cx="26" cy="26" r="23"></circle><path d="M18 18l16 16M34 18L18 34"></path></svg></div><h2>{{ trk.title }}</h2><p>{{ trk.sub }}</p></div></div></sc-if>
+<div class="pad16 stk" style="margin-top:12px"><dc-import name="ContactRow" title="{{ trkRest.title }}" sub="{{ trkRest.sub }}" art="{{ trkRest.art }}" href="{{ trkRest.href }}" hint-size="100%,96px"></dc-import><sc-if value="{{ showCourier }}" hint-placeholder-val="{{ false }}"><dc-import name="ContactRow" title="{{ trkCourier.title }}" sub="{{ trkCourier.sub }}" art="{{ trkCourier.art }}" href="{{ trkCourier.href }}" hint-size="100%,96px"></dc-import></sc-if></div>
+<h3 class="csh">اطلاعات سفارش</h3><div class="pad16"><dc-import name="InfoList" rows="{{ trkInfo }}" hint-size="100%,220px"></dc-import></div>
+<h3 class="csh">غذاهای سفارش</h3><div class="pad16"><dc-import name="InfoList" rows="{{ trkItems }}" hint-size="100%,160px"></dc-import></div>
+<h3 class="csh">هزینه‌ها</h3><div class="pad16"><dc-import name="PriceSummary" rows="{{ trkRows }}" total-label="{{ trkTotalLabel }}" total-value="{{ trkTotal }}" hint-size="100%,200px"></dc-import></div>
+<div class="pad16"><button class="b2 w2" onClick="{{ trkSupport }}">پشتیبانی سفارش</button><sc-if value="{{ trkCanReport }}" hint-placeholder-val="{{ false }}"><button class="b2 w2" onClick="{{ trkReportGo }}">گزارش مشکل سفارش</button></sc-if><sc-if value="{{ trkCanRate }}" hint-placeholder-val="{{ false }}"><button class="b1 w" style="margin-bottom:8px" onClick="{{ trkRateGo }}">امتیاز به سفارش</button></sc-if><sc-if value="{{ trkCanCancel }}" hint-placeholder-val="{{ false }}"><button class="b3 w2" onClick="{{ trkCancelGo }}">لغو سفارش</button></sc-if><sc-if value="{{ trkDone }}" hint-placeholder-val="{{ false }}"><button class="b1 w" onClick="{{ trkReorder }}">سفارش مجدد</button></sc-if><sc-if value="{{ showAdvance }}" hint-placeholder-val="{{ false }}"><div class="sim"><small>فقط برای بررسی طراحی (وضعیت در اپ واقعی از سرور می‌آید)</small><button class="b3 adv" onClick="{{ trkAdvance }}">پیشبرد وضعیت سفارش</button></div></sc-if></div>
+</div>
+</sc-if>
+<sc-if value="{{ isAccount }}" hint-placeholder-val="{{ false }}">
+<div class="sc home">
+<h1 class="pgt">حساب کاربری</h1>
+<div class="pad16"><div class="acchd ent"><span class="accav">{{ user.initial }}</span><div class="acin"><h2>{{ user.name }}</h2><p>{{ user.phone }}</p></div><button class="cmore" onClick="{{ editProfile }}">ویرایش</button></div></div>
+<div class="pad16 ent d1" style="margin-top:12px"><dc-import name="MenuList" groups="{{ accGroups }}" hint-size="100%,520px"></dc-import></div>
+<div class="accft"><svg class="lgo" viewBox="0 0 902.92 251.16" role="img" aria-label="دکون Dokoon"><use href="#dk-logo"></use></svg><small>نسخه {{ version }}</small></div>
+</div>
+<div class="nv"><dc-import name="BottomNav" active="profile" cart-badge="{{ cartBadge }}" on-pick="{{ navPick }}" hint-size="100%,72px"></dc-import></div>
+</sc-if>
+
+<sc-if value="{{ isSocial }}" hint-placeholder-val="{{ false }}">
+<div class="sc pg">
+<dc-import name="TopBar" title="شبکه‌های اجتماعی" on-back="{{ back }}" hint-size="100%,80px"></dc-import>
+<p class="sdesc">از اخبار، تخفیف‌ها و جشنواره‌های دکون در شبکه‌های اجتماعی ما باخبر شوید.</p>
+<div class="pad16 stk"><sc-for list="{{ socials }}" as="x" hint-placeholder-count="5"><dc-import name="SocialCard" title="{{ x.name }}" sub="{{ x.sub }}" handle="{{ x.handle }}" d="{{ x.d }}" on-open="{{ x.open }}" hint-size="100%,88px"></dc-import></sc-for></div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isErrPage }}" hint-placeholder-val="{{ false }}">
+<div class="sc"><dc-import name="ErrorPage" code="{{ er.code }}" title="{{ er.title }}" text="{{ er.text }}" d="{{ er.d }}" cta="{{ er.cta }}" cta-secondary="{{ er.sec }}" on-primary="{{ erPrimary }}" on-secondary="{{ erSecondary }}" hint-size="100%,640px"></dc-import></div>
+</sc-if>
+
+<sc-if value="{{ isSplash }}" hint-placeholder-val="{{ false }}">
+<div class="sc au"><div class="aufoot" style="margin:auto 0"><svg class="lgo big" viewBox="0 0 902.92 251.16" role="img" aria-label="دکون Dokoon"><use href="#dk-logo"></use></svg><p style="margin-top:16px">غذای محبوبت، دم در خونه‌ات</p><div class="ldots"><i></i><i></i><i></i></div></div><small class="verl">نسخه {{ version }}</small></div>
+</sc-if>
+
+<sc-if value="{{ isOnboard }}" hint-placeholder-val="{{ false }}">
+<div class="sc au">
+<button class="skip" onClick="{{ obSkip }}">رد کردن</button>
+<svg class="obart" viewBox="0 0 100 100" aria-hidden="true"><use href="#{{ ob.art }}"></use></svg>
+<h1>{{ ob.title }}</h1><p>{{ ob.text }}</p>
+<div class="dots2"><sc-for list="{{ obDots }}" as="d" hint-placeholder-count="3"><i class="{{ d.cls }}"></i></sc-for></div>
+<div class="aufoot"><button class="b1" onClick="{{ obNext }}">{{ ob.cta }}</button></div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isCity }}" hint-placeholder-val="{{ false }}">
+<div class="sc pg">
+<dc-import name="TopBar" title="انتخاب شهر" on-back="{{ cityBack }}" hint-size="100%,80px"></dc-import>
+<p class="sdesc">شهر خود را انتخاب کنید تا رستوران‌های همان شهر را ببینید.</p>
+<div class="pad16 stk"><sc-for list="{{ cities }}" as="c" hint-placeholder-count="3"><dc-import name="SelectCard" title="{{ c.title }}" sub="{{ c.sub }}" icon="{{ c.icon }}" selected="{{ c.selected }}" radio="{{ true }}" on-pick="{{ c.pick }}" hint-size="100%,88px"></dc-import></sc-for></div>
+<div class="pad16" style="margin-top:12px"><button class="b2" onClick="{{ cityLocate }}">تشخیص خودکار با موقعیت من</button></div>
+<div class="pad16" style="margin-top:12px"><button class="b1" onClick="{{ cityGo }}">تأیید و ادامه</button></div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isLogin }}" hint-placeholder-val="{{ false }}">
+<div class="sc au">
+<svg class="lgo big" viewBox="0 0 902.92 251.16" role="img" aria-label="دکون Dokoon"><use href="#dk-logo"></use></svg>
+<h1>ورود یا ثبت‌نام</h1><p>شماره‌ی موبایل خود را وارد کنید تا کد تأیید برایتان پیامک شود.</p>
+<div class="fld w100" style="margin-top:24px"><label class="lbl" for="lgPhone">شماره‌ی موبایل</label><input id="lgPhone" class="inp" style="width:100%;flex:none;direction:ltr;text-align:right" inputmode="tel" placeholder="۰۹۱۲ ۳۴۵ ۶۷۸۹" value="{{ lgPhone }}" onInput="{{ onLgPhone }}"></div>
+<sc-if value="{{ lgPhoneErr }}" hint-placeholder-val="{{ false }}"><div class="err w100">شماره‌ی موبایل معتبر نیست (مثل ۰۹۱۲۳۴۵۶۷۸۹).</div></sc-if>
+<div class="chk w100" style="margin-top:16px"><button class="cb {{ lgTermsCls }}" role="checkbox" aria-checked="{{ lgTerms }}" aria-label="پذیرش قوانین" onClick="{{ flipTerms }}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5 9-10"></path></svg></button><span>با ورود، <button class="lnk" onClick="{{ openTerms }}">قوانین و مقررات</button> دکون را می‌پذیرم.</span></div>
+<div class="aufoot"><button class="b1 dis" disabled="{{ lgOff }}" onClick="{{ lgSend }}">دریافت کد تأیید</button></div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isOtp }}" hint-placeholder-val="{{ false }}">
+<div class="sc au">
+<div class="otpbk"><dc-import name="TopBar" title="" on-back="{{ back }}" hint-size="100%,80px"></dc-import></div>
+<h1>کد تأیید</h1><p>کد ۴ رقمی ارسال‌شده به {{ otpPhone }} را وارد کنید.</p>
+<input class="inp code w100" style="margin-top:24px;flex:none" inputmode="numeric" maxlength="4" aria-label="کد تأیید" placeholder="----" value="{{ otpCode }}" onInput="{{ onOtp }}">
+<sc-if value="{{ otpErr }}" hint-placeholder-val="{{ false }}"><div class="err w100">کد وارد‌شده درست نیست.</div></sc-if>
+<p style="margin-top:16px">{{ otpTimer }}</p><button class="b2" disabled="{{ otpWait }}" onClick="{{ otpResend }}">ارسال مجدد کد</button>
+<small class="hintd">فقط برای بررسی طراحی: کد ۱۲۳۴ را وارد کنید.</small>
+<div class="aufoot"><button class="b1 dis" disabled="{{ otpOff }}" onClick="{{ otpGo }}">تأیید و ورود</button></div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isSetup }}" hint-placeholder-val="{{ false }}">
+<div class="sc au">
+<h1>تکمیل پروفایل</h1><p>برای سلام گفتن و تحویل سفارش، نام شما لازم است.</p>
+<div class="fld w100" style="margin-top:24px"><label class="lbl" for="spName">نام و نام خانوادگی</label><input id="spName" class="inp" style="width:100%;flex:none" placeholder="مثلاً امیر رضایی" value="{{ spName }}" onInput="{{ onSpName }}"></div>
+<div class="fld w100" style="margin-top:12px"><label class="lbl" for="spRef">کد معرف (اختیاری)</label><input id="spRef" class="inp" style="width:100%;flex:none;direction:ltr;text-align:right" placeholder="DOKOON-..." value="{{ spRef }}" onInput="{{ onSpRef }}"></div>
+<sc-if value="{{ spRefErr }}" hint-placeholder-val="{{ false }}"><div class="err w100">کد معرف معتبر نیست.</div></sc-if>
+<div class="aufoot"><button class="b1 dis" disabled="{{ spOff }}" onClick="{{ spGo }}">ادامه</button></div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isPerms }}" hint-placeholder-val="{{ false }}">
+<div class="sc au">
+<div class="shield"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11zM12 7.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5z"></path></svg></div>
+<h1>دسترسی‌ها</h1><p>برای نمایش رستوران‌های نزدیک و اطلاع از وضعیت سفارش، این دسترسی‌ها را بدهید. هر زمان بخواهید از تنظیمات تغییرشان می‌دهید.</p>
+<div class="w100 stk" style="margin-top:24px"><dc-import name="ListRow" title="موقعیت مکانی" sub="پیدا کردن رستوران‌ها و آدرس شما" d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11zM12 7.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5z" hint-size="100%,72px"></dc-import><dc-import name="ListRow" title="اعلان‌ها" sub="وضعیت سفارش و پیشنهادهای ویژه" d="M6 16V11a6 6 0 0 1 12 0v5l1.5 2h-15zM10 20a2 2 0 0 0 4 0" hint-size="100%,72px"></dc-import></div>
+<div class="aufoot"><button class="b1" onClick="{{ permsGo }}">اجازه می‌دهم</button><button class="b2" onClick="{{ permsGo }}">فعلاً نه</button></div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isSearch }}" hint-placeholder-val="{{ false }}">
+<div class="sc pg">
+<dc-import name="TopBar" title="جستجو" on-back="{{ back }}" hint-size="100%,80px"></dc-import>
+<dc-import name="SearchBar" placeholder="رستوران یا غذا را جستجو کنید" editable="{{ true }}" value="{{ srQuery }}" on-input="{{ onSrQuery }}" hint-size="100%,52px"></dc-import>
+<sc-if value="{{ srIdle }}" hint-placeholder-val="{{ true }}">
+<sc-if value="{{ hasRecent }}" hint-placeholder-val="{{ true }}"><div class="rhd"><h3 class="csh" style="margin:0">جستجوهای اخیر</h3><button class="cmore" onClick="{{ clearRecent }}">پاک کردن</button></div><div class="pad16 chp wrap"><sc-for list="{{ recent }}" as="t" hint-placeholder-count="2"><dc-import name="FilterChip" label="{{ t.label }}" selected="{{ false }}" on-pick="{{ t.pick }}" hint-size="96px,48px"></dc-import></sc-for></div></sc-if>
+<h3 class="csh">جستجوهای محبوب</h3><div class="pad16 chp wrap"><sc-for list="{{ popularQ }}" as="t" hint-placeholder-count="4"><dc-import name="FilterChip" label="{{ t.label }}" selected="{{ false }}" on-pick="{{ t.pick }}" hint-size="96px,48px"></dc-import></sc-for></div>
+</sc-if>
+<sc-if value="{{ srHasRest }}" hint-placeholder-val="{{ false }}"><h3 class="csh">رستوران‌ها</h3><div class="pad16 stk"><sc-for list="{{ srRests }}" as="x" hint-placeholder-count="2"><dc-import name="ListRow" title="{{ x.title }}" sub="{{ x.sub }}" meta="{{ x.meta }}" art="{{ x.art }}" on-tap="{{ x.tap }}" hint-size="100%,72px"></dc-import></sc-for></div></sc-if>
+<sc-if value="{{ srHasFood }}" hint-placeholder-val="{{ false }}"><h3 class="csh">غذاها</h3><div class="pad16 stk"><sc-for list="{{ srFoods }}" as="x" hint-placeholder-count="2"><dc-import name="ListRow" title="{{ x.title }}" sub="{{ x.sub }}" meta="{{ x.meta }}" art="{{ x.art }}" on-tap="{{ x.tap }}" hint-size="100%,72px"></dc-import></sc-for></div></sc-if>
+<sc-if value="{{ srNone }}" hint-placeholder-val="{{ false }}"><dc-import name="EmptyState" art="dk-all" title="نتیجه‌ای پیدا نشد" text="عبارت دیگری را جستجو کنید." hint-size="100%,260px"></dc-import></sc-if>
+</div>
+</sc-if>
+
+<sc-if value="{{ isRestaurants }}" hint-placeholder-val="{{ false }}">
+<div class="sc home">
+<h1 class="pgt">رستوران‌ها</h1>
+<dc-import name="SearchBar" placeholder="دنبال چه رستوران یا غذایی؟" show-filter="{{ true }}" on-tap="{{ openSearch }}" filter-count="{{ filterCountText }}" on-filter="{{ openFilter }}" hint-size="100%,52px"></dc-import>
+<nav class="cats ent d1" aria-label="دسته‌بندی‌ها"><sc-for list="{{ rtCats }}" as="c" hint-placeholder-count="4"><dc-import name="CategoryItem" title="{{ c.title }}" art="{{ c.art }}" selected="{{ c.selected }}" on-pick="{{ c.pick }}" hint-size="72px,108px"></dc-import></sc-for></nav>
+<div class="sgrid ent d2"><sc-for list="{{ rtList }}" as="c" hint-placeholder-count="4"><dc-import name="RestaurantCard" r="{{ c.r }}" on-open="{{ c.open }}" on-fav="{{ c.fav }}" hint-size="176px,256px"></dc-import></sc-for></div>
+<sc-if value="{{ rtEmpty }}" hint-placeholder-val="{{ false }}"><dc-import name="EmptyState" art="dk-all" title="رستورانی پیدا نشد" text="فیلترها یا دسته‌بندی را تغییر دهید." hint-size="100%,260px"></dc-import></sc-if>
+<div style="height:128px"></div>
+</div>
+<div class="nv"><dc-import name="BottomNav" active="restaurants" cart-badge="{{ cartBadge }}" on-pick="{{ navPick }}" hint-size="100%,72px"></dc-import></div>
+</sc-if>
+
+<sc-if value="{{ isOffers }}" hint-placeholder-val="{{ false }}">
+<div class="sc home">
+<h1 class="pgt">تخفیف‌ها</h1>
+<h3 class="csh" style="margin-top:4px">کدهای تخفیف من</h3>
+<div class="pad16 stk"><sc-for list="{{ coupons }}" as="c" hint-placeholder-count="2"><dc-import name="CouponCard" badge="{{ c.badge }}" title="{{ c.title }}" sub="{{ c.sub }}" code="{{ c.code }}" cta="{{ c.cta }}" on-use="{{ c.use }}" hint-size="100%,100px"></dc-import></sc-for></div>
+<sc-if value="{{ hasOfferRests }}" hint-placeholder-val="{{ true }}"><h3 class="csh">رستوران‌های تخفیف‌دار</h3><div class="rw ent d2"><sc-for list="{{ offerRests }}" as="c" hint-placeholder-count="3"><dc-import name="RestaurantCard" r="{{ c.r }}" on-open="{{ c.open }}" on-fav="{{ c.fav }}" hint-size="176px,256px"></dc-import></sc-for></div></sc-if>
+<h3 class="csh">کمپین‌ها</h3>
+<div class="pad16 stk"><sc-for list="{{ campaigns }}" as="x" hint-placeholder-count="3"><dc-import name="ListRow" title="{{ x.title }}" sub="{{ x.sub }}" meta="{{ x.tag }}" art="{{ x.art }}" on-tap="{{ x.tap }}" hint-size="100%,72px"></dc-import></sc-for></div>
+<div style="height:128px"></div>
+</div>
+<div class="nv"><dc-import name="BottomNav" active="offers" cart-badge="{{ cartBadge }}" on-pick="{{ navPick }}" hint-size="100%,72px"></dc-import></div>
+</sc-if>
+
+<sc-if value="{{ isCampaign }}" hint-placeholder-val="{{ false }}">
+<div class="sc pg">
+<dc-import name="TopBar" title="{{ camp.tag }}" on-back="{{ back }}" hint-size="100%,80px"></dc-import>
+<div class="camph" style="background: {{ camp.bg }}"><h2>{{ camp.title }}</h2><p>{{ camp.sub }}</p><svg class="art" viewBox="0 0 100 100" aria-hidden="true"><use href="#{{ camp.art }}"></use></svg></div>
+<p class="mtxt" style="margin-top:16px">{{ camp.text }}</p>
+<div class="pad16"><button class="b1" style="margin-top:16px" onClick="{{ camp.go }}">مشاهده‌ی رستوران</button></div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isFavs }}" hint-placeholder-val="{{ false }}">
+<div class="sc pg">
+<dc-import name="TopBar" title="علاقه‌مندی‌ها" on-back="{{ back }}" hint-size="100%,80px"></dc-import>
+<div class="sgrid ent"><sc-for list="{{ favList }}" as="c" hint-placeholder-count="2"><dc-import name="RestaurantCard" r="{{ c.r }}" on-open="{{ c.open }}" on-fav="{{ c.fav }}" hint-size="176px,256px"></dc-import></sc-for></div>
+<sc-if value="{{ favEmpty }}" hint-placeholder-val="{{ false }}"><dc-import name="EmptyState" art="dk-all" title="هنوز علاقه‌مندی ندارید" text="با زدن قلب روی رستوران‌ها، آن‌ها را اینجا نگه می‌دارید." hint-size="100%,260px"></dc-import><div class="cen"><button class="pr" onClick="{{ goHome }}">دیدن رستوران‌ها</button></div></sc-if>
+</div>
+</sc-if>
+
+<sc-if value="{{ isNotifs }}" hint-placeholder-val="{{ false }}">
+<div class="sc pg">
+<dc-import name="TopBar" title="اعلان‌ها" action-label="{{ nfAllLabel }}" on-back="{{ back }}" on-action="{{ nfAll }}" hint-size="100%,80px"></dc-import>
+<div class="pad16 stk ent"><sc-for list="{{ nfList }}" as="x" hint-placeholder-count="3"><dc-import name="ListRow" title="{{ x.title }}" sub="{{ x.text }}" meta="{{ x.time }}" d="{{ x.d }}" dot="{{ x.dot }}" on-tap="{{ x.tap }}" hint-size="100%,88px"></dc-import></sc-for></div>
+<sc-if value="{{ nfEmpty }}" hint-placeholder-val="{{ false }}"><dc-import name="EmptyState" art="dk-cafe" title="اعلانی ندارید" text="اعلان‌های سفارش و پیشنهادها اینجا نمایش داده می‌شود." hint-size="100%,260px"></dc-import></sc-if>
+</div>
+</sc-if>
+
+<sc-if value="{{ isEditProf }}" hint-placeholder-val="{{ false }}">
+<div class="sc pg">
+<dc-import name="TopBar" title="ویرایش پروفایل" on-back="{{ back }}" hint-size="100%,80px"></dc-import>
+<div class="frm">
+<div class="fld"><label class="lbl" for="epName">نام و نام خانوادگی</label><input id="epName" class="inp" style="width:100%;flex:none" value="{{ epName }}" onInput="{{ onEpName }}"></div>
+<div class="fld"><label class="lbl" for="epPhone">شماره‌ی موبایل</label><input id="epPhone" class="inp" style="width:100%;flex:none;direction:ltr;text-align:right" disabled="{{ true }}" value="{{ epPhone }}"><small class="hintd" style="text-align:right;margin:4px 0 0">برای تغییر شماره با پشتیبانی تماس بگیرید.</small></div>
+<div class="fld"><label class="lbl" for="epBirth">تاریخ تولد (اختیاری، برای کد تخفیف تولد)</label><input id="epBirth" class="inp" style="width:100%;flex:none" placeholder="۱۳۷۵/۰۴/۱۲" inputmode="numeric" value="{{ epBirth }}" onInput="{{ onEpBirth }}"></div>
+<sc-if value="{{ epSaved }}" hint-placeholder-val="{{ false }}"><div class="warn" style="margin:0;background:var(--okbg,#E6F6EC);color:#16A34A">تغییرات ذخیره شد.</div></sc-if>
+<button class="b1 dis" style="margin-top:8px" disabled="{{ epOff }}" onClick="{{ epSave }}">ذخیره‌ی تغییرات</button>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isSettings }}" hint-placeholder-val="{{ false }}">
+<div class="sc pg">
+<dc-import name="TopBar" title="تنظیمات" on-back="{{ back }}" hint-size="100%,80px"></dc-import>
+<h3 class="csh" style="margin-top:4px">نمایش</h3>
+<div class="pad16"><dc-import name="ToggleRow" title="حالت تاریک" sub="تغییر ظاهر اپ به تم تیره" on="{{ dark }}" on-flip="{{ flipDark }}" hint-size="100%,72px"></dc-import></div>
+<h3 class="csh">اعلان‌ها</h3>
+<div class="pad16 stk"><sc-for list="{{ stToggles }}" as="x" hint-placeholder-count="3"><dc-import name="ToggleRow" title="{{ x.title }}" sub="{{ x.sub }}" on="{{ x.on }}" on-flip="{{ x.flip }}" hint-size="100%,72px"></dc-import></sc-for></div>
+<h3 class="csh">عمومی</h3>
+<div class="pad16 stk"><dc-import name="ListRow" title="شهر" sub="شهر فعلی برای نمایش رستوران‌ها" meta="{{ city }}" d="M4 20V9l8-5 8 5v11zM9 20v-6h6v6" on-tap="{{ stCity }}" hint-size="100%,72px"></dc-import><dc-import name="ListRow" title="زبان" sub="زبان اپ" meta="فارسی" d="M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18" hint-size="100%,72px"></dc-import></div>
+<h3 class="csh">صفحه‌های خطا (فقط برای بررسی طراحی)</h3>
+<div class="pad16 stk"><sc-for list="{{ errPreview }}" as="x" hint-placeholder-count="4"><dc-import name="ListRow" title="{{ x.title }}" sub="{{ x.sub }}" d="{{ x.d }}" on-tap="{{ x.tap }}" hint-size="100%,72px"></dc-import></sc-for></div>
+<h3 class="csh">حساب</h3>
+<div class="pad16"><button class="b3" onClick="{{ stDelete }}">حذف حساب کاربری</button></div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isPromos }}" hint-placeholder-val="{{ false }}">
+<div class="sc pg">
+<dc-import name="TopBar" title="کدهای تخفیف" on-back="{{ back }}" hint-size="100%,80px"></dc-import>
+<h3 class="csh" style="margin-top:4px">ثبت کد جدید</h3>
+<div class="pad16"><dc-import name="PromoCodeInput" value="{{ pmInput }}" status="{{ pmStatus }}" message="{{ pmMsg }}" on-input="{{ onPmInput }}" on-apply="{{ pmAdd }}" hint-size="100%,88px"></dc-import></div>
+<h3 class="csh">کدهای من</h3>
+<div class="pad16 stk"><sc-for list="{{ coupons }}" as="c" hint-placeholder-count="2"><dc-import name="CouponCard" badge="{{ c.badge }}" title="{{ c.title }}" sub="{{ c.sub }}" code="{{ c.code }}" cta="{{ c.cta }}" on-use="{{ c.use }}" hint-size="100%,100px"></dc-import></sc-for></div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isSupport }}" hint-placeholder-val="{{ false }}">
+<div class="sc pg">
+<dc-import name="TopBar" title="پشتیبانی" on-back="{{ back }}" hint-size="100%,80px"></dc-import>
+<div class="pad16 stk"><sc-for list="{{ spContacts }}" as="x" hint-placeholder-count="2"><dc-import name="ContactRow" title="{{ x.title }}" sub="{{ x.sub }}" art="dk-all" href="{{ x.href }}" hint-size="100%,96px"></dc-import></sc-for></div>
+<h3 class="csh">پرسش‌های متداول</h3>
+<div class="pad16 stk"><sc-for list="{{ faqs }}" as="x" hint-placeholder-count="4"><dc-import name="FaqItem" q="{{ x.q }}" a="{{ x.a }}" open="{{ x.open }}" on-toggle="{{ x.flip }}" hint-size="100%,56px"></dc-import></sc-for></div>
+<h3 class="csh">ارسال پیام</h3>
+<div class="pad16"><textarea class="nt2" placeholder="مشکل یا پیشنهاد خود را بنویسید" aria-label="پیام به پشتیبانی" value="{{ spMsg }}" onInput="{{ onSpMsg }}"></textarea><sc-if value="{{ spSent }}" hint-placeholder-val="{{ false }}"><div class="warn" style="margin:12px 0 0;background:var(--okbg,#E6F6EC);color:#16A34A">پیام شما ارسال شد. پاسخ را از طریق پیامک دریافت می‌کنید.</div></sc-if><button class="b1 dis" style="margin-top:12px" disabled="{{ spOffMsg }}" onClick="{{ spSend }}">ارسال پیام</button></div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isInvite }}" hint-placeholder-val="{{ false }}">
+<div class="sc pg">
+<dc-import name="TopBar" title="دعوت از دوستان" on-back="{{ back }}" hint-size="100%,80px"></dc-import>
+<div class="pad16"><div class="inv ent"><svg class="invart" viewBox="0 0 100 100" aria-hidden="true"><use href="#dk-cake"></use></svg><h2>{{ inv.title }}</h2><p>{{ inv.text }}</p><div class="code">{{ inv.code }}</div><button class="cp" onClick="{{ invCopy }}">{{ invCopyLabel }}</button></div></div>
+<h3 class="csh">چطور کار می‌کند؟</h3>
+<div class="pad16 stk"><sc-for list="{{ inv.steps }}" as="x" hint-placeholder-count="3"><dc-import name="ListRow" title="{{ x.title }}" sub="{{ x.sub }}" meta="{{ x.n }}" d="{{ x.d }}" hint-size="100%,72px"></dc-import></sc-for></div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isAbout }}" hint-placeholder-val="{{ false }}">
+<div class="sc pg">
+<dc-import name="TopBar" title="درباره ما و قوانین" on-back="{{ back }}" hint-size="100%,80px"></dc-import>
+<div class="accft" style="padding-top:8px"><svg class="lgo" viewBox="0 0 902.92 251.16" role="img" aria-label="دکون Dokoon"><use href="#dk-logo"></use></svg><small>نسخه {{ version }}</small></div>
+<p class="mtxt">{{ aboutText }}</p>
+<div class="pad16 stk" style="margin-top:16px"><sc-for list="{{ aboutRows }}" as="x" hint-placeholder-count="4"><dc-import name="ListRow" title="{{ x.title }}" sub="{{ x.sub }}" d="{{ x.d }}" on-tap="{{ x.tap }}" hint-size="100%,72px"></dc-import></sc-for></div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isLegal }}" hint-placeholder-val="{{ false }}">
+<div class="sc pg">
+<dc-import name="TopBar" title="{{ lgTitle }}" on-back="{{ back }}" hint-size="100%,80px"></dc-import>
+<div class="pad16 stk"><sc-for list="{{ lgItems }}" as="x" hint-placeholder-count="4"><dc-import name="FaqItem" q="{{ x.q }}" a="{{ x.a }}" open="{{ x.open }}" on-toggle="{{ x.flip }}" hint-size="100%,56px"></dc-import></sc-for></div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isApply }}" hint-placeholder-val="{{ false }}">
+<div class="sc pg">
+<dc-import name="TopBar" title="{{ ap.title }}" on-back="{{ back }}" hint-size="100%,80px"></dc-import>
+<sc-if value="{{ apForm }}" hint-placeholder-val="{{ true }}">
+<p class="sdesc">{{ ap.text }}</p>
+<div class="frm"><sc-for list="{{ apFields }}" as="f" hint-placeholder-count="4"><div class="fld"><label class="lbl">{{ f.label }}</label><input class="inp" style="width:100%;flex:none" inputmode="{{ f.mode }}" placeholder="{{ f.ph }}" value="{{ f.value }}" onInput="{{ f.input }}"></div></sc-for>
+<button class="b1 dis" style="margin-top:8px" disabled="{{ apOff }}" onClick="{{ apSend }}">{{ ap.cta }}</button></div>
+</sc-if>
+<sc-if value="{{ apDone }}" hint-placeholder-val="{{ false }}"><div class="pad16"><div class="tkh ent"><div class="okc"><svg viewBox="0 0 52 52" aria-hidden="true"><circle cx="26" cy="26" r="23"></circle><path d="M15 27l8 8 14-16"></path></svg></div><h2>درخواست شما ثبت شد</h2><p>{{ ap.done }}</p></div><button class="b1" style="margin-top:16px" onClick="{{ back }}">بازگشت</button></div></sc-if>
+</div>
+</sc-if>
+
+<sc-if value="{{ isRateApp }}" hint-placeholder-val="{{ false }}">
+<div class="sc pg">
+<dc-import name="TopBar" title="امتیاز به دکون" on-back="{{ back }}" hint-size="100%,80px"></dc-import>
+<sc-if value="{{ raForm }}" hint-placeholder-val="{{ true }}"><p class="sdesc">از کار با دکون چقدر راضی بودید؟</p><dc-import name="StarPicker" items="{{ raStars }}" label="{{ raLabel }}" hint-size="100%,80px"></dc-import><div class="pad16"><textarea class="nt2" placeholder="نظر یا پیشنهاد شما (اختیاری)" aria-label="نظر درباره‌ی دکون" value="{{ raText }}" onInput="{{ onRaText }}"></textarea><button class="b1 dis" style="margin-top:12px" disabled="{{ raOff }}" onClick="{{ raSend }}">ثبت امتیاز</button></div></sc-if>
+<sc-if value="{{ raDone }}" hint-placeholder-val="{{ false }}"><div class="pad16"><div class="tkh ent"><div class="okc"><svg viewBox="0 0 52 52" aria-hidden="true"><circle cx="26" cy="26" r="23"></circle><path d="M15 27l8 8 14-16"></path></svg></div><h2>ممنون از امتیاز شما</h2><p>نظر شما به بهتر شدن دکون کمک می‌کند.</p></div><button class="b1" style="margin-top:16px" onClick="{{ back }}">بازگشت</button></div></sc-if>
+</div>
+</sc-if>
+
+<sc-if value="{{ isRestInfo }}" hint-placeholder-val="{{ false }}">
+<div class="sc pg">
+<dc-import name="TopBar" title="اطلاعات رستوران" on-back="{{ back }}" hint-size="100%,80px"></dc-import>
+<div class="crest ent"><span class="clg"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#{{ ri.art }}"></use></svg></span><div class="cinf"><b>{{ ri.name }}</b><small>{{ ri.sub }}</small></div></div>
+<div class="pad16"><dc-import name="InfoList" rows="{{ riRows }}" hint-size="100%,300px"></dc-import></div>
+<div class="pad16 stk" style="margin-top:12px"><dc-import name="ContactRow" title="تماس با رستوران" sub="{{ ri.phone }}" art="{{ ri.art }}" href="{{ ri.href }}" hint-size="100%,96px"></dc-import></div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isCancel }}" hint-placeholder-val="{{ false }}">
+<div class="sc pg">
+<dc-import name="TopBar" title="لغو سفارش" on-back="{{ back }}" hint-size="100%,80px"></dc-import>
+<p class="sdesc">سفارش را فقط تا قبل از تأیید رستوران می‌توانید لغو کنید. دلیل لغو را انتخاب کنید.</p>
+<div class="pad16 stk"><sc-for list="{{ cnReasons }}" as="x" hint-placeholder-count="4"><dc-import name="SelectCard" title="{{ x.title }}" sub="" icon="{{ x.icon }}" selected="{{ x.selected }}" radio="{{ true }}" on-pick="{{ x.pick }}" hint-size="100%,72px"></dc-import></sc-for></div>
+<div class="pad16" style="margin-top:16px"><button class="b1 dn dis" disabled="{{ cnOff }}" onClick="{{ cnGo }}">لغو سفارش</button><button class="b2" onClick="{{ back }}">انصراف</button></div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isReport }}" hint-placeholder-val="{{ false }}">
+<div class="sc pg">
+<dc-import name="TopBar" title="گزارش مشکل سفارش" on-back="{{ back }}" hint-size="100%,80px"></dc-import>
+<sc-if value="{{ rpForm }}" hint-placeholder-val="{{ true }}">
+<p class="sdesc">مشکل سفارش {{ rpNo }} را انتخاب کنید.</p>
+<div class="pad16 stk"><sc-for list="{{ rpTypes }}" as="x" hint-placeholder-count="5"><dc-import name="SelectCard" title="{{ x.title }}" sub="" icon="{{ x.icon }}" selected="{{ x.selected }}" radio="{{ true }}" on-pick="{{ x.pick }}" hint-size="100%,72px"></dc-import></sc-for></div>
+<div class="pad16" style="margin-top:12px"><textarea class="nt2" placeholder="توضیح بیشتر (اختیاری)" aria-label="توضیح مشکل" value="{{ rpText }}" onInput="{{ onRpText }}"></textarea>
+<label class="photo">{{ rpPhotoLabel }}<input type="file" accept="image/*" onChange="{{ onRpPhoto }}"></label>
+<button class="b1 dis" style="margin-top:12px" disabled="{{ rpOff }}" onClick="{{ rpSend }}">ارسال گزارش</button></div>
+</sc-if>
+<sc-if value="{{ rpDone }}" hint-placeholder-val="{{ false }}"><div class="pad16"><div class="tkh ent"><div class="okc"><svg viewBox="0 0 52 52" aria-hidden="true"><circle cx="26" cy="26" r="23"></circle><path d="M15 27l8 8 14-16"></path></svg></div><h2>گزارش شما ثبت شد</h2><p>پشتیبانی دکون به‌زودی با شما تماس می‌گیرد.</p></div><button class="b1" style="margin-top:16px" onClick="{{ back }}">بازگشت به سفارش</button></div></sc-if>
+</div>
+</sc-if>
+
+<sc-if value="{{ isRateOrder }}" hint-placeholder-val="{{ false }}">
+<div class="sc pg">
+<dc-import name="TopBar" title="امتیاز به سفارش" on-back="{{ back }}" hint-size="100%,80px"></dc-import>
+<h3 class="csh" style="margin-top:4px">{{ roRest }}</h3><dc-import name="StarPicker" items="{{ roStarsR }}" label="{{ roLabelR }}" hint-size="100%,80px"></dc-import>
+<h3 class="csh">{{ roCourier }}</h3><dc-import name="StarPicker" items="{{ roStarsC }}" label="{{ roLabelC }}" hint-size="100%,80px"></dc-import>
+<div class="pad16"><textarea class="nt2" placeholder="نظر شما (اختیاری)" aria-label="نظر درباره‌ی سفارش" value="{{ roText }}" onInput="{{ onRoText }}"></textarea><button class="b1 dis" style="margin-top:12px" disabled="{{ roOff }}" onClick="{{ roSend }}">ثبت امتیاز</button></div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isSoon }}" hint-placeholder-val="{{ false }}">
+<div class="sc pg">
+<dc-import name="TopBar" title="{{ soonTitle }}" on-back="{{ back }}" hint-size="100%,80px"></dc-import>
+<dc-import name="EmptyState" art="dk-cafe" title="این بخش به‌زودی اضافه می‌شود" text="طراحی این صفحه در مرحله‌ی بعد انجام می‌شود." hint-size="100%,260px"></dc-import>
+<div class="cen"><button class="pr" onClick="{{ goHome }}">بازگشت به خانه</button></div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isAddAddr }}" hint-placeholder-val="{{ false }}">
+<div class="sc pg">
+<dc-import name="TopBar" title="افزودن آدرس" on-back="{{ back }}" hint-size="100%,80px"></dc-import>
+<h3 class="csh">انتخاب روی نقشه</h3>
+<div class="pad16"><dc-import name="MapPicker" pin-x="{{ mapPin.x }}" pin-y="{{ mapPin.y }}" in-zone="{{ mapPin.inZone }}" locating="{{ mapPin.locating }}" on-pick="{{ mapPick }}" on-locate="{{ mapLocate }}" hint-size="100%,240px"></dc-import></div>
+<sc-if value="{{ adOut }}" hint-placeholder-val="{{ false }}"><div class="warn" style="margin-top:12px">این محل خارج از محدوده‌ی ارسال است.</div></sc-if>
+<h3 class="csh">یا آدرس را بنویسید</h3>
+<div class="pad16 chp"><sc-for list="{{ adTitles }}" as="t" hint-placeholder-count="3"><dc-import name="FilterChip" label="{{ t.label }}" selected="{{ t.selected }}" on-pick="{{ t.pick }}" hint-size="96px,48px"></dc-import></sc-for></div>
+<div class="pad16" style="margin-top:12px"><textarea class="nt2" placeholder="آدرس کامل: شهر، خیابان، کوچه" value="{{ adText }}" onInput="{{ onAdText }}"></textarea></div>
+<div class="pad16 two"><input class="inp" placeholder="پلاک" value="{{ adPlaque }}" onInput="{{ onAdPlaque }}"><input class="inp" placeholder="واحد" value="{{ adUnit }}" onInput="{{ onAdUnit }}"></div>
+<h3 class="csh">مشخصات گیرنده</h3>
+<div class="pad16 two"><input class="inp" placeholder="نام و نام خانوادگی گیرنده" value="{{ adName }}" onInput="{{ onAdName }}"><input class="inp" placeholder="شماره‌ی تماس" inputmode="tel" value="{{ adPhone }}" onInput="{{ onAdPhone }}"></div>
+</div>
+<div class="dockw"><dc-import name="ActionBar" label="ذخیره‌ی آدرس" value-text="" disabled="{{ adSaveOff }}" on-tap="{{ saveAddr }}" hint-size="100%,88px"></dc-import></div>
+</sc-if>
+<sc-if value="{{ isGateway }}" hint-placeholder-val="{{ false }}">
+<div class="sc pg gw">
+<svg class="lgo" viewBox="0 0 902.92 251.16" role="img" aria-label="دکون Dokoon"><use href="#dk-logo"></use></svg>
+<div class="gcard ent"><div class="shield"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"></path><path d="M8.5 12l2.5 2.5L15.5 10"></path></svg></div>
+<h2>در حال انتقال به درگاه پرداخت</h2><p>لطفاً صفحه را نبندید. پرداخت از طریق درگاه امن بانکی انجام می‌شود.</p>
+<div class="amt"><small>مبلغ قابل پرداخت</small><b>{{ payableText }}</b></div><div class="rst">{{ cartRest.name }} · {{ cartCountText }} غذا</div></div>
+<div class="sim ent d2"><small>فقط برای بررسی طراحی (درگاه واقعی در اپ جایگزین می‌شود)</small><button class="b1" onClick="{{ payOk }}">پرداخت موفق</button><button class="b3" onClick="{{ payFail }}">پرداخت ناموفق</button><button class="b3" onClick="{{ gwTimeout }}">قطع ارتباط با درگاه (خطای ۵۰۴)</button></div>
+<button class="b2" onClick="{{ back }}">انصراف و بازگشت</button>
+</div>
+</sc-if>
+<sc-if value="{{ isPaid }}" hint-placeholder-val="{{ false }}">
+<div class="sc pg gw">
+<svg class="lgo" viewBox="0 0 902.92 251.16" role="img" aria-label="دکون Dokoon"><use href="#dk-logo"></use></svg>
+<div class="gcard ent"><div class="okc"><svg viewBox="0 0 52 52" aria-hidden="true"><circle cx="26" cy="26" r="23"></circle><path d="M15 27l8 8 14-16"></path></svg></div>
+<h2>{{ order.payTitle }}</h2><p>{{ order.payNote }}</p>
+<div class="rcp"><div><span>کد سفارش</span><b>{{ order.no }}</b></div><div><span>رستوران</span><b>{{ order.rest }}</b></div><div><span>گیرنده</span><b>{{ order.rcpt }}</b></div><div><span>آدرس تحویل</span><b>{{ order.addr }}</b></div><div><span>روش پرداخت</span><b>{{ order.payLabel }}</b></div><div><span>{{ order.amountLabel }}</span><b>{{ order.amount }}</b></div><div><span>زمان تقریبی تحویل</span><b>{{ order.eta }}</b></div></div></div>
+<button class="b1 w" onClick="{{ trackOrder }}">پیگیری سفارش</button>
+<button class="b2" onClick="{{ goHome }}">بازگشت به خانه</button>
+</div>
+</sc-if>
+<sc-if value="{{ isPayfail }}" hint-placeholder-val="{{ false }}">
+<div class="sc pg gw">
+<svg class="lgo" viewBox="0 0 902.92 251.16" role="img" aria-label="دکون Dokoon"><use href="#dk-logo"></use></svg>
+<div class="gcard ent"><div class="erc"><svg viewBox="0 0 52 52" aria-hidden="true"><circle cx="26" cy="26" r="23"></circle><path d="M18 18l16 16M34 18L18 34"></path></svg></div>
+<h2>پرداخت ناموفق بود</h2><p>پرداخت انجام نشد. اگر مبلغی از حساب شما کسر شده، طبق قوانین درگاه به حساب شما بازمی‌گردد.</p></div>
+<button class="b1 w" onClick="{{ retryPay }}">تلاش دوباره</button>
+<button class="b2" onClick="{{ toCart }}">بازگشت به سبد خرید</button>
+</div>
+</sc-if>
+
+<sc-if value="{{ showMenu }}" hint-placeholder-val="{{ false }}"><div class="scr" onClick="{{ closeOverlay }}"></div><div class="ov"><dc-import name="MenuDrawer" user="{{ user }}" city="{{ city }}" groups="{{ menuGroups }}" version="{{ version }}" on-close="{{ closeOverlay }}" hint-size="86%,100%"></dc-import></div></sc-if>
+<sc-if value="{{ showFilter }}" hint-placeholder-val="{{ false }}"><div class="scr" onClick="{{ closeOverlay }}"></div><div class="ov"><dc-import name="FilterSheet" sort="{{ fSort }}" toggles="{{ fToggles }}" tags="{{ fTags }}" ratings="{{ fRatings }}" count-text="{{ fCount }}" on-clear="{{ fClear }}" on-apply="{{ fApply }}" hint-size="100%,90%"></dc-import></div></sc-if>
+<sc-if value="{{ showFood }}" hint-placeholder-val="{{ false }}"><div class="scr" onClick="{{ closeOverlay }}"></div><div class="ov"><dc-import name="FoodDetails" food="{{ sheetFood }}" qty-text="{{ sheetQty }}" total-text="{{ sheetTotal }}" can-add="{{ sheetCan }}" cta-label="{{ sheetCta }}" on-close="{{ closeOverlay }}" on-inc="{{ sheetInc }}" on-dec="{{ sheetDec }}" on-review="{{ review }}" on-scroll="{{ sheetScroll }}" on-add="{{ sheetAdd }}" hint-size="100%,92%"></dc-import></div></sc-if>
+<sc-if value="{{ showAddress }}" hint-placeholder-val="{{ false }}"><div class="scr" onClick="{{ closeOverlay }}"></div><div class="ov"><dc-import name="ChoiceSheet" title="انتخاب آدرس تحویل" add-label="افزودن آدرس جدید" on-add="{{ addAddress }}" options="{{ addrOptions }}" on-close="{{ closeOverlay }}" hint-size="100%,70%"></dc-import></div></sc-if>
+
+<sc-if value="{{ showReview }}" hint-placeholder-val="{{ false }}"><div class="scr" style="z-index:35" onClick="{{ closeReview }}"></div><div class="ov" style="z-index:40"><dc-import name="ReviewSheet" food-name="{{ reviewFood }}" star-items="{{ starItems }}" star-label="{{ starLabel }}" text="{{ rvText }}" can-submit="{{ rvOk }}" on-text="{{ onRvText }}" on-submit="{{ rvSubmit }}" on-close="{{ closeReview }}" hint-size="100%,60%"></dc-import></div></sc-if>
+<sc-if value="{{ showDelAddr }}" hint-placeholder-val="{{ false }}"><div class="scr" style="z-index:35" onClick="{{ cancelDel }}"></div><div class="cf" role="alertdialog" aria-label="حذف آدرس"><h4>{{ delText }}</h4><p>این کار قابل بازگشت نیست.</p><button class="b1 dn" onClick="{{ confirmDel }}">حذف آدرس</button><button class="b2" onClick="{{ cancelDel }}">انصراف</button></div></sc-if>
+<sc-if value="{{ showDlg }}" hint-placeholder-val="{{ false }}"><div class="scr" style="z-index:35" onClick="{{ dlgCancel }}"></div><div class="cf" role="alertdialog" aria-label="{{ dlgTitle }}"><h4>{{ dlgTitle }}</h4><p>{{ dlgText }}</p><button class="b1 {{ dlgCls }}" onClick="{{ dlgGo }}">{{ dlgOk }}</button><button class="b2" onClick="{{ dlgCancel }}">انصراف</button></div></sc-if>
+<sc-if value="{{ showConfirm }}" hint-placeholder-val="{{ false }}"><div class="scr" style="z-index:35"></div><div class="cf" role="alertdialog" aria-label="تأیید خالی کردن سبد"><h4>سبد خرید قبلی خالی شود؟</h4><p>سبد شما مربوط به «{{ cartRestName }}» است. با افزودن از «{{ pendingRestName }}»، سبد قبلی خالی می‌شود.</p><button class="b1" onClick="{{ confirmReplace }}">خالی کردن سبد و ادامه</button><button class="b2" onClick="{{ cancelConfirm }}">انصراف</button></div></sc-if>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"status": {"editor": "enum", "options": ["ready", "loading", "error"], "default": "ready", "section": "حالت‌های صفحه"}, "$preview": {"width": 390, "height": 844}}'>
+class Component extends DCLogic {
+constructor(...a) {
+super(...a);
+this.state = { stack: [{ s: 'home', rid: '' }], overlay: '', note: '', promo: null, userAddrs: [], ad: null, order: null, deletedAddr: [], delId: '', orders: [], ordTab: 'active', trackId: '', rc: { mode: 'self', name: 'امیر', phone: '۰۹۱۳۱۲۳۴۵۶۷' }, revCount: 4, userReviews: {}, rv: null, promoInput: '', promoStatus: '', promoMsg: '', addrId: 'a1', slot: 'asap', cat: 'all', tab: '', q: '', fav: { naghsh: true }, filter: this.f0(), draft: this.f0(), cart: { rid: '', items: [] }, sheet: null, pending: null, fm: {}, stars: {}, readN: {}, faqOpen: {}, applied: {}, rated: {}, nt: { orders: true, promos: true, news: false }, oIdx: 0, cityId: 'shahreza', seenOb: false, authFlow: false, payM: 'online', dark: (() => { try { return localStorage.getItem('dk-theme') === 'dark'; } catch (e) { return false; } })() };
+try { if (typeof window !== 'undefined') { window.addEventListener('offline', () => this.showError('offline')); window.addEventListener('online', () => { const t = this.state.stack[this.state.stack.length - 1]; if (t && t.s === 'error' && t.rid === 'offline') this.back(); }); } } catch (e) {}
+}
+renderVals() { return this.build(); }
+f0() { return { sort: 'suggest', open: false, free: false, disc: false, tags: [], min: 0 }; }
+fa(v) { return String(v).replace(/\d/g, (d) => '۰۱۲۳۴۵۶۷۸۹'[d]); }
+dec(n) { return this.fa(n).replace('.', '٫'); }
+money(n) { return this.fa(String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, '٬')); }
+D() {
+if (this._d) return this._d;
+const ex = { id: 'extra', title: 'افزودنی‌ها', min: 0, max: 3, options: [{ id: 'rice', name: 'برنج اضافه', price: 45000 }, { id: 'butter', name: 'کره', price: 10000 }, { id: 'bread', name: 'نان سنگک', price: 10000 }] };
+const drink = { id: 'drink', title: 'نوشیدنی', min: 0, max: 1, options: [{ id: 'doogh', name: 'دوغ محلی', price: 25000 }, { id: 'soda', name: 'نوشابه', price: 20000 }] };
+const fries = { id: 'fries', title: 'اندازه‌ی سیب‌زمینی', min: 1, max: 1, options: [{ id: 's', name: 'کوچک', price: 0 }, { id: 'm', name: 'متوسط', price: 20000 }, { id: 'l', name: 'بزرگ', price: 40000 }] };
+const bex = { id: 'bex', title: 'افزودنی‌ها', min: 0, max: 3, options: [{ id: 'cheese', name: 'پنیر چدار اضافه', price: 20000 }, { id: 'mush', name: 'سس قارچ', price: 15000 }, { id: 'bacon', name: 'گوشت دودی', price: 35000 }] };
+const psize = { id: 'psize', title: 'اندازه‌ی پیتزا', min: 1, max: 1, options: [{ id: 'p25', name: '۲۵ سانتی‌متر', price: 0 }, { id: 'p32', name: '۳۲ سانتی‌متر', price: 60000 }] };
+const sauce = { id: 'sauce', title: 'نوع سس', min: 0, max: 1, options: [{ id: 'ched', name: 'سس چدار', price: 15000 }, { id: 'garl', name: 'سس سیر', price: 10000 }] };
+const rv = [{ initial: 'م', name: 'مریم', date: '۲ روز پیش', text: 'گوشت کاملاً نرم و آبدار بود و برنج عالی دم کشیده بود. بسته‌بندی هم گرم رسید.' }, { initial: 'ع', name: 'علی', date: 'هفته‌ی پیش', text: 'کوبیده‌اش از همه‌جای شهر بهتر است. فقط کاش نان بیشتری می‌دادند.' }, { initial: 'س', name: 'سارا', date: '۲ هفته‌ی پیش', text: 'سرویس سریع بود و غذا کاملاً طبق توضیحات.' }];
+const dist = [{ n: '۵', pct: 86 }, { n: '۴', pct: 9 }, { n: '۳', pct: 3 }, { n: '۲', pct: 1 }, { n: '۱', pct: 1 }];
+const F = (id, rid, name, desc, price, old, badge, art, serving, inc, groups, extra) => Object.assign({ id: id, rid: rid, name: name, desc: desc, price: price, old: old, badge: badge, art: art, serving: serving, includes: inc || [], groups: groups || [], available: true }, extra || {});
+this._d = {
+user: { name: 'امیر', initial: 'ا', phone: '۰۹۱۳ ۱۲۳ ۴۵۶۷', rawPhone: '۰۹۱۳۱۲۳۴۵۶۷' }, city: 'شهرضا', address: 'شهرضا، خیابان امام', version: '۱٫۰٫۰', activeOrders: 1,
+errors: {
+offline: { code: '', title: 'اینترنت متصل نیست', text: 'اتصال وای‌فای یا اینترنت همراه خود را بررسی کنید و دوباره تلاش کنید.', d: 'M3 9a15 15 0 0 1 4-2.5M21 9a15 15 0 0 0-8-3.9M6.5 12.5a10 10 0 0 1 3-1.8M17.5 12.5a10 10 0 0 0-2-1.4M9.5 16a5 5 0 0 1 5 0M12 19.5h.01M4 4l16 16', cta: 'تلاش دوباره', act: 'retry', sec: '' },
+e500: { code: '۵۰۰', title: 'مشکلی در سرور پیش آمده', text: 'این مشکل از طرف ماست و تیم فنی در حال بررسی است. چند دقیقه‌ی دیگر دوباره تلاش کنید.', d: 'M4 5h16v5H4zM4 14h16v5H4zM8 7.5h.01M8 16.5h.01M12 10v4', cta: 'تلاش دوباره', act: 'retry', sec: 'تماس با پشتیبانی' },
+e503: { code: '۵۰۳', title: 'سرویس موقتاً در دسترس نیست', text: 'در حال به‌روزرسانی هستیم و به‌زودی برمی‌گردیم. لطفاً کمی بعد سر بزنید.', d: 'M14.5 5.5a4 4 0 0 0-5 5L4 16l4 4 5.5-5.5a4 4 0 0 0 5-5l-2.5 2.5-2.5-.5-.5-2.5z', cta: 'تلاش دوباره', act: 'retry', sec: '' },
+e504: { code: '۵۰۴', title: 'پاسخ از سرور دیر رسید', text: 'ارتباط با سرور بیش از حد طول کشید. اگر در حال پرداخت بودید، پیش از پرداخت دوباره وضعیت سفارش‌ها را بررسی کنید.', d: 'M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM12 7v5l3 2', cta: 'تلاش دوباره', act: 'retry', sec: 'مشاهده‌ی سفارش‌ها' },
+e403: { code: '۴۰۳', title: 'اجازه‌ی دسترسی ندارید', text: 'به این بخش دسترسی ندارید. اگر فکر می‌کنید اشتباهی رخ داده، با پشتیبانی تماس بگیرید.', d: 'M6 11h12v9H6zM8.5 11V8a3.5 3.5 0 0 1 7 0v3M12 15v2', cta: 'بازگشت به خانه', act: 'home', sec: 'تماس با پشتیبانی' },
+e404: { code: '۴۰۴', title: 'صفحه پیدا نشد', text: 'این صفحه حذف شده یا آدرس آن درست نیست.', d: 'M11 4a7 7 0 1 0 0 14 7 7 0 0 0 0-14zM20 20l-4-4M9 9l4 4M13 9l-4 4', cta: 'بازگشت به خانه', act: 'home', sec: '' },
+e401: { code: '۴۰۱', title: 'نشست شما منقضی شده', text: 'برای ادامه، دوباره با شماره‌ی موبایل وارد شوید.', d: 'M12 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8zM4 21a8 8 0 0 1 16 0', cta: 'ورود دوباره', act: 'login', sec: '' }
+},
+cities: [{ id: 'shahreza', name: 'شهرضا', active: true }, { id: 'nain', name: 'نایین', active: false }, { id: 'jam', name: 'جم', active: false }],
+onboard: [
+{ art: 'dk-kebab', title: 'غذای محبوبت، دم در خونه‌ات', text: 'از بهترین رستوران‌ها و کافه‌های شهرت سفارش بده.' },
+{ art: 'dk-burger', title: 'سفارش ساده، پرداخت امن', text: 'پرداخت فقط از درگاه امن بانکی انجام می‌شود.' },
+{ art: 'dk-cafe', title: 'وضعیت سفارش را لحظه‌به‌لحظه ببین', text: 'از تأیید رستوران تا رسیدن پیک، همه‌چیز را پیگیری کن.' }],
+notifs: [
+{ id: 'n1', kind: 'order', title: 'سفارش شما در حال آماده شدن است', text: 'آشپزهای کباب‌سرای نقش‌جهان مشغول آماده‌سازی هستند.', time: '۵ دقیقه پیش', go: 'orders' },
+{ id: 'n2', kind: 'promo', title: 'کد تخفیف ۱۰٪ دکون', text: 'با کد DOKOON10 تا ۵۰ هزار تومان تخفیف بگیرید.', time: 'دیروز', go: 'offers' },
+{ id: 'n3', kind: 'news', title: 'برگر لاین در دکون', text: 'ارسال سریع تا ۳۰ دقیقه؛ همین حالا سفارش بدهید.', time: '۳ روز پیش', go: 'rest:burger' }],
+popularQ: ['کباب', 'پیتزا', 'برگر', 'قهوه', 'چلو'], recentQ: ['کباب'],
+campText: { b1: 'کباب‌های داغ و تازه را از بهترین کبابی‌های شهرضا سفارش دهید و دم در خانه تحویل بگیرید.', b2: 'برگر و پیتزای داغ با ارسال سریع تا ۳۰ دقیقه. گزینه‌های سفارشی‌سازی را از صفحه‌ی غذا انتخاب کنید.', b3: 'برای عصرانه، قهوه و دسر از کافه‌های محله‌ی خود سفارش دهید.' },
+faqs: [
+{ id: 'f1', q: 'چطور سفارش را پیگیری کنم؟', a: 'از تب «حساب» وارد «سفارش‌ها» شوید و روی سفارش فعال بزنید. مراحل تأیید، آماده‌سازی و ارسال را لحظه‌به‌لحظه می‌بینید.' },
+{ id: 'f2', q: 'چه زمانی می‌توانم سفارش را لغو کنم؟', a: 'تا قبل از تأیید رستوران می‌توانید از صفحه‌ی پیگیری سفارش آن را لغو کنید. بعد از تأیید، لغو فقط با پشتیبانی ممکن است.' },
+{ id: 'f3', q: 'پرداخت چگونه انجام می‌شود؟', a: 'پرداخت فقط از طریق درگاه امن بانکی و آنلاین است. اگر پرداخت ناموفق باشد، مبلغ طبق قوانین بانک به حساب شما برمی‌گردد.' },
+{ id: 'f4', q: 'اگر غذا کامل یا درست نرسید چه کنم؟', a: 'از صفحه‌ی پیگیری سفارش گزینه‌ی «گزارش مشکل» را بزنید و مشکل را بنویسید. پشتیبانی بررسی می‌کند و با شما تماس می‌گیرد.' },
+{ id: 'f5', q: 'کد تخفیف را کجا وارد کنم؟', a: 'کد را در سبد خرید یا از بخش «کدهای تخفیف» وارد کنید. مبلغ تخفیف قبل از پرداخت نمایش داده می‌شود.' }],
+support: { contacts: [{ title: 'تماس تلفنی با پشتیبانی', sub: 'همه‌ی روزها از ۹ صبح تا ۱۱ شب', href: 'tel:+983100000000' }, { title: 'پشتیبانی در واتس‌اپ', sub: 'پاسخ در کمتر از ۳۰ دقیقه', href: 'https://wa.me/983100000000' }] },
+invite: { title: 'دوستانت را به دکون دعوت کن', text: 'هر دوست که با کد تو ثبت‌نام کند و اولین سفارشش را بدهد، هر دوی شما کد تخفیف می‌گیرید.', code: 'DOKOON-AMIR', steps: [{ title: 'کد دعوت را بفرست', sub: 'کد خود را برای دوستانت بفرست', d: 'M4 11h16v9H4zM3 7h18v4H3zM12 7v13' }, { title: 'دوستت ثبت‌نام کند', sub: 'هنگام ثبت‌نام کد تو را وارد کند', d: 'M12 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8zM4 21a8 8 0 0 1 16 0' }, { title: 'هر دو هدیه بگیرید', sub: 'بعد از اولین سفارش، کد تخفیف فعال می‌شود', d: 'M3 12V4h8l10 10-8 8zM7.5 8.5h.01' }] },
+about: { text: 'دکون سفارش آنلاین غذا از رستوران‌ها و کافه‌های شهر شماست. ما رستوران‌های محلی را با پیک سریع و پرداخت امن به شما می‌رسانیم.' },
+legal: {
+terms: { title: 'قوانین و مقررات', items: [{ q: 'شرایط استفاده', a: 'با استفاده از دکون، این قوانین را می‌پذیرید. اطلاعات واردشده باید درست و کامل باشد.' }, { q: 'ثبت و لغو سفارش', a: 'سفارش پس از پرداخت موفق ثبت می‌شود. لغو تا قبل از تأیید رستوران امکان‌پذیر است.' }, { q: 'پرداخت و بازگشت وجه', a: 'پرداخت فقط آنلاین است. در صورت لغو یا پرداخت ناموفق، مبلغ طبق زمان‌بندی بانک بازگردانده می‌شود.' }, { q: 'مسئولیت کیفیت غذا', a: 'کیفیت و آماده‌سازی غذا بر عهده‌ی رستوران است. در صورت مشکل، از بخش «گزارش مشکل» اطلاع دهید.' }] },
+privacy: { title: 'حریم خصوصی', items: [{ q: 'اطلاعاتی که جمع می‌کنیم', a: 'نام، شماره‌ی موبایل، آدرس‌های تحویل و سابقه‌ی سفارش‌ها برای ارائه‌ی خدمات.' }, { q: 'نحوه‌ی استفاده', a: 'اطلاعات فقط برای ثبت، ارسال و پشتیبانی سفارش و بهبود دکون استفاده می‌شود.' }, { q: 'اشتراک‌گذاری', a: 'اطلاعات لازم برای تحویل با رستوران و پیک به اشتراک گذاشته می‌شود و به اشخاص دیگر فروخته نمی‌شود.' }, { q: 'حذف اطلاعات', a: 'هر زمان می‌توانید از «تنظیمات» حساب خود را حذف کنید.' }] } },
+apply: {
+restaurant: { title: 'ثبت‌نام رستوران', text: 'رستوران یا کافه‌ی خود را به دکون اضافه کنید. تیم ما برای تکمیل مدارک با شما تماس می‌گیرد.', cta: 'ثبت درخواست', done: 'درخواست شما ثبت شد. پس از بررسی و تأیید، همکاران ما با شما در ارتباط خواهند بود.', fields: [{ id: 'biz', label: 'نام رستوران', ph: 'مثلاً کباب‌سرای نقش‌جهان', mode: 'text' }, { id: 'owner', label: 'نام مالک', ph: 'نام و نام خانوادگی', mode: 'text' }, { id: 'phone', label: 'شماره‌ی تماس', ph: '۰۹۱۲۳۴۵۶۷۸۹', mode: 'tel' }, { id: 'addr', label: 'آدرس رستوران', ph: 'شهر، خیابان، پلاک', mode: 'text' }] },
+courier: { title: 'همکاری با پیک', text: 'با دکون درآمد داشته باشید. اطلاعات خود را بفرستید تا برای دریافت مدارک تماس بگیریم.', cta: 'ثبت درخواست', done: 'درخواست شما ثبت شد. پس از بررسی و تأیید، همکاران ما با شما در ارتباط خواهند بود.', fields: [{ id: 'name', label: 'نام و نام خانوادگی', ph: 'نام کامل', mode: 'text' }, { id: 'phone', label: 'شماره‌ی تماس', ph: '۰۹۱۲۳۴۵۶۷۸۹', mode: 'tel' }, { id: 'vehicle', label: 'نوع وسیله‌ی نقلیه', ph: 'موتور‌سیکلت', mode: 'text' }, { id: 'area', label: 'محدوده‌ی فعالیت', ph: 'مثلاً مرکز شهرضا', mode: 'text' }] } },
+cancelReasons: ['اشتباه سفارش دادم', 'زمان تحویل طولانی است', 'می‌خواهم سفارش را تغییر دهم', 'سایر'],
+reportTypes: ['غذا کامل نبود', 'غذای اشتباه رسید', 'تأخیر در تحویل', 'کیفیت غذا مناسب نبود', 'سایر'],
+settingsToggles: [{ id: 'orders', title: 'وضعیت سفارش', sub: 'اعلان تأیید، آماده‌سازی و رسیدن پیک' }, { id: 'promos', title: 'تخفیف‌ها و پیشنهادها', sub: 'کدهای تخفیف و جشنواره‌ها' }, { id: 'news', title: 'اخبار دکون', sub: 'رستوران‌های جدید و امکانات تازه' }],
+socials: [
+{ name: 'اینستاگرام', url: 'https://instagram.com/dokoon.app', sub: 'عکس غذاها، جشنواره‌ها و کدهای تخفیف', handle: '@dokoon.app', d: 'M7 3h10a4 4 0 0 1 4 4v10a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V7a4 4 0 0 1 4-4zM12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8zM17.2 6.8h.01' },
+{ name: 'تلگرام', url: 'https://t.me/dokoon_app', sub: 'کانال اطلاع‌رسانی و اخبار دکون', handle: '@dokoon_app', d: 'M21 4L3 11l5 2 2 6 3-4 5 4zM8 13l9-6' },
+{ name: 'ایتا', url: 'https://eitaa.com/dokoon_app', sub: 'کانال دکون در پیام‌رسان ایتا', handle: '@dokoon_app', d: 'M5 5h14v10H11l-4 4v-4H5zM9 9h6M9 12h4' },
+{ name: 'واتس‌اپ', url: 'https://wa.me/983100000000', sub: 'ارتباط سریع با پشتیبانی', handle: '+98 913 000 0000', d: 'M4 20l1.4-4.2A8 8 0 1 1 8.2 18.6zM9 9c0 3 3 6 6 6l1-1.5-2-1-1 .8c-1-.4-2-1.4-2.4-2.4l.8-1-1-2z' },
+{ name: 'آپارات', url: 'https://aparat.com/dokoon', sub: 'ویدیوهای معرفی رستوران‌ها و آموزش', handle: 'aparat.com/dokoon', d: 'M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM10 8.5v7l6-3.5z' }
+],
+
+banners: [
+{ id: 'b1', tag: 'ویژه', title: 'کباب داغ، دم در خونه‌ات', sub: 'از بهترین کبابی‌های شهرضا', art: 'dk-kebab', bg: 'linear-gradient(260deg,#8B2313 30%,#E4501E)', rid: 'naghsh' },
+{ id: 'b2', tag: 'پیشنهاد هفته', title: 'برگر و پیتزای داغ', sub: 'ارسال سریع تا ۳۰ دقیقه', art: 'dk-burger', bg: 'linear-gradient(260deg,#1F1A17 30%,#8B2313)', rid: 'burger' },
+{ id: 'b3', tag: 'تازه‌ها', title: 'قهوه و دسر برای عصرانه', sub: 'کافه‌های محله‌ی شما', art: 'dk-cafe', bg: 'linear-gradient(260deg,#8B2313 30%,#C8281E)', rid: 'cafe' }],
+promo: { label: 'پیشنهاد داغ', title: 'تا ۳۰٪ تخفیف', sub: 'روی رستوران‌های منتخب', art: 'dk-burger', sticker: '۳۰٪', rid: 'burger' },
+categories: [{ id: 'all', title: 'همه', art: 'dk-mix' }, { id: 'fast', title: 'فست‌فود', art: 'dk-burger' }, { id: 'iranian', title: 'ایرانی', art: 'dk-chelo' }, { id: 'cafe', addr: 'شهرضا، خیابان امام، کنار کتابخانه', title: 'کافه', art: 'dk-cafe' }],
+restaurants: [
+{ id: 'naghsh', addr: 'شهرضا، خیابان امام، نبش کوچه‌ی ۴', openH: 11, closeH: 23, name: 'کباب‌سرای نقش‌جهان', sub: 'کباب، چلو، خورشت', type: 'iranian', tags: ['kebab', 'chelo'], km: 1.2, rating: 4.8, reviews: 245, etaMin: 25, etaMax: 35, fee: 45000, minOrder: 150000, open: true, opensNext: '', hours: '۱۱:۰۰ تا ۲۳:۰۰', art: 'dk-chelo', cover: 'linear-gradient(160deg,#8B2313,#E4501E)', offer: '۱۵٪ تخفیف روی اولین سفارش شما', disc: true, badge: 'پرفروش', badgeTone: 'red', hasMenu: true,
+cats: [{ id: 'best', title: 'پرفروش‌ها', art: 'dk-kebab', foods: ['n1', 'n2'] }, { id: 'chelo', title: 'چلویی‌ها', art: 'dk-rice', foods: ['n1', 'n3'] }, { id: 'kebab', title: 'کبابی‌ها', art: 'dk-kebab', foods: ['n2', 'n4'] }, { id: 'stew', title: 'خورشت‌ها', art: 'dk-stew', foods: ['n5'] }, { id: 'start', title: 'پیش‌غذا', art: 'dk-salad', foods: ['n6'] }, { id: 'drink', title: 'نوشیدنی', art: 'dk-drink', foods: ['n7'] }, { id: 'dessert', title: 'دسر', art: 'dk-cake', foods: ['n8'] }] },
+{ id: 'burger', addr: 'شهرضا، بلوار مطهری، روبه‌روی پارک', allowExtras: false, allowScheduled: false, openH: 10, closeH: 24, name: 'برگر لاین', sub: 'برگر، پیتزا، سیب‌زمینی', type: 'fast', tags: ['burger', 'pizza'], km: 0.8, rating: 4.6, reviews: 156, etaMin: 20, etaMax: 30, fee: 45000, minOrder: 120000, open: true, opensNext: '', hours: '۱۰:۰۰ تا ۲۴:۰۰', art: 'dk-burger', cover: 'linear-gradient(160deg,#1F1A17,#8B2313)', offer: '۱۵٪ تخفیف روی همه‌ی برگرها', disc: true, badge: '۱۵٪ تخفیف', badgeTone: 'red', hasMenu: true,
+cats: [{ id: 'special', title: 'پیشنهاد ویژه', art: 'dk-burger', foods: ['b1'] }, { id: 'burgers', title: 'برگرها', art: 'dk-burger', foods: ['b2', 'b3'] }, { id: 'pizza', addr: 'شهرضا، خیابان شریعتی، پلاک ۲۱', title: 'پیتزاها', art: 'dk-pizza', foods: ['b4'] }, { id: 'fries', title: 'سیب‌زمینی', art: 'dk-fries', foods: ['b5'] }, { id: 'drinks', title: 'نوشیدنی', art: 'dk-drink', foods: ['b6'] }] },
+{ id: 'pizza', openH: 11, closeH: 23, name: 'پیتزا ماهان', sub: 'پیتزا، پاستا', type: 'fast', tags: ['pizza'], km: 2, rating: 4.7, reviews: 189, etaMin: 30, etaMax: 40, fee: 0, minOrder: 180000, open: true, opensNext: '', hours: '۱۱:۰۰ تا ۲۳:۳۰', art: 'dk-pizza', cover: 'linear-gradient(160deg,#8B2313,#C8281E)', offer: '', disc: false, badge: 'محبوب', badgeTone: 'amber', hasMenu: false, cats: [] },
+{ id: 'cafe', openH: 8, closeH: 22, name: 'کافه نسیم', sub: 'قهوه، کیک', type: 'cafe', tags: ['cafe', 'sweet'], km: 1.5, rating: 4.9, reviews: 92, etaMin: 15, etaMax: 25, fee: 50000, minOrder: 80000, open: false, opensNext: 'فردا ساعت ۰۸:۰۰', hours: '۰۸:۰۰ تا ۲۲:۰۰', art: 'dk-cafe', cover: 'linear-gradient(160deg,#1F1A17,#8B2313)', offer: '', disc: false, badge: 'محبوب', badgeTone: 'amber', hasMenu: true,
+cats: [{ id: 'coffee', title: 'قهوه', art: 'dk-cafe', foods: ['c1'] }, { id: 'dessert', title: 'دسر', art: 'dk-cake', foods: ['c2'] }] },
+{ id: 'sweet', addr: 'شهرضا، میدان قیام، ضلع شمالی', openH: 9, closeH: 22, name: 'شیرینی‌سرای بهار', sub: 'شیرینی، بستنی', type: 'cafe', tags: ['sweet'], km: 2.4, rating: 4.5, reviews: 64, etaMin: 35, etaMax: 45, fee: 60000, minOrder: 100000, open: true, opensNext: '', hours: '۰۹:۰۰ تا ۲۲:۰۰', art: 'dk-cake', cover: 'linear-gradient(160deg,#8B2313,#E4501E)', offer: '', disc: false, badge: 'جدید', badgeTone: 'red', hasMenu: false, cats: [] }],
+foods: [
+F('n1', 'naghsh', 'چلوکباب کوبیده ویژه', 'دو سیخ کوبیده‌ی گوسفندی تازه‌چرخ‌شده روی زغال، همراه برنج ایرانی دم‌کشیده و گوجه‌ی کبابی.', 280000, 320000, 'پرفروش', 'dk-chelo', '۷۰۰ گرم', [{ n: 'کباب کوبیده‌ی گوسفندی (دو سیخ)', w: '۳۰۰ گرم' }, { n: 'برنج ایرانی با کره', w: '۲۵۰ گرم' }, { n: 'گوجه‌ی کبابی', w: '۱ عدد' }, { n: 'نان سنگک', w: '۱ برش' }], [ex, drink], { rating: 4.8, reviewCount: 126, reviews: rv, dist: dist }),
+F('n2', 'naghsh', 'جوجه کباب زعفرانی', 'سینه‌ی مرغ بی‌استخوان با زعفران، همراه برنج، سیب‌زمینی و سالاد.', 245000, 0, '', 'dk-kebab', '۳۵۰ گرم', [{ n: 'جوجه کباب بی‌استخوان', w: '۳۵۰ گرم' }, { n: 'برنج ایرانی', w: '۲۵۰ گرم' }], [ex, drink]),
+F('n3', 'naghsh', 'چلوکباب برگ', 'فیله‌ی گوسفندی مزه‌دار شده با برنج ایرانی و گوجه.', 365000, 0, '', 'dk-rice', '۲۲۰ گرم', [{ n: 'کباب برگ', w: '۲۲۰ گرم' }, { n: 'برنج ایرانی', w: '۲۵۰ گرم' }], [ex]),
+F('n4', 'naghsh', 'شیشلیک', 'دنده‌ی بره‌ی مزه‌دار شده روی زغال.', 420000, 0, 'جدید', 'dk-kebab', '۳۰۰ گرم', [], []),
+F('n5', 'naghsh', 'قورمه‌سبزی با برنج', 'خورشت سبزی تازه با گوشت و لوبیا، همراه چلو.', 210000, 0, '', 'dk-stew', '۴۵۰ گرم', [], [drink]),
+F('n6', 'naghsh', 'سالاد شیرازی', 'خیار، گوجه و پیاز با آبلیمو و نعنا.', 45000, 0, '', 'dk-salad', '۲۰۰ گرم', [], []),
+F('n7', 'naghsh', 'دوغ محلی', 'دوغ گازدار با نعنا.', 25000, 0, '', 'dk-drink', '۳۰۰ میلی‌لیتر', [], []),
+F('n8', 'naghsh', 'فرنی', 'فرنی با گلاب و پسته، ظرف تک‌نفره.', 55000, 0, '', 'dk-cake', '۱۵۰ گرم', [], [], { available: false }),
+F('b1', 'burger', 'منوی برگر کلاسیک', 'برگر ۱۸۰ گرمی، سیب‌زمینی سرخ‌کرده و نوشابه.', 295000, 340000, '۱۵٪', 'dk-burger', '', [{ n: 'برگر ۱۸۰ گرمی', w: '۱ عدد' }, { n: 'سیب‌زمینی سرخ‌کرده', w: '۱ پرس' }, { n: 'نوشابه', w: '۱ قوطی' }], [fries, bex]),
+F('b2', 'burger', 'برگر مخصوص', 'برگر ۱۸۰ گرمی، پنیر چدار، کاهو و سس مخصوص.', 195000, 0, 'پرفروش', 'dk-burger', '۲۸۰ گرم', [], [bex]),
+F('b3', 'burger', 'چیزبرگر دوبل', 'دو لایه گوشت، دو لایه پنیر و خیارشور.', 245000, 0, '', 'dk-burger', '۳۶۰ گرم', [], [bex]),
+F('b4', 'burger', 'پیتزا پپرونی', 'موزارلا و پپرونی تند روی خمیر دست‌ساز.', 220000, 0, '', 'dk-pizza', '', [], [psize]),
+F('b5', 'burger', 'سیب‌زمینی سرخ‌کرده', 'سیب‌زمینی ترد همراه سس.', 65000, 0, '', 'dk-fries', '۲۵۰ گرم', [], [sauce]),
+F('b6', 'burger', 'نوشابه', 'قوطی، انواع طعم.', 20000, 0, '', 'dk-drink', '۳۳۰ میلی‌لیتر', [], []),
+F('c1', 'cafe', 'قهوه اسپرسو', 'دبل‌شات اسپرسو از دانه‌های تازه‌آسیاب‌شده.', 65000, 0, '', 'dk-cafe', '۶۰ میلی‌لیتر', [], []),
+F('c2', 'cafe', 'کیک شکلاتی', 'کیک اسفنجی با کرم شکلات و توت‌فرنگی.', 85000, 0, '', 'dk-cake', '۱۲۰ گرم', [], [])],
+pastOrders: [
+{ id: 'p1', no: 'دک-۴۷۹۰۲', rid: 'naghsh', status: 4, placed: '۳ روز پیش', lines: [{ foodId: 'n1', qty: 1, unit: 325000, opts: 'برنج اضافه' }, { foodId: 'n7', qty: 2, unit: 25000, opts: '' }], fee: 45000, disc: 0 },
+{ id: 'p2', no: 'دک-۴۷۴۱۵', rid: 'burger', status: 4, placed: 'هفته‌ی پیش', lines: [{ foodId: 'b2', qty: 2, unit: 195000, opts: '' }, { foodId: 'b5', qty: 1, unit: 65000, opts: 'سس چدار' }], fee: 45000, disc: 32500 },
+{ id: 'p3', no: 'دک-۴۷۰۸۸', rid: 'cafe', status: 5, placed: '۲ هفته‌ی پیش', lines: [{ foodId: 'c1', qty: 2, unit: 65000, opts: '' }], fee: 50000, disc: 0 }],
+courier: { name: 'رضا محمدی', vehicle: 'موتور', phone: '09120000001' }, restPhone: '03153421234',
+promos: [{ code: 'DOKOON10', percent: 10, max: 50000, title: '۱۰٪ تخفیف دکون', sub: 'تا سقف ۵۰ هزار تومان · همه‌ی رستوران‌ها' }, { code: 'FIRST20', percent: 20, max: 80000, title: '۲۰٪ تخفیف اولین سفارش', sub: 'تا سقف ۸۰ هزار تومان' }],
+addresses: [{ id: 'a1', title: 'خانه', short: 'خیابان امام', rname: 'امیر', rphone: '۰۹۱۳۱۲۳۴۵۶۷', text: 'شهرضا، خیابان امام، کوچه‌ی ۱۲، پلاک ۸، واحد ۳', inZone: true }, { id: 'a2', title: 'محل کار', short: 'میدان انقلاب', rname: 'امیر', rphone: '۰۹۱۳۱۲۳۴۵۶۷', text: 'شهرضا، میدان انقلاب، ساختمان نگین، طبقه‌ی ۲', inZone: true }, { id: 'a3', title: 'خانه‌ی مادر', short: 'اصفهان، چهارباغ', rname: 'مریم احمدی', rphone: '۰۹۱۲۱۲۳۴۵۶۷', text: 'اصفهان، خیابان چهارباغ', inZone: false }],
+slots: [{ id: 's1', label: 'امروز، ۱۸:۰۰ تا ۱۸:۳۰' }, { id: 's2', label: 'امروز، ۱۸:۳۰ تا ۱۹:۰۰' }, { id: 's3', label: 'امروز، ۱۹:۰۰ تا ۱۹:۳۰' }],
+sorts: [{ id: 'suggest', label: 'پیشنهاد دکون' }, { id: 'near', label: 'نزدیک‌ترین' }, { id: 'rating', label: 'بالاترین امتیاز' }, { id: 'fee', label: 'کمترین هزینه‌ی ارسال' }],
+tags: [{ id: 'kebab', label: 'کباب', art: 'dk-kebab' }, { id: 'chelo', label: 'چلویی', art: 'dk-rice' }, { id: 'burger', label: 'برگر', art: 'dk-burger' }, { id: 'pizza', label: 'پیتزا', art: 'dk-pizza' }, { id: 'cafe', label: 'کافه', art: 'dk-cafe' }, { id: 'sweet', label: 'شیرینی', art: 'dk-cake' }],
+ratings: [{ v: 0, label: 'همه' }, { v: 4, label: '۴ به بالا' }, { v: 4.5, label: '۴٫۵ به بالا' }]
+};
+this._d.foods.forEach((f) => this.mkRev(f));
+return this._d;
+}
+passes(r, f) {
+if (f.tags.length && !f.tags.some((t) => r.tags.indexOf(t) >= 0)) return false;
+if (f.open && !r.open) return false;
+if (f.free && r.fee > 0) return false;
+if (f.disc && !r.disc) return false;
+if (f.min && r.rating < f.min) return false;
+return true;
+}
+countFilters(f) { return (f.sort !== 'suggest' ? 1 : 0) + (f.open ? 1 : 0) + (f.free ? 1 : 0) + (f.disc ? 1 : 0) + f.tags.length + (f.min ? 1 : 0); }
+setS(o) { this.setState(o); }
+openRestaurant(id) {
+const r = this.D().restaurants.find((x) => x.id === id);
+this.push('restaurant', id, { q: '', tab: r && r.cats.length ? r.cats[0].id : '' });
+}
+addrList() { return this.D().addresses.concat(this.state.userAddrs || []).filter((x) => (this.state.deletedAddr || []).indexOf(x.id) < 0); }
+groupsOf(f) { const r = this.D().restaurants.find((x) => x.id === f.rid); return f.groups.filter((g) => g.min >= 1 || !r || r.allowExtras !== false); }
+startAddAddress() { const u = this.D().user; this.push('addaddr', '', { ad: { x: -1, y: -1, title: 'خانه', text: '', plaque: '', unit: '', rname: u.name, rphone: u.rawPhone, locating: false } }); }
+pickMap(x, y) { const a = this.state.ad; const dx = (x - 50) / 100 * 358, dy = (y - 50) / 100 * 240; const inz = Math.sqrt(dx * dx + dy * dy) <= 82; this.setS({ ad: Object.assign({}, a, { x: x, y: y, text: a.text || (inz ? 'شهرضا، ' : '') }) }); }
+locate() { const a = this.state.ad; this.setS({ ad: Object.assign({}, a, { locating: true }) }); setTimeout(() => { const b = this.state.ad; if (b) this.setS({ ad: Object.assign({}, b, { x: 46, y: 56, locating: false, text: 'شهرضا، خیابان امام (موقعیت فعلی شما)' }) }); }, 900); }
+saveAddress() { const a = this.state.ad; const text = a.text.trim(); if (text.length < 8 || (a.rname || '').trim().length < 2 || !this.phoneOk(a.rphone)) return; const full = text + (a.plaque ? '، پلاک ' + a.plaque : '') + (a.unit ? '، واحد ' + a.unit : ''); const inz = a.x >= 0 ? Math.sqrt(Math.pow((a.x - 50) / 100 * 358, 2) + Math.pow((a.y - 50) / 100 * 240, 2)) <= 82 : text.indexOf('شهرضا') >= 0; const id = 'u' + (this.state.userAddrs.length + 1); const parts = text.split('،'); const short = (parts[1] || parts[0]).replace(/\(.*$/, '').trim().slice(0, 18); this.setS({ userAddrs: this.state.userAddrs.concat([{ id: id, title: a.title, short: short, rname: a.rname.trim(), rphone: a.rphone, text: full, inZone: inz }]), rc: this.state.rc.mode === 'self' ? { mode: 'self', name: a.rname.trim(), phone: a.rphone } : this.state.rc, addrId: id, stack: this.state.stack.slice(0, -1), ad: null, overlay: '' }); }
+setTop(s) { this.setS({ stack: this.state.stack.slice(0, -1).concat([{ s: s, rid: '' }]) }); }
+payOk(method) { const m = method === 'cash' ? 'cash' : 'online'; const st = this.state; const cr = this.D().restaurants.find((x) => x.id === st.cart.rid); const items = st.cart.items; const count = items.reduce((q, l) => q + l.qty, 0); const total = items.reduce((q, l) => q + l.unit * l.qty, 0); const disc = st.promo ? Math.min(Math.round(total * st.promo.percent / 100), st.promo.max) : 0; const payable = total + (cr ? cr.fee : 0) - disc; const no0 = 'دک-' + this.fa(48200 + Math.floor(Math.random() * 800)); const oid = 'o' + ((st.orders || []).length + 1); const adrO = this.addrList().find((x) => x.id === st.addrId); this.setS({ orders: [{ id: oid, no: no0, rid: st.cart.rid, status: 0, pay: m, placed: 'همین الان', lines: items.map((l) => ({ foodId: l.foodId, qty: l.qty, unit: l.unit, opts: l.opts || '' })), fee: cr ? cr.fee : 0, disc: disc, rcpt: st.rc.name + ' · ' + st.rc.phone, addr: adrO ? adrO.text : '' }].concat(st.orders || []), trackId: oid, order: { payTitle: m === 'cash' ? 'سفارش شما ثبت شد' : 'پرداخت با موفقیت انجام شد', payNote: m === 'cash' ? 'مبلغ را هنگام تحویل به پیک بپردازید.' : 'سفارش شما برای رستوران ارسال شد.', amountLabel: m === 'cash' ? 'مبلغ قابل پرداخت هنگام تحویل' : 'مبلغ پرداخت‌شده', payLabel: m === 'cash' ? 'نقدی هنگام تحویل' : 'آنلاین', no: no0, rest: cr ? cr.name : '', rcpt: st.rc.name + ' · ' + st.rc.phone, addr: (this.addrList().find((x) => x.id === st.addrId) || { text: '' }).text, amount: this.money(payable) + ' تومان', count: this.fa(count), eta: cr ? this.fa(cr.etaMin) + ' تا ' + this.fa(cr.etaMax) + ' دقیقه' : '' }, cart: { rid: '', items: [] }, promo: null, promoInput: '', promoStatus: '', promoMsg: '', note: '' }); this.setTop('paid'); }
+toCart() { const s = this.state.stack; let i = -1; s.forEach((x, k) => { if (x.s === 'cart') i = k; }); this.setS({ stack: i >= 0 ? s.slice(0, i + 1) : [{ s: 'home', rid: '' }] }); }
+mkRev(f) {
+const N = { n1: 18, n2: 12, n3: 10, n4: 6, n5: 9, n6: 5, n7: 5, n8: 4, b1: 14, b2: 16, b3: 8, b4: 11, b5: 7, b6: 4, c1: 12, c2: 7 }[f.id] || 6;
+const kind = ({ 'dk-kebab': 'k', 'dk-chelo': 'k', 'dk-rice': 'k', 'dk-stew': 's', 'dk-salad': 'a', 'dk-drink': 'd', 'dk-cake': 'c', 'dk-burger': 'b', 'dk-pizza': 'p', 'dk-fries': 'f', 'dk-cafe': 'e' })[f.art] || 'k';
+const OP = { k: ['گوشت کاملاً نرم و آبدار بود.', 'کباب خوش‌طعم و درست پخته شده بود.', 'برنجش عالی دم کشیده بود.', 'مزه‌ی زغال کاملاً حس می‌شد.', 'حجم غذا کاملاً سیرکننده بود.'], s: ['خورشت غلیظ و خوش‌عطر بود.', 'طعمش شبیه غذای خانگی بود.', 'گوشتش کاملاً پخته و نرم بود.', 'سبزی‌ها تازه و معطر بودند.', 'مقدارش مناسب و سیرکننده بود.'], a: ['سبزی‌ها کاملاً تازه بودند.', 'طعم ترش و شور متعادل بود.', 'کنار کباب عالی می‌نشست.', 'ترد و خوش‌رنگ بود.', 'حجمش برای یک نفر مناسب بود.'], d: ['خنک و گازدار رسید.', 'طعمش اصل و خوشمزه بود.', 'با غذا خیلی خوب می‌نشست.', 'نعنایش معطر بود.', 'دما و کیفیتش عالی بود.'], c: ['شیرینی‌اش دقیقاً به اندازه بود.', 'نرم و تازه بود.', 'طعم شکلات خیلی خوب بود.', 'تزئینش مرتب و زیبا بود.', 'سایزش مناسب بود.'], b: ['گوشت برگر آبدار و پخته بود.', 'نان نرم و تازه بود.', 'سس مخصوصش خیلی خوشمزه بود.', 'پنیرش کاملاً آب شده بود.', 'حجمش واقعاً سیرکننده بود.'], p: ['خمیرش نازک و خوش‌پخت بود.', 'پنیر فراوان و کشدار بود.', 'پپرونی تند و خوشمزه بود.', 'داغ و تازه رسید.', 'برش‌ها اندازه‌ی مناسبی داشتند.'], f: ['ترد و داغ بود.', 'نمکش به اندازه بود.', 'سس همراهش عالی بود.', 'حجمش کاملاً مناسب بود.', 'بیرونش ترد و داخلش نرم بود.'], e: ['قهوه با عطر و طعم عالی بود.', 'دمای قهوه مناسب بود.', 'دانه‌ی تازه حس می‌شد.', 'شدتش دقیقاً مطابق سلیقه‌ام بود.', 'کنار کیک عالی بود.'] }[kind];
+const NEG = ['نسبت به انتظارم کمی ضعیف بود.', 'کمی دیر رسید و گرمای غذا کم شده بود.', 'مقدارش کمتر از قیمتش بود.'];
+const CL = ['بسته‌بندی هم تمیز بود.', 'سرعت ارسال عالی بود.', 'دوباره سفارش می‌دهم.', 'قیمتش نسبت به کیفیت مناسب است.', 'پیشنهاد می‌کنم امتحان کنید.'];
+const NM = ['مریم', 'علی', 'سارا', 'رضا', 'نرگس', 'حسین', 'الهام', 'امیرحسین', 'زهرا', 'مهدی', 'فاطمه', 'پویا', 'لیلا', 'کاوه', 'مینا', 'بهروز', 'شقایق', 'آرش'];
+const DT = ['۱ روز پیش', '۲ روز پیش', '۳ روز پیش', '۵ روز پیش', 'هفته‌ی پیش', '۲ هفته‌ی پیش', '۳ هفته‌ی پیش', 'ماه پیش'];
+const ST = [5, 5, 4, 5, 3, 5, 4, 5, 5, 4, 2, 5, 4, 5, 5, 4, 5, 3];
+const off = (this._d.foods.indexOf(f) + 1) * 3; const base = [];
+for (let i = 0; i < N; i++) { const stars = ST[(i + off) % ST.length]; const name = NM[(i * 5 + off) % NM.length]; base.push({ initial: name.charAt(0), name: name, date: DT[Math.min(i, DT.length - 1)], stars: stars, text: stars <= 3 ? NEG[(i + off) % NEG.length] : OP[(i + off) % OP.length] + ' ' + CL[(i * 2 + off) % CL.length] }); }
+f.revBase = base;
+}
+slotsFor(r) {
+if (!r || r.allowScheduled === false) return [];
+const now = 18 * 60, step = 30, out = [];
+const t2 = (m) => this.fa(String(Math.floor(m / 60)).padStart(2, '0')) + ':' + this.fa(String(m % 60).padStart(2, '0'));
+for (let m = Math.ceil((now + 30) / step) * step; m + step <= r.closeH * 60; m += step) out.push({ id: 'd0-' + m, label: 'امروز، ' + t2(m) + ' تا ' + t2(m + step) });
+for (let m = r.openH * 60; m + step <= r.closeH * 60; m += step) out.push({ id: 'd1-' + m, label: 'فردا، ' + t2(m) + ' تا ' + t2(m + step) });
+return out;
+}
+normPhone(v) { return String(v || '').replace(/[۰-۹]/g, (d) => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d)).replace(/[٠-٩]/g, (d) => '٠١٢٣٤٥٦٧٨٩'.indexOf(d)).replace(/\D/g, ''); }
+phoneOk(v) { return /^09\d{9}$/.test(this.normPhone(v)); }
+setMode(mode) { const adr = this.addrList().find((x) => x.id === this.state.addrId); const u = this.D().user; this.setS({ rc: mode === 'self' ? { mode: 'self', name: (adr && adr.rname) || u.name, phone: (adr && adr.rphone) || u.rawPhone } : { mode: 'other', name: '', phone: '' } }); }
+pickAddr(x) { const rc = this.state.rc; this.setS({ addrId: x.id, overlay: '', rc: rc.mode === 'self' ? { mode: 'self', name: x.rname || rc.name, phone: x.rphone || rc.phone } : rc }); }
+orderTotal(o) { return o.lines.reduce((q, l) => q + l.unit * l.qty, 0) + o.fee - o.disc; }
+allOrders() { return (this.state.orders || []).concat(this.D().pastOrders); }
+openOrders() { this.push('orders', ''); }
+openTrack(id) { this.push('track', '', { trackId: id }); }
+advance() { const id = this.state.trackId; this.setS({ orders: this.state.orders.map((o) => (o.id === id && o.status < 4 ? Object.assign({}, o, { status: o.status + 1 }) : o)) }); }
+reorder(o) { this.addLines(o.rid, o.lines.map((l) => ({ key: l.foodId + '|reorder|' + (l.opts || ''), foodId: l.foodId, rid: o.rid, unit: l.unit, qty: l.qty, note: '', opts: l.opts || '' }))); }
+addLines(rid, lines) { const c = this.state.cart; if (c.items.length && c.rid !== rid) { this.setS({ pending: { rid: rid, lines: lines }, overlay: 'confirm' }); return; } const items = c.items.slice(); lines.forEach((line) => { const i = items.findIndex((l) => l.key === line.key); if (i >= 0) items[i] = Object.assign({}, items[i], { qty: items[i].qty + line.qty }); else items.push(line); }); this.setS({ cart: { rid: rid, items: items }, sheet: null, pending: null }); this.openCart(); }
+soon(title) { this.push('soon', '', { soonTitle: title }); }
+back() { const s = this.state.stack; if (s.length > 1) this.setS({ stack: s.slice(0, -1), q: '', overlay: '' }); }
+push(s, rid, extra) { this.setS(Object.assign({ stack: this.state.stack.concat([{ s: s, rid: rid || '' }]), overlay: '' }, extra || {})); }
+openCart() { this.push('cart', ''); }
+chgKey(key, d) { const c = this.state.cart; const items = c.items.map((l) => (l.key === key ? Object.assign({}, l, { qty: l.qty + d }) : l)).filter((l) => l.qty > 0); this.setS({ cart: { rid: items.length ? c.rid : '', items: items } }); }
+applyPromo() {
+const code = (this.state.promoInput || '').trim().toUpperCase(); const p = this.D().promos.find((x) => x.code === code);
+if (!code) { this.setS({ promoStatus: 'err', promoMsg: 'کد تخفیف را وارد کنید.' }); return; }
+if (p) this.setS({ promo: p, promoStatus: 'ok', promoMsg: 'کد تخفیف اعمال شد: ' + this.fa(p.percent) + '٪ تا سقف ' + this.money(p.max) + ' تومان' });
+else this.setS({ promo: null, promoStatus: 'err', promoMsg: 'کد تخفیف معتبر نیست.' });
+}
+toggleFav(id) { const f = Object.assign({}, this.state.fav); f[id] = !f[id]; this.setS({ fav: f }); }
+openFood(fid) {
+const f = this.D().foods.find((x) => x.id === fid); const sel = {};
+this.groupsOf(f).forEach((g) => { if (g.min >= 1 && g.max === 1) sel[g.id] = [g.options[0].id]; });
+this.setS({ revCount: 4, overlay: 'food', sheet: { foodId: fid, qty: 1, sel: sel, note: '' } });
+}
+pickOpt(g, o) {
+const sh = this.state.sheet; const sel = Object.assign({}, sh.sel); const cur = sel[g.id] || [];
+if (g.max > 1) { sel[g.id] = cur.indexOf(o.id) >= 0 ? cur.filter((x) => x !== o.id) : (cur.length < g.max ? cur.concat([o.id]) : cur); }
+else { sel[g.id] = cur[0] === o.id && g.min === 0 ? [] : [o.id]; }
+this.setS({ sheet: Object.assign({}, sh, { sel: sel }) });
+}
+addLine(rid, line) {
+const c = this.state.cart;
+if (c.items.length && c.rid !== rid) { this.setS({ pending: { rid: rid, line: line }, overlay: 'confirm' }); return; }
+const items = c.items.slice(); const i = items.findIndex((l) => l.key === line.key);
+if (i >= 0) items[i] = Object.assign({}, items[i], { qty: items[i].qty + line.qty }); else items.push(line);
+this.setS({ cart: { rid: rid, items: items }, overlay: '', sheet: null, pending: null });
+}
+addSimple(f) {
+const r = this.D().restaurants.find((x) => x.id === f.rid);
+if (!r.open || !f.available) return;
+this.addLine(f.rid, { key: f.id, foodId: f.id, rid: f.rid, unit: f.price, qty: 1 });
+}
+chg(fid, d) {
+const c = this.state.cart; const items = c.items.map((l) => (l.foodId === fid ? Object.assign({}, l, { qty: l.qty + d }) : l)).filter((l) => l.qty > 0);
+this.setS({ cart: { rid: items.length ? c.rid : '', items: items } });
+}
+scrollTo(id) { setTimeout(() => { const el = document.getElementById('cat-' + id); if (el && el.scrollIntoView) el.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 0); }
+showError(kind) { const t = this.state.stack[this.state.stack.length - 1]; if (t && t.s === 'error') return; this.push('error', kind); }
+gv(a) { return a && a.target ? a.target.value : (a == null ? '' : a); }
+fv(k) { const f = this.state.fm; return f && f[k] != null ? f[k] : ''; }
+sf(k, val) { const o = {}; o[k] = val; this.setS({ fm: Object.assign({}, this.state.fm, o) }); }
+fmtPhone(p) { const d = this.normPhone(p); return this.fa(d.slice(0, 4) + ' ' + d.slice(4, 7) + ' ' + d.slice(7)).trim(); }
+nav(list) { this.setS({ stack: [{ s: 'home', rid: '' }].concat(list.map((s) => ({ s: s, rid: '' }))), overlay: '', q: '' }); }
+startAuth() {
+this.setS({ stack: [{ s: 'splash', rid: '' }], overlay: '', dlg: null, fm: {}, authFlow: true, cart: { rid: '', items: [] }, promo: null });
+setTimeout(() => { const t = this.state.stack[this.state.stack.length - 1]; if (t && t.s === 'splash') this.setTop(this.state.seenOb ? 'login' : 'onboard'); }, 1800);
+}
+finishAuth() { this.setS({ stack: [{ s: 'home', rid: '' }], overlay: '', authFlow: false, seenOb: true }); }
+tickOtp() { setTimeout(() => { const t = this.state.stack[this.state.stack.length - 1]; if (t && t.s === 'otp' && this.state.otpLeft > 0) { this.setS({ otpLeft: this.state.otpLeft - 1 }); this.tickOtp(); } }, 1000); }
+toggleFaq(id) { const o = Object.assign({}, this.state.faqOpen); o[id] = !o[id]; this.setS({ faqOpen: o }); }
+useCode(code) { this.setS({ promoInput: code }); this.applyPromo(); this.openCart(); }
+setUser(name, phone) { const u = this.D().user; u.name = name; u.initial = name.trim().charAt(0); if (phone) { u.rawPhone = this.normPhone(phone); u.phone = this.fmtPhone(phone); } }
+build2(v, c) {
+const D = c.D, st = c.st, screen = c.screen, top = c.top, RR = c.RR, FF = c.FF, rc = c.rc, card = c.card, MI = c.MI, fa = (x) => this.fa(x);
+const gv = (a) => this.gv(a), fv = (k) => this.fv(k), sf = (k) => (a) => this.sf(k, gv(a));
+['Splash', 'Onboard', 'City', 'Login', 'Otp', 'Setup', 'Perms', 'Search', 'Restaurants', 'Offers', 'Campaign', 'Favs', 'Notifs', 'EditProf', 'Settings', 'Promos', 'Support', 'Invite', 'About', 'Legal', 'Apply', 'RateApp', 'RestInfo', 'Cancel', 'Report', 'RateOrder'].forEach((n) => { v['is' + n] = screen === n.toLowerCase().replace('editprof', 'editprof'); });
+const nf = st.nt || { orders: true, promos: true, news: false };
+const unread = D.notifs.filter((n) => !(st.readN || {})[n.id]).length;
+// ---- بخش بالا: تب‌ها و جستجو
+v.openSearch = () => this.push('search', '');
+v.editProfile = () => this.push('editprof', '');
+v.navPick = (key) => { if (key === 'home') this.setS({ stack: [{ s: 'home', rid: '' }], overlay: '' }); else if (key === 'cart') this.openCart(); else this.nav([key === 'profile' ? 'account' : key]); };
+// ---- ورود
+const obs = D.onboard, oi = st.oIdx || 0, ob = obs[oi];
+v.ob = Object.assign({}, ob, { cta: oi === obs.length - 1 ? 'شروع کنیم' : 'بعدی' }); v.obDots = obs.map((x, i) => ({ cls: i === oi ? 'on' : '' }));
+v.obNext = () => (oi === obs.length - 1 ? this.setTop('city') : this.setS({ oIdx: oi + 1 })); v.obSkip = () => this.setTop('city');
+const cityId = st.cityId || 'shahreza';
+v.cities = D.cities.map((x) => ({ title: x.name, sub: x.active ? 'فعال' : 'به‌زودی', icon: MI.addr, selected: cityId === x.id, pick: () => { if (x.active) this.setS({ cityId: x.id }); } }));
+v.cityLocate = () => this.setS({ cityId: 'shahreza' });
+v.cityGo = () => { if (st.authFlow) this.setTop('login'); else this.back(); }; v.cityBack = () => { if (st.authFlow) this.setTop('onboard'); else this.back(); };
+const ph = this.normPhone(fv('lgPhone'));
+v.lgPhone = fv('lgPhone'); v.onLgPhone = sf('lgPhone'); v.lgPhoneErr = ph.length >= 11 && !this.phoneOk(ph); v.lgTerms = !!st.terms; v.lgTermsCls = st.terms ? 'on' : '';
+v.flipTerms = () => this.setS({ terms: !st.terms }); v.openTerms = () => this.push('legal', 'terms'); v.lgOff = !(this.phoneOk(ph) && st.terms);
+v.lgSend = () => { if (v.lgOff) return; this.push('otp', '', { otpLeft: 60, fm: Object.assign({}, st.fm, { code: '' }) }); this.tickOtp(); };
+v.otpPhone = this.fmtPhone(ph); v.otpCode = fv('code'); v.onOtp = sf('code'); const oc = this.normPhone(fv('code')); v.otpOff = oc.length < 4; v.otpErr = !!st.otpBad;
+v.otpWait = (st.otpLeft || 0) > 0; v.otpTimer = (st.otpLeft || 0) > 0 ? 'ارسال مجدد کد تا ' + fa('۰۰:' + String(st.otpLeft).padStart(2, '0')) + ' دیگر' : 'کد را دریافت نکردید؟';
+v.otpResend = () => { this.setS({ otpLeft: 60 }); this.tickOtp(); };
+v.otpGo = () => { if (oc !== '1234') { this.setS({ otpBad: true }); return; } this.setS({ otpBad: false }); if (ph === D.user.rawPhone) this.finishAuth(); else this.setTop('setup'); };
+v.spName = fv('spName'); v.onSpName = sf('spName'); v.spRef = fv('spRef'); v.onSpRef = sf('spRef'); const sr = fv('spRef').trim(); v.spRefErr = !!sr && !/^DOKOON-/i.test(sr); v.spOff = fv('spName').trim().length < 2 || v.spRefErr;
+v.spGo = () => { if (v.spOff) return; this.setUser(fv('spName').trim(), ph); this.setTop('perms'); }; v.permsGo = () => this.finishAuth();
+// ---- جستجو
+const q0 = (st.srq || '').trim(); const qn = q0.replace(/ي/g, 'ی').replace(/ك/g, 'ک');
+const recent = st.recent || D.recentQ;
+const setQ = (t) => this.setS({ srq: t });
+v.srQuery = st.srq || ''; v.onSrQuery = (a) => this.setS({ srq: gv(a) }); v.srIdle = !q0; v.hasRecent = recent.length > 0;
+v.recent = recent.map((t) => ({ label: t, pick: () => setQ(t) })); v.clearRecent = () => this.setS({ recent: [] }); v.popularQ = D.popularQ.map((t) => ({ label: t, pick: () => setQ(t) }));
+const keep = () => { if (q0 && recent.indexOf(q0) < 0) this.setS({ recent: [q0].concat(recent).slice(0, 6) }); };
+const mr = q0 ? D.restaurants.filter((r) => (r.name + ' ' + r.sub).indexOf(qn) >= 0) : [], mf = q0 ? D.foods.filter((f) => (f.name + ' ' + f.desc).indexOf(qn) >= 0) : [];
+v.srRests = mr.map((r) => ({ title: r.name, sub: r.sub + ' · ' + this.dec(r.km) + ' کیلومتر', meta: '★ ' + this.dec(r.rating), art: r.art, tap: () => { keep(); this.openRestaurant(r.id); } }));
+v.srFoods = mf.map((f) => ({ title: f.name, sub: RR(f.rid).name, meta: this.money(f.price), art: f.art, tap: () => { keep(); this.openRestaurant(f.rid); this.openFood(f.id); } }));
+v.srHasRest = mr.length > 0; v.srHasFood = mf.length > 0; v.srNone = !!q0 && !mr.length && !mf.length;
+// ---- تب رستوران‌ها
+const rcat = st.rcat || 'all';
+v.rtCats = D.categories.map((x) => ({ title: x.title, art: x.art, selected: rcat === x.id, pick: () => this.setS({ rcat: x.id }) }));
+const rtl = D.restaurants.filter((r) => (rcat === 'all' || r.type === rcat) && this.passes(r, st.filter)); v.rtList = rtl.map(card); v.rtEmpty = rtl.length === 0;
+// ---- تب تخفیف‌ها
+const useC = (p) => ({ badge: fa(p.percent) + '٪', title: p.title, sub: p.sub, code: p.code, cta: 'استفاده', use: () => this.useCode(p.code) });
+v.coupons = D.promos.map(useC); const orl = D.restaurants.filter((r) => r.offer || r.fee === 0); v.offerRests = orl.map(card); v.hasOfferRests = orl.length > 0;
+v.campaigns = D.banners.map((b) => ({ title: b.title, sub: b.sub, tag: b.tag, art: b.art, tap: () => this.push('campaign', b.id) }));
+const cb = D.banners.find((b) => b.id === top.rid) || D.banners[0]; v.camp = Object.assign({}, cb, { text: D.campText[cb.id] || '', go: () => this.openRestaurant(cb.rid) });
+// ---- علاقه‌مندی‌ها
+const fl = D.restaurants.filter((r) => st.fav[r.id]); v.favList = fl.map(card); v.favEmpty = fl.length === 0;
+// ---- اعلان‌ها
+const ND = { order: MI.orders, promo: MI.promo, news: MI.bell };
+v.nfList = D.notifs.map((n) => ({ title: n.title, text: n.text, time: n.time, d: ND[n.kind] || MI.bell, dot: !(st.readN || {})[n.id], tap: () => { this.setS({ readN: Object.assign({}, st.readN, { [n.id]: true }) }); if (n.go === 'orders') this.openOrders(); else if (n.go === 'offers') this.nav(['offers']); else if (n.go.indexOf('rest:') === 0) this.openRestaurant(n.go.slice(5)); } }));
+v.nfEmpty = D.notifs.length === 0; v.nfAllLabel = unread ? 'خواندن همه' : ''; v.nfAll = () => { const r = {}; D.notifs.forEach((n) => { r[n.id] = true; }); this.setS({ readN: r }); };
+// ---- پروفایل
+const ep = st.prof || { name: D.user.name, birth: '' }; v.epName = ep.name; v.epPhone = D.user.phone; v.epBirth = ep.birth; v.epSaved = !!st.profSaved;
+v.onEpName = (a) => this.setS({ prof: Object.assign({}, ep, { name: gv(a) }), profSaved: false }); v.onEpBirth = (a) => this.setS({ prof: Object.assign({}, ep, { birth: gv(a) }), profSaved: false });
+v.epOff = ep.name.trim().length < 2; v.epSave = () => { if (v.epOff) return; this.setUser(ep.name.trim()); this.setS({ profSaved: true }); };
+// ---- تنظیمات
+v.stToggles = D.settingsToggles.map((t) => ({ title: t.title, sub: t.sub, on: !!nf[t.id], flip: () => this.setS({ nt: Object.assign({}, nf, { [t.id]: !nf[t.id] }) }) }));
+v.stCity = () => this.push('city', ''); v.city = (D.cities.find((x) => x.id === cityId) || D.cities[0]).name;
+v.stDelete = () => this.setS({ overlay: 'dlg', dlg: { title: 'حساب کاربری حذف شود؟', text: 'همه‌ی اطلاعات، آدرس‌ها و سفارش‌های شما حذف می‌شود و قابل بازگشت نیست.', ok: 'حذف حساب', danger: true, act: 'logout' } });
+// ---- کدهای تخفیف
+v.pmInput = st.pmInput || ''; v.pmStatus = st.pmStatus || ''; v.pmMsg = st.pmMsg || ''; v.onPmInput = (a) => this.setS({ pmInput: gv(a) });
+v.pmAdd = () => { const code = (st.pmInput || '').trim().toUpperCase(); if (!code) { this.setS({ pmStatus: 'err', pmMsg: 'کد تخفیف را وارد کنید.' }); return; } const p = D.promos.find((x) => x.code === code); if (p) this.setS({ pmStatus: 'ok', pmMsg: 'این کد در فهرست شما قرار دارد و هنگام پرداخت قابل استفاده است.' }); else this.setS({ pmStatus: 'err', pmMsg: 'کد تخفیف معتبر نیست.' }); };
+// ---- پشتیبانی
+const fo = st.faqOpen || {};
+v.spContacts = D.support.contacts; v.faqs = D.faqs.map((x) => ({ q: x.q, a: x.a, open: !!fo[x.id], flip: () => this.toggleFaq(x.id) }));
+v.spMsg = fv('spMsg'); v.onSpMsg = (a) => { this.sf('spMsg', gv(a)); this.setS({ spSent: false }); }; v.spSent = !!st.spSent; v.spOffMsg = fv('spMsg').trim().length < 5;
+v.spSend = () => { if (v.spOffMsg) return; this.setS({ spSent: true, fm: Object.assign({}, st.fm, { spMsg: '' }) }); };
+// ---- دعوت
+const iv = D.invite; v.inv = { title: iv.title, text: iv.text, code: iv.code, steps: iv.steps.map((s, i) => ({ title: s.title, sub: s.sub, n: fa(i + 1), d: s.d })) };
+v.invCopy = () => { try { if (navigator.clipboard) navigator.clipboard.writeText(iv.code); } catch (e) {} this.setS({ copied: true }); }; v.invCopyLabel = st.copied ? 'کپی شد ✓' : 'کپی کد دعوت';
+// ---- درباره و قوانین
+v.aboutText = D.about.text;
+v.aboutRows = [{ title: 'قوانین و مقررات', sub: 'شرایط استفاده از دکون', d: MI.info, tap: () => this.push('legal', 'terms') }, { title: 'حریم خصوصی', sub: 'چطور از اطلاعات شما محافظت می‌کنیم', d: MI.fav, tap: () => this.push('legal', 'privacy') }, { title: 'شبکه‌های اجتماعی', sub: 'ما را دنبال کنید', d: MI.share, tap: () => this.push('social', '') }, { title: 'امتیاز دادن به دکون', sub: 'نظر شما برای ما مهم است', d: MI.star, tap: () => this.push('rateapp', '') }];
+const lg = D.legal[top.rid] || D.legal.terms; v.lgTitle = lg.title; v.lgItems = lg.items.map((x, i) => ({ q: x.q, a: x.a, open: !!fo[top.rid + i], flip: () => this.toggleFaq(top.rid + i) }));
+// ---- ثبت‌نام رستوران و پیک
+const af = D.apply[top.rid] || D.apply.restaurant; v.ap = af; const ak = 'ap_' + top.rid;
+v.apFields = af.fields.map((f) => ({ label: f.label, ph: f.ph, mode: f.mode, value: fv(ak + f.id), input: sf(ak + f.id) })); v.apOff = af.fields.some((f) => fv(ak + f.id).trim().length < (f.id === 'phone' ? 11 : 2) || (f.id === 'phone' && !this.phoneOk(fv(ak + f.id))));
+v.apDone = !!(st.applied || {})[top.rid]; v.apForm = !v.apDone; v.apSend = () => { if (v.apOff) return; this.setS({ applied: Object.assign({}, st.applied, { [top.rid]: true }) }); };
+// ---- امتیاز به اپ
+const mkStars = (key, label) => { const n = (st.stars || {})[key] || 0; return { items: [1, 2, 3, 4, 5].map((i) => ({ cls: n >= i ? 'StarPicker__on' : '', label: fa(i) + ' ستاره', pick: () => this.setS({ stars: Object.assign({}, st.stars, { [key]: i }) }) })), label: ['', 'خیلی بد', 'بد', 'متوسط', 'خوب', 'عالی'][n], n: n }; };
+const rA = mkStars('app'); v.raStars = rA.items; v.raLabel = rA.label; v.raText = fv('raText'); v.onRaText = sf('raText'); v.raOff = rA.n < 1; v.raDone = !!st.rateAppDone; v.raForm = !v.raDone; v.raSend = () => { if (!v.raOff) this.setS({ rateAppDone: true }); };
+// ---- اطلاعات رستوران
+const rr = RR(top.rid) || D.restaurants[0]; v.ri = { name: rr.name, sub: rr.sub, art: rr.art, phone: this.fa(D.restPhone), href: 'tel:' + D.restPhone };
+v.riRows = [{ label: 'وضعیت', value: rr.open ? 'باز است' : 'بسته است' + (rr.opensNext ? ' (بازشدن: ' + rr.opensNext + ')' : '') }, { label: 'ساعت کاری', value: rr.hours }, { label: 'آدرس', value: rr.addr || '' }, { label: 'زمان آماده‌سازی', value: fa(rr.etaMin) + ' تا ' + fa(rr.etaMax) + ' دقیقه' }, { label: 'هزینه‌ی ارسال', value: rr.fee ? this.money(rr.fee) + ' تومان' : 'رایگان' }, { label: 'حداقل سفارش', value: this.money(rr.minOrder) + ' تومان' }, { label: 'نوع پیک', value: 'پیک دکون' }];
+v.restInfo = () => { const t = st.stack[st.stack.length - 1]; this.push('restinfo', t.rid); };
+// ---- سفارش: لغو، گزارش، امتیاز
+const all = this.allOrders(); const to = all.find((o) => o.id === st.trackId) || all[0]; const mine = !!to && (st.orders || []).some((o) => o.id === to.id);
+v.trkCanCancel = !!to && mine && to.status === 0; v.trkCanReport = !!to && (to.status === 3 || to.status === 4); v.trkCanRate = !!to && to.status === 4 && !(st.rated || {})[to.id];
+v.trkCancelGo = () => this.push('cancel', '', { cnWhy: '' }); v.trkReportGo = () => this.push('report', '', { rpType: '', rpDone: false, rpPhoto: '' }); v.trkRateGo = () => this.push('rateorder', '');
+v.trkSupport = () => this.push('support', '');
+const reasons = D.cancelReasons; v.cnReasons = reasons.map((x) => ({ title: x, icon: MI.info, selected: st.cnWhy === x, pick: () => this.setS({ cnWhy: x }) })); v.cnOff = !st.cnWhy;
+v.cnGo = () => { if (!st.cnWhy || !to) return; this.setS({ orders: (st.orders || []).map((o) => (o.id === to.id ? Object.assign({}, o, { status: 5 }) : o)), stack: st.stack.slice(0, -1) }); };
+v.rpNo = to ? to.no : ''; v.rpTypes = D.reportTypes.map((x) => ({ title: x, icon: MI.info, selected: st.rpType === x, pick: () => this.setS({ rpType: x }) })); v.rpText = fv('rpText'); v.onRpText = sf('rpText');
+v.rpPhotoLabel = st.rpPhoto ? 'عکس پیوست شد: ' + st.rpPhoto : 'افزودن عکس (اختیاری)'; v.onRpPhoto = (e) => { const f = e && e.target && e.target.files && e.target.files[0]; this.setS({ rpPhoto: f ? f.name : '' }); };
+v.rpOff = !st.rpType; v.rpDone = !!st.rpDone; v.rpForm = !v.rpDone; v.rpSend = () => { if (!v.rpOff) this.setS({ rpDone: true }); };
+const sR = mkStars('roR'), sC = mkStars('roC'); v.roStarsR = sR.items; v.roLabelR = sR.label; v.roStarsC = sC.items; v.roLabelC = sC.label; v.roRest = to ? 'رستوران: ' + RR(to.rid).name : ''; v.roCourier = 'پیک: ' + D.courier.name;
+v.roText = fv('roText'); v.onRoText = sf('roText'); v.roOff = sR.n < 1; v.roSend = () => { if (v.roOff || !to) return; this.setS({ rated: Object.assign({}, st.rated, { [to.id]: true }), stack: st.stack.slice(0, -1), stars: {} }); };
+// ---- منوها (با شمارنده‌ی زنده)
+v.accGroups = v.accGroups.map((g) => ({ items: g.items.map((i) => (i.label === 'اعلان‌ها' ? Object.assign({}, i, { badge: unread ? fa(unread) : '', hasBadge: !!unread }) : i)) }));
+// ---- تم، خطاها، نقدی
+v.themeCls = st.dark ? 'dk' : ''; v.dark = !!st.dark; v.flipDark = () => { const nx = !this.state.dark; this.setS({ dark: nx }); try { localStorage.setItem('dk-theme', nx ? 'dark' : 'light'); } catch (e) {} };
+v.isErrPage = screen === 'error'; const er = D.errors[top.rid] || D.errors.e500; v.er = er;
+v.erPrimary = () => { if (er.act === 'home') this.setS({ stack: [{ s: 'home', rid: '' }], overlay: '' }); else if (er.act === 'login') this.startAuth(); else this.back(); };
+v.erSecondary = () => { if (top.rid === 'e504') this.setS({ stack: st.stack.slice(0, -1).concat([{ s: 'orders', rid: '' }]) }); else this.push('support', ''); };
+v.errPreview = ['offline', 'e500', 'e503', 'e504', 'e403', 'e404', 'e401'].map((k) => ({ title: D.errors[k].title, sub: D.errors[k].code ? 'خطای ' + D.errors[k].code : 'قطع اینترنت', d: D.errors[k].d, tap: () => this.push('error', k) }));
+v.gwTimeout = () => this.showError('e504');
+v.trkTotalLabel = to && to.pay === 'cash' ? 'مبلغ قابل پرداخت هنگام تحویل' : 'مبلغ پرداخت‌شده';
+if (to) { v.trkInfo = v.trkInfo.concat([{ label: 'روش پرداخت', value: to.pay === 'cash' ? 'نقدی هنگام تحویل' : 'آنلاین' }]); if (to.status === 5 && to.pay === 'cash') v.trk = Object.assign({}, v.trk, { sub: 'سفارش لغو شد و مبلغی از شما دریافت نمی‌شود.' }); }
+// ---- دیالوگ عمومی (خروج / حذف حساب)
+const dl = st.dlg || { title: '', text: '', ok: '', danger: false };
+v.showDlg = st.overlay === 'dlg' && !!st.dlg; v.dlgTitle = dl.title; v.dlgText = dl.text; v.dlgOk = dl.ok; v.dlgCls = dl.danger ? 'dn' : ''; v.dlgCancel = () => this.setS({ overlay: '', dlg: null });
+v.dlgGo = () => { if (dl.act === 'logout') this.startAuth(); else this.setS({ overlay: '', dlg: null }); };
+return v;
+}
+build() {
+const D = this.D(), st = this.state, status = this.props.status || 'ready';
+const top = st.stack[st.stack.length - 1]; const screen = top.s;
+const RR = (id) => D.restaurants.find((x) => x.id === id);
+const FF = (id) => D.foods.find((x) => x.id === id);
+const items = st.cart.items;
+const count = items.reduce((a, l) => a + l.qty, 0), total = items.reduce((a, l) => a + l.unit * l.qty, 0);
+const rc = (r) => ({ id: r.id, name: r.name, sub: r.sub, km: this.dec(r.km), art: r.art, rating: this.dec(r.rating), reviews: this.fa(r.reviews), eta: this.fa(r.etaMin) + ' تا ' + this.fa(r.etaMax), free: r.fee === 0, feeText: r.fee === 0 ? 'ارسال رایگان' : 'ارسال ' + this.money(r.fee) + ' تومان', feeShort: r.fee === 0 ? 'رایگان' : this.money(r.fee), badge: r.badge || '', badgeTone: r.badgeTone || 'red', isOpen: r.open, fav: !!st.fav[r.id], cover: r.cover, minOrderText: this.money(r.minOrder) + ' تومان', hours: r.hours, opensNext: r.opensNext || '', offer: r.offer || '' });
+const card = (r) => ({ r: rc(r), open: () => this.openRestaurant(r.id), fav: () => this.toggleFav(r.id) });
+let base = D.restaurants.filter((r) => (st.cat === 'all' || r.type === st.cat) && this.passes(r, st.filter));
+const s = st.filter.sort; const by = (k, dir) => base.slice().sort((a, b) => dir * (a[k] - b[k]));
+let nearby = by('km', 1), popular = by('rating', -1);
+if (s === 'near') popular = nearby; else if (s === 'rating') nearby = popular; else if (s === 'fee') { nearby = by('fee', 1); popular = nearby; }
+const fcount = this.countFilters(st.filter);
+const v = {
+isHome: screen === 'home', isRestaurant: screen === 'restaurant', isCart: screen === 'cart', isCheckout: screen === 'checkout', isLoading: status === 'loading', isError: status === 'error', isReady: status === 'ready',
+noop: () => {}, retry: () => {}, openCart: () => this.openCart(), back: () => this.back(), goHome: () => this.setS({ stack: [{ s: 'home', rid: '' }], overlay: '' }), openMenu: () => this.setS({ overlay: 'menu' }), closeOverlay: () => this.setS({ overlay: '', sheet: null, pending: null }),
+address: (() => { const L0 = this.addrList(); const ad0 = L0.find((q) => q.id === st.addrId) || L0[0]; return ad0 ? ad0.title + '، ' + ad0.short : 'انتخاب آدرس تحویل'; })(), hasCart: count > 0, cartCountText: this.fa(count), cartTotalText: this.money(total), cartBadge: count > 0 ? this.fa(count) : '',
+filterCountText: fcount ? this.fa(fcount) : '',
+openFilter: () => this.setS({ overlay: 'filter', draft: Object.assign({}, st.filter, { tags: st.filter.tags.slice() }) }),
+banners: D.banners.map((b) => Object.assign({}, b, { go: () => this.openRestaurant(b.rid) })),
+dots: [0, 1, 2].map((i) => ({ delay: (i === 0 ? 0 : -(15 - i * 5)) + 's' })),
+categories: D.categories.map((c) => ({ title: c.title, art: c.art, selected: st.cat === c.id, pick: () => this.setS({ cat: c.id }) })),
+nearby: nearby.map(card), popular: popular.map(card), hasResults: nearby.length > 0, noResults: nearby.length === 0,
+promo: Object.assign({}, D.promo, { go: () => this.openRestaurant(D.promo.rid) }),
+navPick: (key) => { if (key === 'home') this.setS({ stack: [{ s: 'home', rid: '' }], overlay: '' }); else if (key === 'profile') this.setS({ stack: [{ s: 'home', rid: '' }, { s: 'account', rid: '' }], overlay: '' }); else if (key === 'cart') this.openCart(); else this.soon(({ restaurants: 'رستوران‌ها', offers: 'تخفیف‌ها', profile: 'حساب' })[key] || ''); }, openSearch: () => this.soon('جستجو'), placeOrder: () => this.push('gateway', ''), isSoon: screen === 'soon', isSocial: screen === 'social', isOrders: screen === 'orders', isTrack: screen === 'track', isAccount: screen === 'account', editProfile: () => this.soon('ویرایش پروفایل'), isGateway: screen === 'gateway', isPaid: screen === 'paid', isPayfail: screen === 'payfail', isAddAddr: screen === 'addaddr', addAddress: () => this.startAddAddress(), payOk: () => this.payOk(), payFail: () => this.setTop('payfail'), retryPay: () => this.setTop('gateway'), toCart: () => this.toCart(), soonTitle: st.soonTitle || '', user: D.user, city: D.city, version: D.version,
+showMenu: st.overlay === 'menu', showFilter: st.overlay === 'filter', showFood: (st.overlay === 'food' || st.overlay === 'review') && !!st.sheet, showReview: st.overlay === 'review' && !!st.sheet, showDelAddr: st.overlay === 'delconfirm', showConfirm: st.overlay === 'confirm' && !!st.pending, showAddress: st.overlay === 'address', showSlots: st.overlay === 'slots'
+};
+const ic = (d) => d;
+const MI = {
+orders: 'M7 3h10a1 1 0 0 1 1 1v17l-3-2-3 2-3-2-3 2V4a1 1 0 0 1 1-1zM9 8h6M9 12h6',
+fav: 'M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z',
+addr: 'M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11zM12 7.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5z',
+promo: 'M3 12V4h8l10 10-8 8zM7.5 8.5h.01',
+bell: 'M6 16V11a6 6 0 0 1 12 0v5l1.5 2h-15zM10 20a2 2 0 0 0 4 0',
+gear: 'M12 9a3 3 0 1 0 0 6 3 3 0 0 0 0-6zM12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1',
+info: 'M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM12 11v5M12 8h.01',
+out: 'M9 4H5a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h4M16 8l4 4-4 4M20 12H9',
+gift: 'M4 11h16v9H4zM3 7h18v4H3zM12 7v13M12 7c-2 0-4-1-4-3s3-2 4 3zM12 7c2 0 4-1 4-3s-3-2-4 3z',
+help: 'M4 14v-2a8 8 0 0 1 16 0v2M4 14h3v5H5a1 1 0 0 1-1-1zM20 14h-3v5h2a1 1 0 0 0 1-1zM17 19c0 1.5-2 2-5 2',
+shop: 'M4 10l1-5h14l1 5M4 10a2.5 2.5 0 0 0 5 0 2.5 2.5 0 0 0 6 0 2.5 2.5 0 0 0 5 0M5 12v8h14v-8M10 20v-5h4v5',
+bike: 'M6 18a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM18 18a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM6 15l4-7h5l3 7M10 8l2 7h6M14 5h3',
+share: 'M8 12a3 3 0 1 0 0 .01zM18 6a3 3 0 1 0 0 .01zM18 18a3 3 0 1 0 0 .01zM10.6 10.6l4.8-3.2M10.6 13.4l4.8 3.2',
+star: 'M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z'
+};
+const fa0 = (n) => this.fa(n);
+const wrap = (groups) => groups.map((g) => ({ items: g.items.map((i) => Object.assign({ cls: '', badge: '', hasBadge: !!i.badge }, i, { hasBadge: !!i.badge, pick: () => (i.go ? i.go() : this.soon(i.label)) })) }));
+const gOrders = { label: 'سفارش‌ها', d: MI.orders, badge: this.fa(D.activeOrders) + ' فعال', go: () => this.openOrders() };
+// حساب کاربری: داده‌ها و فعالیت شخصی
+v.accGroups = wrap([
+{ items: [gOrders, { label: 'علاقه‌مندی‌ها', d: MI.fav, go: () => this.push('favs', '') }, { label: 'آدرس‌های من', d: MI.addr, go: () => this.setS({ overlay: 'address' }) }] },
+{ items: [{ label: 'اعلان‌ها', d: MI.bell, go: () => this.push('notifs', '') }, { label: 'کدهای تخفیف', d: MI.promo, badge: fa0(D.promos.length), go: () => this.push('promos', '') }, { label: 'تنظیمات', d: MI.gear, go: () => this.push('settings', '') }] },
+{ items: [{ label: 'درباره ما و قوانین', d: MI.info, go: () => this.push('about', '') }] },
+{ items: [{ label: 'خروج از حساب', d: MI.out, cls: 'MenuList__out', go: () => this.setS({ overlay: 'dlg', dlg: { title: 'از حساب خارج می‌شوید؟', text: 'برای سفارش دوباره باید با شماره‌ی موبایل وارد شوید.', ok: 'خروج از حساب', danger: true, act: 'logout' } }) }] }
+]);
+// منوی همبرگری: امکانات عمومی اپ، بدون تکرار موارد حساب
+v.menuGroups = wrap([
+{ items: [{ label: 'دعوت از دوستان', d: MI.gift, badge: 'هدیه', go: () => this.push('invite', '') }, { label: 'پشتیبانی و پرسش‌های متداول', d: MI.help, go: () => this.push('support', '') }] },
+{ items: [{ label: 'ثبت‌نام رستوران', d: MI.shop, go: () => this.push('apply', 'restaurant') }, { label: 'همکاری با پیک', d: MI.bike, go: () => this.push('apply', 'courier') }] },
+{ items: [{ label: 'شبکه‌های اجتماعی', d: MI.share, go: () => this.push('social', '') }, { label: 'امتیاز دادن به دکون', d: MI.star, go: () => this.push('rateapp', '') }] }
+]);
+v.socials = (D.socials || []).map((x) => Object.assign({}, x, { open: () => { try { window.open(x.url || '#', '_blank'); } catch (e) {} } }));
+// filter sheet
+const dr = st.draft; const upd = (p) => this.setS({ draft: Object.assign({}, st.draft, p) });
+v.fSort = D.sorts.map((o) => ({ label: o.label, selected: dr.sort === o.id, pick: () => upd({ sort: o.id }) }));
+const tg = [['open', 'همین الان باز است', 'رستوران‌هایی که سفارش می‌گیرند'], ['free', 'ارسال رایگان', 'بدون هزینه‌ی پیک'], ['disc', 'دارای تخفیف', 'قیمت‌های ویژه و کد تخفیف']];
+v.fToggles = tg.map((t) => ({ title: t[1], sub: t[2], on: !!dr[t[0]], cls: dr[t[0]] ? 'FilterSheet__on' : '', flip: () => { const p = {}; p[t[0]] = !dr[t[0]]; upd(p); } }));
+v.fTags = D.tags.map((t) => ({ label: t.label, art: t.art, selected: dr.tags.indexOf(t.id) >= 0, pick: () => upd({ tags: dr.tags.indexOf(t.id) >= 0 ? dr.tags.filter((x) => x !== t.id) : dr.tags.concat([t.id]) }) }));
+v.fRatings = D.ratings.map((o) => ({ label: o.label, selected: dr.min === o.v, pick: () => upd({ min: o.v }) }));
+const fc = D.restaurants.filter((r) => this.passes(r, dr)).length;
+v.fCount = fc ? 'نمایش ' + this.fa(fc) + ' رستوران' : 'رستورانی پیدا نشد';
+v.fClear = () => this.setS({ draft: this.f0() });
+v.fApply = () => this.setS({ filter: st.draft, overlay: '' });
+// restaurant screen
+v.rest = {}; v.hasMenu = false; v.noMenu = false; v.noMatch = false; v.sections = []; v.tabs = []; v.query = st.q; v.showDock = false;
+if (screen === 'restaurant') {
+const r = RR(top.rid); v.rest = rc(r); v.restFav = () => this.toggleFav(r.id); v.back = () => this.back();
+v.hasMenu = r.hasMenu; v.noMenu = !r.hasMenu;
+v.onQuery = (val0, val = this.gv(val0)) => this.setS({ q: val });
+const q = (st.q || '').trim();
+const qty = (fid) => items.filter((l) => l.foodId === fid).reduce((a, l) => a + l.qty, 0);
+const sec = r.cats.map((c) => ({ id: c.id, title: c.title, art: c.art, foods: c.foods.map(FF).filter((f) => !q || f.name.indexOf(q) >= 0 || f.desc.indexOf(q) >= 0).map((f) => ({ f: { id: f.id, name: f.name, desc: f.desc, art: f.art, priceText: this.money(f.price), oldText: f.old ? this.money(f.old) : '', badge: f.badge, hasGroups: this.groupsOf(f).length > 0, available: f.available, orderable: r.open }, qtyText: qty(f.id) ? this.fa(qty(f.id)) : '', open: () => this.openFood(f.id), add: () => (this.groupsOf(f).length ? this.openFood(f.id) : this.addSimple(f)), inc: () => this.chg(f.id, 1), dec: () => this.chg(f.id, -1) })) })).filter((c) => c.foods.length);
+v.sections = sec; v.noMatch = r.hasMenu && sec.length === 0;
+const act = sec.some((c) => c.id === st.tab) ? st.tab : (sec[0] && sec[0].id);
+v.tabs = sec.map((c) => ({ label: c.title, art: c.art, selected: act === c.id, pick: () => { this.setS({ tab: c.id }); this.scrollTo(c.id); } }));
+v.showDock = count > 0 && st.cart.rid === r.id;
+}
+// food sheet
+v.sheetFood = {}; v.sheetQty = '۱'; v.sheetTotal = ''; v.sheetCan = false; v.sheetCta = ''; v.sheetNote = '';
+if (st.sheet) {
+const sh = st.sheet, f = FF(sh.foodId), r = RR(f.rid);
+let unit = f.price, miss = false;
+const allRv = (st.userReviews[f.id] || []).concat(f.revBase); const avgRv = Math.round(allRv.reduce((q, x) => q + x.stars, 0) / allRv.length * 10) / 10; const visRv = allRv.slice(0, st.revCount);
+const groups = this.groupsOf(f).map((g) => {
+const chosen = sh.sel[g.id] || []; const multi = g.max > 1;
+if (g.min >= 1 && chosen.length < g.min) miss = true;
+chosen.forEach((id) => { const o = g.options.find((x) => x.id === id); if (o) unit += o.price; });
+return { title: g.title, tag: g.min >= 1 ? 'اجباری' : (multi ? 'اختیاری، تا ' + this.fa(g.max) + ' مورد' : 'اختیاری'), tagCls: g.min >= 1 ? 'FoodDetails__rq' : 'FoodDetails__op2', role: multi ? 'checkbox' : 'radio', mkCls: multi ? 'FoodDetails__sq' : '', options: g.options.map((o) => ({ name: o.name, priceText: o.price ? '+' + this.money(o.price) : 'رایگان', selected: chosen.indexOf(o.id) >= 0, cls: chosen.indexOf(o.id) >= 0 ? 'FoodDetails__on' : '', pick: () => this.pickOpt(g, o) })) };
+});
+v.sheetFood = { art: f.art, name: f.name, restaurantName: r.name, rating: allRv.length ? this.dec(avgRv) : '', reviewCount: this.fa(allRv.length), hasMore: visRv.length < allRv.length, priceText: this.money(f.price), oldText: f.old ? this.money(f.old) : '', serving: f.serving, includes: f.includes, desc: f.desc, groups: groups, reviews: visRv.map((x) => Object.assign({ starsText: '★'.repeat(x.stars) + '☆'.repeat(5 - x.stars) }, x)), dist: [5, 4, 3, 2, 1].map((n) => ({ n: this.fa(n), pct: allRv.length ? Math.round(allRv.filter((x) => x.stars === n).length / allRv.length * 100) : 0 })) };
+v.sheetScroll = (e) => { const el = e && e.target; if (!el || el.scrollHeight - el.scrollTop - el.clientHeight > 220) return; if (this.state.revCount < allRv.length) this.setS({ revCount: this.state.revCount + 4 }); };
+const rvd = st.rv || { stars: 0, text: '' };
+v.review = () => this.setS({ overlay: 'review', rv: { stars: 0, text: '' } }); v.closeReview = () => this.setS({ overlay: 'food' });
+v.reviewFood = f.name; v.rvText = rvd.text; v.rvOk = rvd.stars > 0;
+v.starLabel = ['', 'خیلی بد', 'بد', 'متوسط', 'خوب', 'عالی'][rvd.stars];
+v.starItems = [1, 2, 3, 4, 5].map((n) => ({ cls: rvd.stars >= n ? 'ReviewSheet__on' : '', label: this.fa(n) + ' ستاره', pick: () => this.setS({ rv: Object.assign({}, this.state.rv, { stars: n }) }) }));
+v.onRvText = (val0, val = this.gv(val0)) => this.setS({ rv: Object.assign({}, this.state.rv, { text: val }) });
+v.rvSubmit = () => { const x = this.state.rv; if (!x || x.stars < 1) return; const ur = Object.assign({}, this.state.userReviews); ur[f.id] = [{ initial: this.D().user.initial, name: this.D().user.name, date: 'همین الان', stars: x.stars, text: x.text.trim(), mine: true }].concat(ur[f.id] || []); this.setS({ userReviews: ur, overlay: 'food', rv: null }); };
+v.sheetQty = this.fa(sh.qty); v.sheetTotal = this.money(unit * sh.qty); v.sheetNote = sh.note;
+v.sheetCan = f.available && r.open && !miss;
+v.sheetCta = !f.available ? 'ناموجود' : (!r.open ? 'رستوران بسته است' : (miss ? 'گزینه‌های اجباری را انتخاب کنید' : 'افزودن به سبد'));
+v.sheetInc = () => this.setS({ sheet: Object.assign({}, sh, { qty: sh.qty + 1 }) });
+v.sheetDec = () => this.setS({ sheet: Object.assign({}, sh, { qty: Math.max(1, sh.qty - 1) }) });
+v.sheetSetNote = (val0, val = this.gv(val0)) => this.setS({ sheet: Object.assign({}, st.sheet, { note: val }) });
+v.sheetAdd = () => { if (!v.sheetCan) return; const sig = Object.keys(sh.sel).sort().map((k) => k + ':' + sh.sel[k].slice().sort().join(',')).join(';'); const opts = this.groupsOf(f).map((g) => (sh.sel[g.id] || []).map((oid) => { const o = g.options.find((x) => x.id === oid); return o ? o.name : ''; }).filter(Boolean).join('، ')).filter(Boolean).join('، '); this.addLine(f.rid, { key: f.id + '|' + sig + '|' + sh.note, foodId: f.id, rid: f.rid, unit: unit, qty: sh.qty, note: sh.note, opts: opts }); };
+}
+
+const PIN = 'M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11zM12 7.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5z', CLOCK = 'M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM12 7v5l3 2', CAL = 'M5 5h14a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1zM4 10h16M9 3v4M15 3v4', CARD = 'M4 6h16a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1zM3 10h18M7 15h4';
+const cr = st.cart.rid ? RR(st.cart.rid) : null;
+const disc = st.promo ? Math.min(Math.round(total * st.promo.percent / 100), st.promo.max) : 0;
+const fee = cr ? cr.fee : 0; const payable = total + fee - disc; const below = cr ? Math.max(0, cr.minOrder - total) : 0;
+v.cartEmpty = items.length === 0; v.cartFull = items.length > 0;
+v.cartRest = cr ? { name: cr.name, art: cr.art, minText: 'حداقل سفارش: ' + this.money(cr.minOrder) + ' تومان' } : { name: '', art: 'dk-all', minText: '' };
+v.cartItems = items.map((l) => { const f = FF(l.foodId); return { item: { art: f.art, name: f.name, optionsText: l.opts || '', note: l.note || '', totalText: this.money(l.unit * l.qty) }, qtyText: this.fa(l.qty), inc: () => this.chgKey(l.key, 1), dec: () => this.chgKey(l.key, -1) }; });
+v.hasBelow = below > 0; v.belowText = 'برای ثبت سفارش، ' + this.money(below) + ' تومان دیگر به سبد اضافه کنید.';
+v.cartClosed = !!cr && !cr.open; v.closedText = cr && !cr.open ? 'این رستوران الان بسته است. بازشدن بعدی: ' + cr.opensNext : '';
+v.cartOff = !!(below > 0 || (cr && !cr.open));
+v.cartCta = below > 0 ? 'حداقل سفارش کامل نیست' : (cr && !cr.open ? 'رستوران بسته است' : 'ادامه و تکمیل سفارش');
+v.payableText = this.money(payable) + ' تومان';
+v.cartNote = st.note; v.onCartNote = (e) => this.setS({ note: e && e.target ? e.target.value : '' });
+v.promoInput = st.promoInput; v.promoStatus = st.promoStatus; v.promoMsg = st.promoMsg; v.onPromoInput = (val0, val = this.gv(val0)) => this.setS({ promoInput: val }); v.applyPromo = () => this.applyPromo();
+const rows = [{ label: 'جمع غذاها', value: this.money(total) + ' تومان', tone: '' }, { label: 'هزینه‌ی ارسال', value: fee ? this.money(fee) + ' تومان' : 'رایگان', tone: fee ? '' : 'PriceSummary__good' }];
+if (disc) rows.push({ label: 'تخفیف (' + st.promo.code + ')', value: this.money(disc) + ' تومان', tone: 'PriceSummary__good' });
+v.sumRows = rows; v.sumTotal = this.money(payable) + ' تومان';
+v.addMore = () => { if (!cr) return; const prev = st.stack[st.stack.length - 2]; if (prev && prev.s === 'restaurant' && prev.rid === cr.id) this.back(); else this.openRestaurant(cr.id); };
+v.toCheckout = () => this.push('checkout', '');
+const ad = this.addrList().find((a) => a.id === st.addrId) || null;
+const rc0 = st.rc; const rcOk = rc0.name.trim().length >= 2 && this.phoneOk(rc0.phone);
+v.hasAddr = !!ad; v.noAddr = !ad; v.addr = ad ? { title: ad.title, sub: ad.text, icon: PIN } : { title: '', sub: '', icon: PIN }; v.outOfZone = !!ad && !ad.inZone; v.placeOff = !!(v.cartOff || !ad || !ad.inZone || !rcOk);
+v.rcModes = [['self', 'برای خودم'], ['other', 'برای شخص دیگر']].map((q) => ({ label: q[1], selected: rc0.mode === q[0], pick: () => this.setMode(q[0]) }));
+v.rcName = rc0.name; v.rcPhone = rc0.phone; v.onRcName = (val0, val = this.gv(val0)) => this.setS({ rc: Object.assign({}, this.state.rc, { name: val }) }); v.onRcPhone = (val0, val = this.gv(val0)) => this.setS({ rc: Object.assign({}, this.state.rc, { phone: val }) });
+v.hasRcErr = !rcOk && (rc0.name.length > 0 || rc0.phone.length > 0); v.rcErr = 'نام گیرنده و شماره‌ی تماس معتبر (مثلاً ۰۹۱۲۳۴۵۶۷۸۹) را وارد کنید.';
+v.hasNote = (st.note || '').trim().length > 0;
+v.placeCta = !ad ? 'یک آدرس انتخاب کنید' : !ad.inZone ? 'آدرس خارج از محدوده است' : !rcOk ? 'مشخصات گیرنده را کامل کنید' : v.cartCta === 'ادامه و تکمیل سفارش' ? (st.payM === 'cash' && cr && cr.allowCash !== false ? 'ثبت سفارش' : 'پرداخت و ثبت سفارش') : v.cartCta;
+v.openAddress = () => this.setS({ overlay: 'address' });
+v.addrOptions = this.addrList().map((a) => ({ title: a.title, sub: (a.rname ? a.rname + ' · ' : '') + a.text + (a.inZone ? '' : ' (خارج از محدوده)'), icon: PIN, selected: a.id === st.addrId, canDel: true, del: () => this.setS({ delId: a.id, overlay: 'delconfirm' }), pick: () => this.pickAddr(a) }));
+const delA = this.addrList().find((x) => x.id === st.delId); v.delText = delA ? 'آدرس «' + delA.title + '» حذف شود؟' : '';
+v.confirmDel = () => { const id = st.delId; const isUser = (st.userAddrs || []).some((x) => x.id === id); const ua = isUser ? st.userAddrs.filter((x) => x.id !== id) : st.userAddrs; const dd = isUser ? st.deletedAddr : st.deletedAddr.concat([id]); const rest = this.D().addresses.concat(ua).filter((x) => dd.indexOf(x.id) < 0); this.setS({ userAddrs: ua, deletedAddr: dd, addrId: st.addrId === id ? (rest[0] ? rest[0].id : '') : st.addrId, delId: '', overlay: 'address' }); };
+v.cancelDel = () => this.setS({ delId: '', overlay: 'address' });
+v.timeInfo = { title: cr ? 'ارسال حدود ' + this.fa(cr.etaMin) + ' تا ' + this.fa(cr.etaMax) + ' دقیقه‌ی دیگر' : '', sub: 'زمان ارسال را رستوران تعیین می‌کند' };
+v.trackOrder = () => this.setS({ stack: [{ s: 'home', rid: '' }, { s: 'track', rid: '' }], overlay: '' }); const cashOk = !!cr && cr.allowCash !== false; const pm = st.payM === 'cash' && cashOk ? 'cash' : 'online'; v.payOpts = [{ title: 'پرداخت آنلاین', sub: 'پرداخت امن از طریق درگاه بانکی', icon: CARD, selected: pm === 'online', pick: () => this.setS({ payM: 'online' }) }].concat(cashOk ? [{ title: 'پرداخت نقدی هنگام تحویل', sub: 'مبلغ را هنگام تحویل به پیک بپردازید', icon: 'M3 7h18v10H3zM12 9.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM6 10v.01M18 14v.01', selected: pm === 'cash', pick: () => this.setS({ payM: 'cash' }) }] : []); v.payM = pm; v.placeOrder = () => (pm === 'cash' ? this.payOk('cash') : this.push('gateway', ''));
+const adr = st.ad || { x: -1, y: -1, title: 'خانه', text: '', plaque: '', unit: '', rname: '', rphone: '', locating: false };
+const placed = adr.x >= 0; const inZ = placed ? Math.sqrt(Math.pow((adr.x - 50) / 100 * 358, 2) + Math.pow((adr.y - 50) / 100 * 240, 2)) <= 82 : true;
+v.mapPin = { x: adr.x, y: adr.y, inZone: inZ, locating: !!adr.locating };
+v.adTitles = ['خانه', 'محل کار', 'دیگر'].map((t) => ({ label: t, selected: adr.title === t, pick: () => this.setS({ ad: Object.assign({}, this.state.ad, { title: t }) }) }));
+v.adText = adr.text; v.adPlaque = adr.plaque; v.adUnit = adr.unit; v.adOut = placed && !inZ; v.adName = adr.rname; v.adPhone = adr.rphone; v.adSaveOff = adr.text.trim().length < 8 || (adr.rname || '').trim().length < 2 || !this.phoneOk(adr.rphone);
+v.onAdName = (val0, val = this.gv(val0)) => this.setS({ ad: Object.assign({}, this.state.ad, { rname: val }) }); v.onAdPhone = (val0, val = this.gv(val0)) => this.setS({ ad: Object.assign({}, this.state.ad, { rphone: val }) });
+v.onAdText = (val0, val = this.gv(val0)) => this.setS({ ad: Object.assign({}, this.state.ad, { text: val }) });
+v.onAdPlaque = (val0, val = this.gv(val0)) => this.setS({ ad: Object.assign({}, this.state.ad, { plaque: val }) });
+v.onAdUnit = (val0, val = this.gv(val0)) => this.setS({ ad: Object.assign({}, this.state.ad, { unit: val }) });
+v.mapPick = (x, y) => this.pickMap(x, y); v.mapLocate = () => this.locate(); v.saveAddr = () => this.saveAddress();
+v.order = st.order || { no: '', rest: '', amount: '', count: '', eta: '' };
+const all = this.allOrders(); const SL = ['ثبت شد', 'تأیید رستوران', 'در حال آماده‌سازی', 'در راه', 'تحویل شد', 'لغو شد'], TN = ['ink', 'amber', 'amber', 'amber', 'green', 'red'];
+const ov = (o) => { const r = RR(o.rid); const act = o.status < 4; return { art: r.art, name: r.name, no: o.no, date: o.placed, statusLabel: SL[o.status], statusTone: TN[o.status], items: o.lines.map((l) => this.fa(l.qty) + '× ' + FF(l.foodId).name).join('، '), total: this.money(this.orderTotal(o)), footNote: act ? 'زمان تقریبی: ' + this.fa(r.etaMin) + ' تا ' + this.fa(r.etaMax) + ' دقیقه' : (o.status === 5 ? 'لغو شد' : 'تحویل شد'), actionLabel: act ? 'پیگیری سفارش' : (o.status === 4 ? 'سفارش مجدد' : ''), primary: act }; };
+const activeL = all.filter((o) => o.status < 4), pastL = all.filter((o) => o.status >= 4); const curL = st.ordTab === 'past' ? pastL : activeL;
+v.ordTabs = [['active', 'فعال'], ['past', 'گذشته']].map((q) => ({ label: q[1] + (q[0] === 'active' && activeL.length ? ' (' + this.fa(activeL.length) + ')' : ''), selected: st.ordTab === q[0], pick: () => this.setS({ ordTab: q[0] }) }));
+v.ordList = curL.map((o) => ({ order: ov(o), open: () => this.openTrack(o.id), act: () => (o.status < 4 ? this.openTrack(o.id) : this.reorder(o)) }));
+v.ordEmpty = curL.length === 0; v.ordEmptyTitle = st.ordTab === 'past' ? 'هنوز سفارشی ثبت نکرده‌اید' : 'سفارش فعالی ندارید'; v.ordEmptyText = st.ordTab === 'past' ? 'سفارش‌های تحویل‌شده‌ی شما اینجا نمایش داده می‌شوند.' : 'بعد از ثبت سفارش، وضعیت آن را اینجا می‌بینید.';
+const to = all.find((o) => o.id === st.trackId) || all[0];
+v.trkNone = !to; v.trk = { title: '', sub: '', eta: '', art: 'dk-all' }; v.trkSteps = []; v.trkItems = []; v.trkInfo = []; v.trkRows = []; v.trkTotal = ''; v.trkRest = { title: '', sub: '', art: 'dk-all', href: '#' }; v.trkCourier = { title: '', sub: '', art: 'dk-all', href: '#' };
+v.showCourier = false; v.hasSteps = false; v.hasEta = false; v.trkDone = false; v.trkCancel = false; v.showAdvance = false;
+if (to) {
+const r = RR(to.rid), S = to.status; const lo = r.etaMin, hi = r.etaMax;
+const titles = ['سفارش شما ثبت شد', 'رستوران سفارش را تأیید کرد', 'غذای شما در حال آماده شدن است', 'پیک سفارش شما را می‌آورد', 'سفارش تحویل داده شد', 'سفارش لغو شد'];
+const subs = ['منتظر تأیید رستوران هستیم', 'رستوران سفارش شما را پذیرفت', 'آشپزها مشغول آماده‌سازی هستند', 'پیک در مسیر رسیدن به شماست', 'نوش جان!', 'مبلغ پرداختی طبق قوانین درگاه بازگردانده می‌شود'];
+const names = ['ثبت سفارش', 'تأیید رستوران', 'آماده‌سازی غذا', 'در راه', 'تحویل به شما'], ssub = ['سفارش و پرداخت شما ثبت شد', 'رستوران سفارش را پذیرفت', 'غذا در حال پخت و بسته‌بندی است', 'پیک سفارش را به آدرس شما می‌برد', 'سفارش تحویل داده شد'];
+const etaT = S === 3 ? '۵ تا ۱۵ دقیقه' : this.fa(Math.max(5, lo - S * 5)) + ' تا ' + this.fa(Math.max(10, hi - S * 5)) + ' دقیقه';
+v.trk = { title: titles[S], sub: subs[S], eta: etaT, art: r.art };
+v.hasEta = S < 4; v.trkDone = S === 4; v.trkCancel = S === 5; v.hasSteps = S < 5; v.showCourier = S === 3; v.showAdvance = S < 4 && (st.orders || []).some((o) => o.id === to.id);
+v.trkSteps = names.map((n, i) => ({ label: n, sub: (S === 4 || i <= S) ? ssub[i] : '', cls: S === 4 || i < S ? 'StepBar__done' : (i === S ? 'StepBar__cur' : '') }));
+v.trkRest = { title: r.name, sub: 'تماس با رستوران', art: r.art, href: 'tel:' + D.restPhone };
+v.trkCourier = { title: D.courier.name, sub: 'پیک دکون (' + D.courier.vehicle + ')', art: 'dk-all', href: 'tel:' + D.courier.phone };
+v.trkItems = to.lines.map((l) => ({ label: this.fa(l.qty) + '× ' + FF(l.foodId).name + (l.opts ? ' (' + l.opts + ')' : ''), value: this.money(l.unit * l.qty) + ' تومان' }));
+v.trkInfo = [{ label: 'کد سفارش', value: to.no }, { label: 'زمان ثبت', value: to.placed }, { label: 'گیرنده', value: to.rcpt || 'امیر · ۰۹۱۳۱۲۳۴۵۶۷' }, { label: 'آدرس تحویل', value: to.addr || 'شهرضا، خیابان امام، کوچه‌ی ۱۲، پلاک ۸، واحد ۳' }];
+const fsum = to.lines.reduce((q, l) => q + l.unit * l.qty, 0);
+v.trkRows = [{ label: 'جمع غذاها', value: this.money(fsum) + ' تومان', tone: '' }, { label: 'هزینه‌ی ارسال', value: to.fee ? this.money(to.fee) + ' تومان' : 'رایگان', tone: to.fee ? '' : 'PriceSummary__good' }].concat(to.disc ? [{ label: 'تخفیف', value: this.money(to.disc) + ' تومان', tone: 'PriceSummary__good' }] : []);
+v.trkTotal = this.money(this.orderTotal(to)) + ' تومان'; v.trkAdvance = () => this.advance(); v.trkReorder = () => this.reorder(to); v.trkSupport = () => this.soon('پشتیبانی');
+}
+if (st.pending) { v.pendingRestName = RR(st.pending.rid).name; v.cartRestName = st.cart.rid ? RR(st.cart.rid).name : ''; }
+v.confirmReplace = () => { const p = st.pending; this.setS({ cart: { rid: p.rid, items: p.lines || [p.line] }, pending: null, overlay: '', sheet: null }); if (p.lines) this.openCart(); };
+v.cancelConfirm = () => this.setS({ pending: null, overlay: st.sheet ? 'food' : '' });
+return this.build2(v, { D: D, st: st, screen: screen, top: top, RR: RR, FF: FF, rc: rc, card: card, MI: MI });
+}
+}
+
+</script>
+</body>
+</html>
