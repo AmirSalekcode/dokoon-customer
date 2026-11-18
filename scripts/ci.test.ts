@@ -155,3 +155,22 @@ describe('repo automation', () => {
     expect(t).toMatch(/k6/);
   });
 });
+
+describe('test APK for phones', () => {
+  const ci = wf('.github/workflows/ci.yml');
+  const job = ci.jobs['test-apk-release'] as Job & { if?: string };
+
+  it('publishes only after a merge to main, from the mock-data debug APK', () => {
+    expect(job).toBeDefined();
+    expect(job.if).toContain("github.ref == 'refs/heads/main'");
+    expect(job.if).toContain("github.event_name == 'push'");
+    expect(job.needs).toBe('android');
+    expect(runs(ci.jobs.android)).toContain('npm run build:mock');
+  });
+
+  it('only this job can write releases; the workflow default stays read-only', () => {
+    expect(ci.permissions).toEqual({ contents: 'read' });
+    expect(job.permissions).toEqual({ contents: 'write' });
+    expect(runs(job)).toContain('gh release create test-build dokoon-test.apk');
+  });
+});

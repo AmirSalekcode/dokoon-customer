@@ -162,3 +162,28 @@ jobs:
           name: app-debug-apk
           path: android/app/build/outputs/apk/debug/app-debug.apk
           retention-days: 14
+
+  # Phone testing: after every merge to main, the mock-data debug APK is published as the
+  # «test-build» prerelease, always at the same link:
+  #   https://github.com/<owner>/<repo>/releases/download/test-build/dokoon-test.apk
+  # Private repo → only collaborators can download it. Not a store build (no real API, debug-signed).
+  test-apk-release:
+    name: Publish test APK (main only)
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    needs: android
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v5
+        with:
+          name: app-debug-apk
+      - name: Replace the test-build prerelease
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        run: |
+          mv app-debug.apk dokoon-test.apk
+          gh release delete test-build --repo "$REPO" --yes --cleanup-tag || true
+          gh release create test-build dokoon-test.apk --repo "$REPO" --prerelease             --target "$GITHUB_SHA"             --title "نسخه‌ی آزمایشی (داده‌ی نمایشی) — ${GITHUB_SHA::7}"             --notes "APK آزمایشی با داده‌ی نمایشی (بدون سرور واقعی). برای نصب نسخه‌ی جدید، اگر نصب با خطای امضا متوقف شد، اول نسخه‌ی قبلی را حذف کنید. کد ورود آزمایشی: 1234"

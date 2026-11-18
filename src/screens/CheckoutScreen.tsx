@@ -9,7 +9,14 @@ import { SelectCard } from '@/components/library/SelectCard';
 import { TopBar } from '@/components/library/TopBar';
 import { ICONS } from '@/components/primitives/Icon';
 import { selectedAddress, useAddresses } from '@/features/addresses';
-import { summaryRows, toDraft, unavailableFoods, useQuote, type PayMethod } from '@/features/checkout';
+import {
+  summaryRows,
+  toDraft,
+  unavailableFoods,
+  usePayMethod,
+  useQuote,
+  type PayMethod,
+} from '@/features/checkout';
 import { formatMoney, isValidPhone, normalizePhone, toFaDigits } from '@/lib/format';
 import { useNav } from '@/nav/nav';
 import { toast } from '@/ui/toast';
@@ -30,7 +37,8 @@ export function CheckoutScreen(_: ScreenProps) {
   const [mode, setMode] = useState<'self' | 'other'>('self');
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
-  const [method, setMethod] = useState<PayMethod>('online');
+  const method = usePayMethod((st) => st.method);
+  const setMethod = usePayMethod((st) => st.set);
   const [busy, setBusy] = useState(false);
   /** One Idempotency-Key per draft: retries of the same order reuse it. */
   const idem = useRef<{ draft: string; key: string } | null>(null);

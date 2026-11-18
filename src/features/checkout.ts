@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { create } from 'zustand';
 import { api } from '@/api/client';
 import type { OrderDraft, Quote } from '@/api/types';
 import { useCart, type CartState } from '@/cart/cart';
@@ -89,3 +90,9 @@ export function summaryRows(q: Pick<Quote, 'itemsTotal' | 'deliveryFee' | 'disco
 /** Lines the server says are unavailable (by foodId). */
 export const unavailableFoods = (q: Quote | null) =>
   new Set((q?.lines ?? []).filter((l) => l.available === false).map((l) => l.foodId!));
+
+/** Chosen payment method; kept across checkout ↔ gateway ↔ payfail («انتخاب پرداخت نقدی»). */
+export const usePayMethod = create<{ method: PayMethod; set: (m: PayMethod) => void }>((set) => ({
+  method: 'online',
+  set: (method) => set({ method }),
+}));

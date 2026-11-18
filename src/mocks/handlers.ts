@@ -5,6 +5,7 @@ import type {
   ApiErrorBody,
   AuthResult,
   CreateOrderResult,
+  Order,
   OrderDraft,
   Quote,
 } from '@/api/types';
@@ -33,15 +34,22 @@ const latency = () => delay(import.meta.env.MODE === 'test' ? 0 : 250);
 
 // ---- tiny in-memory "database" for the mock (kept in localStorage in the browser demo) ----
 const DB_KEY = 'dk-mock-db';
+interface MockOrder {
+  order: Order;
+  /** ms epoch when the order became PLACED (cash: at creation; online: after payment). */
+  placedMs: number | null;
+  rated: boolean;
+}
 interface MockDb {
   addresses: Address[];
+  orders: MockOrder[];
   seq: number;
 }
-const freshDb = (): MockDb => ({ addresses: [], seq: 0 });
+const freshDb = (): MockDb => ({ addresses: [], orders: [], seq: 0 });
 function loadDb(): MockDb {
   try {
     const raw = globalThis.localStorage?.getItem(DB_KEY);
-    return raw ? (JSON.parse(raw) as MockDb) : freshDb();
+    return raw ? { ...freshDb(), ...(JSON.parse(raw) as Partial<MockDb>) } : freshDb();
   } catch {
     return freshDb();
   }
@@ -63,6 +71,37 @@ const inZone = (p: { lat: number; lng: number }) => {
   const c = D.cities[0].center!;
   return Math.hypot(p.lat - c.lat, p.lng - c.lng) < 0.05;
 };
+
+/**
+ * Demo progression: a placed order advances one step every 30s (mock only). Speed tests can shorten
+ * it with localStorage `dk-mock-step-ms`.
+ */
+function stepMs(): number {
+  try {
+    return Number(globalThis.localStorage?.getItem('dk-mock-step-ms')) || 30_000;
+  } catch {
+    return 30_000;
+  }
+}
+const STATUS_BY_STEP = ['PLACED', 'ACCEPTED', 'PREPARING', 'ON_THE_WAY', 'DELIVERED'] as const;
+const COURIER = { name: 'رضا محمدی', phone: '09130000000' };
+
+function liveOrder(m: MockOrder): Order {
+  const o = m.order;
+  if (o.status === 'PENDING_PAYMENT' || o.status === 'CANCELED_BY_CUSTOMER' || m.placedMs == null)
+    return { ...o, canCancel: false, canRate: false };
+  const step = Math.min(4, Math.floor((Date.now() - m.placedMs) / stepMs()));
+  return {
+    ...o,
+    step,
+    status: STATUS_BY_STEP[step],
+    courier: step >= 3 ? COURIER : null,
+    paymentStatus: o.payMethod === 'cash' ? (step === 4 ? 'cash_collected' : 'cash_due') : o.paymentStatus,
+    canCancel: step === 0,
+    canRate: step === 4 && !m.rated,
+  };
+}
+const findOrder = (id: unknown) => db.orders.find((m) => m.order.id === id);
 
 function quote(draft: OrderDraft): Quote {
   const r = D.restaurants.find((x) => x.id === draft.restaurantId);
@@ -279,32 +318,108 @@ export const handlers = [
     const q = quote(draft);
     if (q.belowMinBy) return err(409, 'MIN_ORDER', 'مبلغ سفارش از حداقل کمتر است');
     const online = draft.payMethod === 'online';
+    const number = String(10300 + ++db.seq);
+    const order: Order = {
+      id: `o${number}`,
+      number,
+      status: online ? 'PENDING_PAYMENT' : 'PLACED',
+      step: 0,
+      restaurant: D.restaurantCards.find((r) => r.id === draft.restaurantId),
+      courier: null,
+      lines: q.lines as unknown as Order['lines'],
+      address: db.addresses.find((a) => a.id === draft.addressId),
+      recipient: (draft.recipient ?? { mode: 'self' }) as Order['recipient'],
+      note: draft.note ?? '',
+      payMethod: draft.payMethod,
+      paymentStatus: online ? 'pending' : 'cash_due',
+      totals: { items: q.itemsTotal, fee: q.deliveryFee, discount: q.discount, total: q.total },
+      etaMin: q.etaMin,
+      etaMax: q.etaMax,
+      placedAt: new Date().toISOString(),
+      canCancel: !online,
+      canRate: false,
+    };
+    db.orders = [...db.orders, { order, placedMs: online ? null : Date.now(), rated: false }];
+    saveDb();
     const body: CreateOrderResult = {
-      order: {
-        ...D.orders[0],
-        id: 'o-new',
-        number: String(10300 + ++db.seq),
-        status: online ? 'PENDING_PAYMENT' : 'PLACED',
-        step: 0,
-        restaurant: D.restaurantCards.find((r) => r.id === draft.restaurantId),
-        address: db.addresses.find((a) => a.id === draft.addressId),
-        note: draft.note ?? '',
-        payMethod: draft.payMethod,
-        paymentStatus: online ? 'pending' : 'cash_due',
-        totals: { items: q.itemsTotal, fee: q.deliveryFee, discount: q.discount, total: q.total },
-        etaMin: q.etaMin,
-        etaMax: q.etaMax,
-      },
+      order,
       payment: online
-        ? { provider: 'zibal', redirectUrl: 'about:blank#mock-gateway', expiresAt: '2026-11-18T10:00:00Z' }
+        ? {
+            provider: 'zibal',
+            redirectUrl: `mock-gateway://${order.id}`,
+            expiresAt: new Date(Date.now() + 15 * 60_000).toISOString(),
+          }
         : null,
     };
     return HttpResponse.json(body, { status: 201 });
   }),
   http.get(p('/orders'), () => HttpResponse.json({ items: D.orders, nextCursor: null })),
   http.get(p('/orders/:id'), ({ params }) => {
+    const m = findOrder(params.id);
+    if (m) return HttpResponse.json(liveOrder(m));
     const o = D.orders.find((x) => x.id === params.id);
     return o ? HttpResponse.json(o) : err(404, 'NOT_FOUND', 'سفارش پیدا نشد');
+  }),
+  // Mock of the server side of the gateway return: the real server verifies with the gateway, then
+  // redirects the user. The fake gateway screen calls it directly, then re-reads the order.
+  http.get(p('/payments/callback/:provider'), ({ request }) => {
+    const q = new URL(request.url).searchParams;
+    const m = findOrder(q.get('orderId'));
+    if (!m) return err(404, 'NOT_FOUND', 'سفارش پیدا نشد');
+    if (m.order.status === 'PENDING_PAYMENT') {
+      if (q.get('result') === 'ok') {
+        m.order = { ...m.order, status: 'PLACED', paymentStatus: 'paid', placedAt: new Date().toISOString() };
+        m.placedMs = Date.now();
+      } else m.order = { ...m.order, paymentStatus: 'failed' };
+      saveDb();
+    }
+    return HttpResponse.json({ orderId: m.order.id, result: q.get('result') });
+  }),
+  http.post(p('/orders/:id/payment/retry'), ({ params }) => {
+    const m = findOrder(params.id);
+    if (!m || m.order.status !== 'PENDING_PAYMENT')
+      return err(409, 'NOT_PAYABLE', 'این سفارش قابل پرداخت نیست');
+    m.order = { ...m.order, paymentStatus: 'pending' };
+    saveDb();
+    return HttpResponse.json({
+      provider: 'zibal',
+      redirectUrl: `mock-gateway://${m.order.id}`,
+      expiresAt: new Date(Date.now() + 15 * 60_000).toISOString(),
+    });
+  }),
+  http.post(p('/orders/:id/cancel'), async ({ params, request }) => {
+    const m = findOrder(params.id);
+    if (!m) return err(404, 'NOT_FOUND', 'سفارش پیدا نشد');
+    const body = (await request.json()) as { reasonId?: string };
+    if (!body.reasonId) return err(400, 'VALIDATION', 'دلیل لغو را انتخاب کنید');
+    if (!liveOrder(m).canCancel)
+      return err(409, 'NOT_CANCELABLE', 'رستوران سفارش را پذیرفته و دیگر قابل لغو نیست');
+    m.order = {
+      ...m.order,
+      status: 'CANCELED_BY_CUSTOMER',
+      paymentStatus: m.order.payMethod === 'online' ? 'refunded' : 'none',
+    };
+    m.placedMs = null;
+    saveDb();
+    return HttpResponse.json({});
+  }),
+  http.post(p('/orders/:id/rating'), async ({ params, request }) => {
+    const m = findOrder(params.id);
+    if (!m) return err(404, 'NOT_FOUND', 'سفارش پیدا نشد');
+    const body = (await request.json()) as { restaurantStars?: number };
+    if (!body.restaurantStars) return err(400, 'VALIDATION', 'امتیاز رستوران الزامی است');
+    if (!liveOrder(m).canRate)
+      return err(409, 'NOT_RATEABLE', 'این سفارش قبلاً امتیاز گرفته یا هنوز تحویل نشده است');
+    m.rated = true;
+    saveDb();
+    return new HttpResponse(null, { status: 201 });
+  }),
+  http.post(p('/orders/:id/report'), async ({ params, request }) => {
+    if (!findOrder(params.id) && !D.orders.some((o) => o.id === params.id))
+      return err(404, 'NOT_FOUND', 'سفارش پیدا نشد');
+    const body = (await request.json()) as { typeId?: string; text?: string };
+    if (!body.typeId || !body.text?.trim()) return err(400, 'VALIDATION', 'نوع مشکل و توضیح الزامی است');
+    return new HttpResponse(null, { status: 201 });
   }),
   http.get(p('/notifications'), () =>
     HttpResponse.json({
