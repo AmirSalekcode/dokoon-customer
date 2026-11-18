@@ -38,7 +38,7 @@
   width: 64px;
   height: 64px;
   min-width: 64px;
-  margin-top: -32px;
+  margin-top: calc(-1 * var(--sp-8));
   border-radius: var(--r-circle);
   background: var(--primary);
   color: var(--white);

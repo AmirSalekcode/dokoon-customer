@@ -68,12 +68,13 @@ describe('CI workflow (.github/workflows/ci.yml)', () => {
     );
   });
 
-  it('quality job: install, format, lint, typecheck, unit tests, secret scans, build', () => {
+  it('quality job: install, format, lint, design lint, typecheck, unit tests, secret scans, build', () => {
     const r = runs(ci().jobs.quality);
     for (const cmd of [
       'npm ci',
       'npm run format:check',
       'npm run lint',
+      'npm run lint:design',
       'npm run typecheck',
       'npm test',
       'npm run secrets:scan',

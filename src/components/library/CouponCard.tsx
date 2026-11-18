@@ -17,7 +17,10 @@ export function CouponCard({ badge, title, sub, code, cta = 'استفاده', on
       <span className={s.tx}>
         <span className={s.t}>{title}</span>
         {sub ? <span className={s.s}>{sub}</span> : null}
-        <span className={s.cd}>{code}</span>
+        {/* Codes are typed in Latin, so they are shown as-is (data-latin: excluded from the digit audit). */}
+        <span className={s.cd} dir="ltr" translate="no" data-latin>
+          {code}
+        </span>
       </span>
       <button type="button" className={s.b} onClick={onUse} aria-label={`${cta} کد ${code}`}>
         {cta}

@@ -192,7 +192,7 @@
   transition: transform var(--t-spring);
 }
 .sq::after {
-  border-radius: 3px;
+  border-radius: calc(var(--r-sm) / 2);
 }
 .on .mk {
   background: var(--primary);

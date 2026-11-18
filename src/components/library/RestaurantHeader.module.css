@@ -65,7 +65,7 @@
 }
 .info {
   position: relative;
-  margin: -48px var(--sp-4) 0;
+  margin: calc(-2 * var(--sp-6)) var(--sp-4) 0;
   padding: var(--sp-4);
   background: var(--sf);
   border-radius: var(--r-xl);

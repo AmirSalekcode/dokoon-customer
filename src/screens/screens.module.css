@@ -79,12 +79,6 @@
   font-size: var(--fs-14);
   font-weight: var(--fw-bold);
 }
-.scrollFiller {
-  height: 900px;
-  margin: var(--sp-4) var(--gutter);
-  border-radius: var(--r-lg);
-  background: repeating-linear-gradient(180deg, var(--sf) 0 80px, var(--soft) 80px 160px);
-}
 .profile {
   display: flex;
   align-items: center;

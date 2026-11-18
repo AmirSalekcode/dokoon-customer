@@ -23,6 +23,7 @@
 .sb input {
   flex: 1;
   min-width: 0;
+  align-self: stretch;
   border: 0;
   outline: 0;
   background: none;

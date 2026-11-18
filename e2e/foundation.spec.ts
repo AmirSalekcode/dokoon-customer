@@ -172,7 +172,9 @@ test('every ErrorPage kind renders from the dev preview', async ({ page }) => {
     e504: 'پاسخ از سرور دیر رسید',
   };
   for (const [kind, title] of Object.entries(expected)) {
-    await visible(page).getByRole('button', { name: kind, exact: true }).click();
+    // Chip labels use Persian digits (e401 → e۴۰۱).
+    const label = kind.replace(/\d/g, (d) => '۰۱۲۳۴۵۶۷۸۹'[Number(d)]);
+    await visible(page).getByRole('button', { name: label, exact: true }).click();
     await expect(visible(page).getByRole('heading', { name: title })).toBeVisible();
     await page.goBack();
     await expect(visible(page).getByRole('heading', { name: 'تنظیمات' })).toBeVisible();
