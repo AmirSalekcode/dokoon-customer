@@ -7,7 +7,7 @@ export const options = pageOptions();
 export default async function () {
   const { context, page } = await openWithCart(browser);
   try {
-    await goToMenuItem(page, 'دعوت از دوستان', 'invite');
+    await goToMenuItem(page, 'دعوت از دوستان', 'invite', 'section h2');
   } finally {
     await page.close();
     await context.close();

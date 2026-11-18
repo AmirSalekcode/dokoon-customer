@@ -7,7 +7,7 @@ export const options = pageOptions();
 export default async function () {
   const { context, page } = await openApp(browser);
   try {
-    await goToMenuItem(page, 'شبکه‌های اجتماعی', 'social');
+    await goToMenuItem(page, 'شبکه‌های اجتماعی', 'social', 'button[aria-label^="دنبال کردن"]');
   } finally {
     await page.close();
     await context.close();

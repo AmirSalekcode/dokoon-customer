@@ -7,7 +7,7 @@ export const options = pageOptions();
 export default async function () {
   const { context, page } = await openApp(browser);
   try {
-    await goToMenuItem(page, 'پشتیبانی و پرسش‌های متداول', 'support');
+    await goToMenuItem(page, 'پشتیبانی و پرسش‌های متداول', 'support', 'a[href^="tel:"]');
   } finally {
     await page.close();
     await context.close();

@@ -7,7 +7,7 @@ export const options = pageOptions();
 export default async function () {
   const { context, page } = await openApp(browser);
   try {
-    await goToMenuItem(page, 'امتیاز دادن به دکون', 'rateapp');
+    await goToMenuItem(page, 'امتیاز دادن به دکون', 'rateapp', '[role="radiogroup"]');
   } finally {
     await page.close();
     await context.close();

@@ -228,12 +228,12 @@ export async function goToAccountItem(page, label, screen) {
 }
 
 /** Home → hamburger menu (header «منو») → drawer item `label` → `screen`. */
-export async function goToMenuItem(page, label, screen) {
+export async function goToMenuItem(page, label, screen, readySelector = 'h2') {
   await page.locator(inScreen('home', 'button[aria-label="منو"]')).first().click();
   await navigate(
     page,
     `//button[.//*[normalize-space(.)="${label}"] or normalize-space(.)="${label}"]`,
     screen,
-    'h2',
+    readySelector,
   );
 }
