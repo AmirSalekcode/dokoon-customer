@@ -14,9 +14,15 @@ import { TrackScreen } from './order/TrackScreen';
 import { CancelOrderScreen } from './order/CancelOrderScreen';
 import { ReportScreen } from './order/ReportScreen';
 import { RateOrderScreen } from './order/RateOrderScreen';
+import { OrdersScreen } from './account/OrdersScreen';
+import { EditProfileScreen } from './account/EditProfileScreen';
+import { AddressesScreen } from './account/AddressesScreen';
+import { FavoritesScreen } from './account/FavoritesScreen';
+import { NotificationsScreen } from './account/NotificationsScreen';
+import { PromosScreen } from './account/PromosScreen';
+import { SettingsScreen } from './account/SettingsScreen';
 import { AccountScreen } from './AccountScreen';
 import { PlaceholderScreen } from './PlaceholderScreen';
-import { FoundationLab } from './FoundationLab';
 import { SplashScreen } from './auth/SplashScreen';
 import { OnboardScreen } from './auth/OnboardScreen';
 import { CityScreen } from './auth/CityScreen';
@@ -54,8 +60,14 @@ const SCREENS: Partial<Record<ScreenId, ComponentType<ScreenProps>>> = {
   cancel: CancelOrderScreen,
   report: ReportScreen,
   rateorder: RateOrderScreen,
+  orders: OrdersScreen,
+  editprof: EditProfileScreen,
+  addresses: AddressesScreen,
+  favs: FavoritesScreen,
+  notifs: NotificationsScreen,
+  promos: PromosScreen,
   account: AccountScreen,
-  settings: FoundationLab,
+  settings: SettingsScreen,
   error: ErrorScreen,
 };
 

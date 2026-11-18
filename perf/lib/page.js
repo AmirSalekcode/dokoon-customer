@@ -215,3 +215,14 @@ export async function goToTrack(page) {
 }
 
 export const trackButton = (label) => `//main[@data-screen="track"]//button[normalize-space(.)="${label}"]`;
+
+/** Logged-in user → account tab → menu item `label` → `screen`. */
+export async function goToAccountItem(page, label, screen) {
+  await navigate(page, NAV.account, 'account', 'h2');
+  await navigate(
+    page,
+    `//main[@data-screen="account"]//button[.//*[normalize-space(.)="${label}"] or normalize-space(.)="${label}"]`,
+    screen,
+    'h2',
+  );
+}

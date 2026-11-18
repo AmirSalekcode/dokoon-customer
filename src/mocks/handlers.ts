@@ -8,6 +8,7 @@ import type {
   Order,
   OrderDraft,
   Quote,
+  User,
 } from '@/api/types';
 import * as D from './data';
 
@@ -44,8 +45,23 @@ interface MockDb {
   addresses: Address[];
   orders: MockOrder[];
   seq: number;
+  /** Notification ids already read. */
+  read: string[];
+  /** Favorite restaurant ids (null = the seed data's isFavorite). */
+  favs: string[] | null;
+  settings: { notifyOrders: boolean; notifyPromos: boolean; notifyNews: boolean };
+  /** The user who logged in last (the mock has one user at a time). null = the demo user. */
+  me: User | null;
 }
-const freshDb = (): MockDb => ({ addresses: [], orders: [], seq: 0 });
+const freshDb = (): MockDb => ({
+  addresses: [],
+  orders: [],
+  seq: 0,
+  read: ['nt3'],
+  favs: null,
+  settings: { notifyOrders: true, notifyPromos: true, notifyNews: false },
+  me: null,
+});
 function loadDb(): MockDb {
   try {
     const raw = globalThis.localStorage?.getItem(DB_KEY);
@@ -102,6 +118,11 @@ function liveOrder(m: MockOrder): Order {
   };
 }
 const findOrder = (id: unknown) => db.orders.find((m) => m.order.id === id);
+const favIds = () => db.favs ?? D.restaurantCards.filter((r) => r.isFavorite).map((r) => r.id!);
+const unread = () => D.notifications.filter((n) => !db.read.includes(n.id)).length;
+/** Every order the mock knows, with live status (newest first). */
+const allOrders = (): Order[] => [...db.orders.map(liveOrder).reverse(), ...D.orders];
+const FINAL_STATUSES = ['DELIVERED', 'CANCELED_BY_CUSTOMER', 'REJECTED', 'EXPIRED', 'PAYMENT_FAILED'];
 
 function quote(draft: OrderDraft): Quote {
   const r = D.restaurants.find((x) => x.id === draft.restaurantId);
@@ -170,6 +191,8 @@ export const handlers = [
     await latency();
     if (code !== '1234') return err(400, 'OTP_INVALID', 'کد واردشده درست نیست');
     const isNewUser = phone !== D.user.phone;
+    db.me = isNewUser ? { id: 'u-new', phone } : { ...D.user, phone };
+    saveDb();
     const body: AuthResult = {
       accessToken: 'mock-access',
       refreshToken: 'mock-refresh',
@@ -189,16 +212,27 @@ export const handlers = [
   ),
   http.post(p('/auth/logout'), () => new HttpResponse(null, { status: 204 })),
 
-  http.get(p('/me'), () => HttpResponse.json(D.user)),
+  http.get(p('/me'), () =>
+    HttpResponse.json({
+      ...(db.me ?? D.user),
+      unreadNotifications: unread(),
+      activeOrders: allOrders().filter(
+        (o) => o.status !== 'PENDING_PAYMENT' && !FINAL_STATUSES.includes(o.status ?? ''),
+      ).length,
+    }),
+  ),
   http.patch(p('/me'), async ({ request }) => {
     const patch = (await request.json()) as { name?: string; referralCode?: string; cityId?: string };
     if (patch.referralCode && !/^DOKOON-[A-Z0-9]+$/.test(patch.referralCode))
       return err(400, 'REF_INVALID', 'کد معرف معتبر نیست.');
-    return HttpResponse.json({
-      // Only echo what changed; the mock does not know which user is calling.
-      name: patch.name,
-      cityId: patch.cityId,
-    });
+    const me = db.me ?? { ...D.user };
+    db.me = {
+      ...me,
+      ...(patch.name ? { name: patch.name } : {}),
+      ...(patch.cityId ? { cityId: patch.cityId } : {}),
+    };
+    saveDb();
+    return HttpResponse.json(db.me);
   }),
   http.get(p('/addresses'), () => HttpResponse.json(db.addresses)),
   http.post(p('/addresses'), async ({ request }) => {
@@ -253,10 +287,20 @@ export const handlers = [
     if (sort && by[sort]) items = [...items].sort((a, b) => by[sort](a) - by[sort](b));
     return HttpResponse.json({ items, nextCursor: null });
   }),
-  http.put(p('/favorites/restaurants/:id'), () => new HttpResponse(null, { status: 204 })),
-  http.delete(p('/favorites/restaurants/:id'), () => new HttpResponse(null, { status: 204 })),
+  http.put(p('/favorites/restaurants/:id'), ({ params }) => {
+    db.favs = [...new Set([...favIds(), String(params.id)])];
+    saveDb();
+    return new HttpResponse(null, { status: 204 });
+  }),
+  http.delete(p('/favorites/restaurants/:id'), ({ params }) => {
+    db.favs = favIds().filter((id) => id !== params.id);
+    saveDb();
+    return new HttpResponse(null, { status: 204 });
+  }),
   http.get(p('/favorites/restaurants'), () =>
-    HttpResponse.json(D.restaurantCards.filter((r) => r.isFavorite)),
+    HttpResponse.json(
+      D.restaurantCards.filter((r) => favIds().includes(r.id!)).map((r) => ({ ...r, isFavorite: true })),
+    ),
   ),
   http.get(p('/restaurants/:id'), ({ params }) => {
     const r = D.restaurants.find((x) => x.id === params.id);
@@ -353,7 +397,26 @@ export const handlers = [
     };
     return HttpResponse.json(body, { status: 201 });
   }),
-  http.get(p('/orders'), () => HttpResponse.json({ items: D.orders, nextCursor: null })),
+  http.get(p('/orders'), ({ request }) => {
+    const tab = new URL(request.url).searchParams.get('tab');
+    const items = allOrders().filter((o) => {
+      if (o.status === 'PENDING_PAYMENT') return false;
+      const final = FINAL_STATUSES.includes(o.status ?? '');
+      return tab === 'past' ? final : tab === 'active' ? !final : true;
+    });
+    return HttpResponse.json({ items, nextCursor: null });
+  }),
+  http.get(p('/orders/:id/reorder'), ({ params }) => {
+    const o = allOrders().find((x) => x.id === params.id);
+    if (!o) return err(404, 'NOT_FOUND', 'سفارش پیدا نشد');
+    const lines = (o.lines as unknown as { foodId: string; qty: number }[]).map((l) => ({
+      foodId: l.foodId,
+      qty: l.qty,
+    }));
+    return HttpResponse.json(
+      quote({ restaurantId: o.restaurant?.id ?? '', lines, addressId: '', payMethod: 'online' }),
+    );
+  }),
   http.get(p('/orders/:id'), ({ params }) => {
     const m = findOrder(params.id);
     if (m) return HttpResponse.json(liveOrder(m));
@@ -423,19 +486,28 @@ export const handlers = [
   }),
   http.get(p('/notifications'), () =>
     HttpResponse.json({
-      items: [
-        {
-          id: 'n1',
-          title: 'سفارش شما در حال آماده شدن است',
-          body: 'آشپزهای کباب‌سرای نقش‌جهان مشغول آماده‌سازی هستند.',
-          read: false,
-          createdAt: '2026-11-18T09:35:00Z',
-          target: { screen: 'track', id: 'o1' },
-        },
-      ],
+      items: D.notifications.map((n) => ({ ...n, read: db.read.includes(n.id) })),
       nextCursor: null,
     }),
   ),
+  http.post(p('/notifications/read'), async ({ request }) => {
+    const body = (await request.json()) as { ids?: string[]; all?: boolean };
+    const ids = body.all ? D.notifications.map((n) => n.id) : (body.ids ?? []);
+    db.read = [...new Set([...db.read, ...ids])];
+    saveDb();
+    return new HttpResponse(null, { status: 204 });
+  }),
+  http.get(p('/me/settings'), () => HttpResponse.json(db.settings)),
+  http.put(p('/me/settings'), async ({ request }) => {
+    db.settings = { ...db.settings, ...((await request.json()) as Partial<MockDb['settings']>) };
+    saveDb();
+    return HttpResponse.json(db.settings);
+  }),
+  http.delete(p('/me'), () => {
+    db = freshDb();
+    saveDb();
+    return new HttpResponse(null, { status: 204 });
+  }),
   http.get(p('/support/info'), () => HttpResponse.json({ contacts: [], faqs: [], socials: [] })),
   http.get(p('/content/:key'), ({ params }) =>
     HttpResponse.json({ title: String(params.key), body: 'متن پیش‌نویس', version: '0' }),

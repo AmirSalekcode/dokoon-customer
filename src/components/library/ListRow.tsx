@@ -21,7 +21,12 @@ export function ListRow({ title, sub, meta, art, d, dot, onTap }: ListRowProps) 
     <button type="button" className={s.r} onClick={onTap}>
       <span className={s.ib}>
         {art ? <Art src={art} className={s.art} /> : d ? <Icon d={d} /> : null}
-        {dot ? <i className={s.dt} aria-label="خوانده‌نشده" /> : null}
+        {dot ? (
+          <>
+            <i className={s.dt} aria-hidden="true" />
+            <span className="visually-hidden">خوانده‌نشده</span>
+          </>
+        ) : null}
       </span>
       <span className={s.tx}>
         <span className={s.t}>{title}</span>
