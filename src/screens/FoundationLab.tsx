@@ -10,6 +10,7 @@ import { useNav } from '@/nav/nav';
 import { mountWithFallback, type MapProviderId } from '@/providers/map/MapProvider';
 import { mapProviders } from '@/providers/map/fakeMap';
 import { useTheme } from '@/theme/theme';
+import { useConsent } from '@/consent/consent';
 import { toast } from '@/ui/toast';
 import s from './screens.module.css';
 
@@ -52,6 +53,9 @@ export function FoundationLab() {
       <TopBar title="تنظیمات" onBack={() => back()} />
       <div className={`${s.pad} ${s.stack}`}>
         <ToggleRow title="تم تیره" sub="ذخیره در همین دستگاه" on={theme === 'dark'} onFlip={toggle} />
+        <Button variant="secondary" onClick={() => useConsent.getState().reset()}>
+          تنظیمات کوکی
+        </Button>
 
         <h2 className={s.sectionTitle}>نقشه (لایه‌ی MapProvider — ساختگی)</h2>
         <div className={s.chips} role="radiogroup" aria-label="ارائه‌دهنده‌ی نقشه">

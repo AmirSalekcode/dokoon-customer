@@ -1,0 +1,2 @@
+# why: commit 3a31dfd accidentally tracked a copy of .env.example (placeholders only, removed in the next commit); line 10 is VITE_BALAD_MAP_KEY= with an EMPTY value and gitleaks generic-api-key read the next line as its value.
+3a31dfd8996689e8036d98a047d0d63887987eca:.env:generic-api-key:10

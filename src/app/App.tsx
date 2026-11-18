@@ -3,6 +3,7 @@ import { cartCount, useCart } from '@/cart/cart';
 import { ToastHost } from '@/components/base/Toast';
 import { BottomNav } from '@/components/library/BottomNav';
 import { ArtSprite } from '@/components/primitives/ArtSprite';
+import { CookieConsent } from '@/consent/CookieConsent';
 import { toFaDigits } from '@/lib/format';
 import { useNav } from '@/nav/nav';
 import { initConnectivity, initSystemBack } from '@/nav/systemBack';
@@ -41,6 +42,7 @@ export function App() {
           />
         </div>
       ) : null}
+      <CookieConsent />
       <OverlayHost />
       <ToastHost />
     </div>
