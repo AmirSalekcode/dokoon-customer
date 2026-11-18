@@ -1,0 +1,145 @@
+{
+  "root_group": {
+    "name": "",
+    "path": "",
+    "id": "d41d8cd98f00b204e9800998ecf8427e",
+    "groups": {},
+    "checks": {
+      "home lists restaurants": {
+        "name": "home lists restaurants",
+        "path": "::home lists restaurants",
+        "id": "a55033e6be3ab5e85514f0eab3f07f4b",
+        "passes": 5,
+        "fails": 0
+      }
+    }
+  },
+  "metrics": {
+    "vus_max": {
+      "value": 1,
+      "min": 1,
+      "max": 1
+    },
+    "checks": {
+      "passes": 5,
+      "fails": 0,
+      "thresholds": {
+        "rate==1": false
+      },
+      "value": 1
+    },
+    "browser_web_vital_fcp": {
+      "avg": 129.6,
+      "min": 128,
+      "med": 128,
+      "max": 132,
+      "p(90)": 132,
+      "p(95)": 132,
+      "thresholds": {
+        "p(75)<1800": false
+      }
+    },
+    "browser_web_vital_ttfb": {
+      "min": 4.4000000059604645,
+      "med": 4.5,
+      "max": 5.4000000059604645,
+      "p(90)": 5.1199999988079075,
+      "p(95)": 5.260000002384186,
+      "avg": 4.7
+    },
+    "vus": {
+      "value": 1,
+      "min": 1,
+      "max": 1
+    },
+    "browser_data_sent": {
+      "count": 14805,
+      "rate": 2255.0566045863266
+    },
+    "browser_web_vital_inp": {
+      "avg": 0,
+      "min": 0,
+      "med": 0,
+      "max": 0,
+      "p(90)": 0,
+      "p(95)": 0
+    },
+    "data_received": {
+      "count": 0,
+      "rate": 0
+    },
+    "browser_web_vital_lcp": {
+      "p(90)": 132,
+      "p(95)": 132,
+      "avg": 129.6,
+      "min": 128,
+      "med": 128,
+      "max": 132,
+      "thresholds": {
+        "p(75)<2500": false
+      }
+    },
+    "pages_measured": {
+      "count": 5,
+      "rate": 0.7615861548754902,
+      "thresholds": {
+        "count>=5": false
+      }
+    },
+    "browser_http_req_duration": {
+      "p(90)": 258.2451009,
+      "p(95)": 259.63060095,
+      "avg": 47.57010010000002,
+      "min": 5.32,
+      "med": 19.793499500000003,
+      "max": 279.313001
+    },
+    "browser_data_received": {
+      "count": 1342050,
+      "rate": 204417.33983013034
+    },
+    "screen_ready": {
+      "p(90)": 0,
+      "p(95)": 0,
+      "avg": 0,
+      "min": 0,
+      "med": 0,
+      "max": 0,
+      "thresholds": {
+        "p(95)<1000": false
+      }
+    },
+    "browser_web_vital_cls": {
+      "max": 0.02757146053302993,
+      "p(90)": 0.02757146053302993,
+      "p(95)": 0.02757146053302993,
+      "avg": 0.027571460533029935,
+      "min": 0.02757146053302993,
+      "med": 0.02757146053302993,
+      "thresholds": {
+        "p(75)<0.1": false
+      }
+    },
+    "iteration_duration": {
+      "min": 1194.5495,
+      "med": 1198.7593,
+      "max": 1213.847,
+      "p(90)": 1212.25616,
+      "p(95)": 1213.05158,
+      "avg": 1202.4031599999998
+    },
+    "iterations": {
+      "count": 5,
+      "rate": 0.7615861548754902
+    },
+    "browser_http_req_failed": {
+      "passes": 0,
+      "fails": 40,
+      "value": 0
+    },
+    "data_sent": {
+      "count": 0,
+      "rate": 0
+    }
+  }
+}

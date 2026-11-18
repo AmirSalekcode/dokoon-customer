@@ -1,0 +1,21 @@
+# Local run: `docker compose up --build` → http://localhost:8080
+# Uses mock mode (MSW) until the backend exists. Public values come from .env (VITE_* only).
+services:
+  web:
+    build:
+      context: .
+      args:
+        BUILD_MODE: ${BUILD_MODE:-mock}
+        VITE_API_BASE_URL: ${VITE_API_BASE_URL:-}
+        VITE_NESHAN_MAP_KEY: ${VITE_NESHAN_MAP_KEY:-}
+        VITE_BALAD_MAP_KEY: ${VITE_BALAD_MAP_KEY:-}
+        VITE_DEFAULT_MAP: ${VITE_DEFAULT_MAP:-neshan}
+        VITE_PAYMENT_PROVIDER: ${VITE_PAYMENT_PROVIDER:-fake}
+        VITE_WEBPUSH_VAPID_PUBLIC_KEY: ${VITE_WEBPUSH_VAPID_PUBLIC_KEY:-}
+    image: dokoon-web:local
+    ports:
+      - '8080:8080'
+    read_only: true
+    tmpfs:
+      - /tmp
+    restart: unless-stopped

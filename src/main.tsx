@@ -4,11 +4,12 @@ import './styles/global.css';
 import { useTheme } from './theme/theme';
 import { App } from './app/App';
 import { registerPwa } from './pwa';
+import { config } from './config/env';
 
 async function boot() {
   // Apply theme store (index.html already set data-theme pre-paint).
   useTheme.getState();
-  if (import.meta.env.VITE_USE_MOCKS === '1') {
+  if (config.useMocks) {
     const { startMockWorker } = await import('./mocks/browser');
     await startMockWorker();
   } else {
