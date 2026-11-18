@@ -1,0 +1,153 @@
+.page {
+  padding-bottom: calc(var(--sp-8) + env(safe-area-inset-bottom));
+}
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+  padding: 0 var(--gutter);
+}
+.h {
+  margin: var(--sp-4) 0 0;
+  font-size: var(--fs-16);
+  font-weight: var(--fw-bold);
+}
+.desc {
+  margin: 0;
+  color: var(--mu);
+  font-size: var(--fs-14);
+  line-height: 1.8;
+}
+.label {
+  font-size: var(--fs-14);
+  font-weight: var(--fw-bold);
+}
+.text {
+  width: 100%;
+  min-height: 112px;
+  padding: var(--sp-3) var(--sp-4);
+  border: 1.5px solid var(--ln);
+  border-radius: var(--r-lg);
+  background: var(--sf);
+  color: var(--ink);
+  font: inherit;
+  font-size: var(--fs-14);
+  resize: vertical;
+}
+.text:focus-visible {
+  outline: 2px solid var(--pr2);
+  outline-offset: 2px;
+}
+.alert {
+  margin: 0;
+  padding: var(--sp-3) var(--sp-4);
+  border-radius: var(--r-lg);
+  background: var(--soft);
+  color: var(--pr2);
+  font-size: var(--fs-14);
+  font-weight: var(--fw-bold);
+}
+
+/* invite */
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: var(--sp-5) var(--sp-4);
+  border-radius: var(--r-xl);
+  background: var(--sf);
+  box-shadow: var(--sh-card);
+  text-align: center;
+}
+.cardArt {
+  width: 96px;
+  height: 96px;
+}
+.card h2 {
+  margin: 0;
+  font-size: var(--fs-20);
+  font-weight: var(--fw-xbold);
+}
+.code {
+  padding: var(--sp-2) var(--sp-5);
+  border: 1.5px dashed var(--pr2);
+  border-radius: var(--r-lg);
+  background: var(--soft);
+  color: var(--pr2);
+  font-size: var(--fs-20);
+  font-weight: var(--fw-xbold);
+  letter-spacing: 0.04em;
+}
+.acts {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+  width: 100%;
+}
+.steps {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.step {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  min-height: 72px;
+  padding: var(--sp-3) var(--sp-4);
+  border-radius: var(--r-lg);
+  background: var(--sf);
+  box-shadow: var(--sh-card);
+}
+.num {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  flex: none;
+  border-radius: var(--r-circle);
+  background: var(--soft);
+  color: var(--pr2);
+  font-weight: var(--fw-xbold);
+}
+.stepText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+.stepText b {
+  font-size: var(--fs-14);
+}
+.stepText small {
+  color: var(--mu);
+  font-size: var(--fs-13);
+}
+
+/* success (rateapp) */
+.done {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: var(--sp-6) var(--sp-4);
+  text-align: center;
+}
+.done h2 {
+  margin: 0;
+  font-size: var(--fs-22);
+  font-weight: var(--fw-xbold);
+}
+.ok {
+  display: grid;
+  place-items: center;
+  width: 72px;
+  height: 72px;
+  border-radius: var(--r-circle);
+  background: var(--okbg);
+  color: var(--ink);
+}

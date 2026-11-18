@@ -21,6 +21,10 @@ import { FavoritesScreen } from './account/FavoritesScreen';
 import { NotificationsScreen } from './account/NotificationsScreen';
 import { PromosScreen } from './account/PromosScreen';
 import { SettingsScreen } from './account/SettingsScreen';
+import { SupportScreen } from './more/SupportScreen';
+import { InviteScreen } from './more/InviteScreen';
+import { SocialScreen } from './more/SocialScreen';
+import { RateAppScreen } from './more/RateAppScreen';
 import { AccountScreen } from './AccountScreen';
 import { PlaceholderScreen } from './PlaceholderScreen';
 import { SplashScreen } from './auth/SplashScreen';
@@ -68,6 +72,10 @@ const SCREENS: Partial<Record<ScreenId, ComponentType<ScreenProps>>> = {
   promos: PromosScreen,
   account: AccountScreen,
   settings: SettingsScreen,
+  support: SupportScreen,
+  invite: InviteScreen,
+  social: SocialScreen,
+  rateapp: RateAppScreen,
   error: ErrorScreen,
 };
 
