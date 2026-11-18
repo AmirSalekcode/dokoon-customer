@@ -40,3 +40,8 @@ Nothing here is implemented as an invented endpoint; the frontend works around e
     `Quote.lines` (and to `Order.lines`, see #2).
 11. **Editing the mobile number** needs an OTP flow for the new number (e.g. `POST /me/phone/request`
     + `/verify`). Until then the app shows the number read-only.
+12. **`/partner-requests` `extra` and `/uploads` body.** `extra` is declared as a bare `{type: object}`, which
+    the generator turns into `Record<string, never>`; the app sends string fields there (restaurant:
+    `business`, `address`; courier: `vehicle`, `area`). Proposal: `additionalProperties: {type: string}`
+    or named optional fields. `POST /uploads` has no `requestBody`; the app sends `multipart/form-data`
+    with one `file` field. Proposal: declare it (`multipart/form-data`, `file: string, format: binary`).

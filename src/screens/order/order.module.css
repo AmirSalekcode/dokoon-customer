@@ -102,3 +102,78 @@
   padding: var(--sp-3) var(--gutter) calc(var(--sp-3) + env(safe-area-inset-bottom));
   background: var(--bg);
 }
+
+/* report photos */
+.photos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.photo {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 80px;
+  height: 80px;
+  overflow: hidden;
+  border-radius: var(--r-lg);
+  background: var(--soft);
+  color: var(--pr2);
+}
+.photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.photoDel {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-end: 0;
+  display: grid;
+  place-items: center;
+  width: var(--touch);
+  height: var(--touch);
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+}
+.photoDel::before {
+  content: '';
+  position: absolute;
+  inset-block-start: var(--sp-1);
+  inset-inline-end: var(--sp-1);
+  width: 24px;
+  height: 24px;
+  border-radius: var(--r-circle);
+  background: var(--sf);
+  box-shadow: var(--sh-card);
+}
+.photoDel svg {
+  position: absolute;
+  inset-block-start: calc(var(--sp-1) + 4px);
+  inset-inline-end: calc(var(--sp-1) + 4px);
+}
+.photoDel:focus-visible,
+input:focus-visible + .addPhoto {
+  outline: var(--focus-ring);
+  outline-offset: 2px;
+}
+.addPhoto {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-2);
+  min-height: var(--touch);
+  border: 1.5px dashed var(--ln);
+  border-radius: var(--r-lg);
+  background: var(--sf);
+  color: var(--pr2);
+  font-size: var(--fs-14);
+  font-weight: var(--fw-bold);
+  cursor: pointer;
+}

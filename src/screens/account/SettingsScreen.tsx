@@ -156,6 +156,7 @@ export function SettingsScreen(_: ScreenProps) {
               {KINDS.map((k) => (
                 <FilterChip key={k} label={k} onPick={() => showError(k)} />
               ))}
+              <FilterChip label="soon" onPick={() => push('soon')} />
             </div>
             <h2 className={s.h}>خطای ساختگی سرور (mock)</h2>
             <div className={s.chips}>

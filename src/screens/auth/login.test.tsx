@@ -82,7 +82,7 @@ describe('<LoginScreen />', () => {
   it('the terms link opens the terms page', async () => {
     render(<LoginScreen route={route('login')} />);
     await userEvent.click(screen.getByRole('button', { name: 'قوانین و مقررات' }));
-    expect(top()).toMatchObject({ screen: 'legal', params: { doc: 'terms' } });
+    expect(top()).toMatchObject({ screen: 'legal', params: { kind: 'terms' } });
   });
 
   it('back closes login and forgets the pending intent (e.g. checkout)', async () => {

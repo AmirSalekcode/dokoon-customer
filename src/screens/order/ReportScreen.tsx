@@ -1,8 +1,10 @@
-import { useId, useState } from 'react';
+import { useEffect, useId, useRef, useState } from 'react';
 import { api } from '@/api/client';
 import { Button } from '@/components/base/Button';
 import { SelectCard } from '@/components/library/SelectCard';
 import { TopBar } from '@/components/library/TopBar';
+import { Icon } from '@/components/primitives/Icon';
+import { toFaDigits } from '@/lib/format';
 import { useNav } from '@/nav/nav';
 import { toast } from '@/ui/toast';
 import type { ScreenProps } from '../registry';
@@ -17,9 +19,37 @@ export const REPORT_TYPES = [
   { id: 'other', title: 'سایر' },
 ];
 
+/** Upload limits from the contract (`POST /uploads`: jpeg/png/webp, max 5MB). */
+export const PHOTO_MAX_BYTES = 5 * 1024 * 1024;
+export const PHOTO_TYPES = ['image/jpeg', 'image/png', 'image/webp'];
+export const PHOTO_MAX_COUNT = 3;
+
+interface Photo {
+  id: string;
+  /** Local preview (object URL), when the platform supports it. */
+  preview?: string;
+}
+
+/** Upload failure with a Persian, user-facing message (from the server or a default). */
+class UploadError extends Error {}
+
+/** Uploads one image; resolves to the upload id or throws UploadError / a network error. */
+async function uploadPhoto(file: File): Promise<string> {
+  const form = new FormData();
+  form.append('file', file);
+  const { data, error } = await api.POST('/uploads', {
+    body: form as never,
+    bodySerializer: (b: unknown) => b as FormData,
+  });
+  if (error !== undefined || !data?.id) {
+    throw new UploadError((error as { message?: string } | undefined)?.message || 'بارگذاری عکس انجام نشد.');
+  }
+  return data.id;
+}
+
 /**
- * Report a problem (screen-specs §4 report). Photo attachment needs an upload endpoint that the
- * contract does not have yet (contract-notes #8), so it is not offered.
+ * Report a problem (screen-specs §4 report): type, text and up to three optional photos. Each photo
+ * is uploaded on pick (POST /uploads) and sent as `photoUploadIds` (contract-notes #8).
  */
 export function ReportScreen({ route }: ScreenProps) {
   const orderId = route.params.orderId ?? '';
@@ -28,8 +58,43 @@ export function ReportScreen({ route }: ScreenProps) {
   const [text, setText] = useState('');
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
+  const [photos, setPhotos] = useState<Photo[]>([]);
+  const [uploading, setUploading] = useState(false);
   const textId = useId();
-  const ok = !!type && text.trim().length >= 3 && !busy;
+  const fileId = useId();
+  const previews = useRef<string[]>([]);
+  const ok = !!type && text.trim().length >= 3 && !busy && !uploading;
+
+  useEffect(
+    () => () => {
+      if (typeof URL.revokeObjectURL === 'function') previews.current.forEach((u) => URL.revokeObjectURL(u));
+    },
+    [],
+  );
+
+  const addPhoto = async (file: File | undefined) => {
+    if (!file) return;
+    setError('');
+    if (!PHOTO_TYPES.includes(file.type)) {
+      setError('فقط عکس jpeg، png یا webp قابل ارسال است.');
+      return;
+    }
+    if (file.size > PHOTO_MAX_BYTES) {
+      setError(`حجم عکس باید کمتر از ${toFaDigits(5)} مگابایت باشد`);
+      return;
+    }
+    setUploading(true);
+    try {
+      const id = await uploadPhoto(file);
+      const preview = typeof URL.createObjectURL === 'function' ? URL.createObjectURL(file) : undefined;
+      if (preview) previews.current.push(preview);
+      setPhotos((prev) => [...prev, { id, preview }]);
+    } catch (e) {
+      setError(e instanceof UploadError ? e.message : 'اتصال برقرار نشد. دوباره تلاش کنید.');
+    } finally {
+      setUploading(false);
+    }
+  };
 
   const submit = async () => {
     setBusy(true);
@@ -37,7 +102,11 @@ export function ReportScreen({ route }: ScreenProps) {
     try {
       const { error: err } = await api.POST('/orders/{id}/report', {
         params: { path: { id: orderId } },
-        body: { typeId: type, text: text.trim() },
+        body: {
+          typeId: type,
+          text: text.trim(),
+          ...(photos.length ? { photoUploadIds: photos.map((p) => p.id) } : {}),
+        },
       });
       if (err !== undefined) {
         setError((err as { message?: string }).message || 'ثبت گزارش انجام نشد.');
@@ -81,6 +150,44 @@ export function ReportScreen({ route }: ScreenProps) {
           value={text}
           onChange={(e) => setText(e.target.value)}
         />
+        {photos.length ? (
+          <ul className={s.photos} aria-label="عکس‌ها">
+            {photos.map((p, i) => (
+              <li key={p.id} className={s.photo}>
+                {p.preview ? <img src={p.preview} alt={`عکس ${toFaDigits(i + 1)}`} /> : <Icon name="check" />}
+                <button
+                  type="button"
+                  className={s.photoDel}
+                  aria-label={`حذف عکس ${toFaDigits(i + 1)}`}
+                  onClick={() => setPhotos((prev) => prev.filter((x) => x.id !== p.id))}
+                >
+                  <Icon name="close" size={16} />
+                </button>
+              </li>
+            ))}
+          </ul>
+        ) : null}
+        {photos.length < PHOTO_MAX_COUNT ? (
+          <>
+            <input
+              id={fileId}
+              type="file"
+              accept={PHOTO_TYPES.join(',')}
+              className="visually-hidden"
+              disabled={uploading}
+              onChange={(e) => {
+                const input = e.currentTarget;
+                void addPhoto(input.files?.[0]).finally(() => {
+                  input.value = '';
+                });
+              }}
+            />
+            <label htmlFor={fileId} className={s.addPhoto} aria-busy={uploading || undefined}>
+              <Icon name="plus" size={20} />
+              <span>{uploading ? 'در حال بارگذاری عکس…' : 'افزودن عکس (اختیاری)'}</span>
+            </label>
+          </>
+        ) : null}
         {error ? (
           <p className={s.alert} role="alert">
             {error}

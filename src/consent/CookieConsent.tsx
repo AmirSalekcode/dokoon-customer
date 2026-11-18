@@ -60,7 +60,7 @@ export function CookieConsent() {
         <p className={s.text}>
           دکون برای کارکرد اپ (ورود، سبد خرید، تم) اطلاعات ضروری را روی دستگاه شما نگه می‌دارد. با اجازه‌ی شما
           از آمار ناشناس هم برای بهتر کردن اپ استفاده می‌کنیم.{' '}
-          <button type="button" className={s.link} onClick={() => push('legal', { doc: 'privacy' })}>
+          <button type="button" className={s.link} onClick={() => push('legal', { kind: 'privacy' })}>
             سیاست حریم خصوصی
           </button>
         </p>
