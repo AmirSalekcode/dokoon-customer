@@ -18,7 +18,7 @@ test.beforeEach(async ({ page }) => {
 
 async function openHome(page: Page) {
   await page.goto('/');
-  await expect(visible(page).getByRole('heading', { name: 'سلام امیر عزیز' })).toBeVisible();
+  await expect(visible(page).getByRole('heading', { name: 'سلام مهمان عزیز' })).toBeVisible();
   await expect(visible(page).getByRole('heading', { name: 'نزدیک شما' })).toBeVisible();
 }
 
@@ -60,7 +60,7 @@ test('back returns to the exact previous screen with its scroll position (UI bac
   await expect(visible(page).getByRole('heading', { name: 'کباب‌سرای نقش‌جهان', level: 1 })).toBeVisible();
   // In-app back button
   await visible(page).getByRole('button', { name: 'بازگشت' }).click();
-  await expect(visible(page).getByRole('heading', { name: 'سلام امیر عزیز' })).toBeAttached();
+  await expect(visible(page).getByRole('heading', { name: 'سلام مهمان عزیز' })).toBeAttached();
   expect(await visible(page).evaluate((el) => el.scrollTop)).toBe(before);
 
   // System back (browser back = popstate, same handler as Android back)
@@ -70,7 +70,7 @@ test('back returns to the exact previous screen with its scroll position (UI bac
   await card2.click();
   await expect(visible(page).getByRole('heading', { name: 'برگر لاین', level: 1 })).toBeVisible();
   await page.goBack();
-  await expect(visible(page).getByRole('heading', { name: 'سلام امیر عزیز' })).toBeAttached();
+  await expect(visible(page).getByRole('heading', { name: 'سلام مهمان عزیز' })).toBeAttached();
   expect(await visible(page).evaluate((el) => el.scrollTop)).toBe(before2);
 });
 
@@ -78,7 +78,7 @@ test('system back closes an overlay first; at home root first back warns to exit
   await openHome(page);
   await page.getByRole('button', { name: 'منو' }).click();
   await expect(page.getByRole('dialog', { name: 'منو' })).toBeVisible();
-  await expect(page.getByRole('dialog', { name: 'منو' }).getByText('سلام امیر عزیز')).toBeVisible();
+  await expect(page.getByRole('dialog', { name: 'منو' }).getByText('سلام مهمان عزیز')).toBeVisible();
   await page.goBack();
   await expect(page.getByRole('dialog')).toHaveCount(0);
   await page.goBack();
@@ -143,7 +143,7 @@ test('offline → offline ErrorPage; reconnect returns automatically', async ({ 
   await expect(page.getByRole('heading', { name: 'اینترنت متصل نیست' })).toBeVisible();
   await context.setOffline(false);
   await expect(page.getByRole('heading', { name: 'اینترنت متصل نیست' })).toHaveCount(0);
-  await expect(visible(page).getByRole('heading', { name: 'سلام امیر عزیز' })).toBeVisible();
+  await expect(visible(page).getByRole('heading', { name: 'سلام مهمان عزیز' })).toBeVisible();
 });
 
 test('server 503 (after retries) → e503 ErrorPage; retry goes back and reloads', async ({ page }) => {

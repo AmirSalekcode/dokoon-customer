@@ -16,10 +16,25 @@ export interface TextFieldProps extends Omit<
   numeric?: boolean;
   maxDigits?: number;
   size?: 'md' | 'lg';
+  /** Extra class for the <input> (e.g. large letter-spaced OTP digits). */
+  inputClassName?: string;
 }
 
 export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(function TextField(
-  { label, value, onChange, error, hint, numeric, maxDigits, size = 'md', id, className, ...rest },
+  {
+    label,
+    value,
+    onChange,
+    error,
+    hint,
+    numeric,
+    maxDigits,
+    size = 'md',
+    id,
+    className,
+    inputClassName,
+    ...rest
+  },
   ref,
 ) {
   const auto = useId();
@@ -33,7 +48,13 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(function T
       <input
         ref={ref}
         id={inputId}
-        className={[s.input, size === 'lg' && s.inputLg, error && s.inputErr, numeric && s.ltr]
+        className={[
+          s.input,
+          size === 'lg' && s.inputLg,
+          error && s.inputErr,
+          numeric && s.ltr,
+          inputClassName,
+        ]
           .filter(Boolean)
           .join(' ')}
         value={numeric ? toFaDigits(value) : value}

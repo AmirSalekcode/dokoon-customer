@@ -23,8 +23,10 @@ export function ErrorScreen({ route }: ScreenProps) {
         nav().resetTo('home');
         return;
       case 'login':
+        // Session expired: drop to guest at home, then ask to log in (D-59).
         useSession.getState().clear();
-        nav().resetTo('login');
+        nav().resetTo('home');
+        nav().push('login');
         return;
       case 'support':
         nav().push('support');

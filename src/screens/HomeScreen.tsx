@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { api } from '@/api/client';
 import { unwrap, useApi } from '@/api/useApi';
 import { useSession } from '@/auth/session';
+import { displayName } from '@/auth/flow';
 import { CategoryItem } from '@/components/library/CategoryItem';
 import { EmptyState } from '@/components/library/EmptyState';
 import { ErrorState } from '@/components/library/ErrorState';
@@ -17,7 +18,7 @@ import s from './screens.module.css';
 /** Foundation demo of Home: real API client + mock data + loading/empty/error states. */
 export function HomeScreen() {
   const { push, openOverlay } = useNav.getState();
-  const name = useSession((st) => st.user?.name) ?? 'امیر';
+  const name = displayName(useSession((st) => st.user?.name));
   const [cat, setCat] = useState('all');
   const home = useApi(() => unwrap(api.GET('/home', { params: { query: { cityId: 'shahreza' } } })), []);
 

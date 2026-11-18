@@ -58,10 +58,10 @@ export async function openApp(browser) {
   return { context, page };
 }
 
-/** Click `selector`, then measure until `screen` is the visible top screen with `readySelector` inside. */
-export async function navigate(page, selector, screen, readySelector = 'h1, h2') {
+/** Run `action` (click, typing…), then measure until `screen` is the visible top screen with `readySelector`. */
+export async function transition(page, action, screen, readySelector = 'h1, h2') {
   const t0 = Date.now();
-  await page.locator(selector).first().click();
+  await action();
   await page
     .locator(`${visible(screen)} ${readySelector}`)
     .first()
@@ -70,6 +70,37 @@ export async function navigate(page, selector, screen, readySelector = 'h1, h2')
   screenReady.add(ms, { screen });
   check(ms, { [`${screen} ready < 1s`]: (v) => v < 1000 });
   return ms;
+}
+
+/** Click `selector`, then measure until `screen` is the visible top screen with `readySelector` inside. */
+export async function navigate(page, selector, screen, readySelector = 'h1, h2') {
+  return transition(page, () => page.locator(selector).first().click(), screen, readySelector);
+}
+
+/** Inside the visible screen. */
+export const inScreen = (screen, selector) => `${visible(screen)} ${selector}`;
+
+/** Returning guest → account tab → login screen. */
+export async function goToLogin(page) {
+  await navigate(page, NAV.account, 'account', 'h2');
+  await navigate(
+    page,
+    '//main[@data-screen="account"]//button[normalize-space(.)="ورود یا ثبت‌نام"]',
+    'login',
+    'h1',
+  );
+}
+
+/** Login screen → OTP screen for `phone`. */
+export async function goToOtp(page, phone) {
+  await page.locator(inScreen('login', 'input')).fill(phone);
+  await page.locator(inScreen('login', '[role="checkbox"]')).click();
+  await navigate(
+    page,
+    '//main[@data-screen="login"]//button[normalize-space(.)="دریافت کد تأیید"]',
+    'otp',
+    'h1',
+  );
 }
 
 // First install: only the cookie decision (so the popup doesn't cover buttons); no launch state.

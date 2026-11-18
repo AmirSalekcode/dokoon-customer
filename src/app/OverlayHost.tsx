@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useSession } from '@/auth/session';
+import { displayName } from '@/auth/flow';
 import { useCart } from '@/cart/cart';
 import { Dialog } from '@/components/base/Dialog';
 import { ChoiceSheet } from '@/components/library/ChoiceSheet';
@@ -68,7 +69,8 @@ export function OverlayHost() {
           danger
           onConfirm={() => {
             useSession.getState().clear();
-            resetTo('login');
+            resetTo('home');
+            toast('از حساب خارج شدید');
           }}
           onCancel={closeOverlay}
         />
@@ -85,12 +87,16 @@ export function OverlayHost() {
 function MenuOverlay() {
   const { closeOverlay, push } = useNav.getState();
   const user = useSession((st) => st.user);
-  const name = user?.name ?? 'امیر';
+  const name = displayName(user?.name);
   const go = (screen: Parameters<typeof push>[0], params?: Record<string, string>) => () =>
     push(screen, params);
   return (
     <MenuDrawer
-      user={{ name, initial: name.slice(0, 1), phone: formatPhone(user?.phone ?? '09131234567') }}
+      user={{
+        name,
+        initial: name.slice(0, 1),
+        phone: user?.phone ? formatPhone(user.phone) : 'وارد نشده‌اید',
+      }}
       city="شهرضا"
       version={toFaDigits('0.1.0').replace(/\./g, '٫')}
       onClose={closeOverlay}
