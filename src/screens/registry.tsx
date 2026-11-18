@@ -8,6 +8,12 @@ import { CartScreen } from './CartScreen';
 import { CheckoutScreen } from './CheckoutScreen';
 import { AddAddressScreen } from './AddAddressScreen';
 import { PaidScreen } from './PaidScreen';
+import { GatewayScreen } from './GatewayScreen';
+import { PayFailScreen } from './PayFailScreen';
+import { TrackScreen } from './order/TrackScreen';
+import { CancelOrderScreen } from './order/CancelOrderScreen';
+import { ReportScreen } from './order/ReportScreen';
+import { RateOrderScreen } from './order/RateOrderScreen';
 import { AccountScreen } from './AccountScreen';
 import { PlaceholderScreen } from './PlaceholderScreen';
 import { FoundationLab } from './FoundationLab';
@@ -42,6 +48,12 @@ const SCREENS: Partial<Record<ScreenId, ComponentType<ScreenProps>>> = {
   checkout: CheckoutScreen,
   addaddr: AddAddressScreen,
   paid: PaidScreen,
+  gateway: GatewayScreen,
+  payfail: PayFailScreen,
+  track: TrackScreen,
+  cancel: CancelOrderScreen,
+  report: ReportScreen,
+  rateorder: RateOrderScreen,
   account: AccountScreen,
   settings: FoundationLab,
   error: ErrorScreen,

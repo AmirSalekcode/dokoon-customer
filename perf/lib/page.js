@@ -151,12 +151,13 @@ const ADDRESS_SEED = {
  * Open the app as a logged-in returning user with one food in the cart (mock API).
  * `withAddress` also seeds one saved delivery address in the mock database.
  */
-export async function openWithCart(browser, { withAddress = false } = {}) {
+export async function openWithCart(browser, { withAddress = false, stepMs = 0 } = {}) {
   const context = await browser.newContext({ viewport: { width: 390, height: 844 }, locale: 'fa-IR' });
   const seed = {
     'dk-session': { accessToken: 'mock-access', refreshToken: 'mock-refresh', user: null },
     'dk-cart': CART_SEED,
-    'dk-mock-db': { addresses: withAddress ? [ADDRESS_SEED] : [], seq: withAddress ? 1 : 0 },
+    'dk-mock-db': { addresses: withAddress ? [ADDRESS_SEED] : [], orders: [], seq: withAddress ? 1 : 0 },
+    ...(stepMs ? { 'dk-mock-step-ms': stepMs } : {}),
   };
   await context.addInitScript(
     `${CONSENT_SEED} try { const s = ${JSON.stringify(seed)}; if (!sessionStorage.getItem('dk-k6-seeded')) { for (const k in s) localStorage.setItem(k, JSON.stringify(s[k])); sessionStorage.setItem('dk-k6-seeded', '1'); } } catch (e) {}`,
@@ -179,3 +180,38 @@ export async function goToCheckout(page) {
   await page.locator(cta).waitFor({ state: 'visible' });
   await navigate(page, cta, 'checkout', 'h2');
 }
+
+const CHECKOUT = '//main[@data-screen="checkout"]';
+
+/** Checkout → online payment → gateway simulator. */
+export async function goToGateway(page) {
+  await goToCheckout(page);
+  await navigate(
+    page,
+    `${CHECKOUT}//button[starts-with(normalize-space(.), "ثبت سفارش")][not(@disabled)]`,
+    'gateway',
+    'h2',
+  );
+}
+
+/** Checkout → cash on delivery → paid → «پیگیری سفارش» → track. */
+export async function goToTrack(page) {
+  await goToCheckout(page);
+  await page
+    .locator(`${CHECKOUT}//button[@role="radio"][.//*[normalize-space(.)="نقدی هنگام تحویل"]]`)
+    .click();
+  await navigate(
+    page,
+    `${CHECKOUT}//button[starts-with(normalize-space(.), "ثبت سفارش")][not(@disabled)]`,
+    'paid',
+    'h1',
+  );
+  await navigate(
+    page,
+    '//main[@data-screen="paid"]//button[normalize-space(.)="پیگیری سفارش"]',
+    'track',
+    'h1',
+  );
+}
+
+export const trackButton = (label) => `//main[@data-screen="track"]//button[normalize-space(.)="${label}"]`;

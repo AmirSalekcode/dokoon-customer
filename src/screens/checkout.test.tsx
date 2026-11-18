@@ -5,6 +5,7 @@ import { beforeEach, describe, expect, it } from 'vitest';
 import { useSession } from '@/auth/session';
 import { useCart } from '@/cart/cart';
 import { useAddresses } from '@/features/addresses';
+import { usePayMethod } from '@/features/checkout';
 import { server } from '@/mocks/node';
 import { useNav } from '@/nav/nav';
 import type { Route } from '@/nav/types';
@@ -28,6 +29,7 @@ async function withAddress() {
 }
 
 beforeEach(() => {
+  usePayMethod.getState().set('online');
   useSession.getState().clear();
   useSession.getState().setSession({ accessToken: 'a', refreshToken: 'r' });
   useAddresses.getState().clear();
@@ -149,7 +151,7 @@ describe('<CheckoutScreen /> — spec §3 checkout', () => {
     await waitFor(() => expect(submit()).toBeEnabled());
     await userEvent.click(submit());
     await waitFor(() => expect(top().screen).toBe('gateway'));
-    expect(top().params).toMatchObject({ orderId: 'o-new' });
+    expect(top().params).toMatchObject({ orderId: expect.stringMatching(/^o\d+$/) });
     expect(useCart.getState().lines).toHaveLength(1);
   });
 

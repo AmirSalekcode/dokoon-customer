@@ -27,3 +27,12 @@ Nothing here is implemented as an invented endpoint; the frontend works around e
 7. **Shared restaurant links**: the app shares `https://<app-origin>/?restaurant=<id>` (ids must match
    `^[\w-]{1,64}$`). If the backend later serves link previews (Open Graph) or Android App Links for
    `dokoonapp.ir`, it should use the same format.
+8. **Order cancel / report lists.** `POST /orders/{id}/cancel` takes `reasonId` and `/report` takes
+   `typeId`, but there is no endpoint listing them. The app uses fixed ids for now:
+   cancel `mistake | too_slow | change | other`, report `missing | wrong | late | quality | other`.
+   Proposal: `GET /orders/cancel-reasons` and `GET /orders/report-types` (id + Persian title), or
+   enums in the contract. `photoUploadIds` needs an upload endpoint (e.g. `POST /uploads`) that the
+   contract does not have, so the report screen has no photo yet.
+9. **Payment callback query.** `/payments/callback/{provider}` declares no query parameters, while its
+   summary says the server reads the gateway result and redirects with `?orderId=&result=`.
+   Proposal: document the gateway's query params there (they differ per provider).
