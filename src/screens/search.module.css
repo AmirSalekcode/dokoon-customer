@@ -1,0 +1,51 @@
+/* Search (prototype `.rhd`, `.csh`, `.chp.wrap`, `.cmore`) — tokens only. */
+.page {
+  padding-bottom: calc(var(--sp-8) + env(safe-area-inset-bottom));
+}
+.head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: var(--sp-5) var(--gutter) var(--sp-3);
+}
+.head > .title {
+  margin: 0;
+}
+.title {
+  font-size: var(--fs-16);
+  font-weight: var(--fw-bold);
+  line-height: 1.5;
+}
+.more {
+  min-height: var(--touch);
+  min-width: var(--touch);
+  padding: 0 var(--sp-3);
+  border: 0;
+  background: none;
+  color: var(--pr2);
+  font: inherit;
+  font-size: var(--fs-14);
+  font-weight: var(--fw-bold);
+  cursor: pointer;
+}
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-2);
+  padding: 0 var(--gutter);
+}
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+  padding: 0 var(--gutter);
+}
+.note {
+  margin: var(--sp-4) var(--gutter) 0;
+  padding: var(--sp-3) var(--sp-4);
+  border-radius: var(--r-lg);
+  background: var(--soft);
+  color: var(--pr2);
+  font-size: var(--fs-13);
+  line-height: 1.7;
+}

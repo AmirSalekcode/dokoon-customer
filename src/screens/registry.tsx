@@ -2,6 +2,7 @@ import type { ComponentType } from 'react';
 import type { Route, ScreenId } from '@/nav/types';
 import { ErrorScreen } from './ErrorScreen';
 import { HomeScreen } from './HomeScreen';
+import { SearchScreen } from './SearchScreen';
 import { RestaurantScreen } from './RestaurantScreen';
 import { RestInfoScreen } from './RestInfoScreen';
 import { CartScreen } from './CartScreen';
@@ -56,6 +57,7 @@ const SCREENS: Partial<Record<ScreenId, ComponentType<ScreenProps>>> = {
   setup: SetupScreen,
   perms: PermsScreen,
   home: HomeScreen,
+  search: SearchScreen,
   restaurant: RestaurantScreen,
   restinfo: RestInfoScreen,
   cart: CartScreen,
@@ -98,6 +100,5 @@ export function screenFor(id: ScreenId): ComponentType<ScreenProps> {
 export const TITLES: Partial<Record<ScreenId, string>> = {
   restaurants: 'رستوران‌ها',
   offers: 'تخفیف‌ها',
-  search: 'جستجو',
   campaign: 'کمپین',
 };

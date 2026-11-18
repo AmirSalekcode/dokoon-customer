@@ -45,3 +45,11 @@ Nothing here is implemented as an invented endpoint; the frontend works around e
     `business`, `address`; courier: `vehicle`, `area`). Proposal: `additionalProperties: {type: string}`
     or named optional fields. `POST /uploads` has no `requestBody`; the app sends `multipart/form-data`
     with one `file` field. Proposal: declare it (`multipart/form-data`, `file: string, format: binary`).
+13. **Search filters and recent searches.** `GET /search` takes only `q`/`lat`/`lng`, so the shared
+    FilterSheet cannot narrow search results on the server. The app filters the returned cards on the
+    client (`openNow`, `hasDiscount`, `minRating`, `sort`); food-type `tags` cannot be applied because
+    `RestaurantCard` has no tags, and the app tells the user. Proposal: accept the same filter params as
+    `GET /restaurants` (`sort`, `openNow`, `hasDiscount`, `tags`, `minRating`) on `/search`. Also: no
+    endpoint to save or clear the per-user `recent` list of `/search/suggestions`; the app keeps its own
+    list per device (D-81). Proposal: `DELETE /search/recent` (and the server records `q` on `/search`
+    for logged-in users). `/search` has no paging (`nextCursor`); fine for now, needed for big cities.
