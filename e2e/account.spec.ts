@@ -70,3 +70,43 @@ test('settings: notification switch persists across visits', async ({ page }) =>
     'true',
   );
 });
+
+test('about → legal (terms/privacy): sections expand; system back returns step by step', async ({ page }) => {
+  await openAccount(page);
+  await screen(page, 'account')
+    .getByRole('button', { name: /^درباره ما و قوانین/ })
+    .click();
+  const about = screen(page, 'about');
+  await expect(about.getByText(/سفارش آنلاین غذا از رستوران‌ها/)).toBeVisible();
+  await expect(about.getByText('نسخه‌ی ۰٫۱٫۰')).toBeVisible();
+  await about.getByRole('button', { name: /^حریم خصوصی/ }).click();
+  const legal = screen(page, 'legal');
+  await expect(legal.getByRole('heading', { level: 1, name: 'حریم خصوصی' })).toBeVisible();
+  await expect(legal.getByText(/متن پیش‌نویس/)).toBeVisible();
+  const sec = legal.getByRole('button', { name: 'نحوه‌ی استفاده' });
+  await sec.click();
+  await expect(sec).toHaveAttribute('aria-expanded', 'true');
+  await expect(legal.getByText(/فقط برای ثبت، ارسال و پشتیبانی سفارش/)).toBeVisible();
+  expect(await page.evaluate(() => document.scrollingElement!.scrollWidth)).toBeLessThanOrEqual(390);
+  await page.goBack();
+  await expect(about).toBeVisible();
+  await about.getByRole('button', { name: /^قوانین و مقررات/ }).click();
+  await expect(
+    screen(page, 'legal').getByRole('heading', { level: 1, name: 'قوانین و مقررات' }),
+  ).toBeVisible();
+  await page.goBack();
+  await page.goBack();
+  await expect(screen(page, 'account')).toBeVisible();
+});
+
+test('soon: coming-soon page from the dev preview; «بازگشت» returns to settings', async ({ page }) => {
+  await openAccount(page);
+  await screen(page, 'account')
+    .getByRole('button', { name: /^تنظیمات/ })
+    .click();
+  await screen(page, 'settings').getByRole('button', { name: 'soon', exact: true }).click();
+  const soon = screen(page, 'soon');
+  await expect(soon.getByRole('heading', { name: 'به‌زودی در دکون' })).toBeVisible();
+  await soon.getByRole('button', { name: 'بازگشت', exact: true }).last().click();
+  await expect(screen(page, 'settings')).toBeVisible();
+});

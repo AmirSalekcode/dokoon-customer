@@ -130,7 +130,7 @@ describe('<CookieConsent />', () => {
     render(<CookieConsent />);
     await userEvent.click(screen.getByRole('button', { name: 'سیاست حریم خصوصی' }));
     const s = useNav.getState().stack;
-    expect(s[s.length - 1]).toMatchObject({ screen: 'legal', params: { doc: 'privacy' } });
+    expect(s[s.length - 1]).toMatchObject({ screen: 'legal', params: { kind: 'privacy' } });
   });
 
   it('buttons meet the 48px touch target via CSS class contract', () => {

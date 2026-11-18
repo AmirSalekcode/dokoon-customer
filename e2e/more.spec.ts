@@ -107,3 +107,78 @@ test('no horizontal scroll on the four screens at 390 wide', async ({ page }) =>
     await expect(screen(page, 'home')).toBeVisible();
   }
 });
+
+test('apply (restaurant): validation, Persian digits, success message, back returns home', async ({
+  page,
+}) => {
+  await openHome(page);
+  const ap = await openFromMenu(page, 'ثبت‌نام رستوران', 'apply');
+  await expect(ap.getByRole('heading', { level: 1, name: 'ثبت‌نام رستوران' })).toBeVisible();
+  const send = ap.getByRole('button', { name: 'ثبت درخواست' });
+  await ap.getByLabel('نام رستوران').fill('کافه نارنج');
+  await ap.getByLabel('نام مالک').fill('سارا احمدی');
+  await ap.getByLabel('آدرس رستوران').fill('شهرضا، خیابان امام');
+  await ap.getByLabel('شماره‌ی تماس').fill('۰۸۱۲۱۲۳۴۵۶۷');
+  await expect(ap.getByText('شماره نامعتبر است')).toBeVisible();
+  await expect(send).toBeDisabled();
+  await ap.getByLabel('شماره‌ی تماس').fill('۰۹۱۲۱۲۳۴۵۶۷');
+  await expect(ap.getByLabel('شهر')).toHaveValue('shahreza');
+  expect(await page.evaluate(() => document.scrollingElement!.scrollWidth)).toBeLessThanOrEqual(390);
+  await send.click();
+  await expect(ap.getByRole('heading', { name: 'درخواست شما ثبت شد' })).toBeVisible();
+  await ap.getByRole('button', { name: 'بازگشت' }).click();
+  await expect(screen(page, 'home')).toBeVisible();
+});
+
+test('apply (courier): own fields; system back returns home', async ({ page }) => {
+  await openHome(page);
+  const ap = await openFromMenu(page, 'همکاری با پیک', 'apply');
+  await expect(ap.getByRole('heading', { level: 1, name: 'همکاری با پیک' })).toBeVisible();
+  await ap.getByLabel('نوع وسیله‌ی نقلیه').selectOption('موتورسیکلت');
+  await expect(ap.getByLabel('محدوده‌ی فعالیت')).toBeVisible();
+  await page.goBack();
+  await expect(screen(page, 'home')).toBeVisible();
+});
+
+test('report: photo uploaded (POST /uploads), too-large rejected, report sent → back to track', async ({
+  page,
+}) => {
+  await openHome(page, { loggedIn: true });
+  await page.getByRole('navigation', { name: 'منوی اصلی' }).getByRole('button', { name: 'حساب' }).click();
+  await screen(page, 'account')
+    .getByRole('button', { name: /^سفارش‌ها/ })
+    .click();
+  await screen(page, 'orders')
+    .getByRole('button', { name: /سفارش ۱۰۲۵۴/ })
+    .click();
+  await screen(page, 'track').getByRole('button', { name: 'گزارش مشکل' }).click();
+  const rp = screen(page, 'report');
+  await rp.getByRole('radio', { name: 'غذا کامل نبود' }).click();
+  await rp.getByLabel('توضیح مشکل').fill('نوشابه نبود');
+  const input = rp.getByLabel('افزودن عکس (اختیاری)');
+  await input.setInputFiles({
+    name: 'big.jpg',
+    mimeType: 'image/jpeg',
+    buffer: Buffer.alloc(6 * 1024 * 1024),
+  });
+  await expect(rp.getByRole('alert')).toHaveText('حجم عکس باید کمتر از ۵ مگابایت باشد');
+  // 1×1 PNG
+  const png = Buffer.from(
+    'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==',
+    'base64',
+  );
+  const uploaded = page.waitForResponse(
+    (r) => r.url().endsWith('/uploads') && r.request().method() === 'POST',
+  );
+  await input.setInputFiles({ name: 'food.png', mimeType: 'image/png', buffer: png });
+  const up = await uploaded;
+  expect(up.status()).toBe(201);
+  expect(((await up.json()) as { id: string }).id).toMatch(/^up\d+$/);
+  await expect(rp.getByRole('list', { name: 'عکس‌ها' }).getByRole('listitem')).toHaveCount(1);
+  await expect(rp.getByRole('img', { name: 'عکس ۱' })).toBeVisible();
+  expect(await page.evaluate(() => document.scrollingElement!.scrollWidth)).toBeLessThanOrEqual(390);
+  // (the report body with photoUploadIds is asserted in more.test.tsx; the SW hides fetch bodies here)
+  await rp.getByRole('button', { name: 'ثبت گزارش' }).click();
+  await expect(screen(page, 'track')).toBeVisible();
+  await expect(page.getByText('گزارش شما ثبت شد')).toBeVisible();
+});

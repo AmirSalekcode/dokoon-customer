@@ -97,7 +97,7 @@ export function LoginScreen({ route }: ScreenProps) {
             <button
               type="button"
               className={s.link}
-              onClick={() => useNav.getState().push('legal', { doc: 'terms' })}
+              onClick={() => useNav.getState().push('legal', { kind: 'terms' })}
             >
               قوانین و مقررات
             </button>{' '}

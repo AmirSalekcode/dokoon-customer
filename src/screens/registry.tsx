@@ -25,6 +25,10 @@ import { SupportScreen } from './more/SupportScreen';
 import { InviteScreen } from './more/InviteScreen';
 import { SocialScreen } from './more/SocialScreen';
 import { RateAppScreen } from './more/RateAppScreen';
+import { AboutScreen } from './more/AboutScreen';
+import { LegalScreen } from './more/LegalScreen';
+import { ApplyScreen } from './more/ApplyScreen';
+import { SoonScreen } from './more/SoonScreen';
 import { AccountScreen } from './AccountScreen';
 import { PlaceholderScreen } from './PlaceholderScreen';
 import { SplashScreen } from './auth/SplashScreen';
@@ -76,6 +80,10 @@ const SCREENS: Partial<Record<ScreenId, ComponentType<ScreenProps>>> = {
   invite: InviteScreen,
   social: SocialScreen,
   rateapp: RateAppScreen,
+  about: AboutScreen,
+  legal: LegalScreen,
+  apply: ApplyScreen,
+  soon: SoonScreen,
   error: ErrorScreen,
 };
 
@@ -86,24 +94,10 @@ export function screenFor(id: ScreenId): ComponentType<ScreenProps> {
   return SCREENS[id] ?? PlaceholderScreen;
 }
 
-/** Persian titles for placeholder screens. */
+/** Persian titles for the screens that are still placeholders (not in SCREENS yet). */
 export const TITLES: Partial<Record<ScreenId, string>> = {
   restaurants: 'رستوران‌ها',
   offers: 'تخفیف‌ها',
   search: 'جستجو',
-  login: 'ورود',
-  orders: 'سفارش‌ها',
-  support: 'پشتیبانی',
-  restinfo: 'اطلاعات رستوران',
-  checkout: 'تکمیل سفارش',
-  favs: 'علاقه‌مندی‌ها',
-  notifs: 'اعلان‌ها',
-  addresses: 'آدرس‌های من',
-  promos: 'کدهای تخفیف',
-  about: 'درباره ما',
-  invite: 'دعوت از دوستان',
-  social: 'شبکه‌های اجتماعی',
-  rateapp: 'امتیاز به دکون',
-  apply: 'همکاری با دکون',
-  settings: 'تنظیمات',
+  campaign: 'کمپین',
 };

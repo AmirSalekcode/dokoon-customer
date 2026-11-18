@@ -151,3 +151,44 @@
   background: var(--okbg);
   color: var(--ink);
 }
+
+/* about / legal */
+.version {
+  color: var(--mu);
+  font-size: var(--fs-13);
+}
+.note {
+  margin: 0;
+  padding: var(--sp-3) var(--sp-4);
+  border-radius: var(--r-lg);
+  background: var(--soft);
+  color: var(--ink);
+  font-size: var(--fs-13);
+  line-height: 1.8;
+}
+
+/* apply */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-1);
+}
+.select {
+  width: 100%;
+  height: var(--h-input);
+  padding: 0 var(--sp-4);
+  border: 1.5px solid var(--ln);
+  border-radius: var(--r-lg);
+  background: var(--sf);
+  color: var(--ink);
+  font: inherit;
+  font-size: var(--fs-15);
+}
+.select:focus-visible {
+  border-color: var(--primary);
+  outline: var(--focus-ring);
+  outline-offset: 0;
+}
+.select:disabled {
+  color: var(--mu);
+}
