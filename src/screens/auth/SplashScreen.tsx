@@ -9,11 +9,11 @@ import type { ScreenProps } from '../registry';
 import s from './auth.module.css';
 
 /**
- * Decision D-61: the splash stays at least SPLASH_MIN_MS (brand moment) and leaves as soon as the
+ * Decision D-61 (+ owner update: minimum doubled to 1.2s): the splash stays at least SPLASH_MIN_MS (brand moment) and leaves as soon as the
  * app is ready (session revalidated), but never later than SPLASH_MAX_MS (the original 1.8s).
  * A fixed 1.8s delayed the main content (LCP ~2.3s on every launch).
  */
-export const SPLASH_MIN_MS = 600;
+export const SPLASH_MIN_MS = 1200;
 export const SPLASH_MAX_MS = 1800;
 
 /** Revalidate a stored session in the background; an invalid one just drops the user to guest. */
