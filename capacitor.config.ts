@@ -2,11 +2,11 @@ import type { CapacitorConfig } from '@capacitor/cli';
 
 /**
  * Android shell (Bazaar / Myket / direct APK). iPhone uses the PWA in phase 1.
- * appId follows the kickoff suggestion `ir.dokoon.customer` — confirm before the first store upload
- * (it cannot be changed after publishing).
+ * appId = reversed domain (dokoonapp.ir → ir.dokoonapp.customer), decision D-52.
+ * It can never change after the first store upload. Future apps: ir.dokoonapp.restaurant / .courier.
  */
 const config: CapacitorConfig = {
-  appId: 'ir.dokoon.customer',
+  appId: 'ir.dokoonapp.customer',
   appName: 'دکون',
   webDir: 'dist',
   android: {
