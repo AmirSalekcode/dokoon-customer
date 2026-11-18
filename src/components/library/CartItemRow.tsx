@@ -10,6 +10,8 @@ export interface CartItemRowItem {
   optionsText?: string;
   /** Line total, integer toman. */
   total: number;
+  /** Server says this food is no longer available. */
+  unavailable?: boolean;
 }
 
 export interface CartItemRowProps {
@@ -22,12 +24,13 @@ export interface CartItemRowProps {
 /** Cart line: name, options, price, quantity stepper. */
 export function CartItemRow({ item, qtyText, onInc, onDec }: CartItemRowProps) {
   return (
-    <div className={s.ci}>
+    <div className={[s.ci, item.unavailable && s.off].filter(Boolean).join(' ')}>
       <div className={s.th}>
         <Art src={item.art} className={s.art} />
       </div>
       <div className={s.bd}>
         <h4 className={s.nm}>{item.name}</h4>
+        {item.unavailable ? <span className={s.na}>ناموجود</span> : null}
         {item.optionsText ? <p className={s.op}>{item.optionsText}</p> : null}
         <div className={s.bt}>
           <Price price={item.total} />

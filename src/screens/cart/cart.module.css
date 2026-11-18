@@ -1,0 +1,103 @@
+.page {
+  padding-bottom: calc(var(--h-bottomnav) + var(--h-actionbar) + var(--sp-6) + env(safe-area-inset-bottom));
+}
+.pageNoNav {
+  padding-bottom: calc(var(--h-actionbar) + var(--sp-8) + env(safe-area-inset-bottom));
+}
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+  padding: 0 var(--gutter);
+}
+.rest {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-3);
+}
+.rest small {
+  color: var(--mu);
+  font-size: var(--fs-12);
+}
+.rest h2 {
+  margin: 0;
+  font-size: var(--fs-16);
+  font-weight: var(--fw-bold);
+}
+.more {
+  min-height: var(--touch);
+  padding: 0 var(--sp-4);
+  border: 1.5px solid var(--ln);
+  border-radius: var(--r-pill);
+  background: var(--sf);
+  color: var(--pr2);
+  font-size: var(--fs-13);
+  font-weight: var(--fw-bold);
+  cursor: pointer;
+}
+.lines {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.noteInput {
+  width: 100%;
+  min-height: 80px;
+  padding: var(--sp-3) var(--sp-4);
+  border: 1.5px solid var(--ln);
+  border-radius: var(--r-lg);
+  background: var(--sf);
+  color: var(--ink);
+  font: inherit;
+  font-size: var(--fs-14);
+  resize: vertical;
+}
+.quoting {
+  height: 140px;
+  border-radius: var(--r-lg);
+  background: var(--sf);
+  opacity: 0.6;
+}
+.alert {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-3);
+  margin: 0;
+  padding: var(--sp-3) var(--sp-4);
+  border-radius: var(--r-lg);
+  background: var(--soft);
+  color: var(--pr2);
+  font-size: var(--fs-14);
+  font-weight: var(--fw-bold);
+}
+.alert button {
+  min-height: var(--touch);
+  border: 0;
+  background: none;
+  color: var(--pr2);
+  font: inherit;
+  text-decoration: underline;
+  cursor: pointer;
+}
+/* Sticky CTA (above the bottom navigation on the cart tab). */
+.dock {
+  position: sticky;
+  bottom: calc(var(--h-bottomnav) + env(safe-area-inset-bottom));
+  z-index: var(--z-sticky);
+  margin-top: var(--sp-4);
+  padding: var(--sp-3) var(--gutter);
+  background: var(--bg);
+}
+.dockNoNav {
+  position: sticky;
+  bottom: 0;
+  z-index: var(--z-sticky);
+  margin-top: var(--sp-4);
+  padding: var(--sp-3) var(--gutter) calc(var(--sp-3) + env(safe-area-inset-bottom));
+  background: var(--bg);
+}

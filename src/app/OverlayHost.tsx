@@ -9,6 +9,7 @@ import { MenuDrawer } from '@/components/library/MenuDrawer';
 import { ReviewSheet } from '@/components/library/ReviewSheet';
 import { ICONS } from '@/components/primitives/Icon';
 import { formatPhone, toFaDigits } from '@/lib/format';
+import { useAddresses } from '@/features/addresses';
 import { useNav } from '@/nav/nav';
 import { toast } from '@/ui/toast';
 import { FoodOverlay } from './FoodOverlay';
@@ -19,7 +20,7 @@ const STAR_LABELS = ['خیلی بد', 'بد', 'معمولی', 'خوب', 'عال�
 /** Renders the single active overlay (menu, filter, food, review, address, confirm, delconfirm, dlg). */
 export function OverlayHost() {
   const overlay = useNav((st) => st.overlay);
-  const { closeOverlay, push, resetTo } = useNav.getState();
+  const { closeOverlay, resetTo } = useNav.getState();
   if (!overlay) return null;
   const p = overlay.props ?? {};
 
@@ -27,24 +28,7 @@ export function OverlayHost() {
     case 'menu':
       return <MenuOverlay />;
     case 'address':
-      return (
-        <ChoiceSheet
-          title="انتخاب آدرس تحویل"
-          addLabel="افزودن آدرس جدید"
-          options={[
-            {
-              id: 'a1',
-              title: 'خانه',
-              sub: 'شهرضا، خیابان امام',
-              icon: ICONS.home,
-              selected: true,
-              onPick: closeOverlay,
-            },
-          ]}
-          onClose={closeOverlay}
-          onAdd={() => push('addaddr')}
-        />
-      );
+      return <AddressOverlay />;
     case 'confirm':
       return <CartReplaceDialog />;
     case 'delconfirm':
@@ -83,6 +67,33 @@ export function OverlayHost() {
     case 'filter':
       return <FilterOverlay />;
   }
+}
+
+function AddressOverlay() {
+  const { closeOverlay, push } = useNav.getState();
+  const { list, selectedId, select } = useAddresses();
+  return (
+    <ChoiceSheet
+      title="انتخاب آدرس تحویل"
+      addLabel="افزودن آدرس جدید"
+      options={list.map((a) => ({
+        id: a.id ?? '',
+        title: a.title ?? '',
+        sub: a.fullText,
+        icon: a.title === 'محل کار' ? ICONS.bag : ICONS.home,
+        selected: a.id === selectedId,
+        onPick: () => {
+          if (a.id) select(a.id);
+          closeOverlay();
+        },
+      }))}
+      onClose={closeOverlay}
+      onAdd={() => {
+        closeOverlay();
+        push('addaddr');
+      }}
+    />
+  );
 }
 
 function MenuOverlay() {

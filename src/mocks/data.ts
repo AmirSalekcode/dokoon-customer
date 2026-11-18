@@ -87,7 +87,7 @@ export const restaurants: Restaurant[] = [
     etaMin: 20,
     etaMax: 30,
     fee: 0,
-    minOrder: 120000,
+    minOrder: 300000,
     distanceKm: 0.8,
     open: true,
     opensNext: '',

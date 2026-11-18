@@ -5,6 +5,9 @@ import { HomeScreen } from './HomeScreen';
 import { RestaurantScreen } from './RestaurantScreen';
 import { RestInfoScreen } from './RestInfoScreen';
 import { CartScreen } from './CartScreen';
+import { CheckoutScreen } from './CheckoutScreen';
+import { AddAddressScreen } from './AddAddressScreen';
+import { PaidScreen } from './PaidScreen';
 import { AccountScreen } from './AccountScreen';
 import { PlaceholderScreen } from './PlaceholderScreen';
 import { FoundationLab } from './FoundationLab';
@@ -36,6 +39,9 @@ const SCREENS: Partial<Record<ScreenId, ComponentType<ScreenProps>>> = {
   restaurant: RestaurantScreen,
   restinfo: RestInfoScreen,
   cart: CartScreen,
+  checkout: CheckoutScreen,
+  addaddr: AddAddressScreen,
+  paid: PaidScreen,
   account: AccountScreen,
   settings: FoundationLab,
   error: ErrorScreen,

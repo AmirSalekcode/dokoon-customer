@@ -130,3 +130,52 @@ export const NAV = {
   cart: 'nav[aria-label="منوی اصلی"] button:nth-child(3)',
   account: 'nav[aria-label="منوی اصلی"] button:nth-child(5)',
 };
+
+const CART_SEED = {
+  restaurant: { id: 'naghsh', name: 'کباب‌سرای نقش‌جهان' },
+  lines: [{ lineId: 'n2', foodId: 'n2', title: 'کباب برگ', unitPrice: 420000, qty: 1, options: [] }],
+  note: '',
+  promoCode: '',
+};
+const ADDRESS_SEED = {
+  id: 'a1',
+  title: 'خانه',
+  fullText: 'شهرضا، خیابان امام، کوچه‌ی ۱۲',
+  location: { lat: 32.0089, lng: 51.8668 },
+  recipientName: 'امیر',
+  recipientPhone: '09131234567',
+  inZone: true,
+};
+
+/**
+ * Open the app as a logged-in returning user with one food in the cart (mock API).
+ * `withAddress` also seeds one saved delivery address in the mock database.
+ */
+export async function openWithCart(browser, { withAddress = false } = {}) {
+  const context = await browser.newContext({ viewport: { width: 390, height: 844 }, locale: 'fa-IR' });
+  const seed = {
+    'dk-session': { accessToken: 'mock-access', refreshToken: 'mock-refresh', user: null },
+    'dk-cart': CART_SEED,
+    'dk-mock-db': { addresses: withAddress ? [ADDRESS_SEED] : [], seq: withAddress ? 1 : 0 },
+  };
+  await context.addInitScript(
+    `${CONSENT_SEED} try { const s = ${JSON.stringify(seed)}; if (!sessionStorage.getItem('dk-k6-seeded')) { for (const k in s) localStorage.setItem(k, JSON.stringify(s[k])); sessionStorage.setItem('dk-k6-seeded', '1'); } } catch (e) {}`,
+  );
+  const page = await context.newPage();
+  await page.goto(BASE_URL, { waitUntil: 'networkidle' });
+  await page
+    .locator(`${visible('home')} section`)
+    .first()
+    .waitFor({ state: 'visible' });
+  pagesMeasured.add(1);
+  return { context, page };
+}
+
+/** Cart tab → checkout (the CTA is enabled once the server quote arrives). */
+export async function goToCheckout(page) {
+  await navigate(page, NAV.cart, 'cart', 'h2');
+  const cta =
+    '//main[@data-screen="cart"]//button[starts-with(normalize-space(.), "ادامه و تکمیل سفارش")][not(@disabled)]';
+  await page.locator(cta).waitFor({ state: 'visible' });
+  await navigate(page, cta, 'checkout', 'h2');
+}
