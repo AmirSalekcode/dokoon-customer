@@ -22,3 +22,5 @@ android/capacitor-cordova-android-plugins/
 android/.idea/
 *.keystore
 *.jks
+# k6 results
+perf/results/

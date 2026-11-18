@@ -1,0 +1,32 @@
+# Keep the Docker build context small and secret-free.
+# Secrets
+.env
+.env.*
+!.env.example
+!.env.mock
+*.keystore
+*.jks
+# VCS / tooling
+.git
+.github
+.cloud
+.claude
+.vscode
+.idea
+# Dependencies and outputs (rebuilt inside the image)
+node_modules
+dist
+dev-dist
+storybook-static
+coverage
+test-results
+playwright-report
+# Not needed to build the web app
+android
+prototype
+docs
+e2e
+perf
+*.md
+Dockerfile
+docker-compose*.yml
