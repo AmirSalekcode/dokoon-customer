@@ -22,7 +22,9 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "cap:sync": "npm run build:mock && cap sync android",
-    "android:debug": "npm run cap:sync && cd android && gradlew.bat assembleDebug"
+    "android:debug": "npm run cap:sync && cd android && gradlew.bat assembleDebug",
+    "secrets:scan": "node scripts/secret-scan.mjs",
+    "secrets:scan:dist": "node scripts/secret-scan.mjs dist"
   },
   "dependencies": {
     "@capacitor/android": "^8.6.2",
