@@ -19,3 +19,8 @@ android/capacitor-cordova-android-plugins/
 android/.idea/
 *.keystore
 *.jks
+# Secrets (keep templates)
+.env
+.env.*
+!.env.example
+!.env.mock
