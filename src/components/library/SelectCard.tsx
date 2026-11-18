@@ -1,3 +1,4 @@
+import { useId } from 'react';
 import { Icon } from '../primitives/Icon';
 import s from './SelectCard.module.css';
 
@@ -27,6 +28,7 @@ export function SelectCard({
   onPick,
   onAction,
 }: SelectCardProps) {
+  const id = useId();
   return (
     <div className={[s.sc, selected && s.on, disabled && s.dis].filter(Boolean).join(' ')}>
       <button
@@ -34,6 +36,8 @@ export function SelectCard({
         className={s.mn}
         role={radio ? 'radio' : undefined}
         aria-checked={radio ? !!selected : undefined}
+        aria-labelledby={`${id}-t`}
+        aria-describedby={sub ? `${id}-s` : undefined}
         disabled={disabled}
         onClick={onPick}
       >
@@ -43,8 +47,8 @@ export function SelectCard({
           </span>
         ) : null}
         <span className={s.tx}>
-          <b>{title}</b>
-          {sub ? <small>{sub}</small> : null}
+          <b id={`${id}-t`}>{title}</b>
+          {sub ? <small id={`${id}-s`}>{sub}</small> : null}
         </span>
         {radio ? <span className={s.mk} /> : null}
       </button>

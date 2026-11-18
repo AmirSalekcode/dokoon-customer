@@ -13,13 +13,16 @@
     <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
     <title>دکون</title>
     <script>
-      // Apply saved theme before first paint (no flash). Key: dk-theme. Storage may throw.
+      // Theme before first paint (no flash): saved choice in dk-theme, else follow the phone.
       (function () {
         var t = null;
         try {
           t = localStorage.getItem('dk-theme');
         } catch (e) {}
-        if (t === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+        var dark =
+          t === 'dark' ||
+          (t !== 'light' && window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches);
+        if (dark) document.documentElement.setAttribute('data-theme', 'dark');
       })();
     </script>
   </head>
