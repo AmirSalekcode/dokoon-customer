@@ -34,7 +34,6 @@ import { LegalScreen } from './more/LegalScreen';
 import { ApplyScreen } from './more/ApplyScreen';
 import { SoonScreen } from './more/SoonScreen';
 import { AccountScreen } from './AccountScreen';
-import { PlaceholderScreen } from './PlaceholderScreen';
 import { SplashScreen } from './auth/SplashScreen';
 import { OnboardScreen } from './auth/OnboardScreen';
 import { CityScreen } from './auth/CityScreen';
@@ -47,11 +46,8 @@ export interface ScreenProps {
   route: Route;
 }
 
-/**
- * Phase 1 = foundation only. Home / restaurant / cart are thin demo screens that exercise the
- * API client, mock server, cart and navigation; full screens are built per spec in phase 2.
- */
-const SCREENS: Partial<Record<ScreenId, ComponentType<ScreenProps>>> = {
+/** Every ScreenId must map to a real screen — the type makes a missing one a compile error. */
+const SCREENS: Record<ScreenId, ComponentType<ScreenProps>> = {
   splash: SplashScreen,
   onboard: OnboardScreen,
   city: CityScreen,
@@ -95,12 +91,9 @@ const SCREENS: Partial<Record<ScreenId, ComponentType<ScreenProps>>> = {
   error: ErrorScreen,
 };
 
-/** Screens with a real implementation (each must have a k6 script in perf/pages/<id>.js). */
+/** All screens (each must have a k6 script in perf/pages/<id>.js). */
 export const IMPLEMENTED_SCREENS = Object.keys(SCREENS) as ScreenId[];
 
 export function screenFor(id: ScreenId): ComponentType<ScreenProps> {
-  return SCREENS[id] ?? PlaceholderScreen;
+  return SCREENS[id];
 }
-
-/** Persian titles for the screens that are still placeholders (not in SCREENS yet). */
-export const TITLES: Partial<Record<ScreenId, string>> = {};

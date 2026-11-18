@@ -19,6 +19,7 @@ import { useNav } from '@/nav/nav';
 import { useTheme } from '@/theme/theme';
 import { toast } from '@/ui/toast';
 import type { ScreenProps } from '../registry';
+import { toFaDigits } from '@/lib/format';
 import s from './account.module.css';
 import a from '../cart/addaddr.module.css';
 
@@ -154,7 +155,7 @@ export function SettingsScreen(_: ScreenProps) {
             <h2 className={s.h}>پیش‌نمایش صفحات خطا (فقط نسخه‌ی توسعه)</h2>
             <div className={s.chips}>
               {KINDS.map((k) => (
-                <FilterChip key={k} label={k} onPick={() => showError(k)} />
+                <FilterChip key={k} label={toFaDigits(k)} onPick={() => showError(k)} />
               ))}
               <FilterChip label="soon" onPick={() => push('soon')} />
             </div>
@@ -163,7 +164,7 @@ export function SettingsScreen(_: ScreenProps) {
               {['', '500', '503', '504', '404', '401'].map((st) => (
                 <FilterChip
                   key={st || 'off'}
-                  label={st || 'خاموش'}
+                  label={st ? toFaDigits(st) : 'خاموش'}
                   selected={mockStatus === st}
                   onPick={() => {
                     writeStorage('dk-mock-status', st || null);

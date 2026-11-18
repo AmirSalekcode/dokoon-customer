@@ -1,46 +1,48 @@
 /** Screen ids from docs/dokoon-screen-specs.md (v48). */
-export type ScreenId =
-  | 'splash'
-  | 'onboard'
-  | 'city'
-  | 'login'
-  | 'otp'
-  | 'setup'
-  | 'perms'
-  | 'home'
-  | 'search'
-  | 'restaurants'
-  | 'offers'
-  | 'campaign'
-  | 'restaurant'
-  | 'restinfo'
-  | 'cart'
-  | 'checkout'
-  | 'addaddr'
-  | 'gateway'
-  | 'paid'
-  | 'payfail'
-  | 'orders'
-  | 'track'
-  | 'cancel'
-  | 'report'
-  | 'rateorder'
-  | 'account'
-  | 'favs'
-  | 'notifs'
-  | 'editprof'
-  | 'settings'
-  | 'promos'
-  | 'addresses'
-  | 'support'
-  | 'invite'
-  | 'about'
-  | 'legal'
-  | 'social'
-  | 'rateapp'
-  | 'apply'
-  | 'soon'
-  | 'error';
+export const SCREEN_IDS = [
+  'splash',
+  'onboard',
+  'city',
+  'login',
+  'otp',
+  'setup',
+  'perms',
+  'home',
+  'search',
+  'restaurants',
+  'offers',
+  'campaign',
+  'restaurant',
+  'restinfo',
+  'cart',
+  'checkout',
+  'addaddr',
+  'gateway',
+  'paid',
+  'payfail',
+  'orders',
+  'track',
+  'cancel',
+  'report',
+  'rateorder',
+  'account',
+  'favs',
+  'notifs',
+  'editprof',
+  'settings',
+  'promos',
+  'addresses',
+  'support',
+  'invite',
+  'about',
+  'legal',
+  'social',
+  'rateapp',
+  'apply',
+  'soon',
+  'error',
+] as const;
+export type ScreenId = (typeof SCREEN_IDS)[number];
 
 /** Bottom tabs (reset the stack). */
 export type TabId = 'home' | 'restaurants' | 'cart' | 'offers' | 'account';

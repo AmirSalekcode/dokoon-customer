@@ -100,13 +100,13 @@
   text-align: right;
 }
 .error {
-  margin: 6px 0 0;
+  margin: var(--sp-2) 0 0;
   font-size: var(--fs-13);
   color: var(--danger-alt);
   line-height: 1.6;
 }
 .hint {
-  margin: 6px 0 0;
+  margin: var(--sp-1) 0 0;
   font-size: var(--fs-12);
   color: var(--mu);
 }

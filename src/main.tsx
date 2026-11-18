@@ -7,6 +7,10 @@ import { AppErrorBoundary } from './app/AppErrorBoundary';
 import { boot } from './app/boot';
 import { registerPwa } from './pwa';
 import { config } from './config/env';
+import { useNav } from './nav/nav';
+
+// Mock builds only (e2e/integrity.spec.ts opens every screen directly). Holds no data or secrets.
+if (config.useMocks) (window as unknown as { __dkNav?: typeof useNav }).__dkNav = useNav;
 
 // Apply theme store (index.html already set data-theme pre-paint).
 useTheme.getState();

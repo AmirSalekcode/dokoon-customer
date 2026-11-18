@@ -3,7 +3,7 @@
   flex-direction: column;
   align-items: center;
   min-height: 100%;
-  padding: 64px var(--sp-6) calc(var(--sp-8) + env(safe-area-inset-bottom));
+  padding: calc(2 * var(--sp-8)) var(--sp-6) calc(var(--sp-8) + env(safe-area-inset-bottom));
   text-align: center;
   background: var(--bg);
   color: var(--ink);
