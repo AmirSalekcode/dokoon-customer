@@ -1,0 +1,129 @@
+/* Shared layout for entry / login screens (prototype `.au`). */
+.au {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100%;
+  padding: calc(48px + env(safe-area-inset-top)) var(--sp-6) calc(var(--sp-8) + env(safe-area-inset-bottom));
+  text-align: center;
+  background: var(--bg);
+  color: var(--ink);
+}
+.au h1 {
+  margin: var(--sp-6) 0 var(--sp-2);
+  font-size: var(--fs-24);
+  font-weight: var(--fw-xbold);
+  line-height: 1.5;
+}
+.au p {
+  margin: 0;
+  font-size: var(--fs-14);
+  color: var(--mu);
+  line-height: 1.8;
+}
+.foot {
+  margin-top: auto;
+  width: 100%;
+  padding-top: var(--sp-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+}
+.w100 {
+  width: 100%;
+  text-align: start;
+}
+
+/* Splash */
+.splashMid {
+  margin: auto 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-4);
+}
+.logoBig {
+  animation: bob 4s ease-in-out infinite;
+}
+.dots {
+  display: flex;
+  gap: var(--sp-2);
+  justify-content: center;
+  margin-top: var(--sp-6);
+}
+.dots i {
+  width: 10px;
+  height: 10px;
+  border-radius: var(--r-circle);
+  background: var(--primary);
+  animation: pulse 1.2s ease-in-out infinite;
+}
+.dots i:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.dots i:nth-child(3) {
+  animation-delay: 0.4s;
+}
+.version {
+  font-size: var(--fs-12);
+  color: var(--mu);
+}
+
+/* Onboarding */
+.skip {
+  align-self: flex-start;
+  min-height: var(--touch);
+  padding: 0 var(--sp-2);
+  border: 0;
+  background: none;
+  color: var(--mu);
+  font-size: var(--fs-14);
+  cursor: pointer;
+}
+.obArt {
+  width: 220px;
+  height: 220px;
+  margin-top: var(--sp-6);
+  filter: drop-shadow(0 16px 16px var(--art-shadow));
+  animation: float 4.5s ease-in-out infinite;
+}
+.pager {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+  margin-top: var(--sp-6);
+}
+.pager i {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--r-pill);
+  background: var(--ln);
+  transition:
+    width var(--t-med),
+    background var(--t-med);
+}
+.pager i.on {
+  width: 24px;
+  background: var(--primary);
+}
+
+/* City */
+.desc {
+  margin: 0;
+  padding: 0 var(--gutter) var(--sp-4);
+  font-size: var(--fs-14);
+  line-height: 1.8;
+  color: var(--mu);
+}
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+  padding: 0 var(--gutter);
+}
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+  padding: var(--sp-4) var(--gutter) calc(var(--sp-6) + env(safe-area-inset-bottom));
+}

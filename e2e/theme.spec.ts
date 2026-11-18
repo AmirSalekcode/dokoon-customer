@@ -5,6 +5,9 @@ const visible = (page: Page) => page.locator('main:not([hidden])');
 // Cookie popup is covered by consent.spec.ts; start with a saved decision here.
 test.beforeEach(async ({ page }) => {
   await page.addInitScript(() => {
+    // Returning user: onboarding done, city chosen (launch flow is covered by launch.spec.ts).
+    if (!localStorage.getItem('dk-launch'))
+      localStorage.setItem('dk-launch', JSON.stringify({ seenOnboarding: true, cityId: 'shahreza' }));
     if (!localStorage.getItem('dk-consent'))
       localStorage.setItem(
         'dk-consent',

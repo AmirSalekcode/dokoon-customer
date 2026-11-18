@@ -7,6 +7,9 @@ import { CartScreen } from './CartScreen';
 import { AccountScreen } from './AccountScreen';
 import { PlaceholderScreen } from './PlaceholderScreen';
 import { FoundationLab } from './FoundationLab';
+import { SplashScreen } from './auth/SplashScreen';
+import { OnboardScreen } from './auth/OnboardScreen';
+import { CityScreen } from './auth/CityScreen';
 
 export interface ScreenProps {
   route: Route;
@@ -17,6 +20,9 @@ export interface ScreenProps {
  * API client, mock server, cart and navigation; full screens are built per spec in phase 2.
  */
 const SCREENS: Partial<Record<ScreenId, ComponentType<ScreenProps>>> = {
+  splash: SplashScreen,
+  onboard: OnboardScreen,
+  city: CityScreen,
   home: HomeScreen,
   restaurant: RestaurantScreen,
   cart: CartScreen,
