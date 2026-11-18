@@ -1,0 +1,160 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  quality:
+    name: Lint, types, unit tests, secret scan, build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - run: npm run format:check
+      - run: npm run lint
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm run secrets:scan
+      - run: npm run build
+      - run: npm run secrets:scan:dist
+      - uses: actions/upload-artifact@v4
+        with:
+          name: web-dist
+          path: dist
+          retention-days: 7
+
+  gitleaks:
+    name: Secret scan (gitleaks, full history)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  e2e:
+    name: E2E (Playwright, 390×844)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - run: npm run e2e
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: playwright-traces
+          path: test-results
+          retention-days: 7
+
+  storybook:
+    name: Storybook build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - run: npm run build-storybook -- --quiet
+
+  docker-perf:
+    name: Docker image + k6 speed tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    needs: quality
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build image (mock mode, self-contained)
+        run: docker build --build-arg BUILD_MODE=mock -t dokoon-web:ci .
+      - name: Run container
+        run: |
+          docker run -d --name web -p 8080:8080 --read-only --tmpfs /tmp dokoon-web:ci
+          for i in $(seq 1 30); do curl -fsS http://127.0.0.1:8080/healthz && break; sleep 1; done
+      - name: Check SPA fallback and security headers
+        run: |
+          curl -fsS -o /dev/null http://127.0.0.1:8080/some/deep/link
+          headers=$(curl -fsSI http://127.0.0.1:8080/)
+          echo "$headers"
+          for h in X-Content-Type-Options X-Frame-Options Referrer-Policy Content-Security-Policy; do
+            echo "$headers" | grep -qi "^$h:" || { echo "missing $h"; exit 1; }
+          done
+          curl -fsSI http://127.0.0.1:8080/sw.js | grep -qi 'cache-control: no-cache'
+      - uses: grafana/setup-k6-action@v1
+      - name: k6 static load test
+        run: k6 run --summary-export k6-static.json perf/static-load.js
+        env:
+          BASE_URL: http://127.0.0.1:8080
+      - name: k6 speed test for every screen
+        env:
+          BASE_URL: http://127.0.0.1:8080
+          K6_BROWSER_HEADLESS: 'true'
+          K6_BROWSER_ARGS: no-sandbox
+          ITERATIONS: '5'
+        run: |
+          for p in perf/pages/*.js; do
+            echo "::group::$p"
+            k6 run --summary-export "k6-$(basename "$p" .js).json" "$p"
+            echo "::endgroup::"
+          done
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: k6-results
+          path: k6-*.json
+          retention-days: 30
+      - if: always()
+        run: docker logs web || true
+
+  android:
+    name: Android debug APK
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    needs: quality
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: gradle
+      - run: npm ci
+      - run: npm run build:mock
+      - run: npx cap sync android
+      - name: Gradle assembleDebug
+        working-directory: android
+        run: chmod +x gradlew && ./gradlew assembleDebug --no-daemon
+      - uses: actions/upload-artifact@v4
+        with:
+          name: app-debug-apk
+          path: android/app/build/outputs/apk/debug/app-debug.apk
+          retention-days: 14
