@@ -14,8 +14,13 @@ Nothing here is implemented as an invented endpoint; the frontend works around e
    Proposal: keep only real image URLs in production (no change needed) — confirm with the owner.
 4. **`Error.details`** is `{type: object}` without properties (typed as `Record<string, never>`).
    Proposal: `additionalProperties: true`.
-5. **Search suggestions** (`/search/suggestions`) has no `security` override — fine if it is per user;
-   for guests it should allow anonymous access (guest-browsing decision is still open).
+5. **Guest browsing (decision D-59, approved).** Users browse without logging in; login is required only
+   at checkout, orders, favorites and account. The contract's global `security: bearer` must be
+   overridden with `security: [{}, {bearer: []}]` (token optional) on: `/home`, `/restaurants`,
+   `/restaurants/{id}`, `/restaurants/{id}/menu`, `/foods/{id}`, `GET /foods/{id}/reviews`, `/search`,
+   `/search/suggestions`, `/campaigns`, `/campaigns/{id}`, `/geo/zone-check`, `/promos` (public promos;
+   personal ones when a token is sent), and `POST /checkout/quote` (price check before login).
+   When a token is present the server may personalize (e.g. `isFavorite`).
 6. **Payment return**: `/payments/callback/{provider}` redirects to the app with `?orderId=&result=`.
    The Android deep-link scheme / PWA return URL must be agreed (current Android scheme placeholder:
-   `ir.dokoon.customer://`).
+   `ir.dokoonapp.customer://`).

@@ -2,6 +2,17 @@ import { expect, test, type Page } from '@playwright/test';
 
 const visible = (page: Page) => page.locator('main:not([hidden])');
 
+// These flows are not about cookies: start with a saved consent so the popup is not shown.
+test.beforeEach(async ({ page }) => {
+  await page.addInitScript(() => {
+    if (!localStorage.getItem('dk-consent'))
+      localStorage.setItem(
+        'dk-consent',
+        JSON.stringify({ version: 1, analytics: false, decidedAt: '2026-11-18' }),
+      );
+  });
+});
+
 async function openHome(page: Page) {
   await page.goto('/');
   await expect(visible(page).getByRole('heading', { name: 'سلام امیر عزیز' })).toBeVisible();

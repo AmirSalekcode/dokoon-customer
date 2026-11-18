@@ -11,6 +11,7 @@ import { mapProviders } from '@/providers/map/fakeMap';
 import { useTheme } from '@/theme/theme';
 import { SelectCard } from '@/components/library/SelectCard';
 import { ICONS } from '@/components/primitives/Icon';
+import { useConsent } from '@/consent/consent';
 import { toast } from '@/ui/toast';
 import s from './screens.module.css';
 
@@ -72,6 +73,9 @@ export function FoundationLab() {
             />
           ))}
         </div>
+        <Button variant="secondary" onClick={() => useConsent.getState().reset()}>
+          تنظیمات کوکی
+        </Button>
 
         <h2 className={s.sectionTitle}>نقشه (لایه‌ی MapProvider — ساختگی)</h2>
         <div className={s.chips} role="radiogroup" aria-label="ارائه‌دهنده‌ی نقشه">

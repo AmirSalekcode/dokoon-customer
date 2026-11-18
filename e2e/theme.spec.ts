@@ -1,6 +1,17 @@
 import { expect, test, type Page } from '@playwright/test';
 
 const visible = (page: Page) => page.locator('main:not([hidden])');
+
+// Cookie popup is covered by consent.spec.ts; start with a saved decision here.
+test.beforeEach(async ({ page }) => {
+  await page.addInitScript(() => {
+    if (!localStorage.getItem('dk-consent'))
+      localStorage.setItem(
+        'dk-consent',
+        JSON.stringify({ version: 1, analytics: false, decidedAt: '2026-11-18' }),
+      );
+  });
+});
 const html = (page: Page) => page.locator('html');
 
 async function openSettings(page: Page) {
