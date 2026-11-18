@@ -285,7 +285,14 @@ export const handlers = [
       distance: (r) => r.distanceKm ?? 0,
     };
     if (sort && by[sort]) items = [...items].sort((a, b) => by[sort](a) - by[sort](b));
-    return HttpResponse.json({ items, nextCursor: null });
+    // Cursor = offset into the filtered list (opaque to the app).
+    const from = Number(q.get('cursor') ?? 0) || 0;
+    const limit = Number(q.get('limit') ?? 20) || 20;
+    const to = from + limit;
+    return HttpResponse.json({
+      items: items.slice(from, to),
+      nextCursor: to < items.length ? String(to) : null,
+    });
   }),
   http.put(p('/favorites/restaurants/:id'), ({ params }) => {
     db.favs = [...new Set([...favIds(), String(params.id)])];
@@ -350,6 +357,10 @@ export const handlers = [
     HttpResponse.json({ recent: ['کباب'], popular: ['کباب', 'پیتزا', 'برگر'] }),
   ),
   http.get(p('/campaigns'), () => HttpResponse.json(D.campaigns)),
+  http.get(p('/campaigns/:id'), ({ params }) => {
+    const c = D.campaigns.find((x) => x.id === params.id);
+    return c ? HttpResponse.json(c) : err(404, 'NOT_FOUND', 'کمپین پیدا نشد');
+  }),
   http.get(p('/promos'), () => HttpResponse.json(D.promos)),
 
   http.post(p('/checkout/quote'), async ({ request }) =>
