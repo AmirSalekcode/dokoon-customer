@@ -30,6 +30,12 @@ describe('k6 perf coverage (a page is not done until it has a speed test)', () =
     }
   });
 
+  it('seeds cookie consent with a STRING init script (k6 silently ignores function init scripts)', () => {
+    const lib = read('perf/lib/page.js');
+    expect(lib).not.toMatch(/addInitScript\(\s*\(\)\s*=>/);
+    expect(lib).toMatch(/addInitScript\(\s*CONSENT_SEED\s*\)/);
+  });
+
   it('static load test exists with latency and error thresholds', () => {
     const src = read('perf/static-load.js');
     expect(src).toMatch(/http_req_duration/);
