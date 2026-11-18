@@ -10,7 +10,7 @@ import type { Route } from '@/nav/types';
 import { useToast } from '@/ui/toast';
 import { CityScreen } from './CityScreen';
 import { OnboardScreen, ONBOARDING } from './OnboardScreen';
-import { SPLASH_MS, SplashScreen } from './SplashScreen';
+import { SPLASH_MAX_MS, SPLASH_MIN_MS, SplashScreen } from './SplashScreen';
 
 const route = (screen: Route['screen'], params: Record<string, string> = {}): Route => ({
   key: 'k',
@@ -50,7 +50,7 @@ describe('<SplashScreen />', () => {
     expect(screen.getByText(/^نسخه /)).toBeInTheDocument();
     expect(stack()).toEqual(['splash']);
     await act(async () => {
-      vi.advanceTimersByTime(SPLASH_MS);
+      vi.advanceTimersByTime(SPLASH_MIN_MS);
     });
     expect(stack()).toEqual(['onboard']);
   });
@@ -62,9 +62,41 @@ describe('<SplashScreen />', () => {
     useNav.getState().resetTo('splash');
     render(<SplashScreen route={route('splash')} />);
     await act(async () => {
-      vi.advanceTimersByTime(SPLASH_MS);
+      vi.advanceTimersByTime(SPLASH_MIN_MS);
     });
     expect(stack()).toEqual(['home']);
+  });
+
+  it('decision D-61: stays at least SPLASH_MIN_MS (brand), leaves as soon as the app is ready', async () => {
+    vi.useFakeTimers();
+    useNav.getState().resetTo('splash');
+    render(<SplashScreen route={route('splash')} />);
+    await act(async () => {
+      vi.advanceTimersByTime(SPLASH_MIN_MS - 1);
+    });
+    expect(stack()).toEqual(['splash']);
+    await act(async () => {
+      vi.advanceTimersByTime(1);
+    });
+    expect(stack()).toEqual(['onboard']);
+    expect(SPLASH_MIN_MS).toBe(600);
+  });
+
+  it('waits for a slow session check, but never longer than SPLASH_MAX_MS', async () => {
+    vi.useFakeTimers();
+    server.use(http.get('*/v1/me', () => new Promise<Response>(() => {})));
+    useSession.getState().setSession({ accessToken: 'a', refreshToken: 'r' });
+    useNav.getState().resetTo('splash');
+    render(<SplashScreen route={route('splash')} />);
+    await act(async () => {
+      vi.advanceTimersByTime(SPLASH_MIN_MS);
+    });
+    expect(stack()).toEqual(['splash']);
+    await act(async () => {
+      vi.advanceTimersByTime(SPLASH_MAX_MS - SPLASH_MIN_MS);
+    });
+    expect(stack()).toEqual(['onboard']);
+    expect(SPLASH_MAX_MS).toBe(1800);
   });
 
   it('checks a stored session; an expired one is cleared silently (user continues as guest)', async () => {
