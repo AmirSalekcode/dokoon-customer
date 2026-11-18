@@ -79,7 +79,7 @@ describe('<SplashScreen />', () => {
       vi.advanceTimersByTime(1);
     });
     expect(stack()).toEqual(['onboard']);
-    expect(SPLASH_MIN_MS).toBe(600);
+    expect(SPLASH_MIN_MS).toBe(1200); // owner: exactly 2× the earlier 0.6s
   });
 
   it('waits for a slow session check, but never longer than SPLASH_MAX_MS', async () => {

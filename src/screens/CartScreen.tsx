@@ -1,4 +1,5 @@
 import { cartItemsTotal, useCart } from '@/cart/cart';
+import { openGuarded } from '@/auth/flow';
 import { Button } from '@/components/base/Button';
 import { CartItemRow } from '@/components/library/CartItemRow';
 import { EmptyState } from '@/components/library/EmptyState';
@@ -63,6 +64,9 @@ export function CartScreen() {
           totalLabel="جمع (تخمینی)"
           totalValue={formatMoney(total)}
         />
+        <Button size="lg" block onClick={() => openGuarded('checkout')}>
+          ثبت سفارش · {formatMoney(total)}
+        </Button>
         <p className={s.note}>
           مبلغ نهایی، هزینه‌ی ارسال و تخفیف را سرور در مرحله‌ی تکمیل سفارش محاسبه می‌کند.
         </p>

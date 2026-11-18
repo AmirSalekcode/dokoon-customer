@@ -82,6 +82,10 @@ export const useAuthFlow = create<AuthFlowState>((set) => ({
 
 export const isLoggedIn = () => !!useSession.getState().accessToken;
 
+/** Name used in «سلام … عزیز» (CLAUDE.md rule 7); guests are «مهمان». */
+export const GUEST_NAME = 'مهمان';
+export const displayName = (name?: string | null) => (name && name.trim() ? name.trim() : GUEST_NAME);
+
 /** Open a screen that may need login. Guests go to login first; the target is remembered. */
 export function openGuarded(screen: ScreenId, params?: RouteParams) {
   const nav = useNav.getState();

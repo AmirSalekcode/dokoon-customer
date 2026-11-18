@@ -89,12 +89,14 @@ export const handlers = [
     const { code, phone } = (await request.json()) as { code: string; phone: string };
     await latency();
     if (code !== '1234') return err(400, 'OTP_INVALID', 'کد واردشده درست نیست');
+    const isNewUser = phone !== D.user.phone;
     const body: AuthResult = {
       accessToken: 'mock-access',
       refreshToken: 'mock-refresh',
       expiresInSec: 3600,
-      isNewUser: phone !== D.user.phone,
-      user: { ...D.user, phone },
+      isNewUser,
+      // A new account has no name yet (collected on the setup screen).
+      user: isNewUser ? { id: 'u-new', phone } : { ...D.user, phone },
     };
     return HttpResponse.json(body);
   }),
@@ -108,6 +110,16 @@ export const handlers = [
   http.post(p('/auth/logout'), () => new HttpResponse(null, { status: 204 })),
 
   http.get(p('/me'), () => HttpResponse.json(D.user)),
+  http.patch(p('/me'), async ({ request }) => {
+    const patch = (await request.json()) as { name?: string; referralCode?: string; cityId?: string };
+    if (patch.referralCode && !/^DOKOON-[A-Z0-9]+$/.test(patch.referralCode))
+      return err(400, 'REF_INVALID', 'کد معرف معتبر نیست.');
+    return HttpResponse.json({
+      // Only echo what changed; the mock does not know which user is calling.
+      name: patch.name,
+      cityId: patch.cityId,
+    });
+  }),
   http.get(p('/addresses'), () => HttpResponse.json([])),
   http.get(p('/geo/zone-check'), ({ request }) => {
     const u = new URL(request.url);

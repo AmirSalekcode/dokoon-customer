@@ -10,6 +10,10 @@ import { FoundationLab } from './FoundationLab';
 import { SplashScreen } from './auth/SplashScreen';
 import { OnboardScreen } from './auth/OnboardScreen';
 import { CityScreen } from './auth/CityScreen';
+import { LoginScreen } from './auth/LoginScreen';
+import { OtpScreen } from './auth/OtpScreen';
+import { SetupScreen } from './auth/SetupScreen';
+import { PermsScreen } from './auth/PermsScreen';
 
 export interface ScreenProps {
   route: Route;
@@ -23,6 +27,10 @@ const SCREENS: Partial<Record<ScreenId, ComponentType<ScreenProps>>> = {
   splash: SplashScreen,
   onboard: OnboardScreen,
   city: CityScreen,
+  login: LoginScreen,
+  otp: OtpScreen,
+  setup: SetupScreen,
+  perms: PermsScreen,
   home: HomeScreen,
   restaurant: RestaurantScreen,
   cart: CartScreen,
