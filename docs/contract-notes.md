@@ -24,3 +24,6 @@ Nothing here is implemented as an invented endpoint; the frontend works around e
 6. **Payment return**: `/payments/callback/{provider}` redirects to the app with `?orderId=&result=`.
    The Android deep-link scheme / PWA return URL must be agreed (current Android scheme placeholder:
    `ir.dokoonapp.customer://`).
+7. **Shared restaurant links**: the app shares `https://<app-origin>/?restaurant=<id>` (ids must match
+   `^[\w-]{1,64}$`). If the backend later serves link previews (Open Graph) or Android App Links for
+   `dokoonapp.ir`, it should use the same format.

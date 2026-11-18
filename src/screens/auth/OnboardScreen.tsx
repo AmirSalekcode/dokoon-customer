@@ -3,7 +3,7 @@ import { bootScreen, useLaunch } from '@/auth/flow';
 import { Button } from '@/components/base/Button';
 import { Art } from '@/components/primitives/Art';
 import { toFaDigits } from '@/lib/format';
-import { useNav } from '@/nav/nav';
+import { enterBootScreen } from '@/nav/deepLink';
 import type { ScreenProps } from '../registry';
 import s from './auth.module.css';
 
@@ -33,7 +33,7 @@ export function OnboardScreen(_: ScreenProps) {
 
   const finish = () => {
     useLaunch.getState().finishOnboarding();
-    useNav.getState().setTop(bootScreen());
+    enterBootScreen(bootScreen());
   };
 
   return (

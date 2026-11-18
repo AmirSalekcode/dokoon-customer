@@ -2,6 +2,7 @@ import type { UIEvent } from 'react';
 import { Sheet, SheetHandle } from '../base/Sheet';
 import { Art } from '../primitives/Art';
 import { Icon } from '../primitives/Icon';
+import { toFaDigits } from '@/lib/format';
 import { Price } from './Price';
 import { QuantityStepper } from './QuantityStepper';
 import { Rating } from './Rating';
@@ -52,8 +53,9 @@ export interface FoodDetailsData {
   desc?: string;
   groups?: FoodGroupVM[];
   reviews?: FoodReviewVM[];
+  /** undefined = still loading (shows a loader); [] = no reviews yet. */
   /** Star distribution 5→1: label + percent. */
-  dist?: { n: string; pct: number }[];
+  dist?: { n: string; pct: number; pctText?: string }[];
   hasMore?: boolean;
 }
 
@@ -89,6 +91,7 @@ export function FoodDetails({
   onScroll,
 }: FoodDetailsProps) {
   const reviews = f.reviews ?? [];
+  const reviewsLoading = f.reviews === undefined;
   return (
     <Sheet label={`جزئیات ${f.name}`} onClose={onClose} height="full" className={s.sh}>
       <div className={s.pic}>
@@ -100,7 +103,7 @@ export function FoodDetails({
         </button>
         <Art src={f.art} className={s.fa} />
       </div>
-      <div className={s.bd} onScroll={onScroll}>
+      <div className={s.bd} onScroll={onScroll} data-testid="food-body">
         <div className={s.t1}>
           <div>
             <h2>{f.name}</h2>
@@ -170,40 +173,47 @@ export function FoodDetails({
                 <b>{f.rating}</b>
                 <span>از {f.reviewCount} نظر</span>
               </div>
-              <div className={s.bars}>
+              <ul className={s.bars} aria-label="پراکندگی امتیازها">
                 {(f.dist ?? []).map((b) => (
-                  <div key={b.n} className={s.br}>
-                    <span>{b.n}</span>
-                    <i>
+                  <li key={b.n} className={s.br} aria-label={`${b.n} ستاره: ${b.pctText ?? b.pct}٪`}>
+                    <span aria-hidden="true">{b.n}</span>
+                    <i aria-hidden="true">
                       <u style={{ width: `${b.pct}%` }} />
                     </i>
-                  </div>
+                  </li>
                 ))}
-              </div>
+              </ul>
             </div>
-            {reviews.map((v) => (
-              <div key={v.id} className={s.rv}>
-                <div className={s.rh}>
-                  <span className={s.av}>{v.initial}</span>
-                  <div>
-                    <b>{v.name}</b>
-                    <small>{v.date}</small>
+            <ul className={s.rvl} aria-label="نظرات کاربران">
+              {reviews.map((v) => (
+                <li key={v.id} className={s.rv}>
+                  <div className={s.rh}>
+                    <span className={s.av}>{v.initial}</span>
+                    <div>
+                      <b>{v.name}</b>
+                      <small>{v.date}</small>
+                    </div>
+                    <span className={s.vs} aria-label={`${toFaDigits(v.stars)} از ۵ ستاره`}>
+                      {'★'.repeat(v.stars)}
+                    </span>
                   </div>
-                  <span className={s.vs} aria-label={`${v.stars} از ۵ ستاره`}>
-                    {'★'.repeat(v.stars)}
-                  </span>
-                </div>
-                <p>{v.text}</p>
-                {v.mine ? <span className={s.mine}>نظر شما</span> : null}
-              </div>
-            ))}
+                  <p>{v.text}</p>
+                  {v.mine ? <span className={s.mine}>نظر شما</span> : null}
+                </li>
+              ))}
+            </ul>
             {f.hasMore ? (
-              <div className={s.ldg} aria-label="در حال بارگذاری نظرات">
+              <div className={s.ldg} role="status" aria-label="در حال بارگذاری نظرات">
                 <i />
                 <i />
               </div>
             ) : null}
           </>
+        ) : reviewsLoading ? (
+          <div className={s.ldg} role="status" aria-label="در حال بارگذاری نظرات">
+            <i />
+            <i />
+          </div>
         ) : (
           <p className={s.ds}>هنوز نظری ثبت نشده است. اولین نفر باشید.</p>
         )}

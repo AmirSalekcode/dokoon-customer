@@ -3,6 +3,7 @@ import type { Route, ScreenId } from '@/nav/types';
 import { ErrorScreen } from './ErrorScreen';
 import { HomeScreen } from './HomeScreen';
 import { RestaurantScreen } from './RestaurantScreen';
+import { RestInfoScreen } from './RestInfoScreen';
 import { CartScreen } from './CartScreen';
 import { AccountScreen } from './AccountScreen';
 import { PlaceholderScreen } from './PlaceholderScreen';
@@ -33,6 +34,7 @@ const SCREENS: Partial<Record<ScreenId, ComponentType<ScreenProps>>> = {
   perms: PermsScreen,
   home: HomeScreen,
   restaurant: RestaurantScreen,
+  restinfo: RestInfoScreen,
   cart: CartScreen,
   account: AccountScreen,
   settings: FoundationLab,

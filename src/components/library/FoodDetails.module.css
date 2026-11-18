@@ -248,6 +248,9 @@
   color: var(--mu);
 }
 .bars {
+  margin: 0;
+  padding: 0;
+  list-style: none;
   flex: 1;
 }
 .br {
@@ -273,6 +276,11 @@
   background: var(--warning);
   transform-origin: right;
   animation: grow 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) 0.4s both;
+}
+.rvl {
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 .rv {
   margin-top: var(--sp-3);

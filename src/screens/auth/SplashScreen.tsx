@@ -4,7 +4,7 @@ import { bootScreen } from '@/auth/flow';
 import { useSession } from '@/auth/session';
 import { Logo } from '@/components/primitives/Logo';
 import { toFaDigits } from '@/lib/format';
-import { useNav } from '@/nav/nav';
+import { enterBootScreen } from '@/nav/deepLink';
 import type { ScreenProps } from '../registry';
 import s from './auth.module.css';
 
@@ -36,7 +36,7 @@ export function SplashScreen(_: ScreenProps) {
     const leave = () => {
       if (left) return;
       left = true;
-      useNav.getState().setTop(bootScreen());
+      enterBootScreen(bootScreen());
     };
     const maybeLeave = () => minDone && ready && leave();
     const min = setTimeout(() => {

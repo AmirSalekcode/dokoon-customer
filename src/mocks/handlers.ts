@@ -173,7 +173,32 @@ export const handlers = [
     const f = D.foods.find((x) => x.id === params.id);
     return f ? HttpResponse.json(f) : err(404, 'NOT_FOUND', 'غذا پیدا نشد');
   }),
-  http.get(p('/foods/:id/reviews'), () => HttpResponse.json(D.reviewPage)),
+  http.get(p('/foods/:id/reviews'), ({ params, request }) => {
+    const f = D.foods.find((x) => x.id === params.id);
+    if (!f) return err(404, 'NOT_FOUND', 'غذا پیدا نشد');
+    if (!f.reviews)
+      return HttpResponse.json({
+        average: 0,
+        count: 0,
+        distribution: [0, 0, 0, 0, 0],
+        items: [],
+        nextCursor: null,
+      });
+    const from = Number(new URL(request.url).searchParams.get('cursor') ?? 0);
+    const all = D.reviewPage.items ?? [];
+    const to = from + D.REVIEW_PAGE_SIZE;
+    return HttpResponse.json({
+      ...D.reviewPage,
+      items: all.slice(from, to),
+      nextCursor: to < all.length ? String(to) : null,
+    });
+  }),
+  http.post(p('/foods/:id/reviews'), async ({ request }) => {
+    const body = (await request.json()) as { stars?: number; text?: string };
+    if (!body.stars || body.stars < 1 || body.stars > 5 || (body.text?.length ?? 0) > 500)
+      return err(422, 'VALIDATION', 'امتیاز باید بین ۱ تا ۵ باشد');
+    return new HttpResponse(null, { status: 201 });
+  }),
   http.get(p('/search'), ({ request }) => {
     const q = new URL(request.url).searchParams.get('q') ?? '';
     return HttpResponse.json({

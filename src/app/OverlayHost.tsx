@@ -1,3 +1,4 @@
+import { api } from '@/api/client';
 import { useState } from 'react';
 import { useSession } from '@/auth/session';
 import { displayName } from '@/auth/flow';
@@ -78,7 +79,7 @@ export function OverlayHost() {
     case 'food':
       return <FoodOverlay foodId={String(p.foodId)} restaurantId={String(p.restaurantId)} />;
     case 'review':
-      return <ReviewOverlay foodName={String(p.foodName ?? '')} />;
+      return <ReviewOverlay foodId={String(p.foodId ?? '')} foodName={String(p.foodName ?? '')} />;
     case 'filter':
       return <FilterOverlay />;
   }
@@ -149,10 +150,24 @@ function CartReplaceDialog() {
   );
 }
 
-function ReviewOverlay({ foodName }: { foodName: string }) {
+function ReviewOverlay({ foodId, foodName }: { foodId: string; foodName: string }) {
   const { closeOverlay } = useNav.getState();
   const [stars, setStars] = useState(0);
   const [text, setText] = useState('');
+  const [busy, setBusy] = useState(false);
+  const submit = async () => {
+    setBusy(true);
+    try {
+      const body = text.trim() ? { stars, text: text.trim() } : { stars };
+      const { error } = await api.POST('/foods/{id}/reviews', { params: { path: { id: foodId } }, body });
+      if (error !== undefined) throw error;
+      closeOverlay();
+      toast('نظر شما ثبت شد', 'success');
+    } catch {
+      toast('ثبت نظر انجام نشد. دوباره تلاش کنید.', 'error');
+      setBusy(false);
+    }
+  };
   return (
     <ReviewSheet
       foodName={foodName}
@@ -164,11 +179,9 @@ function ReviewOverlay({ foodName }: { foodName: string }) {
       starLabel={stars ? STAR_LABELS[stars - 1] : ''}
       text={text}
       canSubmit={stars > 0}
+      busy={busy}
       onText={setText}
-      onSubmit={() => {
-        closeOverlay();
-        toast('نظر شما ثبت شد', 'success');
-      }}
+      onSubmit={() => void submit()}
       onClose={closeOverlay}
     />
   );

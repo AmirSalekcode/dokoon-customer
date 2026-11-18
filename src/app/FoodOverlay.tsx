@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { api } from '@/api/client';
 import { unwrap, useApi } from '@/api/useApi';
+import { isLoggedIn } from '@/auth/flow';
 import { addToCart } from '@/cart/addToCart';
 import { FoodDetails } from '@/components/library/FoodDetails';
 import { LoadingState } from '@/components/library/LoadingState';
@@ -15,11 +16,14 @@ import {
   type Selection,
 } from '@/features/viewmodels';
 import { formatDecimal, formatNumber, toFaDigits } from '@/lib/format';
+import { nearBottom, toDistVM, toReviewVM, useFoodReviews } from '@/features/reviews';
 import { useNav } from '@/nav/nav';
+import { toast } from '@/ui/toast';
 
 /** Food sheet overlay: options, quantity, live price, add to the shared cart. */
 export function FoodOverlay({ foodId, restaurantId }: { foodId: string; restaurantId: string }) {
-  const { closeOverlay, openOverlay } = useNav.getState();
+  const { closeOverlay, openOverlay, push } = useNav.getState();
+  const reviews = useFoodReviews(foodId);
   const [sel, setSel] = useState<Selection>({});
   const [qty, setQty] = useState(1);
   const data = useApi(
@@ -64,7 +68,12 @@ export function FoodOverlay({ foodId, restaurantId }: { foodId: string; restaura
         oldPrice: f.oldPrice,
         desc: f.desc,
         groups: toFoodGroupsVM(groups, sel, (g, id) => setSel((cur) => toggleOption(g, cur, id))),
-        reviews: [],
+        reviews: reviews.initial ? undefined : reviews.items.map(toReviewVM),
+        dist: reviews.summary ? toDistVM(reviews.summary.distribution, reviews.summary.count) : undefined,
+        hasMore: reviews.hasMore,
+      }}
+      onScroll={(e) => {
+        if (reviews.hasMore && nearBottom(e.currentTarget)) reviews.loadMore();
       }}
       qtyText={toFaDigits(qty)}
       totalText={formatNumber(unit * qty)}
@@ -81,7 +90,15 @@ export function FoodOverlay({ foodId, restaurantId }: { foodId: string; restaura
       onClose={closeOverlay}
       onInc={() => setQty((q) => Math.min(q + 1, 20))}
       onDec={() => setQty((q) => Math.max(q - 1, 1))}
-      onReview={() => openOverlay({ kind: 'review', props: { foodName: f.title } }, { keepParent: true })}
+      onReview={() => {
+        if (!isLoggedIn()) {
+          closeOverlay();
+          toast('برای ثبت نظر وارد شوید');
+          push('login');
+          return;
+        }
+        openOverlay({ kind: 'review', props: { foodId: f.id, foodName: f.title } }, { keepParent: true });
+      }}
       onAdd={() => {
         const options = groups.flatMap((g) =>
           (g.options ?? [])
