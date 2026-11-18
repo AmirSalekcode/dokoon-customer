@@ -508,8 +508,30 @@ export const handlers = [
     saveDb();
     return new HttpResponse(null, { status: 204 });
   }),
-  http.get(p('/support/info'), () => HttpResponse.json({ contacts: [], faqs: [], socials: [] })),
-  http.get(p('/content/:key'), ({ params }) =>
-    HttpResponse.json({ title: String(params.key), body: 'متن پیش‌نویس', version: '0' }),
-  ),
+  http.get(p('/support/info'), () => HttpResponse.json(D.supportInfo)),
+  http.get(p('/content/:key'), ({ params }) => {
+    const c = D.content[String(params.key)];
+    return c ? HttpResponse.json(c) : err(404, 'NOT_FOUND', 'صفحه پیدا نشد');
+  }),
+  http.get(p('/me/invite'), () => HttpResponse.json(D.invite)),
+  http.post(p('/support/messages'), async ({ request }) => {
+    const body = (await request.json()) as { text?: string };
+    if (!body.text?.trim()) return err(400, 'VALIDATION', 'متن پیام را بنویسید');
+    return new HttpResponse(null, { status: 201 });
+  }),
+  http.post(p('/partner-requests'), async ({ request }) => {
+    const b = (await request.json()) as { kind?: string; name?: string; phone?: string; cityId?: string };
+    if (!b.kind || !b.name || !b.phone || !b.cityId) return err(400, 'VALIDATION', 'اطلاعات کامل نیست');
+    if (!/^09\d{9}$/.test(b.phone)) return err(400, 'PHONE_INVALID', 'شماره موبایل معتبر نیست');
+    return new HttpResponse(null, { status: 201 });
+  }),
+  http.post(p('/uploads'), async ({ request }) => {
+    const form = await request.formData();
+    const file = form.get('file');
+    if (!(file instanceof Blob)) return err(400, 'VALIDATION', 'فایلی ارسال نشد');
+    if (file.size > 5 * 1024 * 1024) return err(413, 'TOO_LARGE', 'حجم عکس باید کمتر از ۵ مگابایت باشد');
+    if (!/^image\/(jpeg|png|webp)$/.test(file.type)) return err(415, 'TYPE', 'فقط عکس jpeg، png یا webp');
+    db.seq += 1;
+    return HttpResponse.json({ id: `up${db.seq}`, url: `mock-upload://up${db.seq}` }, { status: 201 });
+  }),
 ];
