@@ -4,12 +4,13 @@ import { Button } from '@/components/base/Button';
 import { FilterChip } from '@/components/library/FilterChip';
 import { MapPicker } from '@/components/library/MapPicker';
 import { TopBar } from '@/components/library/TopBar';
-import { ToggleRow } from '@/components/library/ToggleRow';
 import { readStorage, writeStorage } from '@/lib/storage';
 import { useNav } from '@/nav/nav';
 import { mountWithFallback, type MapProviderId } from '@/providers/map/MapProvider';
 import { mapProviders } from '@/providers/map/fakeMap';
 import { useTheme } from '@/theme/theme';
+import { SelectCard } from '@/components/library/SelectCard';
+import { ICONS } from '@/components/primitives/Icon';
 import { useConsent } from '@/consent/consent';
 import { toast } from '@/ui/toast';
 import s from './screens.module.css';
@@ -22,7 +23,7 @@ export function FoundationLab() {
   const back = useNav((st) => st.back);
   const showError = useNav((st) => st.showError);
   const openOverlay = useNav((st) => st.openOverlay);
-  const { theme, toggle } = useTheme();
+  const { mode, setMode } = useTheme();
   const [mockStatus, setMockStatus] = useState(readStorage('dk-mock-status') ?? '');
   const [mapPref, setMapPref] = useState<MapProviderId>((readStorage(MAP_KEY) as MapProviderId) || 'neshan');
   const [mapUsed, setMapUsed] = useState('');
@@ -52,7 +53,26 @@ export function FoundationLab() {
     <div className={s.pageNoNav}>
       <TopBar title="تنظیمات" onBack={() => back()} />
       <div className={`${s.pad} ${s.stack}`}>
-        <ToggleRow title="تم تیره" sub="ذخیره در همین دستگاه" on={theme === 'dark'} onFlip={toggle} />
+        <h2 className={s.sectionTitle}>تم</h2>
+        <div className={s.stack} role="radiogroup" aria-label="تم">
+          {(
+            [
+              ['system', 'مطابق گوشی', 'با روشن و خاموش شدن حالت تیره‌ی گوشی عوض می‌شود', ICONS.info],
+              ['light', 'روشن', 'همیشه روشن', ICONS.sun],
+              ['dark', 'تیره', 'همیشه تیره', ICONS.moon],
+            ] as const
+          ).map(([id, title, sub, icon]) => (
+            <SelectCard
+              key={id}
+              title={title}
+              sub={sub}
+              icon={icon}
+              radio
+              selected={mode === id}
+              onPick={() => setMode(id)}
+            />
+          ))}
+        </div>
         <Button variant="secondary" onClick={() => useConsent.getState().reset()}>
           تنظیمات کوکی
         </Button>

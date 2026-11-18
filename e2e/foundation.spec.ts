@@ -41,22 +41,7 @@ test('RTL, Persian, Yekan Bakh font and Persian digits; no horizontal scroll at 
   expect(overflow).toBeLessThanOrEqual(0);
 });
 
-test('theme switch persists in localStorage dk-theme and survives reload', async ({ page }) => {
-  await openHome(page);
-  await page.getByRole('button', { name: 'حساب' }).click();
-  await visible(page)
-    .getByRole('button', { name: /تنظیمات/ })
-    .click();
-  const sw = visible(page).getByRole('switch', { name: 'تم تیره' });
-  await expect(sw).toHaveAttribute('aria-checked', 'false');
-  await sw.click();
-  await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
-  expect(await page.evaluate(() => localStorage.getItem('dk-theme'))).toBe('dark');
-  const bg = await page.evaluate(() => getComputedStyle(document.body).getPropertyValue('--bg').trim());
-  expect(bg.toLowerCase()).toBe('#17120f');
-  await page.reload();
-  await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
-});
+// Theme behavior (system default, explicit choice, live switching) lives in theme.spec.ts.
 
 test('back returns to the exact previous screen with its scroll position (UI back and browser/Android back)', async ({
   page,
