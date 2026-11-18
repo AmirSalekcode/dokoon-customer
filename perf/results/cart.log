@@ -1,0 +1,60 @@
+
+
+  █ THRESHOLDS 
+
+    browser_web_vital_cls
+    ✓ 'p(75)<0.1' p(75)=0.027571
+
+    browser_web_vital_fcp
+    ✓ 'p(75)<1800' p(75)=128ms
+
+    browser_web_vital_lcp
+    ✓ 'p(75)<2500' p(75)=128ms
+
+    checks
+    ✓ 'rate==1' rate=100.00%
+
+    pages_measured
+    ✓ 'count>=5' count=5
+
+    screen_ready
+    ✓ 'p(95)<1000' p(95)=206.6ms
+
+
+  █ TOTAL RESULTS 
+
+    checks_total.......: 5       0.66313/s
+    checks_succeeded...: 100.00% 5 out of 5
+    checks_failed......: 0.00%   0 out of 5
+
+    ✓ cart ready < 1s
+
+    CUSTOM
+    pages_measured..............: 5      0.66313/s
+    screen_ready................: avg=199.4ms  min=192ms    med=197ms    max=207ms    p(90)=206.2ms  p(95)=206.6ms 
+
+    EXECUTION
+    iteration_duration..........: avg=1.39s    min=1.39s    med=1.39s    max=1.4s     p(90)=1.4s     p(95)=1.4s    
+    iterations..................: 5      0.66313/s
+    vus.........................: 1      min=1       max=1
+    vus_max.....................: 1      min=1       max=1
+
+    NETWORK
+    data_received...............: 0 B    0 B/s
+    data_sent...................: 0 B    0 B/s
+
+    BROWSER
+    browser_data_received.......: 1.3 MB 178 kB/s
+    browser_data_sent...........: 15 kB  2.0 kB/s
+    browser_http_req_duration...: avg=48.07ms  min=5.1ms    med=19.2ms   max=263.37ms p(90)=259.01ms p(95)=261.4ms 
+    browser_http_req_failed.....: 0.00%  0 out of 40
+
+    WEB_VITALS
+    browser_web_vital_cls.......: avg=0.027571 min=0.027571 med=0.027571 max=0.027571 p(90)=0.027571 p(95)=0.027571
+    browser_web_vital_fcp.......: avg=124.8ms  min=120ms    med=120ms    max=136ms    p(90)=132.8ms  p(95)=134.4ms 
+    browser_web_vital_inp.......: avg=16ms     min=16ms     med=16ms     max=16ms     p(90)=16ms     p(95)=16ms    
+    browser_web_vital_lcp.......: avg=124.8ms  min=120ms    med=120ms    max=136ms    p(90)=132.8ms  p(95)=134.4ms 
+    browser_web_vital_ttfb......: avg=4.18ms   min=4.09ms   med=4.1ms    max=4.3ms    p(90)=4.3ms    p(95)=4.3ms   
+
+
+

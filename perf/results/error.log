@@ -1,0 +1,62 @@
+
+
+  █ THRESHOLDS 
+
+    browser_web_vital_cls
+    ✓ 'p(75)<0.1' p(75)=0.027571
+
+    browser_web_vital_fcp
+    ✓ 'p(75)<1800' p(75)=128ms
+
+    browser_web_vital_lcp
+    ✓ 'p(75)<2500' p(75)=128ms
+
+    checks
+    ✓ 'rate==1' rate=100.00%
+
+    pages_measured
+    ✓ 'count>=5' count=5
+
+    screen_ready
+    ✓ 'p(95)<1000' p(95)=206ms
+
+
+  █ TOTAL RESULTS 
+
+    checks_total.......: 15      1.573374/s
+    checks_succeeded...: 100.00% 15 out of 15
+    checks_failed......: 0.00%   0 out of 15
+
+    ✓ account ready < 1s
+    ✓ settings ready < 1s
+    ✓ error ready < 1s
+
+    CUSTOM
+    pages_measured..............: 5      0.524458/s
+    screen_ready................: avg=198.26ms min=192ms    med=195ms    max=206ms    p(90)=205.6ms  p(95)=206ms   
+
+    EXECUTION
+    iteration_duration..........: avg=1.79s    min=1.78s    med=1.79s    max=1.8s     p(90)=1.8s     p(95)=1.8s    
+    iterations..................: 5      0.524458/s
+    vus.........................: 1      min=1       max=1
+    vus_max.....................: 1      min=1       max=1
+
+    NETWORK
+    data_received...............: 0 B    0 B/s
+    data_sent...................: 0 B    0 B/s
+
+    BROWSER
+    browser_data_received.......: 1.3 MB 141 kB/s
+    browser_data_sent...........: 15 kB  1.6 kB/s
+    browser_http_req_duration...: avg=47.96ms  min=5.1ms    med=19.15ms  max=273.46ms p(90)=258.01ms p(95)=261.99ms
+    browser_http_req_failed.....: 0.00%  0 out of 40
+
+    WEB_VITALS
+    browser_web_vital_cls.......: avg=0.027571 min=0.027571 med=0.027571 max=0.027571 p(90)=0.027571 p(95)=0.027571
+    browser_web_vital_fcp.......: avg=124.8ms  min=120ms    med=128ms    max=128ms    p(90)=128ms    p(95)=128ms   
+    browser_web_vital_inp.......: avg=16ms     min=16ms     med=16ms     max=16ms     p(90)=16ms     p(95)=16ms    
+    browser_web_vital_lcp.......: avg=124.8ms  min=120ms    med=128ms    max=128ms    p(90)=128ms    p(95)=128ms   
+    browser_web_vital_ttfb......: avg=4.25ms   min=4.09ms   med=4.2ms    max=4.5ms    p(90)=4.41ms   p(95)=4.45ms  
+
+
+
