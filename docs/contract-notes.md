@@ -31,8 +31,12 @@ Nothing here is implemented as an invented endpoint; the frontend works around e
    `typeId`, but there is no endpoint listing them. The app uses fixed ids for now:
    cancel `mistake | too_slow | change | other`, report `missing | wrong | late | quality | other`.
    Proposal: `GET /orders/cancel-reasons` and `GET /orders/report-types` (id + Persian title), or
-   enums in the contract. `photoUploadIds` needs an upload endpoint (e.g. `POST /uploads`) that the
-   contract does not have, so the report screen has no photo yet.
+   enums in the contract. (The report photo uses the existing `POST /uploads` → `photoUploadIds`.)
 9. **Payment callback query.** `/payments/callback/{provider}` declares no query parameters, while its
    summary says the server reads the gateway result and redirects with `?orderId=&result=`.
    Proposal: document the gateway's query params there (they differ per provider).
+10. **Reorder lines.** `GET /orders/{id}/reorder` returns a `Quote`, whose lines have no option ids, so
+    a reorder cannot restore chosen options (fries size, extras). Proposal: add `optionIds` to
+    `Quote.lines` (and to `Order.lines`, see #2).
+11. **Editing the mobile number** needs an OTP flow for the new number (e.g. `POST /me/phone/request`
+    + `/verify`). Until then the app shows the number read-only.

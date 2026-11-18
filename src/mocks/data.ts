@@ -346,4 +346,47 @@ export const orders: Order[] = [
     canCancel: false,
     canRate: false,
   },
+  {
+    id: 'o0',
+    number: '10198',
+    status: 'DELIVERED',
+    step: 4,
+    restaurant: restaurantCards[1],
+    courier: null,
+    lines: [
+      { foodId: 'b4', title: 'پیتزا پپرونی', qty: 1, unitPrice: 310000, total: 310000 },
+    ] as unknown as Order['lines'],
+    payMethod: 'cash',
+    paymentStatus: 'cash_collected',
+    totals: { items: 310000, fee: 0, discount: 0, total: 310000 },
+    etaMin: 30,
+    etaMax: 40,
+    placedAt: '2026-11-12T18:10:00Z',
+    canCancel: false,
+    canRate: false,
+  },
+];
+
+export const notifications = [
+  {
+    id: 'nt1',
+    title: 'سفارش شما در حال آماده شدن است',
+    body: 'آشپزهای کباب‌سرای نقش‌جهان مشغول آماده‌سازی هستند.',
+    createdAt: '2026-11-18T09:35:00Z',
+    target: { screen: 'track', id: 'o1' },
+  },
+  {
+    id: 'nt2',
+    title: '۱۵٪ تخفیف اولین سفارش از کباب‌سرای نقش‌جهان',
+    body: 'فقط تا آخر هفته.',
+    createdAt: '2026-11-17T12:00:00Z',
+    target: { screen: 'restaurant', id: 'naghsh' },
+  },
+  {
+    id: 'nt3',
+    title: 'به دکون خوش آمدید',
+    body: 'غذای خوب شهرضا، دم در خانه‌ی شما.',
+    createdAt: '2026-11-10T08:00:00Z',
+    target: null,
+  },
 ];

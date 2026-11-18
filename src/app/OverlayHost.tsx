@@ -10,6 +10,8 @@ import { ReviewSheet } from '@/components/library/ReviewSheet';
 import { ICONS } from '@/components/primitives/Icon';
 import { formatPhone, toFaDigits } from '@/lib/format';
 import { useAddresses } from '@/features/addresses';
+import { useFavorites } from '@/features/favorites';
+import { cancelPendingReorder, confirmPendingReorder } from '@/features/reorder';
 import { useNav } from '@/nav/nav';
 import { toast } from '@/ui/toast';
 import { FoodOverlay } from './FoodOverlay';
@@ -20,7 +22,6 @@ const STAR_LABELS = ['خیلی بد', 'بد', 'معمولی', 'خوب', 'عال�
 /** Renders the single active overlay (menu, filter, food, review, address, confirm, delconfirm, dlg). */
 export function OverlayHost() {
   const overlay = useNav((st) => st.overlay);
-  const { closeOverlay, resetTo } = useNav.getState();
   if (!overlay) return null;
   const p = overlay.props ?? {};
 
@@ -32,34 +33,9 @@ export function OverlayHost() {
     case 'confirm':
       return <CartReplaceDialog />;
     case 'delconfirm':
-      return (
-        <Dialog
-          title="آدرس «خانه» حذف شود؟"
-          text="این کار قابل بازگشت نیست."
-          confirmLabel="حذف آدرس"
-          danger
-          onConfirm={() => {
-            closeOverlay();
-            toast('حذف شد');
-          }}
-          onCancel={closeOverlay}
-        />
-      );
+      return <DeleteAddressDialog id={String(p.addressId ?? '')} title={String(p.title ?? '')} />;
     case 'dlg':
-      return (
-        <Dialog
-          title="خروج از حساب"
-          text="برای سفارش دوباره باید با شماره‌ی موبایل وارد شوید."
-          confirmLabel="خروج"
-          danger
-          onConfirm={() => {
-            useSession.getState().clear();
-            resetTo('home');
-            toast('از حساب خارج شدید');
-          }}
-          onCancel={closeOverlay}
-        />
-      );
+      return <ActionDialog action={String(p.action ?? '')} />;
     case 'food':
       return <FoodOverlay foodId={String(p.foodId)} restaurantId={String(p.restaurantId)} />;
     case 'review':
@@ -135,6 +111,87 @@ function MenuOverlay() {
           ],
         },
       ]}
+    />
+  );
+}
+
+function DeleteAddressDialog({ id, title }: { id: string; title: string }) {
+  const { closeOverlay } = useNav.getState();
+  return (
+    <Dialog
+      title={`آدرس «${title}» حذف شود؟`}
+      text="این کار قابل بازگشت نیست."
+      confirmLabel="حذف آدرس"
+      danger
+      onConfirm={async () => {
+        closeOverlay();
+        const ok = await useAddresses.getState().remove(id);
+        toast(ok ? 'آدرس حذف شد' : 'حذف آدرس انجام نشد.', ok ? 'info' : 'error');
+      }}
+      onCancel={closeOverlay}
+    />
+  );
+}
+
+/** Data-driven confirm dialogs: logout, delete account, reorder over another restaurant's cart. */
+function ActionDialog({ action }: { action: string }) {
+  const { closeOverlay, resetTo } = useNav.getState();
+  const signOut = () => {
+    useSession.getState().clear();
+    useAddresses.getState().clear();
+    useFavorites.getState().clear();
+  };
+  if (action === 'delete-account')
+    return (
+      <Dialog
+        title="حذف حساب کاربری"
+        text="سفارش‌ها، آدرس‌ها و علاقه‌مندی‌های شما حذف می‌شود و این کار قابل بازگشت نیست."
+        confirmLabel="حذف حساب"
+        danger
+        onConfirm={async () => {
+          try {
+            const { error } = await api.DELETE('/me');
+            if (error !== undefined) throw error;
+            signOut();
+            resetTo('home');
+            toast('حساب شما حذف شد');
+          } catch {
+            closeOverlay();
+            toast('حذف حساب انجام نشد. دوباره تلاش کنید.', 'error');
+          }
+        }}
+        onCancel={closeOverlay}
+      />
+    );
+  if (action === 'reorder')
+    return (
+      <Dialog
+        title="سبد خرید قبلی خالی شود؟"
+        text="سبد فعلی شما مربوط به رستوران دیگری است. با سفارش مجدد، سبد قبلی خالی می‌شود."
+        confirmLabel="خالی کردن سبد و ادامه"
+        dismissOnScrim={false}
+        onConfirm={() => {
+          closeOverlay();
+          confirmPendingReorder();
+        }}
+        onCancel={() => {
+          cancelPendingReorder();
+          closeOverlay();
+        }}
+      />
+    );
+  return (
+    <Dialog
+      title="خروج از حساب"
+      text="برای سفارش دوباره باید با شماره‌ی موبایل وارد شوید."
+      confirmLabel="خروج"
+      danger
+      onConfirm={() => {
+        signOut();
+        resetTo('home');
+        toast('از حساب خارج شدید');
+      }}
+      onCancel={closeOverlay}
     />
   );
 }
