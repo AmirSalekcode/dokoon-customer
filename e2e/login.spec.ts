@@ -26,7 +26,7 @@ async function enterPhoneAndCode(page: Page, phone: string) {
   await visible(page).getByLabel('کد تأیید').fill('1234');
 }
 
-test('guest browses and fills the cart; «ثبت سفارش» asks to log in, then lands on checkout', async ({
+test('guest browses and fills the cart; «ادامه و تکمیل سفارش» asks to log in, then lands on checkout', async ({
   page,
 }) => {
   await page.goto('/');
@@ -37,7 +37,7 @@ test('guest browses and fills the cart; «ثبت سفارش» asks to log in, th
     .getByRole('button', { name: /مشاهده سبد خرید/ })
     .click();
   await visible(page)
-    .getByRole('button', { name: /ثبت سفارش/ })
+    .getByRole('button', { name: /ادامه و تکمیل سفارش/ })
     .click();
 
   await enterPhoneAndCode(page, '09131234567'); // known user

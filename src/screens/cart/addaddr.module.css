@@ -1,0 +1,33 @@
+.maps {
+  display: flex;
+  gap: var(--sp-2);
+  padding: var(--sp-1);
+  border-radius: var(--r-pill);
+  background: var(--sf);
+  box-shadow: var(--sh-card);
+}
+.map {
+  flex: 1;
+  min-height: var(--touch);
+  border: 0;
+  border-radius: var(--r-pill);
+  background: transparent;
+  color: var(--mu);
+  font: inherit;
+  font-size: var(--fs-14);
+  font-weight: var(--fw-bold);
+  cursor: pointer;
+}
+.on {
+  background: var(--soft);
+  color: var(--pr2);
+}
+.titles {
+  display: flex;
+  gap: var(--sp-2);
+}
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--sp-3);
+}

@@ -1,5 +1,13 @@
 import { delay, http, HttpResponse } from 'msw';
-import type { ApiErrorBody, AuthResult, CreateOrderResult, OrderDraft, Quote } from '@/api/types';
+import type {
+  Address,
+  AddressInput,
+  ApiErrorBody,
+  AuthResult,
+  CreateOrderResult,
+  OrderDraft,
+  Quote,
+} from '@/api/types';
 import * as D from './data';
 
 /** Matches any origin/base, e.g. http://localhost:5173/api/v1/home or https://api.dokoon.example/v1/home */
@@ -22,6 +30,39 @@ function forcedStatus(): number | null {
 }
 
 const latency = () => delay(import.meta.env.MODE === 'test' ? 0 : 250);
+
+// ---- tiny in-memory "database" for the mock (kept in localStorage in the browser demo) ----
+const DB_KEY = 'dk-mock-db';
+interface MockDb {
+  addresses: Address[];
+  seq: number;
+}
+const freshDb = (): MockDb => ({ addresses: [], seq: 0 });
+function loadDb(): MockDb {
+  try {
+    const raw = globalThis.localStorage?.getItem(DB_KEY);
+    return raw ? (JSON.parse(raw) as MockDb) : freshDb();
+  } catch {
+    return freshDb();
+  }
+}
+let db = loadDb();
+function saveDb() {
+  try {
+    globalThis.localStorage?.setItem(DB_KEY, JSON.stringify(db));
+  } catch {
+    /* ignore */
+  }
+}
+/** Tests: start every case from an empty mock database. */
+export function resetMockDb() {
+  db = freshDb();
+}
+
+const inZone = (p: { lat: number; lng: number }) => {
+  const c = D.cities[0].center!;
+  return Math.hypot(p.lat - c.lat, p.lng - c.lng) < 0.05;
+};
 
 function quote(draft: OrderDraft): Quote {
   const r = D.restaurants.find((x) => x.id === draft.restaurantId);
@@ -120,14 +161,28 @@ export const handlers = [
       cityId: patch.cityId,
     });
   }),
-  http.get(p('/addresses'), () => HttpResponse.json([])),
+  http.get(p('/addresses'), () => HttpResponse.json(db.addresses)),
+  http.post(p('/addresses'), async ({ request }) => {
+    const input = (await request.json()) as AddressInput;
+    if (!input.title || !input.fullText || !input.location || !input.recipientName || !input.recipientPhone)
+      return err(400, 'VALIDATION', 'اطلاعات آدرس کامل نیست');
+    if (!inZone(input.location)) return err(422, 'OUT_OF_ZONE', 'این محل خارج از محدوده‌ی سرویس دکون است');
+    const a: Address = { ...input, id: `a${++db.seq}`, inZone: true };
+    db.addresses = [...db.addresses, a];
+    saveDb();
+    return HttpResponse.json(a, { status: 201 });
+  }),
+  http.delete(p('/addresses/:id'), ({ params }) => {
+    db.addresses = db.addresses.filter((a) => a.id !== params.id);
+    saveDb();
+    return new HttpResponse(null, { status: 204 });
+  }),
   http.get(p('/geo/zone-check'), ({ request }) => {
     const u = new URL(request.url);
     const lat = Number(u.searchParams.get('lat'));
     const lng = Number(u.searchParams.get('lng'));
-    const c = D.cities[0].center!;
-    const inZone = Math.hypot(lat - c.lat, lng - c.lng) < 0.05;
-    return HttpResponse.json({ inZone, cityId: inZone ? 'shahreza' : undefined });
+    const ok = inZone({ lat, lng });
+    return HttpResponse.json({ inZone: ok, cityId: ok ? 'shahreza' : undefined });
   }),
 
   http.get(p('/home'), async () => {
@@ -228,10 +283,17 @@ export const handlers = [
       order: {
         ...D.orders[0],
         id: 'o-new',
+        number: String(10300 + ++db.seq),
         status: online ? 'PENDING_PAYMENT' : 'PLACED',
         step: 0,
+        restaurant: D.restaurantCards.find((r) => r.id === draft.restaurantId),
+        address: db.addresses.find((a) => a.id === draft.addressId),
+        note: draft.note ?? '',
         payMethod: draft.payMethod,
         paymentStatus: online ? 'pending' : 'cash_due',
+        totals: { items: q.itemsTotal, fee: q.deliveryFee, discount: q.discount, total: q.total },
+        etaMin: q.etaMin,
+        etaMax: q.etaMax,
       },
       payment: online
         ? { provider: 'zibal', redirectUrl: 'about:blank#mock-gateway', expiresAt: '2026-11-18T10:00:00Z' }

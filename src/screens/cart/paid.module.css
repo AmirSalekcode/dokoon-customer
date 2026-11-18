@@ -1,0 +1,50 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-3);
+  min-height: 100%;
+  padding: var(--sp-8) var(--gutter) calc(var(--sp-8) + env(safe-area-inset-bottom));
+  text-align: center;
+}
+.art {
+  width: 160px;
+  height: 160px;
+}
+.h {
+  margin: 0;
+  font-size: var(--fs-24);
+  font-weight: var(--fw-xbold);
+}
+.num {
+  margin: 0;
+  color: var(--mu);
+  font-size: var(--fs-14);
+}
+.box {
+  width: 100%;
+  margin: var(--sp-2) 0 0;
+  padding: var(--sp-3) var(--sp-4);
+  border-radius: var(--r-lg);
+  background: var(--soft);
+  color: var(--pr2);
+  font-size: var(--fs-15);
+  font-weight: var(--fw-bold);
+}
+.ok {
+  background: var(--okbg);
+  color: var(--ink);
+}
+.sub {
+  margin: 0;
+  color: var(--mu);
+  font-size: var(--fs-13);
+  line-height: 1.8;
+}
+.acts {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+  width: 100%;
+  margin-top: auto;
+}

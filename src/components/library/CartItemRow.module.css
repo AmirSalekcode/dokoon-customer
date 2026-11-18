@@ -44,3 +44,17 @@
   align-items: center;
   margin-top: var(--sp-2);
 }
+.off .th,
+.off .nm {
+  opacity: 0.55;
+}
+.na {
+  display: inline-block;
+  margin-top: var(--sp-1);
+  padding: 2px var(--sp-2);
+  border-radius: var(--r-sm);
+  background: var(--soft);
+  color: var(--pr2);
+  font-size: var(--fs-12);
+  font-weight: var(--fw-bold);
+}
