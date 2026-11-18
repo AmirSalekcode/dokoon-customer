@@ -1,4 +1,4 @@
-package ir.dokoon.customer;
+package ir.dokoonapp.customer;
 
 import com.getcapacitor.BridgeActivity;
 

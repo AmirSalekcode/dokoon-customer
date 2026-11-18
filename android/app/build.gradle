@@ -1,10 +1,10 @@
 apply plugin: 'com.android.application'
 
 android {
-    namespace = "ir.dokoon.customer"
+    namespace = "ir.dokoonapp.customer"
     compileSdk = rootProject.ext.compileSdkVersion
     defaultConfig {
-        applicationId "ir.dokoon.customer"
+        applicationId "ir.dokoonapp.customer"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
