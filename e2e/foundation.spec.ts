@@ -5,6 +5,9 @@ const visible = (page: Page) => page.locator('main:not([hidden])');
 // These flows are not about cookies: start with a saved consent so the popup is not shown.
 test.beforeEach(async ({ page }) => {
   await page.addInitScript(() => {
+    // Returning user: onboarding done, city chosen (launch flow is covered by launch.spec.ts).
+    if (!localStorage.getItem('dk-launch'))
+      localStorage.setItem('dk-launch', JSON.stringify({ seenOnboarding: true, cityId: 'shahreza' }));
     if (!localStorage.getItem('dk-consent'))
       localStorage.setItem(
         'dk-consent',

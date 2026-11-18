@@ -20,6 +20,7 @@ async function clsAfterLoad(page: Page): Promise<number> {
     await route.continue();
   });
   await page.addInitScript(() => {
+    localStorage.setItem('dk-launch', JSON.stringify({ seenOnboarding: true, cityId: 'shahreza' }));
     (window as unknown as { __cls: number }).__cls = 0;
     new PerformanceObserver((list) => {
       for (const e of list.getEntries() as (PerformanceEntry & {

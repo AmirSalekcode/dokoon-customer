@@ -39,7 +39,8 @@ interface NavState {
 }
 
 export const useNav = create<NavState>((set, get) => ({
-  stack: [route('home')],
+  // App start: splash decides onboarding / city / home (see auth/flow.ts bootScreen).
+  stack: [route('splash')],
   overlay: null,
   exitArmedAt: 0,
 

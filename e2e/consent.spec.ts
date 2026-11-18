@@ -1,5 +1,13 @@
 import { expect, test } from '@playwright/test';
 
+// Returning user for the launch flow (covered by launch.spec.ts); cookie consent itself starts undecided.
+test.beforeEach(async ({ page }) => {
+  await page.addInitScript(() => {
+    if (!localStorage.getItem('dk-launch'))
+      localStorage.setItem('dk-launch', JSON.stringify({ seenOnboarding: true, cityId: 'shahreza' }));
+  });
+});
+
 const banner = (page: import('@playwright/test').Page) =>
   page.getByRole('dialog', { name: 'رضایت استفاده از کوکی' });
 

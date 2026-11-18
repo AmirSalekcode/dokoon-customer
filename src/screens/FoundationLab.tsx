@@ -12,6 +12,10 @@ import { useTheme } from '@/theme/theme';
 import { SelectCard } from '@/components/library/SelectCard';
 import { ICONS } from '@/components/primitives/Icon';
 import { useConsent } from '@/consent/consent';
+import { ListRow } from '@/components/library/ListRow';
+import { useLaunch } from '@/auth/flow';
+import { api } from '@/api/client';
+import { unwrap, useApi } from '@/api/useApi';
 import { toast } from '@/ui/toast';
 import s from './screens.module.css';
 
@@ -24,6 +28,9 @@ export function FoundationLab() {
   const showError = useNav((st) => st.showError);
   const openOverlay = useNav((st) => st.openOverlay);
   const { mode, setMode } = useTheme();
+  const push = useNav((st) => st.push);
+  const cityId = useLaunch((st) => st.cityId);
+  const cities = useApi(() => unwrap(api.GET('/cities')), [], { fullPageErrors: false });
   const [mockStatus, setMockStatus] = useState(readStorage('dk-mock-status') ?? '');
   const [mapPref, setMapPref] = useState<MapProviderId>((readStorage(MAP_KEY) as MapProviderId) || 'neshan');
   const [mapUsed, setMapUsed] = useState('');
@@ -73,6 +80,16 @@ export function FoundationLab() {
             />
           ))}
         </div>
+        <ListRow
+          title="شهر"
+          sub={
+            cities.status === 'success'
+              ? (cities.data.find((c) => c.id === cityId)?.name ?? 'انتخاب نشده')
+              : ''
+          }
+          d={ICONS.pin}
+          onTap={() => push('city', { from: 'settings' })}
+        />
         <Button variant="secondary" onClick={() => useConsent.getState().reset()}>
           تنظیمات کوکی
         </Button>

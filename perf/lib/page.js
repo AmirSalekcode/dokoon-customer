@@ -40,11 +40,11 @@ export function pageOptions(extra = {}) {
 
 // Must be a string: k6's addInitScript silently ignores functions (verified with a probe).
 const CONSENT_SEED =
-  "try { localStorage.setItem('dk-consent', JSON.stringify({ version: 1, analytics: false, decidedAt: '2026-11-18' })); } catch (e) {}";
+  "try { localStorage.setItem('dk-consent', JSON.stringify({ version: 1, analytics: false, decidedAt: '2026-11-18' })); localStorage.setItem('dk-launch', JSON.stringify({ seenOnboarding: true, cityId: 'shahreza' })); } catch (e) {}";
 
 const visible = (screen) => `main[data-screen="${screen}"]:not([hidden])`;
 
-/** Open the app at 390×844 with cookie consent already decided (the popup is tested separately). */
+/** Open the app at 390×844 as a returning user (consent decided, onboarding done, city chosen). */
 export async function openApp(browser) {
   const context = await browser.newContext({ viewport: { width: 390, height: 844 }, locale: 'fa-IR' });
   await context.addInitScript(CONSENT_SEED);
@@ -70,6 +70,29 @@ export async function navigate(page, selector, screen, readySelector = 'h1, h2')
   screenReady.add(ms, { screen });
   check(ms, { [`${screen} ready < 1s`]: (v) => v < 1000 });
   return ms;
+}
+
+// First install: only the cookie decision (so the popup doesn't cover buttons); no launch state.
+const FIRST_VISIT_SEED =
+  "try { localStorage.setItem('dk-consent', JSON.stringify({ version: 1, analytics: false, decidedAt: '2026-11-18' })); } catch (e) {}";
+
+/**
+ * Open the app as a brand-new user and wait for `screen` (splash → onboard → …).
+ * Records the time from navigation start to that screen as screen_ready.
+ */
+export async function openFresh(browser, screen = 'splash', readySelector = 'h1, p') {
+  const context = await browser.newContext({ viewport: { width: 390, height: 844 }, locale: 'fa-IR' });
+  await context.addInitScript(FIRST_VISIT_SEED);
+  const page = await context.newPage();
+  const t0 = Date.now();
+  // Don't wait for network idle: we measure when the screen appears, not when all requests settle.
+  await page.goto(BASE_URL, { waitUntil: 'domcontentloaded' });
+  await page
+    .locator(`${visible(screen)} ${readySelector}`)
+    .first()
+    .waitFor({ state: 'visible' });
+  pagesMeasured.add(1);
+  return { context, page, ms: Date.now() - t0 };
 }
 
 export const NAV = {
