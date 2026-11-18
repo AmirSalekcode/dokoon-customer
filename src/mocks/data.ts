@@ -131,6 +131,13 @@ export const restaurants: Restaurant[] = [
 
 export const restaurantCards: RestaurantCard[] = restaurants.map(card);
 
+/** Mock-only facets for filtering GET /restaurants (category / food tags are server-side concepts). */
+export const restaurantMeta: Record<string, { category: string; tags: string[] }> = {
+  naghsh: { category: 'iranian', tags: ['kebab', 'chelo', 'stew'] },
+  burger: { category: 'fast', tags: ['burger', 'pizza', 'fries'] },
+  cafe: { category: 'cafe', tags: ['cafe', 'cake'] },
+};
+
 const food = (f: Food): Food => ({
   available: true,
   oldPrice: null,
