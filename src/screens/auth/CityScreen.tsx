@@ -9,6 +9,7 @@ import { LoadingState } from '@/components/library/LoadingState';
 import { SelectCard } from '@/components/library/SelectCard';
 import { TopBar } from '@/components/library/TopBar';
 import { ICONS } from '@/components/primitives/Icon';
+import { enterBootScreen } from '@/nav/deepLink';
 import { useNav } from '@/nav/nav';
 import { toast } from '@/ui/toast';
 import type { ScreenProps } from '../registry';
@@ -43,7 +44,7 @@ export function CityScreen({ route }: ScreenProps) {
     if (!selected) return;
     useLaunch.getState().setCity(selected);
     if (fromSettings) useNav.getState().back();
-    else useNav.getState().setTop('home');
+    else enterBootScreen('home');
   };
 
   const locate = async () => {

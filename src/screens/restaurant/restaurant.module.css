@@ -1,0 +1,62 @@
+.page {
+  padding-bottom: calc(var(--sp-8) + env(safe-area-inset-bottom));
+}
+.infoBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-2);
+  width: calc(100% - 2 * var(--gutter));
+  min-height: var(--touch);
+  margin: var(--sp-3) var(--gutter) 0;
+  border: 0;
+  border-radius: var(--r-lg);
+  background: var(--sf);
+  color: var(--pr2);
+  font-size: var(--fs-14);
+  font-weight: var(--fw-bold);
+  box-shadow: var(--sh-card);
+  cursor: pointer;
+}
+.search {
+  margin-top: var(--sp-4);
+}
+/* Sticky category chips (spec: «دسته‌ها (چسبان)»). */
+.tabs {
+  position: sticky;
+  top: 0;
+  z-index: var(--z-sticky);
+  display: flex;
+  gap: var(--sp-2);
+  overflow-x: auto;
+  margin-top: var(--sp-3);
+  padding: var(--sp-3) var(--gutter);
+  background: var(--bg);
+  scrollbar-width: none;
+}
+.tabs::-webkit-scrollbar {
+  display: none;
+}
+.tabs > * {
+  flex: none;
+}
+.sectionHead {
+  margin: var(--sp-5) var(--gutter) var(--sp-3);
+  font-size: var(--fs-20);
+  font-weight: var(--fw-bold);
+  line-height: 1.4;
+  /* keep the heading below the sticky chips when jumped to */
+  scroll-margin-top: 84px;
+}
+.foods {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+  padding: 0 var(--gutter);
+}
+.dock {
+  position: sticky;
+  bottom: 0;
+  z-index: var(--z-sticky);
+  margin-top: var(--sp-4);
+}

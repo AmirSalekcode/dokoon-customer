@@ -1,3 +1,4 @@
+import { captureDeepLink } from '@/nav/deepLink';
 import { useNav } from '@/nav/nav';
 
 export interface BootDeps {
@@ -13,6 +14,7 @@ export interface BootDeps {
  * ignored (the app works without offline caching).
  */
 export async function boot({ useMocks, startMocks, registerPwa, renderApp }: BootDeps): Promise<void> {
+  captureDeepLink();
   if (useMocks) {
     try {
       await startMocks();

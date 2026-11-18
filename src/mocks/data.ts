@@ -287,28 +287,43 @@ export const promos: Promo[] = [
   { code: 'FIRST20', title: '۲۰٪ تخفیف اولین سفارش', sub: 'فقط برای اولین سفارش', badge: '۲۰٪' },
 ];
 
+const REVIEWERS = [
+  'مریم',
+  'علی',
+  'زهرا',
+  'رضا',
+  'نرگس',
+  'حسین',
+  'سارا',
+  'مهدی',
+  'فاطمه',
+  'امیر',
+  'لیلا',
+  'محسن',
+];
+const REVIEW_TEXTS = [
+  'گوشت کاملاً نرم و آبدار بود.',
+  'کوبیده‌اش از همه‌جای شهر بهتر است.',
+  'به‌موقع رسید و هنوز داغ بود.',
+  'برنج عالی بود، کمی نمک بیشتر می‌خواست.',
+];
+
+/** All reviews of a food with reviews (n1 in tests): 12 items, served 5 per page by the mock. */
 export const reviewPage: ReviewPage = {
   average: 4.8,
   count: 124,
   distribution: [107, 11, 4, 1, 1],
-  items: [
-    {
-      id: 'r1',
-      userName: 'مریم',
-      stars: 5,
-      text: 'گوشت کاملاً نرم و آبدار بود.',
-      createdAt: '2026-11-15T12:00:00Z',
-    },
-    {
-      id: 'r2',
-      userName: 'علی',
-      stars: 4,
-      text: 'کوبیده‌اش از همه‌جای شهر بهتر است.',
-      createdAt: '2026-11-10T12:00:00Z',
-    },
-  ],
+  items: REVIEWERS.map((userName, i) => ({
+    id: `r${i + 1}`,
+    userName,
+    stars: i % 5 === 3 ? 4 : 5,
+    text: REVIEW_TEXTS[i % REVIEW_TEXTS.length],
+    createdAt: new Date(Date.UTC(2026, 10, 15 - i, 12)).toISOString(),
+  })),
   nextCursor: null,
 };
+
+export const REVIEW_PAGE_SIZE = 5;
 
 export const orders: Order[] = [
   {
