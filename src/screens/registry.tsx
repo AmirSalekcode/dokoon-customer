@@ -3,6 +3,9 @@ import type { Route, ScreenId } from '@/nav/types';
 import { ErrorScreen } from './ErrorScreen';
 import { HomeScreen } from './HomeScreen';
 import { SearchScreen } from './SearchScreen';
+import { RestaurantsScreen } from './browse/RestaurantsScreen';
+import { OffersScreen } from './browse/OffersScreen';
+import { CampaignScreen } from './browse/CampaignScreen';
 import { RestaurantScreen } from './RestaurantScreen';
 import { RestInfoScreen } from './RestInfoScreen';
 import { CartScreen } from './CartScreen';
@@ -58,6 +61,9 @@ const SCREENS: Partial<Record<ScreenId, ComponentType<ScreenProps>>> = {
   perms: PermsScreen,
   home: HomeScreen,
   search: SearchScreen,
+  restaurants: RestaurantsScreen,
+  offers: OffersScreen,
+  campaign: CampaignScreen,
   restaurant: RestaurantScreen,
   restinfo: RestInfoScreen,
   cart: CartScreen,
@@ -97,8 +103,4 @@ export function screenFor(id: ScreenId): ComponentType<ScreenProps> {
 }
 
 /** Persian titles for the screens that are still placeholders (not in SCREENS yet). */
-export const TITLES: Partial<Record<ScreenId, string>> = {
-  restaurants: 'رستوران‌ها',
-  offers: 'تخفیف‌ها',
-  campaign: 'کمپین',
-};
+export const TITLES: Partial<Record<ScreenId, string>> = {};

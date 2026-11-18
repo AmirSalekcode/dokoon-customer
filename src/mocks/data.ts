@@ -262,6 +262,13 @@ export const campaigns: Campaign[] = [
     imageUrl: 'art:dk-burger',
     restaurantIds: ['burger'],
   },
+  {
+    id: 'b3',
+    title: 'هفته‌ی طعم‌های شهرضا',
+    text: 'این هفته از رستوران‌های شرکت‌کننده سفارش دهید و پیشنهادهای ویژه‌ی هر رستوران را ببینید.',
+    imageUrl: 'art:dk-mix',
+    restaurantIds: ['naghsh', 'burger', 'cafe'],
+  },
 ];
 
 export const home: Home = {

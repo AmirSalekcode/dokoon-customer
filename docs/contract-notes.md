@@ -53,3 +53,9 @@ Nothing here is implemented as an invented endpoint; the frontend works around e
     endpoint to save or clear the per-user `recent` list of `/search/suggestions`; the app keeps its own
     list per device (D-81). Proposal: `DELETE /search/recent` (and the server records `q` on `/search`
     for logged-in users). `/search` has no paging (`nextCursor`); fine for now, needed for big cities.
+14. **Campaign restaurants and list totals.** `Campaign` has only `restaurantIds`, and there is no way to
+    fetch several `RestaurantCard`s by id, so the campaign screen calls `GET /restaurants/{id}` once per
+    participant (full `Restaurant` objects; ids that fail are skipped). Proposal: either embed
+    `restaurants: RestaurantCard[]` in `GET /campaigns/{id}`, or accept `ids` on `GET /restaurants`.
+    Also, `RestaurantPage` has no `total`, so the FilterSheet's «نمایش N رستوران» counts only the first
+    page (≤ `limit`). Proposal: add `total: integer` to `RestaurantPage`.

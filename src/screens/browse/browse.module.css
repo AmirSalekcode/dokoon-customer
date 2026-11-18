@@ -1,0 +1,104 @@
+/* Restaurants / offers tabs and campaign (prototype `.sgrid`, `.rw`, `.csh`, `.camph`) — tokens only. */
+.page {
+  padding-bottom: calc(var(--h-bottomnav) + var(--sp-8) + env(safe-area-inset-bottom));
+}
+.pageNoNav {
+  padding-bottom: calc(var(--sp-8) + env(safe-area-inset-bottom));
+}
+.cats {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--sp-2);
+  padding: var(--sp-4) var(--sp-5) var(--sp-2);
+}
+.sectionHead {
+  margin: var(--sp-5) var(--gutter) var(--sp-3);
+  font-size: var(--fs-20);
+  font-weight: var(--fw-bold);
+  line-height: 1.4;
+}
+/* 2 columns of 176px cards inside the 358px content width. */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 176px));
+  justify-content: center;
+  gap: var(--sp-2);
+  padding: 0 var(--gutter) var(--sp-4);
+}
+.row {
+  display: flex;
+  gap: var(--sp-3);
+  overflow-x: auto;
+  padding: var(--sp-1) var(--gutter) var(--sp-4);
+  scrollbar-width: none;
+}
+.row::-webkit-scrollbar {
+  display: none;
+}
+.row > * {
+  flex: none;
+}
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+  padding: 0 var(--gutter);
+}
+.more {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-2);
+  padding: 0 var(--gutter) var(--sp-4);
+}
+.moreNote {
+  margin: 0;
+  color: var(--mu);
+  font-size: var(--fs-13);
+}
+/* Campaign hero (same look as the Home carousel slide). */
+.hero {
+  position: relative;
+  overflow: hidden;
+  margin: 0 var(--gutter);
+  padding: var(--sp-5);
+  border-radius: var(--r-xl);
+  aspect-ratio: 8 / 5;
+  color: var(--white);
+  background: linear-gradient(260deg, var(--brand-dark) 30%, var(--primary));
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  inset-inline-end: -8%;
+  bottom: -24%;
+  width: 74%;
+  aspect-ratio: 1;
+  border-radius: var(--r-circle);
+  background: radial-gradient(circle, var(--halo), transparent 66%);
+}
+.hero h1 {
+  position: relative;
+  margin: 0;
+  max-width: 56%;
+  font-size: var(--fs-22);
+  font-weight: var(--fw-xbold);
+  line-height: 1.4;
+}
+.heroArt {
+  position: absolute;
+  inset-inline-end: var(--sp-3);
+  bottom: var(--sp-3);
+  width: 44%;
+  height: auto;
+  aspect-ratio: 1;
+}
+.text {
+  margin: var(--sp-4) var(--gutter) 0;
+  color: var(--ink);
+  font-size: var(--fs-15);
+  line-height: 1.9;
+}

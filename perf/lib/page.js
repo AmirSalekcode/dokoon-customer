@@ -127,7 +127,9 @@ export async function openFresh(browser, screen = 'splash', readySelector = 'h1,
 }
 
 export const NAV = {
+  restaurants: 'nav[aria-label="منوی اصلی"] button:nth-child(2)',
   cart: 'nav[aria-label="منوی اصلی"] button:nth-child(3)',
+  offers: 'nav[aria-label="منوی اصلی"] button:nth-child(4)',
   account: 'nav[aria-label="منوی اصلی"] button:nth-child(5)',
 };
 
