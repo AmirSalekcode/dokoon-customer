@@ -5,7 +5,11 @@ storybook-static/
 coverage/
 test-results/
 playwright-report/
-.env*.local
+*.local
+.env
+.env.*
+!.env.example
+!.env.mock
 .DS_Store
 Thumbs.db
 # Android build outputs (the android/ project itself is committed)
@@ -18,10 +22,5 @@ android/capacitor-cordova-android-plugins/
 android/.idea/
 *.keystore
 *.jks
-# Secrets (keep templates)
-.env
-.env.*
-!.env.example
-!.env.mock
 # k6 results
 perf/results/
