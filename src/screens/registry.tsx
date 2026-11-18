@@ -25,6 +25,9 @@ const SCREENS: Partial<Record<ScreenId, ComponentType<ScreenProps>>> = {
   error: ErrorScreen,
 };
 
+/** Screens with a real implementation (each must have a k6 script in perf/pages/<id>.js). */
+export const IMPLEMENTED_SCREENS = Object.keys(SCREENS) as ScreenId[];
+
 export function screenFor(id: ScreenId): ComponentType<ScreenProps> {
   return SCREENS[id] ?? PlaceholderScreen;
 }
