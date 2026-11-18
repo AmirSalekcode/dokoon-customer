@@ -17,6 +17,7 @@ export type Restaurant = S['Restaurant'];
 export type RestaurantPage = S['RestaurantPage'];
 export type MenuCategory = S['MenuCategory'];
 export type Food = S['Food'];
+export type FoodHit = S['FoodHit'];
 export type OptionGroup = S['OptionGroup'];
 export type Review = S['Review'];
 export type ReviewPage = S['ReviewPage'];
