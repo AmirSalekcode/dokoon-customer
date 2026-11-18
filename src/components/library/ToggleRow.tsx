@@ -4,11 +4,13 @@ export interface ToggleRowProps {
   title: string;
   sub?: string;
   on: boolean;
+  /** Locked switch (e.g. essential cookies). */
+  disabled?: boolean;
   onFlip?: () => void;
 }
 
 /** Row with an on/off switch (settings). */
-export function ToggleRow({ title, sub, on, onFlip }: ToggleRowProps) {
+export function ToggleRow({ title, sub, on, disabled, onFlip }: ToggleRowProps) {
   return (
     <div className={s.r}>
       <span className={s.tx}>
@@ -21,6 +23,7 @@ export function ToggleRow({ title, sub, on, onFlip }: ToggleRowProps) {
         role="switch"
         aria-checked={on}
         aria-label={title}
+        disabled={disabled}
         onClick={onFlip}
       />
     </div>
