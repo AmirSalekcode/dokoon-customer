@@ -43,6 +43,25 @@ describe('CI workflow (.github/workflows/ci.yml)', () => {
     expect(ci().permissions).toEqual({ contents: 'read' });
   });
 
+  it('gitleaks job may read PR commits (and nothing else extra)', () => {
+    expect(ci().jobs.gitleaks.permissions).toEqual({ contents: 'read', 'pull-requests': 'read' });
+  });
+
+  it('uses current (Node 24) majors of the official actions', () => {
+    const min: Record<string, number> = {
+      'actions/checkout': 5,
+      'actions/setup-node': 5,
+      'actions/setup-java': 5,
+      'actions/upload-artifact': 5,
+    };
+    for (const w of [ci(), wf('.github/workflows/cd.yml')]) {
+      for (const u of uses(w)) {
+        const [name, ver] = u.split('@');
+        if (min[name]) expect(Number(ver.replace(/^v/, '')), u).toBeGreaterThanOrEqual(min[name]);
+      }
+    }
+  });
+
   it('has quality, e2e, storybook, docker+k6, android and secret-scan jobs', () => {
     expect(Object.keys(ci().jobs)).toEqual(
       expect.arrayContaining(['quality', 'e2e', 'storybook', 'docker-perf', 'android', 'gitleaks']),
