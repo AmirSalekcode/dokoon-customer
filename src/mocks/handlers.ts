@@ -134,10 +134,36 @@ export const handlers = [
     await latency();
     return HttpResponse.json(D.home);
   }),
-  http.get(p('/restaurants'), async () => {
+  http.get(p('/restaurants'), async ({ request }) => {
     await latency();
-    return HttpResponse.json({ items: D.restaurantCards, nextCursor: null });
+    const q = new URL(request.url).searchParams;
+    const category = q.get('category');
+    const tags = q.getAll('tags');
+    const minRating = Number(q.get('minRating') ?? 0);
+    let items = D.restaurantCards.filter((r) => {
+      const meta = D.restaurantMeta[r.id!];
+      if (category && meta.category !== category) return false;
+      if (q.get('openNow') === 'true' && !r.open) return false;
+      if (q.get('hasDiscount') === 'true' && !r.offer) return false;
+      if (minRating && (r.rating ?? 0) < minRating) return false;
+      if (tags.length && !tags.some((t) => meta.tags.includes(t))) return false;
+      return true;
+    });
+    const sort = q.get('sort');
+    const by: Record<string, (r: (typeof items)[number]) => number> = {
+      rating: (r) => -(r.rating ?? 0),
+      eta: (r) => r.etaMin ?? 0,
+      fee: (r) => r.fee ?? 0,
+      distance: (r) => r.distanceKm ?? 0,
+    };
+    if (sort && by[sort]) items = [...items].sort((a, b) => by[sort](a) - by[sort](b));
+    return HttpResponse.json({ items, nextCursor: null });
   }),
+  http.put(p('/favorites/restaurants/:id'), () => new HttpResponse(null, { status: 204 })),
+  http.delete(p('/favorites/restaurants/:id'), () => new HttpResponse(null, { status: 204 })),
+  http.get(p('/favorites/restaurants'), () =>
+    HttpResponse.json(D.restaurantCards.filter((r) => r.isFavorite)),
+  ),
   http.get(p('/restaurants/:id'), ({ params }) => {
     const r = D.restaurants.find((x) => x.id === params.id);
     return r ? HttpResponse.json(r) : err(404, 'NOT_FOUND', 'رستوران پیدا نشد');

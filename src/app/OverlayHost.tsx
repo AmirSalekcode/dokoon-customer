@@ -4,7 +4,6 @@ import { displayName } from '@/auth/flow';
 import { useCart } from '@/cart/cart';
 import { Dialog } from '@/components/base/Dialog';
 import { ChoiceSheet } from '@/components/library/ChoiceSheet';
-import { FilterSheet } from '@/components/library/FilterSheet';
 import { MenuDrawer } from '@/components/library/MenuDrawer';
 import { ReviewSheet } from '@/components/library/ReviewSheet';
 import { ICONS } from '@/components/primitives/Icon';
@@ -12,6 +11,7 @@ import { formatPhone, toFaDigits } from '@/lib/format';
 import { useNav } from '@/nav/nav';
 import { toast } from '@/ui/toast';
 import { FoodOverlay } from './FoodOverlay';
+import { FilterOverlay } from './FilterOverlay';
 
 const STAR_LABELS = ['خیلی بد', 'بد', 'معمولی', 'خوب', 'عالی'];
 
@@ -169,44 +169,6 @@ function ReviewOverlay({ foodName }: { foodName: string }) {
         closeOverlay();
         toast('نظر شما ثبت شد', 'success');
       }}
-      onClose={closeOverlay}
-    />
-  );
-}
-
-function FilterOverlay() {
-  const { closeOverlay } = useNav.getState();
-  const [sort, setSort] = useState('recommended');
-  const [open, setOpen] = useState(false);
-  const sorts = [
-    ['recommended', 'پیشنهادی'],
-    ['rating', 'بیشترین امتیاز'],
-    ['eta', 'سریع‌ترین'],
-    ['fee', 'کمترین هزینه ارسال'],
-  ];
-  return (
-    <FilterSheet
-      sort={sorts.map(([id, label]) => ({ id, label, selected: sort === id, onPick: () => setSort(id) }))}
-      toggles={[
-        {
-          id: 'open',
-          title: 'فقط باز',
-          sub: 'رستوران‌هایی که الان سفارش می‌گیرند',
-          on: open,
-          onFlip: () => setOpen((v) => !v),
-        },
-      ]}
-      tags={[
-        { id: 'kebab', label: 'کباب', art: 'dk-kebab' },
-        { id: 'pizza', label: 'پیتزا', art: 'dk-pizza' },
-      ]}
-      ratings={[{ id: '4', label: '۴+' }]}
-      countText="نمایش نتایج"
-      onClear={() => {
-        setSort('recommended');
-        setOpen(false);
-      }}
-      onApply={closeOverlay}
       onClose={closeOverlay}
     />
   );
