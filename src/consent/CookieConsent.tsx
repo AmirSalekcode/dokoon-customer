@@ -1,8 +1,43 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNav } from '@/nav/nav';
 import { ToggleRow } from '@/components/library/ToggleRow';
 import { useConsent } from './consent';
 import s from './CookieConsent.module.css';
+
+/** Max wait for the web font before showing the popup anyway (slow or blocked font). */
+export const FONT_WAIT_MS = 3000;
+
+/** The weights the popup uses (body 400, title/buttons 700). */
+const FONT_SPECS = ['400 14px "Yekan Bakh"', '700 16px "Yekan Bakh"'];
+
+type FontSet = { load?: (spec: string) => Promise<unknown> } | undefined;
+const fontSet = (): FontSet =>
+  typeof document !== 'undefined' ? (document as { fonts?: FontSet }).fonts : undefined;
+
+/**
+ * True once the popup's web font is in place. The popup is anchored to the bottom, so rendering it
+ * with the fallback font and swapping to Yekan Bakh later made it jump (CLS ≈ 0.06–0.08 on first visits).
+ * Browsers load fonts lazily, so `document.fonts.ready` can resolve before anything started loading;
+ * we request the faces explicitly instead. Appearing after the load causes no layout shift.
+ */
+function useFontsReady(): boolean {
+  // Only skip waiting when the Font Loading API is missing. fonts.check() is not trusted: Chrome
+  // returns true before a lazily-loaded face has arrived. load() resolves at once when cached.
+  const [ready, setReady] = useState(() => !fontSet()?.load);
+  useEffect(() => {
+    if (ready) return;
+    let alive = true;
+    const done = () => alive && setReady(true);
+    const timer = setTimeout(done, FONT_WAIT_MS);
+    const f = fontSet();
+    Promise.all(FONT_SPECS.map((spec) => f!.load!(spec))).then(done, done);
+    return () => {
+      alive = false;
+      clearTimeout(timer);
+    };
+  }, [ready]);
+  return ready;
+}
 
 /**
  * Cookie consent popup (bottom card, non-blocking so the app stays usable).
@@ -13,7 +48,8 @@ export function CookieConsent() {
   const push = useNav((st) => st.push);
   const [details, setDetails] = useState(false);
   const [analytics, setAnalytics] = useState(false);
-  if (decided) return null;
+  const fontsReady = useFontsReady();
+  if (decided || !fontsReady) return null;
 
   return (
     <div className={s.wrap} role="dialog" aria-modal="false" aria-label="رضایت استفاده از کوکی">

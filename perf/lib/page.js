@@ -38,17 +38,16 @@ export function pageOptions(extra = {}) {
   };
 }
 
+// Must be a string: k6's addInitScript silently ignores functions (verified with a probe).
+const CONSENT_SEED =
+  "try { localStorage.setItem('dk-consent', JSON.stringify({ version: 1, analytics: false, decidedAt: '2026-11-18' })); } catch (e) {}";
+
 const visible = (screen) => `main[data-screen="${screen}"]:not([hidden])`;
 
 /** Open the app at 390×844 with cookie consent already decided (the popup is tested separately). */
 export async function openApp(browser) {
   const context = await browser.newContext({ viewport: { width: 390, height: 844 }, locale: 'fa-IR' });
-  await context.addInitScript(() => {
-    localStorage.setItem(
-      'dk-consent',
-      JSON.stringify({ version: 1, analytics: false, decidedAt: '2026-11-18' }),
-    );
-  });
+  await context.addInitScript(CONSENT_SEED);
   const page = await context.newPage();
   await page.goto(BASE_URL, { waitUntil: 'networkidle' });
   await page

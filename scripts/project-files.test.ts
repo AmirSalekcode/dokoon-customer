@@ -1,3 +1,4 @@
+import { execSync } from 'node:child_process';
 import { existsSync, readFileSync } from 'node:fs';
 import path from 'node:path';
 import { describe, expect, it } from 'vitest';
@@ -77,5 +78,15 @@ describe('.dockerignore', () => {
     ]) {
       expect(d, p).toContain(p);
     }
+  });
+});
+
+describe('tracked files', () => {
+  it('no generated output is tracked (k6 results, builds, test reports)', () => {
+    const tracked = execSync('git ls-files', { cwd: root }).toString().split('\n');
+    const generated = tracked.filter((f) =>
+      /^(perf\/results|dist|dev-dist|storybook-static|test-results|playwright-report|coverage)\//.test(f),
+    );
+    expect(generated).toEqual([]);
   });
 });
