@@ -1,4 +1,8 @@
 .page {
+  /* Fill the screen so the cart bar sits at the bottom even when the menu is short. */
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
   padding-bottom: calc(var(--sp-8) + env(safe-area-inset-bottom));
 }
 .infoBtn {
@@ -58,5 +62,15 @@
   position: sticky;
   bottom: 0;
   z-index: var(--z-sticky);
-  margin-top: var(--sp-4);
+  margin-top: auto;
+  padding-top: var(--sp-4);
+}
+
+/* Tablet layout (D-88): food cards in columns. */
+@media (min-width: 600px) {
+  .foods {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: var(--sp-4);
+  }
 }

@@ -183,3 +183,47 @@
 .page {
   padding-bottom: calc(var(--h-bottomnav) + var(--sp-8) + env(safe-area-inset-bottom));
 }
+
+/* Tablet layout (D-88): as many restaurant columns as fit; categories centered. */
+@media (min-width: 600px) {
+  .grid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    justify-content: stretch;
+    gap: var(--sp-4);
+  }
+  .cats {
+    justify-content: center;
+    gap: var(--sp-8);
+  }
+}
+@media (min-width: 600px) {
+  /* Wide, shorter banner; the art scales with the banner height instead of its width. */
+  .hv {
+    /* full content width; height 3/8 of it, at most 340px (a max-height with aspect-ratio would
+       shrink the width instead) */
+    aspect-ratio: auto;
+    height: min(340px, calc((min(100vw, var(--content-wide)) - 2 * var(--gutter)) * 0.375));
+  }
+  .slide {
+    padding: var(--sp-8);
+  }
+  .slide h2 {
+    max-width: 46%;
+    font-size: var(--fs-24);
+  }
+  .slide p {
+    max-width: 44%;
+    font-size: var(--fs-15);
+  }
+  .art {
+    left: 4%;
+    bottom: -10%;
+    width: auto;
+    height: 112%;
+  }
+  .slide::before {
+    left: 0;
+    width: auto;
+    height: 150%;
+  }
+}

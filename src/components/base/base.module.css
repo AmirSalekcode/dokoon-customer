@@ -256,3 +256,16 @@
 .toast_error {
   background: var(--danger);
 }
+
+/* Tablet layout (D-88): sheets and dialogs stay a comfortable width, centered. */
+@media (min-width: 600px) {
+  .sheet {
+    inset-inline: max(0px, calc((100% - var(--sheet-max)) / 2));
+  }
+  .drawer {
+    width: min(86%, 380px);
+  }
+  .dialog {
+    inset-inline: max(var(--sp-6), calc((100% - var(--dialog-max)) / 2));
+  }
+}
