@@ -28,14 +28,15 @@ beforeEach(() => {
 const ready = () => screen.findByRole('heading', { level: 1, name: 'کباب‌سرای نقش‌جهان' });
 
 describe('<RestaurantScreen /> — spec §2 restaurant', () => {
-  it('header shows rating, ETA (display only), delivery fee, minimum order and hours', async () => {
+  it('header shows rating, ETA (display only), delivery fee and hours — no minimum order', async () => {
     render(<RestaurantScreen route={route('naghsh')} />);
     expect(screen.getByRole('status', { name: 'در حال بارگذاری' })).toBeInTheDocument();
     const header = await screen.findByRole('region', { name: 'کباب‌سرای نقش‌جهان' });
     expect(header).toHaveTextContent('۴٫۸');
     expect(header).toHaveTextContent('۲۵–۳۵');
     expect(header).toHaveTextContent('۴۵٬۰۰۰');
-    expect(header).toHaveTextContent('حداقل سفارش: ۱۵۰٬۰۰۰ تومان');
+    // No minimum order (owner decision D-89).
+    expect(header).not.toHaveTextContent('حداقل سفارش');
     expect(header).toHaveTextContent('۱۱:۰۰ تا ۲۳:۰۰');
     expect(header).toHaveTextContent('باز');
   });

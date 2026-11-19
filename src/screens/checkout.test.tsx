@@ -47,6 +47,22 @@ beforeEach(() => {
 const submit = () => screen.getByRole('button', { name: /^ثبت سفارش/ });
 
 describe('<CheckoutScreen /> — spec §3 checkout', () => {
+  it('no minimum order: one cheeseburger can be ordered (owner decision D-89)', async () => {
+    await withAddress();
+    useCart.getState().clear();
+    useCart
+      .getState()
+      .add(
+        { id: 'burger', name: 'برگر لاین' },
+        { foodId: 'b1', title: 'چیزبرگر دوبل', unitPrice: 260000, options: [] },
+      );
+    render(<CheckoutScreen route={route} />);
+    await waitFor(() => expect(submit()).toBeEnabled());
+    expect(screen.queryByText(/حداقل سفارش/)).toBeNull();
+    await userEvent.click(submit());
+    await waitFor(() => expect(top().screen).toBe('gateway'));
+  });
+
   it('no address yet → «افزودن آدرس» opens addaddr; submit disabled', async () => {
     render(<CheckoutScreen route={route} />);
     expect(await screen.findByText('هنوز آدرسی ثبت نکرده‌اید')).toBeInTheDocument();

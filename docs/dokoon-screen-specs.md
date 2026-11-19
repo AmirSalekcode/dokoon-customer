@@ -47,7 +47,7 @@
 - بنر + متن (`campText`) + رستوران‌های شرکت‌کننده ← `restaurant`.
 ### `restaurant`
 - ⟵ Home/search/favs/offers/track(تکرار سفارش). ⟶ `restinfo`، شیت غذا، `cart`.
-- RestaurantHeader (کاور، بازگشت، علاقه‌مندی، اشتراک)، اطلاعات: امتیاز، زمان ارسال (`etaMin–etaMax`، فقط نمایش)، هزینه‌ی ارسال (`fee`)، حداقل سفارش (`minOrder`)، ساعت کاری؛ دسته‌ها (چسبان)؛ FoodCardها؛ CartSummary چسبان وقتی سبد غیرخالی.
+- RestaurantHeader (کاور، بازگشت، علاقه‌مندی، اشتراک)، اطلاعات: امتیاز، زمان ارسال (`etaMin–etaMax`، فقط نمایش)، هزینه‌ی ارسال (`fee`)، ساعت کاری (بدون حداقل سفارش — D-89)؛ دسته‌ها (چسبان)؛ FoodCardها؛ CartSummary چسبان وقتی سبد غیرخالی.
 - رستوران بسته: کارت‌ها غیرفعال + «فردا ساعت … باز می‌شود»؛ افزودن به سبد ممنوع.
 - منوی خالی (`hasMenu:false`): EmptyState.
 ### شیت غذا (`overlay food` — FoodDetails)
@@ -58,7 +58,7 @@
 
 ## ۳. سبد و ثبت سفارش
 ### `cart` (تب مرکز)
-- ⟵ BottomNav، CartSummary، Header. CartItemRow (استپر، حذف با رسیدن به صفر)، یادداشت سبد (تنها یادداشت)، PromoCodeInput (DOKOON10, FIRST20: وضعیت ok/err + پیام)، PriceSummary (جمع غذا، ارسال، تخفیف، جمع کل). کمتر از `minOrder`: دکمه غیرفعال + «تا حداقل سفارش N تومان مانده». خالی: EmptyState + دکمه‌ی «رفتن به رستوران‌ها».
+- ⟵ BottomNav، CartSummary، Header. CartItemRow (استپر، حذف با رسیدن به صفر)، یادداشت سبد (تنها یادداشت)، PromoCodeInput (DOKOON10, FIRST20: وضعیت ok/err + پیام)، PriceSummary (جمع غذا، ارسال، تخفیف، جمع کل). حداقل سفارش وجود ندارد (D-89): هر مبلغی قابل سفارش است؛ فقط غذای ناموجود دکمه را غیرفعال می‌کند. خالی: EmptyState + دکمه‌ی «رفتن به رستوران‌ها».
 ### `checkout`
 - گیرنده: «برای خودم / برای شخص دیگر» (نام و موبایل اجباری برای دیگری)؛ آدرس (SelectCard، افزودن ← `addaddr`، تغییر ← overlay address)؛ کارت **زمان تحویل** (اطلاعاتی، بدون انتخاب: «ارسال حدود X تا Y دقیقه‌ی دیگر»، از `etaMin/etaMax`)؛ پرداخت: «آنلاین» یا «نقدی هنگام تحویل» (نقدی فقط اگر `allowCash`)؛ خلاصه‌ی سفارش با یادداشت.
 - «ثبت و پرداخت»: آنلاین ← `gateway`؛ نقدی ← ثبت مستقیم ← `paid`. باید تعریف شود: قفل قیمت هنگام ثبت، رفتار تغییر قیمت/ناموجودی، idempotency.
@@ -102,7 +102,7 @@ _پیاده‌سازی (KAN-39):_ ارسال پیام پشتیبانی و `ratea
 _پیاده‌سازی (KAN-40):_ `about` متن را از `GET /content/about` و نسخه‌ی اپ را نشان می‌دهد و به `legal` (terms|privacy)، `social` و `rateapp` لینک دارد؛ `legal` با پارامتر `kind` باز می‌شود و بخش‌ها (خطوط «## ») آکاردئونی‌اند با برچسب «متن پیش‌نویس». `apply` بدون ورود به `POST /partner-requests` می‌فرستد (فیلدهای اضافی در `extra`، شهر پیش‌فرض = شهر کاربر، شماره ۰۹ و ۱۱ رقمی با نرمال‌سازی ارقام) و پس از ثبت پیام موفقیت و «بازگشت». `soon` صفحه‌ی عمومی با `title`/`text` اختیاری (D-80).
 
 ## ۷. مدل داده‌ی حداقلی (برای قرارداد API)
-- **Restaurant**: id, name, sub, type, tags[], addr, km, rating, reviews, etaMin, etaMax *(توسط رستوران‌دار)*, fee, minOrder, open, opensNext, hours, openH/closeH, cover, art, offer, disc, badge, hasMenu, cats[], allowExtras, allowCash، (`allowScheduled`: منسوخ)
+- **Restaurant**: id, name, sub, type, tags[], addr, km, rating, reviews, etaMin, etaMax *(توسط رستوران‌دار)*, fee, ~~minOrder~~ (حذف، D-89), open, opensNext, hours, openH/closeH, cover, art, offer, disc, badge, hasMenu, cats[], allowExtras, allowCash، (`allowScheduled`: منسوخ)
 - **Category**: id, title, art, foods[]. **Food**: id, title, price, old, desc, options[], rating, reviews.
 - **Order**: id, no, rid, status(0–4 / canceled), pay('cash'|'online'), placed, lines[{foodId, qty, unit, opts}], address، recipient{name,phone}، note، totals{items, fee, discount, total}.
 - **User/Address/Notification/Promo/Review**: مطابق صفحات بالا.
@@ -112,3 +112,7 @@ loading · empty · error(retry) · offline · نشست منقضی(۴۰۱) · غ
 
 ## ۹. موارد باز (قبل از کد)
 کیف پول (تصمیم باز) · نقشه‌ی زنده‌ی پیک · علاقه‌مندی غذا · نظرات رستوران · دسترسی مهمان · سیاست لغو/بازپرداخت · push در ایران (FCM/جایگزین) · ارائه‌دهنده‌ی نقشه (نشان/بلد) و تم تیره‌ی آن · درگاه پرداخت واقعی · داده‌ی واقعی (شبکه‌ها، تلفن پشتیبانی، آدرس رستوران‌ها، کد دعوت، متن حقوقی).
+
+## تغییرات (changelog)
+- **۱۴۰۵/۰۸/۲۹ (2026-11-20) — D-89:** حداقل سفارش حذف شد (تصمیم مالک). کاربر می‌تواند هر تعداد غذا، حتی یک عدد، از هر رستوران سفارش دهد. از سبد، تکمیل سفارش، سربرگ رستوران و اطلاعات رستوران برداشته شد؛ پیشنهاد حذف `minOrder`/`belowMinBy` از قرارداد در `docs/contract-notes.md` (بند ۱۵).
+

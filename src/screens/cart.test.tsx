@@ -50,7 +50,7 @@ describe('<CartScreen /> — spec §3 cart', () => {
     expect(screen.getByRole('heading', { name: 'سبد خرید شما خالی است' })).toBeInTheDocument();
   });
 
-  it('below the minimum order: disabled CTA + «تا حداقل سفارش … مانده»', async () => {
+  it('no minimum order: a single cheeseburger can go to checkout (owner decision D-89)', async () => {
     useCart
       .getState()
       .add(
@@ -58,9 +58,11 @@ describe('<CartScreen /> — spec §3 cart', () => {
         { foodId: 'b1', title: 'چیزبرگر دوبل', unitPrice: 260000, options: [] },
       );
     render(<CartScreen route={route} />);
-    expect(await screen.findByText('تا حداقل سفارش ۴۰٬۰۰۰ تومان مانده')).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /ادامه و تکمیل سفارش/ })).toBeDisabled();
-    expect(await summary()).toHaveTextContent('هزینه‌ی ارسالرایگان');
+    const s = await summary();
+    await waitFor(() => expect(s).toHaveTextContent('مبلغ قابل پرداخت۲۶۰٬۰۰۰ تومان'));
+    expect(s).toHaveTextContent('هزینه‌ی ارسالرایگان');
+    await waitFor(() => expect(screen.getByRole('button', { name: /ادامه و تکمیل سفارش/ })).toBeEnabled());
+    expect(screen.queryByText(/حداقل سفارش/)).toBeNull();
   });
 
   it('promo code: valid → discount row; invalid → error message', async () => {

@@ -37,13 +37,8 @@ export function CartScreen(_: ScreenProps) {
   }
 
   const off = unavailableFoods(quote);
-  const below = quote?.belowMinBy ?? 0;
-  const blocked =
-    off.size > 0
-      ? 'غذاهای ناموجود را از سبد حذف کنید'
-      : below > 0
-        ? `تا حداقل سفارش ${formatMoney(below)} مانده`
-        : '';
+  // No minimum order (owner decision D-89): only unavailable foods block checkout.
+  const blocked = off.size > 0 ? 'غذاهای ناموجود را از سبد حذف کنید' : '';
   const canGo = !!quote && !loading && !error && !blocked;
   const total = quote?.total ?? cartItemsTotal(cart);
   const promo = quote?.promo;

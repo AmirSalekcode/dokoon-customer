@@ -39,7 +39,6 @@ export function RestInfoScreen({ route }: ScreenProps) {
             : '—',
       },
       { label: 'هزینه‌ی ارسال', value: r.fee ? formatMoney(r.fee) : 'رایگان' },
-      { label: 'حداقل سفارش', value: r.minOrder ? formatMoney(r.minOrder) : 'ندارد' },
       { label: 'روش پرداخت', value: r.allowCash ? 'آنلاین و نقدی هنگام تحویل' : 'فقط آنلاین' },
     ];
     return (
