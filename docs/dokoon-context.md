@@ -403,7 +403,7 @@ The codes were estimated from the reference image and can be refined after the f
 | Background | `background` | `#FBF0E6` | Cream background of every screen |
 | Surface | `surface` | `#FFFFFF` | Cards, search bar, icon buttons, bottom bar |
 | Ink | `ink` | `#1F1A17` | Headings, item names, prices |
-| Secondary text | `inkMuted` | `#7A6E66` | Subtitles, rating counts, placeholders |
+| Secondary text | `inkMuted` | `#73675F` | Subtitles, rating counts, placeholders |
 | Divider | `line` | `#F0DFD0` | Soft dividers, input borders |
 | Badge red | `badgeRed` | `#C8281E` | "پرفروش" and "٪ تخفیف" badges, round discount sticker |
 | Badge amber / star | `accentAmber` | `#F5B32F` | "محبوب" badge, rating stars |
@@ -497,7 +497,7 @@ class SfColors {
   static const background = Color(0xFFFBF0E6);
   static const surface = Color(0xFFFFFFFF);
   static const ink = Color(0xFF1F1A17);
-  static const inkMuted = Color(0xFF7A6E66);
+  static const inkMuted = Color(0xFF73675F);
   static const line = Color(0xFFF0DFD0);
   static const badgeRed = Color(0xFFC8281E);
   static const accentAmber = Color(0xFFF5B32F);
@@ -552,7 +552,7 @@ You are the lead designer and developer of the "Dokoon" (دکون) app (v1: orde
 restaurants of each city).
 Follow the design system below exactly and do not add any colors or fonts of your own.
 Colors: primary #E4501E, primaryPressed #C2410C, primarySoft #FCE3D0, heroDeep #8B2313,
-background #FBF0E6, surface #FFFFFF, ink #1F1A17, inkMuted #7A6E66, line #F0DFD0,
+background #FBF0E6, surface #FFFFFF, ink #1F1A17, inkMuted #73675F, line #F0DFD0,
 badgeRed #C8281E, accentAmber #F5B32F, success #16A34A, danger #DC2626.
 Font: Yekan Bakh only, as a local file, no CDN.
 Style: warm and appetizing, cream background, large cut-out food photos, big rounded
