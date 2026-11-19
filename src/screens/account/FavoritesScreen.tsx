@@ -33,7 +33,7 @@ export function FavoritesScreen({ route }: ScreenProps) {
         />
       );
     return (
-      <div className={s.list}>
+      <div className={`${s.list} ${s.cards}`}>
         {items.map((r) => (
           <RestaurantCard
             key={r.id}

@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { useNav } from '@/nav/nav';
-import { screenFor } from '@/screens/registry';
+import { layoutFor, screenFor } from '@/screens/registry';
 import s from './app.module.css';
 
 /**
@@ -31,6 +31,7 @@ export function ScreenHost() {
             className={s.screen}
             data-route-key={r.key}
             data-screen={r.screen}
+            data-layout={layoutFor(r.screen)}
             hidden={!isTop}
             inert={!isTop}
             tabIndex={-1}

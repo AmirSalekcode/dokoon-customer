@@ -188,3 +188,20 @@
   color: var(--pr2);
   font-weight: var(--fw-bold);
 }
+
+/* Tablet layout (D-88): the art follows the cover height instead of its (much larger) width. */
+@media (min-width: 600px) {
+  .cv {
+    height: 280px;
+  }
+  .art {
+    left: 6%;
+    bottom: 48px;
+    width: auto;
+    height: 72%;
+  }
+  .cv::before {
+    width: auto;
+    height: 130%;
+  }
+}

@@ -23,3 +23,16 @@
   z-index: var(--z-nav);
   animation: rise 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) both;
 }
+
+/* Tablet layout (D-88): center the content column; the screen background still fills the width. */
+@media (min-width: 600px) {
+  .screen {
+    padding-inline: max(0px, calc((100% - var(--content-narrow)) / 2));
+  }
+  .screen[data-layout='wide'] {
+    padding-inline: max(0px, calc((100% - var(--content-wide)) / 2));
+  }
+  .nav {
+    inset-inline: max(var(--gutter), calc((100% - var(--float-max)) / 2));
+  }
+}

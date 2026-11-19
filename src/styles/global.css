@@ -46,11 +46,11 @@ select {
   outline-offset: 2px;
 }
 
-/* App frame: fluid mobile layout, capped width on desktop, base design frame 390×844. */
+/* App frame: fills the screen. Phones use the 390×844-based layout; from 600px wide the tablet
+   layout applies (wider gutters, content widths below, more grid columns) — decision D-88. */
 .app-frame {
   position: relative;
   width: 100%;
-  max-width: 430px;
   height: 100%;
   margin: 0 auto;
   overflow: hidden;

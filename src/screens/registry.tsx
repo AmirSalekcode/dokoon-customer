@@ -94,6 +94,19 @@ const SCREENS: Record<ScreenId, ComponentType<ScreenProps>> = {
 /** All screens (each must have a k6 script in perf/pages/<id>.js). */
 export const IMPLEMENTED_SCREENS = Object.keys(SCREENS) as ScreenId[];
 
+/** Tablet layout (D-88): list/grid screens get the wide column; all others a readable narrow one. */
+const WIDE_SCREENS = new Set<ScreenId>([
+  'home',
+  'search',
+  'restaurants',
+  'offers',
+  'campaign',
+  'restaurant',
+  'favs',
+  'orders',
+]);
+export const layoutFor = (id: ScreenId): 'wide' | 'narrow' => (WIDE_SCREENS.has(id) ? 'wide' : 'narrow');
+
 export function screenFor(id: ScreenId): ComponentType<ScreenProps> {
   return SCREENS[id];
 }

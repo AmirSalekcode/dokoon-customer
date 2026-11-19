@@ -50,7 +50,7 @@ export function OrdersScreen(_: ScreenProps) {
         />
       );
     return (
-      <div className={s.list}>
+      <div className={`${s.list} ${s.orderGrid}`}>
         {items.map((o) => {
           const delivered = o.status === 'DELIVERED';
           const active = !isFinal(o);

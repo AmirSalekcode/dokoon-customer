@@ -1,7 +1,7 @@
 import { expect, test, type Page } from '@playwright/test';
 
 /**
- * Nothing may spill outside the app frame, from small Android phones (320px) to tablets.
+ * Nothing may spill outside the app frame, from small Android phones (320px) to tablets (iPad Pro).
  * Content inside horizontal scrollers (chip rows, card rows) is allowed to extend.
  */
 const VIEWPORTS: [number, number][] = [
@@ -11,6 +11,8 @@ const VIEWPORTS: [number, number][] = [
   [430, 932],
   [768, 1024],
   [844, 390],
+  [1024, 1366],
+  [1180, 820],
 ];
 const TABS = new Set(['home', 'restaurants', 'offers', 'search', 'cart', 'account']);
 const SCREENS: [string, Record<string, string>?][] = [

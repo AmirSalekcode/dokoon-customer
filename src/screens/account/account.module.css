@@ -146,3 +146,32 @@
   flex-wrap: wrap;
   gap: var(--sp-2);
 }
+
+/* Favorite restaurants: same grid as the restaurants tab. */
+.cards {
+  --card-w: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 176px));
+  justify-content: center;
+  gap: var(--sp-2);
+}
+/* Tablet layout (D-88) */
+@media (min-width: 600px) {
+  .cards {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    justify-content: stretch;
+    gap: var(--sp-4);
+  }
+  .orderGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    align-items: start;
+    gap: var(--sp-4);
+  }
+}
+@media (min-width: 600px) {
+  .tabs {
+    width: min(480px, calc(100% - 2 * var(--gutter)));
+    margin-inline: auto;
+  }
+}

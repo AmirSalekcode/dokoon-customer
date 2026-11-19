@@ -108,3 +108,16 @@
   font-size: var(--fs-15);
   line-height: 1.9;
 }
+
+/* Tablet layout (D-88): as many restaurant columns as fit; categories centered. */
+@media (min-width: 600px) {
+  .grid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    justify-content: stretch;
+    gap: var(--sp-4);
+  }
+  .cats {
+    justify-content: center;
+    gap: var(--sp-8);
+  }
+}

@@ -26,3 +26,19 @@
 :root.ios {
   --field-min: 16px;
 }
+
+/* Tablet layout (≥ 600px wide, D-88). Phones keep the base values. */
+:root {
+  /* readable column for forms/text screens; wide column for list/grid screens */
+  --content-narrow: 640px;
+  --content-wide: 1120px;
+  /* floating bottom UI (nav, cookie card) and sheets/dialogs on tablets */
+  --float-max: 560px;
+  --sheet-max: 600px;
+  --dialog-max: 440px;
+}
+@media (min-width: 600px) {
+  :root {
+    --gutter: 24px;
+  }
+}
