@@ -14,9 +14,15 @@ React 19 + TypeScript + Vite 8, PWA (vite-plugin-pwa / Workbox) and Capacitor 8 
 | `npm run storybook` | Storybook on :6006 — 5 base + 39 library components, light/dark toolbar |
 | `npm run api:gen` | Regenerate `src/api/schema.d.ts` from `contract/dokoon-openapi.yaml` |
 | `npm run mock:prism` | Contract-only mock (Prism) on :4010, alternative to MSW |
+| `npm run lighthouse` | Lighthouse mobile on the URL entry points of a running `preview:perf` (budget: Performance & Accessibility ≥ 90); reports in `perf/results/` |
 | `npm run android:debug` | Mock build → `cap sync` → `android/app/build/outputs/apk/debug/app-debug.apk` |
 
 Android build needs `JAVA_HOME` (JDK 21) and `ANDROID_HOME` (Android SDK, platform 35).
+
+Store release: push a tag `vX.Y.Z` on main. `cd.yml` refuses to build without the four `ANDROID_KEY*`
+secrets and `vars.VITE_API_BASE_URL`, sets `versionCode = X*10000 + Y*100 + Z`, signs, runs
+`apksigner verify` and attaches `app-release.apk` to the GitHub release. Everything else needed
+before a public release is tracked in `docs/release-checklist.md`.
 
 ## Layout
 
