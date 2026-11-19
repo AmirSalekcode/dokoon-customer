@@ -17,3 +17,12 @@
   --ring-primary-0: color-mix(in srgb, var(--primary) 0%, transparent);
   --focus-ring: 3px solid var(--primary);
 }
+
+/* Minimum text size for form fields. iOS Safari zooms the page when a field under 16px is focused,
+   so on iPhone/iPad (html.ios, set in index.html) fields are at least 16px. Elsewhere: design sizes. */
+:root {
+  --field-min: 0px;
+}
+:root.ios {
+  --field-min: 16px;
+}
