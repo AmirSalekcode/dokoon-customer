@@ -1,5 +1,7 @@
 .rc {
-  width: 176px;
+  /* 176px in horizontal card rows; grids set --card-w: 100% so cards fit narrow columns. */
+  width: var(--card-w, 176px);
+  min-width: 0;
   min-height: 256px;
   overflow: hidden;
   padding: var(--sp-2) var(--sp-2) var(--sp-3);
@@ -99,11 +101,17 @@
 }
 .rm {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
+  column-gap: var(--sp-2);
   margin: var(--sp-2) var(--sp-1) 0;
   font-size: var(--fs-12);
   color: var(--mu);
   line-height: 1.6;
+}
+/* Keep «۲۵–۳۵ دقیقه» and «۴۵٬۰۰۰ تومان» whole; in narrow cards the pair wraps as two lines. */
+.rm > * {
+  white-space: nowrap;
 }
 .rm strong {
   color: var(--ink);
