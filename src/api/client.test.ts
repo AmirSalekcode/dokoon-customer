@@ -36,7 +36,6 @@ describe('generated API client against mock server', () => {
     });
     expect(data?.itemsTotal).toBe(285000);
     expect(data?.discount).toBe(28500);
-    expect(data?.belowMinBy).toBe(0);
     expect(data?.payMethods).toEqual(['online', 'cash']);
   });
 });

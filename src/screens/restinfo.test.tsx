@@ -28,7 +28,8 @@ describe('<RestInfoScreen /> — spec §2 restinfo', () => {
     const drow = (label: string) => within(delivery).getByText(label).closest('div')!;
     expect(drow('زمان ارسال')).toHaveTextContent('۲۵ تا ۳۵ دقیقه');
     expect(drow('هزینه‌ی ارسال')).toHaveTextContent('۴۵٬۰۰۰ تومان');
-    expect(drow('حداقل سفارش')).toHaveTextContent('۱۵۰٬۰۰۰ تومان');
+    // No minimum order (owner decision D-89).
+    expect(delivery).not.toHaveTextContent('حداقل سفارش');
     expect(drow('روش پرداخت')).toHaveTextContent('آنلاین و نقدی هنگام تحویل');
   });
 

@@ -13,7 +13,6 @@ export interface RestaurantHeaderData {
   reviews?: string;
   eta?: string;
   feeShort?: string;
-  minOrderText?: string;
   hours?: string;
   isOpen?: boolean;
   /** e.g. «فردا ساعت ۹:۰۰» */
@@ -91,9 +90,6 @@ export function RestaurantHeader({ r, onBack, onFav, onShare }: RestaurantHeader
           </div>
         </div>
         <div className={s.rw}>
-          <span>
-            حداقل سفارش: <b>{r.minOrderText}</b>
-          </span>
           <span>
             ساعت کاری: <b>{r.hours}</b>
           </span>

@@ -40,7 +40,6 @@ export function toRestaurantHeaderVM(r: Restaurant): RestaurantHeaderData {
     cover: r.coverUrl,
     art: r.coverUrl,
     feeShort: r.fee ? formatNumber(r.fee) : 'رایگان',
-    minOrderText: r.minOrder ? `${formatNumber(r.minOrder)} تومان` : '—',
     hours: r.hours,
     opensNext: r.opensNext,
     offer: r.offer || undefined,

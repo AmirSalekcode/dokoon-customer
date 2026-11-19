@@ -147,15 +147,12 @@ function quote(draft: OrderDraft): Quote {
     ? Math.min(Math.round(itemsTotal * (draft.promoCode === 'FIRST20' ? 0.2 : 0.1)), 50000)
     : 0;
   const deliveryFee = r?.fee ?? 0;
-  const minOrder = r?.minOrder ?? 0;
   return {
     lines,
     itemsTotal,
     deliveryFee,
     discount,
     total: itemsTotal + deliveryFee - discount,
-    minOrder,
-    belowMinBy: Math.max(0, minOrder - itemsTotal),
     promo: draft.promoCode
       ? promoOk
         ? { status: 'ok', message: 'کد تخفیف اعمال شد' }
@@ -371,7 +368,6 @@ export const handlers = [
       return err(400, 'IDEMPOTENCY_KEY_REQUIRED', 'کلید یکتایی ارسال نشد');
     const draft = (await request.json()) as OrderDraft;
     const q = quote(draft);
-    if (q.belowMinBy) return err(409, 'MIN_ORDER', 'مبلغ سفارش از حداقل کمتر است');
     const online = draft.payMethod === 'online';
     const number = String(10300 + ++db.seq);
     const order: Order = {

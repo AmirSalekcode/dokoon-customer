@@ -10,4 +10,4 @@ const meta = {
 export default meta;
 type S = StoryObj<typeof meta>;
 export const Default: S = {};
-export const Disabled: S = { args: { disabled: true, label: 'تا حداقل سفارش ۳۰٬۰۰۰ تومان مانده' } };
+export const Disabled: S = { args: { disabled: true, label: 'غذاهای ناموجود را از سبد حذف کنید' } };

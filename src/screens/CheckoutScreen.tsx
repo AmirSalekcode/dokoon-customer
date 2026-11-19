@@ -65,7 +65,8 @@ export function CheckoutScreen(_: ScreenProps) {
   const pay: PayMethod = methods.includes(method) ? method : 'online';
   const phoneErr = mode === 'other' && phone && !isValidPhone(phone) ? 'شماره موبایل معتبر نیست' : undefined;
   const recipientOk = mode === 'self' || (name.trim().length > 1 && isValidPhone(phone));
-  const blocked = unavailableFoods(quote).size > 0 || (quote?.belowMinBy ?? 0) > 0;
+  // No minimum order (owner decision D-89): only unavailable foods block the order.
+  const blocked = unavailableFoods(quote).size > 0;
   const canSubmit = !!address && !!quote && !loading && !error && !blocked && recipientOk && !busy;
 
   const submit = async () => {

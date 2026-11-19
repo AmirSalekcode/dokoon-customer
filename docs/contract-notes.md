@@ -59,3 +59,9 @@ Nothing here is implemented as an invented endpoint; the frontend works around e
     `restaurants: RestaurantCard[]` in `GET /campaigns/{id}`, or accept `ids` on `GET /restaurants`.
     Also, `RestaurantPage` has no `total`, so the FilterSheet's «نمایش N رستوران» counts only the first
     page (≤ `limit`). Proposal: add `total: integer` to `RestaurantPage`.
+15. **No minimum order (owner decision D-89, 2026-11-20).** The owner removed the minimum order: any
+    amount, even a single item, can be ordered from any restaurant. The app no longer reads
+    `RestaurantCard.minOrder`, `Quote.minOrder` or `Quote.belowMinBy`, and never shows a minimum.
+    Proposal: remove those three fields and the `MIN_ORDER` error code from the contract, and make sure
+    `POST /checkout/quote` and `POST /orders` never reject an order for being below a minimum.
+
