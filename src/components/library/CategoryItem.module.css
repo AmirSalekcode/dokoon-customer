@@ -1,8 +1,10 @@
 .ci {
   display: flex;
+  flex: 0 1 72px;
   flex-direction: column;
   align-items: center;
   gap: var(--sp-2);
+  min-width: 56px;
   width: 72px;
   padding: 0;
   border: 0;
@@ -20,8 +22,10 @@
 .cc {
   display: grid;
   place-items: center;
-  width: 72px;
-  height: 72px;
+  width: 100%;
+  max-width: 72px;
+  aspect-ratio: 1;
+  height: auto;
   padding: var(--sp-3);
   overflow: hidden;
   border-radius: var(--r-circle);

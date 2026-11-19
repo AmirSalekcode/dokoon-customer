@@ -9,7 +9,12 @@
   display: flex;
   justify-content: space-between;
   gap: var(--sp-2);
+  overflow-x: auto;
   padding: var(--sp-4) var(--sp-5) var(--sp-2);
+  scrollbar-width: none;
+}
+.cats::-webkit-scrollbar {
+  display: none;
 }
 .sectionHead {
   margin: var(--sp-5) var(--gutter) var(--sp-3);
@@ -19,6 +24,7 @@
 }
 /* 2 columns of 176px cards inside the 358px content width. */
 .grid {
+  --card-w: 100%;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 176px));
   justify-content: center;
