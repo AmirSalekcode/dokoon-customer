@@ -31,7 +31,7 @@
   background: var(--sf);
   color: var(--ink);
   font: inherit;
-  font-size: var(--fs-14);
+  font-size: max(var(--fs-14), var(--field-min));
   resize: vertical;
 }
 .text:focus-visible {
@@ -182,7 +182,7 @@
   background: var(--sf);
   color: var(--ink);
   font: inherit;
-  font-size: var(--fs-15);
+  font-size: max(var(--fs-15), var(--field-min));
 }
 .select:focus-visible {
   border-color: var(--primary);
