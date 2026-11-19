@@ -54,7 +54,7 @@ export function FoodCard({ f, qtyText = '', onOpen, onAdd, onInc, onDec }: FoodC
       <div className={s.fm}>
         <div className={s.ft}>
           {f.badge ? <Badge text={f.badge} /> : null}
-          <h4 className={s.fn}>{f.name}</h4>
+          <h3 className={s.fn}>{f.name}</h3>
           {f.desc ? <p className={s.fx}>{f.desc}</p> : null}
           <Price price={f.price} old={f.oldPrice} />
           {hasQ && f.hasGroups ? (

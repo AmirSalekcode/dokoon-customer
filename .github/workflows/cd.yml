@@ -71,6 +71,23 @@ jobs:
           distribution: temurin
           java-version: '21'
           cache: gradle
+      - name: Preflight — refuse to publish an unsigned, unversioned or API-less store build
+        env:
+          ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+          VITE_API_BASE_URL: ${{ vars.VITE_API_BASE_URL }}
+          TAG: ${{ github.ref_name }}
+        run: |
+          missing=0
+          for v in ANDROID_KEYSTORE_BASE64 ANDROID_KEYSTORE_PASSWORD ANDROID_KEY_ALIAS ANDROID_KEY_PASSWORD VITE_API_BASE_URL; do
+            if [ -z "${!v}" ]; then echo "::error::$v is not set"; missing=1; fi
+          done
+          [ "$missing" = 0 ] || exit 1
+          [[ "$TAG" =~ ^v([0-9]+)\.([0-9]+)\.([0-9]+)$ ]] || { echo "::error::tag must be vX.Y.Z, got $TAG"; exit 1; }
+          echo "ANDROID_VERSION_NAME=${TAG#v}" >> "$GITHUB_ENV"
+          echo "ANDROID_VERSION_CODE=$(( BASH_REMATCH[1] * 10000 + BASH_REMATCH[2] * 100 + BASH_REMATCH[3] ))" >> "$GITHUB_ENV"
       - run: npm ci
       - run: npm run build
         env:
@@ -92,6 +109,12 @@ jobs:
           ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
           ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
           ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+      - name: Verify the APK signature
+        run: |
+          apk=android/app/build/outputs/apk/release/app-release.apk
+          test -f "$apk" || { echo "::error::signed app-release.apk not produced"; ls android/app/build/outputs/apk/release; exit 1; }
+          "$(ls -d "$ANDROID_HOME"/build-tools/* | sort -V | tail -1)/apksigner" verify --print-certs "$apk"
+          echo "versionCode=$ANDROID_VERSION_CODE versionName=$ANDROID_VERSION_NAME"
       - uses: softprops/action-gh-release@v2
         with:
-          files: android/app/build/outputs/apk/release/*.apk
+          files: android/app/build/outputs/apk/release/app-release.apk

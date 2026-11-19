@@ -27,7 +27,7 @@ export function Banners({ items, onOpen }: { items: Campaign[]; onOpen: (c: Camp
     <section className={s.hv} aria-label="پیشنهادهای ویژه" aria-roledescription="carousel">
       <div className={s.track} style={{ transform: `translateX(${i * 100}%)` }}>
         {items.map((b, k) => (
-          <article
+          <div
             key={b.id}
             className={`${s.slide} ${s[`bg${k % 3}`]}`}
             role="group"
@@ -46,7 +46,7 @@ export function Banners({ items, onOpen }: { items: Campaign[]; onOpen: (c: Camp
               </i>
             </button>
             <Art src={b.imageUrl} className={s.art} />
-          </article>
+          </div>
         ))}
       </div>
       {n > 1 ? (

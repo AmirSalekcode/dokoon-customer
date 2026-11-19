@@ -64,7 +64,7 @@ export function RestaurantCard({ r, onOpen, onFav }: RestaurantCardProps) {
         ) : null}
         {r.isOpen === false ? <span className={s.rx}>بسته است</span> : null}
       </div>
-      <h4 className={s.rn}>{r.name}</h4>
+      <h3 className={s.rn}>{r.name}</h3>
       <p className={s.rs}>
         {r.sub}
         {r.km ? ` · ${r.km} کیلومتر` : ''}

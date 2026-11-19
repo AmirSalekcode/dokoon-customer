@@ -31,7 +31,7 @@
 }
 /* light theme (default) — prototype defines these on .app */
 :root,.app{
-  --bg:#FBF0E6; --sf:#FFFFFF; --ink:#1F1A17; --mu:#7A6E66; --ln:#F0DFD0; --soft:#FCE3D0; --pr2:#C2410C; --okbg:#E6F6EC;
+  --bg:#FBF0E6; --sf:#FFFFFF; --ink:#1F1A17; --mu:#73675F; --ln:#F0DFD0; --soft:#FCE3D0; --pr2:#B23B0A; --okbg:#E6F6EC;
   --logo1:#172b50; --logo2:#0f1b35;
 }
 /* dark theme — add class "dk" (or data-theme="dark") */

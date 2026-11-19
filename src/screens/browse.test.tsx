@@ -30,7 +30,7 @@ beforeEach(() => {
 
 const cardNames = (root: HTMLElement) =>
   within(root)
-    .getAllByRole('heading', { level: 4 })
+    .getAllByRole('heading', { level: 3 })
     .map((h) => h.textContent);
 
 describe('<RestaurantsScreen /> — spec §2 restaurants tab', () => {

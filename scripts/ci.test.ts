@@ -64,7 +64,15 @@ describe('CI workflow (.github/workflows/ci.yml)', () => {
 
   it('has quality, e2e, storybook, docker+k6, android and secret-scan jobs', () => {
     expect(Object.keys(ci().jobs)).toEqual(
-      expect.arrayContaining(['quality', 'e2e', 'storybook', 'docker-perf', 'android', 'gitleaks']),
+      expect.arrayContaining([
+        'quality',
+        'e2e',
+        'storybook',
+        'docker-perf',
+        'lighthouse',
+        'android',
+        'gitleaks',
+      ]),
     );
   });
 
@@ -93,6 +101,15 @@ describe('CI workflow (.github/workflows/ci.yml)', () => {
     expect(r).toMatch(/X-Content-Type-Options/);
     expect(r).toMatch(/perf\/static-load\.js/);
     expect(r).toMatch(/perf\/pages\/\*\.js|for p in perf\/pages/);
+  });
+
+  it('lighthouse job audits the mock build on mobile against the release budget', () => {
+    const job = ci().jobs.lighthouse;
+    expect(job).toBeDefined();
+    const r = runs(job);
+    expect(r).toContain('npm run build:mock');
+    expect(r).toContain('npm run lighthouse');
+    expect(r).toMatch(/playwright install/);
   });
 
   it('android job builds the debug APK and uploads it', () => {
@@ -140,6 +157,20 @@ describe('CD workflow (.github/workflows/cd.yml)', () => {
     const cdText = read('.github/workflows/cd.yml');
     expect(cdText).toMatch(/ANDROID_KEYSTORE_BASE64/);
     expect(cdText).toMatch(/assembleRelease/);
+  });
+
+  // KAN-45: a tag must never publish an unsigned / unversioned / API-less store build.
+  it('release APK: fails without keystore secrets or API URL, versions from the tag, verifies the signature', () => {
+    const job = cd().jobs['android-release'];
+    const r = runs(job);
+    expect(r).toMatch(/ANDROID_KEYSTORE_BASE64.*-z|-z.*ANDROID_KEYSTORE_BASE64/s);
+    expect(r).toMatch(/VITE_API_BASE_URL/);
+    expect(r).toMatch(/ANDROID_VERSION_CODE/);
+    expect(r).toMatch(/apksigner"? verify/);
+    expect(r).not.toMatch(/build:mock/);
+    const gradle = read('android/app/build.gradle');
+    expect(gradle).toMatch(/System\.getenv\("ANDROID_VERSION_CODE"\)/);
+    expect(gradle).toMatch(/System\.getenv\("ANDROID_VERSION_NAME"\)/);
   });
 });
 
