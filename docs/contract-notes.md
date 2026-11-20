@@ -87,3 +87,7 @@ Nothing here is implemented as an invented endpoint; the frontend works around e
 21. **Uploads.** Registration documents and dish photos use the customer contract's `POST /uploads`
     (presigned). The restaurant contract should reference it (or define `/r/uploads`) so the generated
     panel client has it; dish photo limit jpeg/png/webp ≤ 5 MB (D-99).
+22. **App config per app (D-106).** `GET /app/config` has one `minVersion` and one `maintenance`, but
+    customer and restaurant apps ship separate versions. Proposal: `GET /app/config?app=customer|restaurant`
+    (or `minVersion: {customer, restaurant}`), and let `maintenance` be per app too. Until then both apps
+    read the same fields.

@@ -1,6 +1,6 @@
 import type { ErrorKind } from '@/api/errors';
 
-export type ErrorAction = 'retry' | 'home' | 'login' | 'support' | 'orders';
+export type ErrorAction = 'retry' | 'home' | 'login' | 'support' | 'orders' | 'reload' | 'update';
 
 export interface ErrorContent {
   code: string;
@@ -13,7 +13,7 @@ export interface ErrorContent {
   secAct?: ErrorAction;
 }
 
-/** Texts from the prototype (App.dc.html D.errors). */
+/** Texts from the prototype (App.dc.html D.errors); maintenance/update added for GET /app/config. */
 export const ERROR_CONTENT: Record<ErrorKind, ErrorContent> = {
   offline: {
     code: '',
@@ -76,5 +76,21 @@ export const ERROR_CONTENT: Record<ErrorKind, ErrorContent> = {
     d: 'M12 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8zM4 21a8 8 0 0 1 16 0',
     cta: 'ورود دوباره',
     act: 'login',
+  },
+  maintenance: {
+    code: '',
+    title: 'دکون در حال به‌روزرسانی است',
+    text: 'برای بهتر شدن سرویس، مدت کوتاهی در دسترس نیستیم. کمی بعد دوباره سر بزنید.',
+    d: 'M14.5 5.5a4 4 0 0 0-5 5L4 16l4 4 5.5-5.5a4 4 0 0 0 5-5l-2.5 2.5-2.5-.5-.5-2.5z',
+    cta: 'تلاش دوباره',
+    act: 'reload',
+  },
+  update: {
+    code: '',
+    title: 'نسخه‌ی جدید دکون آماده است',
+    text: 'این نسخه دیگر پشتیبانی نمی‌شود. برای ادامه، دکون را به‌روز کنید.',
+    d: 'M12 4v11M7 10l5 5 5-5M5 20h14',
+    cta: 'به‌روزرسانی',
+    act: 'update',
   },
 };

@@ -31,6 +31,19 @@ function forcedStatus(): number | null {
   }
 }
 
+/**
+ * Dev-only: localStorage `dk-mock-config` (JSON) overrides GET /app/config, e.g.
+ * {"maintenance":true} or {"minVersion":"99.0.0"} to see the maintenance / forced-update pages.
+ */
+function configOverride(): Record<string, unknown> {
+  try {
+    const v = globalThis.localStorage?.getItem('dk-mock-config');
+    return v ? (JSON.parse(v) as Record<string, unknown>) : {};
+  } catch {
+    return {};
+  }
+}
+
 const latency = () => delay(import.meta.env.MODE === 'test' ? 0 : 250);
 
 // ---- tiny in-memory "database" for the mock (kept in localStorage in the browser demo) ----
@@ -175,7 +188,7 @@ export const handlers = [
     return undefined;
   }),
 
-  http.get(p('/app/config'), () => HttpResponse.json(D.appConfig)),
+  http.get(p('/app/config'), () => HttpResponse.json({ ...D.appConfig, ...configOverride() })),
   http.get(p('/cities'), () => HttpResponse.json(D.cities)),
 
   http.post(p('/auth/otp/request'), async ({ request }) => {

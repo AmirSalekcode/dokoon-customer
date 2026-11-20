@@ -31,6 +31,15 @@ describe('parseEnv (public, browser-safe config only)', () => {
     });
   });
 
+  it('reads the optional app update link (forced-update page) and rejects a non-https one', () => {
+    expect(parseEnv({}).updateUrl).toBeNull();
+    expect(parseEnv({ VITE_UPDATE_URL: 'https://dokoonapp.ir/app' }).updateUrl).toBe(
+      'https://dokoonapp.ir/app',
+    );
+    expect(() => parseEnv({ VITE_UPDATE_URL: 'http://dokoonapp.ir/app' })).toThrow(EnvError);
+    expect(() => parseEnv({ VITE_UPDATE_URL: 'not a url' })).toThrow(EnvError);
+  });
+
   it('rejects an invalid or non-https API URL in production', () => {
     expect(() => parseEnv({ VITE_API_BASE_URL: 'not a url' })).toThrow(EnvError);
     expect(() => parseEnv({ VITE_API_BASE_URL: 'http://api.example/v1', PROD: true })).toThrow(/https/);

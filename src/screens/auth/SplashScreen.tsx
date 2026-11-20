@@ -1,10 +1,12 @@
 import { useEffect } from 'react';
 import { api } from '@/api/client';
+import { checkAppConfig, type ConfigBlock } from '@/app/appConfig';
 import { bootScreen } from '@/auth/flow';
 import { useSession } from '@/auth/session';
 import { Logo } from '@/components/primitives/Logo';
 import { toFaDigits } from '@/lib/format';
 import { enterBootScreen } from '@/nav/deepLink';
+import { useNav } from '@/nav/nav';
 import type { ScreenProps } from '../registry';
 import s from './auth.module.css';
 
@@ -33,10 +35,13 @@ export function SplashScreen(_: ScreenProps) {
     let left = false;
     let minDone = false;
     let ready = false;
+    let block: ConfigBlock = null;
     const leave = () => {
       if (left) return;
       left = true;
-      enterBootScreen(bootScreen());
+      // Maintenance / too-old app: the error page is the only screen, so back cannot skip it.
+      if (block) useNav.getState().resetTo('error', { kind: block });
+      else enterBootScreen(bootScreen());
     };
     const maybeLeave = () => minDone && ready && leave();
     const min = setTimeout(() => {
@@ -44,7 +49,15 @@ export function SplashScreen(_: ScreenProps) {
       maybeLeave();
     }, SPLASH_MIN_MS);
     const max = setTimeout(leave, SPLASH_MAX_MS);
-    void checkSession().finally(() => {
+    // Session and app config are checked in parallel (no extra splash time).
+    void Promise.all([
+      checkSession(),
+      checkAppConfig().then((b) => {
+        block = b;
+        // Arrived after the splash already left (slow network): still block.
+        if (b && left) useNav.getState().resetTo('error', { kind: b });
+      }),
+    ]).finally(() => {
       ready = true;
       maybeLeave();
     });

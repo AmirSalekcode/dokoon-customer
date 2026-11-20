@@ -32,3 +32,5 @@ export const E404: S = { args: c('e404') };
 export const E500: S = { args: c('e500') };
 export const E503: S = { args: c('e503') };
 export const E504: S = { args: c('e504') };
+export const Maintenance: S = { args: c('maintenance') };
+export const Update: S = { args: c('update') };

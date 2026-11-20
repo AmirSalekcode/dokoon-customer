@@ -20,6 +20,8 @@ export interface PublicConfig {
   defaultMap: MapId;
   paymentProvider: PaymentProviderId;
   webPushPublicKey: string | null;
+  /** Where the forced-update page sends Android users (store/download page). Null = reload only. */
+  updateUrl: string | null;
 }
 
 type RawEnv = Record<string, string | boolean | undefined>;
@@ -49,6 +51,19 @@ function apiUrl(v: unknown, prod: boolean): string | null {
   return s.replace(/\/$/, '');
 }
 
+function httpsUrl(name: string, v: unknown): string | null {
+  const s = str(v);
+  if (s === null) return null;
+  let u: URL;
+  try {
+    u = new URL(s);
+  } catch {
+    throw new EnvError(`${name} is not a valid URL`);
+  }
+  if (u.protocol !== 'https:') throw new EnvError(`${name} must use https`);
+  return s;
+}
+
 /** Pure parser (unit-tested). Only whitelisted VITE_ keys are read. */
 export function parseEnv(raw: RawEnv): PublicConfig {
   const prod = raw.PROD === true;
@@ -64,6 +79,7 @@ export function parseEnv(raw: RawEnv): PublicConfig {
       'fake',
     ),
     webPushPublicKey: str(raw.VITE_WEBPUSH_VAPID_PUBLIC_KEY),
+    updateUrl: httpsUrl('VITE_UPDATE_URL', raw.VITE_UPDATE_URL),
   };
 }
 
