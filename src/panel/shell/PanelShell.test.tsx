@@ -42,7 +42,7 @@ describe('header and navigation', () => {
     expect(
       within(tabs)
         .getAllByRole('button')
-        .map((b) => b.textContent),
+        .map((b) => b.textContent?.replace(/[۰-۹]/g, '')),
     ).toEqual(['سفارش‌ها', 'منو', 'گزارش', 'حساب']);
     await userEvent.click(within(tabs).getByRole('button', { name: 'حساب' }));
     expect(within(tabs).getByRole('button', { name: 'حساب' })).toHaveAttribute('aria-current', 'page');

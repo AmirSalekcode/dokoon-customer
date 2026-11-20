@@ -7,7 +7,8 @@ import { RegStatusScreen } from './auth/RegStatusScreen';
 import { ShiftScreen } from './auth/ShiftScreen';
 import { SoundScreen } from './SoundScreen';
 import { HelpScreen, PanelErrorScreen, type PanelScreenProps } from './StackScreens';
-import { AccountScreen, MenuScreen, OrdersScreen, ReportsScreen } from './TabScreens';
+import { OrdersScreen } from './orders/OrdersScreen';
+import { AccountScreen, MenuScreen, ReportsScreen } from './TabScreens';
 
 const SCREENS: Record<PanelScreen, ComponentType<PanelScreenProps>> = {
   orders: OrdersScreen,

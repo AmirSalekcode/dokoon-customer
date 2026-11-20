@@ -1,0 +1,76 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+  padding: var(--sp-4) 0 var(--sp-8);
+}
+.page > :not(.tabs) {
+  margin-inline: var(--gutter);
+}
+
+/* Restaurant closed banner. */
+.closed {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: var(--sp-3) var(--sp-4);
+  border-radius: var(--r-lg);
+  background: var(--soft);
+  color: var(--ink);
+}
+.closed p {
+  flex: 1;
+  margin: 0;
+  font-size: var(--fs-14);
+  font-weight: var(--fw-bold);
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+  min-width: 0;
+}
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-2);
+}
+.more {
+  display: flex;
+  justify-content: center;
+}
+.end {
+  margin: 0;
+  text-align: center;
+  font-size: var(--fs-13);
+  color: var(--mu);
+}
+
+/* One column on phones; list (1.1) + detail (1) side by side from 720px. */
+.split {
+  display: grid;
+  gap: var(--sp-4);
+}
+.detail {
+  display: none;
+}
+@media (min-width: 720px) {
+  .split {
+    grid-template-columns: 1.1fr 1fr;
+    align-items: start;
+  }
+  .detail {
+    display: block;
+    position: sticky;
+    top: var(--sp-4);
+  }
+}
