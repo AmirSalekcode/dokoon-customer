@@ -5,7 +5,7 @@ import { usePanelSession } from '../api/session';
 import type { RestaurantAuth, RestaurantStatus } from '../api/types';
 import { usePanelNav, type PanelScreen } from '../nav/nav';
 import { useRestaurant } from '../state/restaurant';
-import { useShift } from '../state/shift';
+import { endShift, useShift } from '../state/shift';
 
 /**
  * Restaurant sign-in flow (KAN-59, restaurant screen specs §1):
@@ -80,7 +80,7 @@ export function bootPanel() {
 /** Forget this device's session locally (also the e401 page's «ورود دوباره»). */
 export function signOutLocal() {
   usePanelSession.getState().clear();
-  useShift.getState().end();
+  endShift();
   useRestaurant.setState({ profile: null, status: 'idle', switching: false });
   usePanelNav.getState().resetTo('login');
 }

@@ -1,0 +1,122 @@
+.panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-4);
+  padding: var(--sp-4);
+  border-radius: var(--r-xl);
+  background: var(--sf);
+  color: var(--ink);
+  box-shadow: var(--sh-card);
+}
+.eq {
+  height: 72px;
+  display: flex;
+  align-items: flex-end;
+  gap: var(--sp-2);
+}
+.eq i {
+  width: 8px;
+  height: 18px;
+  border-radius: var(--r-pill);
+  background: var(--primary);
+}
+.playing .eq i {
+  animation: eqBar 0.9s ease-in-out infinite;
+}
+.playing .eq i:nth-child(2) {
+  animation-delay: 0.1s;
+}
+.playing .eq i:nth-child(3) {
+  animation-delay: 0.2s;
+}
+.playing .eq i:nth-child(4) {
+  animation-delay: 0.3s;
+}
+.playing .eq i:nth-child(5) {
+  animation-delay: 0.15s;
+}
+.playing .eq i:nth-child(6) {
+  animation-delay: 0.25s;
+}
+.playing .eq i:nth-child(7) {
+  animation-delay: 0.05s;
+}
+@keyframes eqBar {
+  0%,
+  100% {
+    height: 14px;
+  }
+  50% {
+    height: 68px;
+  }
+}
+.play {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  height: 56px;
+  padding: 0 var(--sp-8);
+  border: 0;
+  border-radius: var(--r-pill);
+  background: var(--primary);
+  color: var(--white);
+  font: inherit;
+  font-size: var(--fs-15);
+  font-weight: var(--fw-xbold);
+  cursor: pointer;
+  box-shadow: var(--sh-cta);
+}
+.play svg {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.play:focus-visible,
+.segs button:focus-visible {
+  outline: 3px solid var(--ink);
+  outline-offset: 2px;
+}
+.volume {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  font-size: var(--fs-14);
+  font-weight: var(--fw-bold);
+}
+.segs {
+  flex: 1;
+  display: flex;
+  gap: var(--sp-2);
+}
+.segs button {
+  flex: 1;
+  height: var(--touch);
+  padding: 0;
+  border: 0;
+  border-radius: var(--r-sm);
+  background: var(--ln);
+  cursor: pointer;
+  transition: background var(--t-fast);
+}
+.segs button.on {
+  background: var(--primary);
+}
+.tone {
+  margin: 0;
+  font-size: var(--fs-12);
+  color: var(--mu);
+  text-align: center;
+  line-height: 1.7;
+}
+@media (prefers-reduced-motion: reduce) {
+  .playing .eq i {
+    animation: none;
+    height: 40px;
+  }
+}

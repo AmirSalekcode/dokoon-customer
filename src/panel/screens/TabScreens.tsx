@@ -59,6 +59,7 @@ export function ReportsScreen() {
   );
 }
 
+const D_SOUND = 'M5 10v4h3l5 4V6l-5 4zM17 9a4 4 0 0 1 0 6';
 const D_LOGOUT = 'M15 4h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-3M10 16l-4-4 4-4M6 12h10';
 const D_HELP =
   'M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM9.5 9a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6V14M12 17h.01';
@@ -70,6 +71,12 @@ export function AccountScreen() {
   return (
     <div className={s.page}>
       <div className={s.card}>
+        <ListRow
+          title="صدا و هشدار"
+          sub="زنگ سفارش جدید، بلندی صدا، لرزش"
+          d={D_SOUND}
+          onTap={() => push('sound')}
+        />
         <ListRow title="راهنما و پشتیبانی" d={D_HELP} onTap={() => push('help')} />
       </div>
       <div className={s.card}>

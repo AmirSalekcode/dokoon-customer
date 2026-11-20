@@ -65,7 +65,7 @@ export default defineConfig({
         ],
       },
       workbox: {
-        globPatterns: ['**/*.{js,css,html,svg,png,ttf,woff2}'],
+        globPatterns: ['**/*.{js,css,html,svg,png,ttf,woff2,wav}'],
         navigateFallback: '/panel.html',
         // API and live socket are network-only: never serve stale orders from cache.
         navigateFallbackDenylist: [/^\/api\//, /^\/mockServiceWorker\.js$/],
