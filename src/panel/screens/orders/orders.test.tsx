@@ -8,7 +8,7 @@ import { panelHandlers, resetPanelMockDb } from '../../mocks/handlers';
 import { usePanelNav } from '../../nav/nav';
 import { useLive } from '../../realtime/live';
 import { PanelShell } from '../../shell/PanelShell';
-import { useHistory } from '../../state/history';
+import { localDate, useHistory } from '../../state/history';
 import { useOrders } from '../../state/orders';
 import { useOrdersUi } from '../../state/ordersUi';
 import { useRestaurant } from '../../state/restaurant';
@@ -108,8 +108,12 @@ describe('orders list', () => {
     const week = tiles().length;
     expect(week).toBeLessThan(10);
 
-    // Seed history starts 26 h ago; drop the one delivered order of today so «امروز» is empty.
-    db.orders = db.orders.filter((o) => o.id !== 'o6');
+    // Seed times are relative to now: drop every finished order of today so «امروز» is empty.
+    const today = localDate(Date.now());
+    db.orders = db.orders.filter(
+      (o) =>
+        ['new', 'prep', 'ready', 'way'].includes(o.status!) || localDate(Date.parse(o.placedAt!)) !== today,
+    );
     await user.click(within(chips).getByRole('button', { name: 'امروز' }));
     expect(await screen.findByText('در این بازه سفارشی نبود')).toBeInTheDocument();
 
