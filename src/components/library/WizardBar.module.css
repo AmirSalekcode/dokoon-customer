@@ -1,0 +1,66 @@
+.wrap {
+  display: flex;
+  align-items: flex-start;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  color: var(--ink);
+}
+.step {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-1);
+}
+/* Connector to the next step (towards the reading end). */
+.step::before {
+  content: '';
+  position: absolute;
+  top: calc(var(--sp-4) - 1.5px);
+  inset-inline-start: 50%;
+  width: 100%;
+  height: 3px;
+  background: var(--ln);
+}
+.step:last-child::before {
+  display: none;
+}
+.done::before {
+  background: var(--primary);
+}
+.dot {
+  position: relative;
+  z-index: var(--z-base);
+  display: grid;
+  place-items: center;
+  width: var(--sp-8);
+  height: var(--sp-8);
+  border: 3px solid var(--ln);
+  border-radius: var(--r-circle);
+  background: var(--sf);
+  color: var(--mu);
+  font-size: var(--fs-14);
+  font-weight: var(--fw-xbold);
+}
+.done .dot {
+  border-color: var(--primary);
+  background: var(--primary);
+  color: var(--white);
+}
+.cur .dot {
+  border-color: var(--primary);
+  color: var(--pr2);
+}
+.label {
+  font-size: var(--fs-12);
+  font-weight: var(--fw-bold);
+  line-height: 1.5;
+  text-align: center;
+  color: var(--mu);
+}
+.cur .label {
+  color: var(--ink);
+}

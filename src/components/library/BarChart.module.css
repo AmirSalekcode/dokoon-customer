@@ -1,0 +1,64 @@
+.card {
+  padding: var(--sp-4);
+  border-radius: var(--r-xl);
+  background: var(--sf);
+  color: var(--ink);
+  box-shadow: var(--sh-card);
+}
+.title {
+  margin: 0 0 var(--sp-3);
+  font-size: var(--fs-14);
+  font-weight: var(--fw-xbold);
+}
+.graph {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--sp-2);
+  height: 132px;
+}
+.bar {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--sp-1);
+}
+.value {
+  font-size: var(--fs-12);
+  font-weight: var(--fw-bold);
+  line-height: 1.2;
+  color: var(--mu);
+}
+.rect {
+  width: 100%;
+  max-width: var(--sp-8);
+  border-radius: var(--r-sm) var(--r-sm) var(--sp-1) var(--sp-1);
+  background: var(--soft);
+  transition: height 0.3s ease-out;
+}
+.on .rect {
+  background: var(--primary);
+}
+.on .value {
+  color: var(--pr2);
+}
+.labels {
+  display: flex;
+  gap: var(--sp-2);
+  margin-top: var(--sp-2);
+}
+.labels span {
+  flex: 1;
+  min-width: 0;
+  font-size: var(--fs-12);
+  text-align: center;
+  color: var(--mu);
+}
+@media (prefers-reduced-motion: reduce) {
+  .rect {
+    transition: none;
+  }
+}
