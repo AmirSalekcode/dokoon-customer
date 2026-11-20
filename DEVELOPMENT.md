@@ -97,6 +97,10 @@ built by `vite.panel.config.ts` into `dist-panel/` with its own PWA manifest («
 - **Shift + sound (KAN-61):** `src/panel/sound/` — `engine.ts` (Web Audio, unlock on the shift tap, repeat until
   answered, mute, 5 levels, vibration), `wakeLock.ts`, `settings.ts` (`dk-r-sound`). The alert file is generated:
   `node scripts/gen-alert-sound.mjs` → `public-panel/sounds/new-order.wav` (a test checks the committed file matches).
+- **Live connection (KAN-62):** `src/panel/realtime/client.ts` (ticket → WebSocket, backoff, frames) and `live.ts`
+  (offline page after 2.5 s, 15 s list refresh, resync, `onLiveEvent`); active orders in `src/panel/state/orders.ts`.
+  Mock builds: `__dkPanelMocks.stream.outage(true|false)`, `.dropAll()`, `.emit({event, data})`, `__dkPanelMocks.addOrder()`.
+  Unit tests get an in-page stream from `src/panel/test/session.ts`.
 - **E2E locally:** `npm run e2e:panel` builds the mock panel and serves it on `127.0.0.1:5176`.
 
 ## Rules enforced in code

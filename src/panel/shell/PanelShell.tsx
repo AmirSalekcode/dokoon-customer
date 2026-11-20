@@ -10,7 +10,9 @@ import { panelApi } from '../api/client';
 import { bootPanel, logout } from '../auth/flow';
 import { isPanelTab, usePanelNav, type PanelTab } from '../nav/nav';
 import { panelScreenFor, SHELL_SCREENS } from '../screens/registry';
+import { reconnectLive, startLive, stopLive } from '../realtime/live';
 import { useRestaurant } from '../state/restaurant';
+import { useShift } from '../state/shift';
 import { confirmClose, toggleOpen } from './openSwitch';
 import { RBottomNav, type RNavItem } from './RBottomNav';
 import { RHeader } from './RHeader';
@@ -105,6 +107,18 @@ export function PanelShell() {
   const profile = useRestaurant((st) => st.profile);
   const switching = useRestaurant((st) => st.switching);
   const [booted, setBooted] = useState(false);
+  const shiftOn = useShift((st) => st.started);
+
+  // Live orders while the shift is on (KAN-62); back online → reconnect without waiting for backoff.
+  useEffect(() => {
+    if (!shiftOn) return;
+    startLive();
+    window.addEventListener('online', reconnectLive);
+    return () => {
+      window.removeEventListener('online', reconnectLive);
+      stopLive();
+    };
+  }, [shiftOn]);
 
   useEffect(() => {
     const a = initSystemBack(usePanelNav);

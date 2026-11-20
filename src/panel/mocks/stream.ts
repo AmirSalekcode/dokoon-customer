@@ -48,6 +48,8 @@ export interface MockStreamOptions {
  */
 export function createMockStream({ newOrderEveryMs = 0 }: MockStreamOptions = {}) {
   const sockets = new Set<MockSocket>();
+  /** Simulated outage: every connection is lost and new ones fail until it ends. */
+  let down = false;
   let timers: ReturnType<typeof setInterval>[] = [];
 
   const emit = (msg: RealtimeMessage) => sockets.forEach((s) => s.deliver(msg));
@@ -79,6 +81,7 @@ export function createMockStream({ newOrderEveryMs = 0 }: MockStreamOptions = {}
     const hasTicket = new URL(url, 'http://x').searchParams.has('ticket');
     queueMicrotask(() => {
       if (!hasTicket) return socket.finish(4401, 'ticket required');
+      if (down) return socket.finish(1006, 'server unreachable');
       sockets.add(socket);
       socket.open();
       startTimers();
@@ -91,6 +94,15 @@ export function createMockStream({ newOrderEveryMs = 0 }: MockStreamOptions = {}
     emit,
     /** Every device loses the connection (abnormal close 1006). */
     dropAll: () => [...sockets].forEach((s) => s.finish(1006, 'connection lost')),
+    /** Start/end an outage (KAN-62 demo and E2E: offline page, 15 s refresh, recovery). */
+    outage: (on: boolean) => {
+      down = on;
+      if (on) [...sockets].forEach((s) => s.finish(1006, 'connection lost'));
+    },
+    /** Devices currently connected. */
+    get connected() {
+      return sockets.size;
+    },
     stop,
   };
 }

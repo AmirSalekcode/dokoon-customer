@@ -9,6 +9,7 @@ import { useTheme } from '@/theme/theme';
 import { ERROR_KINDS } from '../errors/panelErrors';
 import { usePanelNav } from '../nav/nav';
 import { reopen } from '../shell/openSwitch';
+import { countByTab, useOrders } from '../state/orders';
 import { useRestaurant } from '../state/restaurant';
 import s from './screens.module.css';
 
@@ -21,6 +22,9 @@ import s from './screens.module.css';
 export function OrdersScreen() {
   const open = useRestaurant((st) => st.profile?.open ?? true);
   const switching = useRestaurant((st) => st.switching);
+  const byId = useOrders((st) => st.byId);
+  const ordersReady = useOrders((st) => st.status === 'ready');
+  const c = countByTab(byId);
   return (
     <div className={s.page}>
       {!open ? (
@@ -33,6 +37,12 @@ export function OrdersScreen() {
       ) : null}
       <div className={s.split}>
         <section aria-label="فهرست سفارش‌ها">
+          {ordersReady ? (
+            // Live summary until the full list (KAN-63).
+            <p className={s.muted} aria-live="polite" data-testid="orders-summary">
+              {`${toFaDigits(c.new)} سفارش جدید · ${toFaDigits(c.prep)} در حال آماده‌سازی · ${toFaDigits(c.ready_or_way)} آماده و در مسیر`}
+            </p>
+          ) : null}
           <EmptyState art="dk-chelo" title="سفارش‌ها" text="فهرست سفارش‌ها اینجا نمایش داده می‌شود." />
         </section>
         <section className={s.detail} aria-label="جزئیات سفارش">
