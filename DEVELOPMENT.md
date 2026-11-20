@@ -82,6 +82,11 @@ built by `vite.panel.config.ts` into `dist-panel/` with its own PWA manifest («
   | `dk-mock-neworder-ms` = `30000` (`0` = off, default 90 s) | demo new order on the live stream |
   | `__dkPanelMocks.stream.dropAll()` | every device loses the live connection |
   | OTP `1234`; phones `09130000001/2/3` | pending / needs_docs / rejected registration |
+- **Shell (KAN-58):** `src/panel/shell/` — `RHeader` (dark business header, open/closed switch), `RBottomNav`
+  (bottom bar < 720, 104px side rail ≥ 720 via CSS), stack navigation from the shared `createStackNav`
+  (`src/panel/nav/nav.ts`: tabs orders/menu/reports/account, exact back, Android back + «press again to exit»),
+  full-page errors with panel actions, startup `/app/config` check. Mock builds: Account → error page previews.
+- **E2E locally:** `npm run e2e:panel` builds the mock panel and serves it on `127.0.0.1:5176`.
 
 ## Rules enforced in code
 - Tokens only: components use `var(--…)` from `design-tokens/dokoon-tokens.css`; derived transparencies live in
