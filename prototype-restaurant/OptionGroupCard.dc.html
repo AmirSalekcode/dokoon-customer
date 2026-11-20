@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>کارت گروه گزینه</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:300;font-display:swap;src:url(/_blob/2ef92529418867881b213c86e0698e5f) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:400;font-display:swap;src:url(/_blob/bd549ffc7e0220163cf551aa8c12f971) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:500;font-display:swap;src:url(/_blob/2c86d88b0953b236f79c30f4ec52072f) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:700;font-display:swap;src:url(/_blob/17ce6732741785f9a10e038c7f86abc8) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:800;font-display:swap;src:url(/_blob/0208d433250cedfb8a54737f1d0176d9) format('truetype')}
+.OG_c{font-family:'Yekan Bakh',Tahoma,sans-serif;background:var(--sf,#fff);color:var(--ink,#1F1A17);border-radius:20px;padding:16px;box-shadow:0 4px 16px rgba(31,26,23,.06);display:flex;flex-direction:column;gap:12px}
+.OG_h{display:flex;align-items:center;gap:8px}.OG_h h4{margin:0;flex:1;font-size:16px;font-weight:800;line-height:1.5}
+.OG_tg{height:28px;padding:0 12px;border-radius:999px;font-size:12px;font-weight:800;line-height:28px;background:var(--soft,#FCE3D0);color:var(--pr2,#C2410C)}.OG_rq{background:#1F1A17;color:#fff}
+.OG_s{margin:0;font-size:12px;color:var(--mu,#7A6E66)}
+.OG_o{display:flex;justify-content:space-between;gap:12px;padding:12px;border-radius:12px;background:var(--bg,#FBF0E6);font-size:14px;font-weight:700}.OG_o span:last-child{color:var(--pr2,#C2410C)}
+.OG_a{display:flex;gap:8px}
+.OG_b{font-family:'Yekan Bakh',Tahoma,sans-serif;flex:1;height:48px;border:2px solid var(--ln,#F0DFD0);border-radius:999px;background:none;color:var(--ink,#1F1A17);font-size:14px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px}
+.OG_b svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}.OG_b:focus-visible{outline:3px solid #E4501E;outline-offset:2px}.OG_dn{color:#C8281E;border-color:#C8281E}
+</style>
+</helmet>
+<div class="OG_c" dir="rtl"><div class="OG_h"><h4>{{ title }}</h4><span class="OG_tg {{ tagCls }}">{{ tag }}</span></div><p class="OG_s">{{ rule }}</p><sc-for list="{{ options }}" as="o" hint-placeholder-count="3"><div class="OG_o"><span>{{ o.name }}</span><span>{{ o.price }}</span></div></sc-for><div class="OG_a"><button class="OG_b" onClick="{{ add }}"><svg class="" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>گزینه</button><button class="OG_b" onClick="{{ edit }}"><svg class="" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16zM13 7l4 4"></path></svg>ویرایش</button><button class="OG_b OG_dn" aria-label="حذف گروه" onClick="{{ del }}"><svg class="" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 7h14M10 7V4h4v3M7 7l1 13h8l1-13"></path></svg></button></div></div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"group": {"editor": null}, "onEdit": {"editor": null}, "onAdd": {"editor": null}, "onDelete": {"editor": null}, "$preview": {"width": 358, "height": 240}}'>
+class Component extends DCLogic {
+renderVals() {
+const P = this.props;
+const g = P.group || {};
+return { title: g.title ?? '', tag: g.required ? 'اجباری' : 'اختیاری', tagCls: g.required ? 'OG_rq' : '', rule: g.rule ?? '', options: g.options || [], add: () => { if (P.onAdd) P.onAdd(); }, edit: () => { if (P.onEdit) P.onEdit(); }, del: () => { if (P.onDelete) P.onDelete(); } };
+}
+}
+</script>
+</body>
+</html>

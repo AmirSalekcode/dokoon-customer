@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>نوار ناوبری رستوران</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:300;font-display:swap;src:url(/_blob/2ef92529418867881b213c86e0698e5f) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:400;font-display:swap;src:url(/_blob/bd549ffc7e0220163cf551aa8c12f971) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:500;font-display:swap;src:url(/_blob/2c86d88b0953b236f79c30f4ec52072f) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:700;font-display:swap;src:url(/_blob/17ce6732741785f9a10e038c7f86abc8) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:800;font-display:swap;src:url(/_blob/0208d433250cedfb8a54737f1d0176d9) format('truetype')}
+.RBottomNav_nv{font-family:'Yekan Bakh',Tahoma,sans-serif;display:flex;background:var(--sf,#fff);border-top:1px solid var(--ln,#F0DFD0);padding:8px 8px 12px;gap:4px;box-shadow:0 -8px 24px rgba(31,26,23,.08)}
+.RBottomNav_it{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;gap:2px;border:0;background:none;cursor:pointer;color:var(--mu,#7A6E66);padding:0;height:56px;font-family:inherit}
+.RBottomNav_ic{position:relative;width:64px;height:32px;border-radius:999px;display:grid;place-items:center;transition:background .2s ease-out,transform .2s ease-out}
+.RBottomNav_ic svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.RBottomNav_lb{font-size:12px;font-weight:700;line-height:1.6}
+.RBottomNav_on{color:#E4501E}.RBottomNav_on .RBottomNav_ic{background:var(--soft,#FCE3D0)}
+.RBottomNav_on{color:var(--pr2,#C2410C)}
+.RBottomNav_it:focus-visible{outline:3px solid #E4501E;outline-offset:-3px;border-radius:12px}
+.RBottomNav_bg{position:absolute;top:-4px;inset-inline-end:8px;min-width:20px;height:20px;padding:0 6px;border-radius:999px;background:#C8281E;color:#fff;font-style:normal;font-size:12px;font-weight:800;line-height:20px;text-align:center;animation:RBottomNav_pl 2.4s ease-in-out infinite}
+@keyframes RBottomNav_pl{0%,100%{transform:scale(1)}50%{transform:scale(1.18)}}
+.RBottomNav_rail{flex-direction:column;width:104px;height:100%;border-top:0;border-inline-start:1px solid var(--ln,#F0DFD0);box-shadow:none;padding:16px 8px;justify-content:flex-start;gap:8px}
+.RBottomNav_rail .RBottomNav_it{flex:none;height:72px}
+</style>
+</helmet>
+<nav class="RBottomNav_nv {{ cls }}" dir="rtl" aria-label="ناوبری اصلی"><sc-for list="{{ items }}" as="it" hint-placeholder-count="4"><button class="RBottomNav_it {{ it.cls }}" aria-current="{{ it.cur }}" onClick="{{ it.pick }}"><span class="RBottomNav_ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="{{ it.d }}"></path></svg><sc-if value="{{ it.hasBadge }}" hint-placeholder-val="{{ false }}"><i class="RBottomNav_bg">{{ it.badge }}</i></sc-if></span><span class="RBottomNav_lb">{{ it.label }}</span></button></sc-for></nav>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"items": {"editor": null}, "active": {"editor": null}, "rail": {"editor": null}, "onPick": {"editor": null}, "$preview": {"width": 390, "height": 76}}'>
+class Component extends DCLogic {
+renderVals() {
+const P = this.props;
+const items = (P.items || []).map((x) => ({ d: x.d, label: x.label, badge: x.badge || '', hasBadge: !!x.badge, cls: P.active === x.key ? 'RBottomNav_on' : '', cur: P.active === x.key ? 'page' : 'false', pick: () => { if (P.onPick) P.onPick(x.key); } }));
+return { items: items, cls: P.rail ? 'RBottomNav_rail' : '' };
+}
+}
+</script>
+</body>
+</html>

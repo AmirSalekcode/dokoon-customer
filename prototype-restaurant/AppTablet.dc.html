@@ -1,0 +1,578 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>اپ رستوران دکون (تبلت)</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:300;font-display:swap;src:url(/_blob/2ef92529418867881b213c86e0698e5f) format('truetype')}
+@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:400;font-display:swap;src:url(/_blob/bd549ffc7e0220163cf551aa8c12f971) format('truetype')}
+@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:500;font-display:swap;src:url(/_blob/2c86d88b0953b236f79c30f4ec52072f) format('truetype')}
+@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:700;font-display:swap;src:url(/_blob/17ce6732741785f9a10e038c7f86abc8) format('truetype')}
+@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:800;font-display:swap;src:url(/_blob/0208d433250cedfb8a54737f1d0176d9) format('truetype')}
+.app{--bg:#FBF0E6;--sf:#FFFFFF;--ink:#1F1A17;--mu:#7A6E66;--ln:#F0DFD0;--soft:#FCE3D0;--pr2:#C2410C;--okbg:#E6F6EC;--hd:#1F1A17;--logo1:#F6EEE8;--logo2:#E7DCD2}
+.app.dk{--bg:#17120F;--sf:#241C17;--ink:#F6EEE8;--mu:#B3A59B;--ln:#3A2E27;--soft:#3B2117;--pr2:#FF8A5C;--okbg:#10301C;--hd:#0D0907;--logo1:#F6EEE8;--logo2:#E7DCD2;color-scheme:dark}
+.app{font-family:'Yekan Bakh',Tahoma,sans-serif;color:var(--ink,#1F1A17);background:var(--bg,#FBF0E6);position:relative;overflow:hidden;width:100%;max-width:430px;margin:0 auto;height:100%;min-height:844px;font-size:14px;line-height:1.7}
+.app.wide{max-width:none;min-height:768px}
+.app *{box-sizing:border-box}
+.app button{font-family:inherit}
+@keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+@keyframes float{0%,100%{transform:translateY(0) rotate(-6deg)}50%{transform:translateY(-8px) rotate(-2deg)}}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.18)}}
+@keyframes pop{0%{transform:scale(.92)}60%{transform:scale(1.07)}100%{transform:scale(1)}}
+@keyframes glow{0%,100%{box-shadow:0 8px 24px rgba(228,80,30,.25),0 0 0 0 rgba(228,80,30,.35)}50%{box-shadow:0 8px 24px rgba(228,80,30,.25),0 0 0 12px rgba(228,80,30,0)}}
+@keyframes slideU{from{transform:translateY(100%)}to{transform:none}}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+@keyframes spin{to{transform:rotate(360deg)}}
+.ent{animation:rise .6s cubic-bezier(.2,.8,.2,1) both}
+.d1{animation-delay:.1s}.d2{animation-delay:.2s}.d3{animation-delay:.3s}.d4{animation-delay:.4s}
+html,body{height:100%}body{margin:0;background:#EADBCB}
+.sc{position:absolute;inset:0;display:flex;flex-direction:column;overflow:hidden;background:var(--bg,#FBF0E6)}
+.bd{flex:1;min-height:0;overflow-y:auto;overflow-x:hidden;padding-bottom:16px}
+.pad{padding:0 16px}
+.stk{display:flex;flex-direction:column;gap:12px;padding:12px 16px 16px}
+.sh{margin:16px 16px 4px;font-size:16px;font-weight:800;line-height:1.5}
+.sp{height:12px}
+.shell{position:absolute;inset:0;display:flex;flex-direction:column}
+.app.wide .shell{flex-direction:row}
+.mn{flex:1;min-width:0;min-height:0;display:flex;flex-direction:column;position:relative}
+.rl{flex:none;display:none}.app.wide .rl{display:block;height:100%}
+.bn{flex:none}.app.wide .bn{display:none}
+.split{flex:1;min-height:0;display:flex;gap:16px;padding:0 16px 16px}
+.lst{flex:1.1;min-width:0;overflow-y:auto;display:flex;flex-direction:column;gap:12px;padding:4px 0 16px}
+.dtl{flex:1;min-width:0;overflow-y:auto;padding:4px 0 16px}
+.col{display:flex;flex-direction:column;gap:12px}
+.app.wide .gr2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.app.wide .cen{max-width:720px;margin:0 auto;width:100%}
+.stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.app.wide .stats{grid-template-columns:repeat(4,minmax(0,1fr))}
+.demo{margin:0 16px 4px;height:40px;padding:0 16px;border:2px dashed var(--ln,#F0DFD0);border-radius:999px;background:none;color:var(--mu,#7A6E66);font-size:12px;font-weight:700;cursor:pointer;align-self:flex-start}
+.demo:focus-visible,.lk:focus-visible,.stp button:focus-visible{outline:3px solid #E4501E;outline-offset:2px}
+.nt{margin:0 16px;padding:12px 16px;border-radius:20px;background:var(--soft,#FCE3D0);color:var(--pr2,#C2410C);font-size:14px;font-weight:700;line-height:1.8}
+.nt.w{background:#FFF3D6;color:#7A4E00}.dk .nt.w{background:#3A2C0B;color:#F5B32F}
+.dockw{flex:none;animation:rise .6s cubic-bezier(.2,.8,.2,1) both}
+.scr{position:absolute;inset:0;background:rgba(31,26,23,.52);animation:fade .35s ease-out both;z-index:20}
+.sheet{position:absolute;left:0;right:0;bottom:0;z-index:30;animation:slideU .35s cubic-bezier(.2,.8,.2,1) both}
+.dlg{position:absolute;left:16px;right:16px;top:50%;transform:translateY(-50%);z-index:40;animation:pop .35s ease-out both}
+.alr{position:absolute;inset:0;z-index:25;animation:fade .3s ease-out both}
+.tst{position:absolute;left:16px;right:16px;bottom:96px;z-index:50}
+.app.wide .tst{left:auto;right:auto;width:360px;inset-inline-start:128px}
+.lg{position:absolute;inset:0;display:flex;flex-direction:column;background:var(--bg,#FBF0E6);overflow-y:auto}
+.lgh{flex:none;background:var(--hd,#1F1A17);border-radius:0 0 40px 40px;padding:48px 24px 48px;display:flex;flex-direction:column;align-items:center;gap:16px;color:#F6EEE8;text-align:center;--logo1:#fff;--logo2:#F6EEE8}
+.lgh svg.l{width:180px;height:auto}
+.lgh .tg{height:28px;padding:0 16px;border-radius:999px;background:#E4501E;color:#fff;font-size:14px;font-weight:800;line-height:28px}
+.lgh p{margin:0;font-size:14px;line-height:1.8;color:#B3A59B}
+.lgh .art{width:96px;height:96px;filter:drop-shadow(0 12px 12px rgba(0,0,0,.4));animation:float 4.5s ease-in-out infinite}
+.lgb{flex:1;padding:24px 16px 24px;display:flex;flex-direction:column;gap:16px;width:100%;max-width:480px;margin:0 auto}
+.lgb h2{margin:0;font-size:20px;font-weight:800}
+.btn{height:56px;border:0;border-radius:999px;background:#E4501E;color:#fff;font-size:16px;font-weight:800;cursor:pointer;box-shadow:0 8px 24px rgba(228,80,30,.25);transition:transform .2s ease-out}
+.btn:hover{transform:scale(1.02)}.btn:disabled{background:var(--ln,#F0DFD0);color:var(--mu,#7A6E66);box-shadow:none;cursor:not-allowed;transform:none}
+.btn:focus-visible{outline:3px solid #1F1A17;outline-offset:2px}
+.lk{border:0;background:none;color:var(--pr2,#C2410C);font-size:15px;font-weight:700;height:48px;cursor:pointer}
+.stp{background:var(--sf,#fff);border-radius:20px;padding:12px 16px;display:flex;align-items:center;gap:12px;box-shadow:0 4px 16px rgba(31,26,23,.06)}
+.stp span{flex:1;font-size:15px;font-weight:700}
+.stp button{width:48px;height:48px;border:0;border-radius:50%;background:var(--soft,#FCE3D0);color:var(--pr2,#C2410C);font-size:24px;font-weight:800;cursor:pointer;padding:0}
+.stp output{min-width:72px;text-align:center;font-size:16px;font-weight:800}
+.chs{display:flex;gap:8px;flex-wrap:wrap}
+.acc{background:var(--sf,#fff);border-radius:28px;padding:16px;box-shadow:0 4px 16px rgba(31,26,23,.06);display:flex;gap:12px;align-items:center;margin:12px 16px 0}
+.acc .av{width:56px;height:56px;border-radius:50%;background:var(--soft,#FCE3D0);flex:none;display:grid;place-items:center}.acc .av svg{width:44px;height:44px}
+.acc h3{margin:0;font-size:16px;font-weight:800;line-height:1.5}.acc p{margin:0;font-size:12px;color:var(--mu,#7A6E66)}
+.two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.rowa{display:flex;gap:8px}
+.rowa .btn{flex:1;height:52px;font-size:14px}.rowa .btn.o{background:var(--sf,#fff);color:var(--ink,#1F1A17);border:2px solid var(--ln,#F0DFD0);box-shadow:none}
+.mask{background:var(--sf,#fff);border-radius:20px;padding:12px 16px;display:flex;flex-direction:column;gap:4px;box-shadow:0 4px 16px rgba(31,26,23,.06)}
+.mask small{font-size:12px;color:var(--mu,#7A6E66);line-height:1.7}.mask b{font-size:16px;letter-spacing:.5px}
+.catrow{display:flex;align-items:flex-start;gap:8px}.catrow>*:first-child{flex:1;min-width:0}.catrow .lk{margin-top:28px}
+.ld{display:flex;justify-content:center;padding:48px}.ld i{width:40px;height:40px;border:4px solid var(--ln,#F0DFD0);border-top-color:#E4501E;border-radius:50%;animation:spin 1s linear infinite}
+@media(prefers-reduced-motion:reduce){.app *,.app *::after,.app *::before{animation:none!important;transition:none!important}}
+</style>
+</helmet>
+<div class="app {{ appCls }}" dir="rtl" lang="fa">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<linearGradient id="gBun" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F9BE5C"></stop><stop offset="1" stop-color="#C77A24"></stop></linearGradient>
+<linearGradient id="gBun2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#EBA640"></stop><stop offset="1" stop-color="#B5651A"></stop></linearGradient>
+<linearGradient id="gLet" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8ACB4B"></stop><stop offset="1" stop-color="#3F8A25"></stop></linearGradient>
+<linearGradient id="gChe" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFDA5A"></stop><stop offset="1" stop-color="#EFA21A"></stop></linearGradient>
+<linearGradient id="gPat" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7A4228"></stop><stop offset="1" stop-color="#3A1D10"></stop></linearGradient>
+<linearGradient id="gTom" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F25C40"></stop><stop offset="1" stop-color="#B0221A"></stop></linearGradient>
+<radialGradient id="gCh2" cx=".5" cy=".4" r=".7"><stop offset="0" stop-color="#FFE79C"></stop><stop offset="1" stop-color="#F0A92E"></stop></radialGradient>
+<linearGradient id="gCr" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F7D18C"></stop><stop offset="1" stop-color="#C9863A"></stop></linearGradient>
+<radialGradient id="gMeat" cx=".35" cy=".3" r=".9"><stop offset="0" stop-color="#C45A35"></stop><stop offset="1" stop-color="#5A2411"></stop></radialGradient>
+<linearGradient id="gCup" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFFFFF"></stop><stop offset="1" stop-color="#E3D6C9"></stop></linearGradient>
+<radialGradient id="gCof" cx=".4" cy=".4" r=".8"><stop offset="0" stop-color="#7A4D35"></stop><stop offset="1" stop-color="#2E1A10"></stop></radialGradient>
+<linearGradient id="gSp" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFEBB9"></stop><stop offset="1" stop-color="#EDBB62"></stop></linearGradient>
+<linearGradient id="gCr2" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#FFE3EC"></stop><stop offset="1" stop-color="#FFB9CF"></stop></linearGradient>
+<radialGradient id="gStr" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#FF6A4D"></stop><stop offset="1" stop-color="#B01E1E"></stop></radialGradient>
+<symbol id="dk-burger" viewBox="0 0 100 100"><ellipse cx="50" cy="93" rx="38" ry="5" fill="#000" opacity=".16"></ellipse><path d="M50 91c-28 0-38-2-38-14h76c0 12-10 14-38 14z" fill="url(#gBun2)"></path><rect x="11" y="64" width="78" height="9" rx="4.5" fill="url(#gTom)"></rect><rect x="10" y="52" width="80" height="14" rx="7" fill="url(#gPat)"></rect><path d="M10 51l8 9 10-8 10 9 12-9 12 9 10-8 8 8V48H10z" fill="url(#gChe)"></path><path d="M8 45q5 8 11 1t11 1 11-1 11 1 11-1 11 1 8-1v5H8z" fill="url(#gLet)"></path><path d="M12 45C12 25 28 12 50 12s38 13 38 33z" fill="url(#gBun)"></path><path d="M22 31C26 23 36 18 48 17" stroke="#fff" stroke-opacity=".55" stroke-width="3.5" fill="none" stroke-linecap="round"></path><g fill="#FFF3D2"><ellipse cx="38" cy="26" rx="3" ry="1.6" transform="rotate(-25 38 26)"></ellipse><ellipse cx="52" cy="22" rx="3" ry="1.6" transform="rotate(10 52 22)"></ellipse><ellipse cx="66" cy="28" rx="3" ry="1.6" transform="rotate(30 66 28)"></ellipse><ellipse cx="58" cy="35" rx="3" ry="1.6"></ellipse><ellipse cx="44" cy="35" rx="3" ry="1.6" transform="rotate(-15 44 35)"></ellipse><ellipse cx="74" cy="38" rx="3" ry="1.6" transform="rotate(40 74 38)"></ellipse></g></symbol>
+<symbol id="dk-pizza" viewBox="0 0 100 100"><ellipse cx="52" cy="94" rx="24" ry="4" fill="#000" opacity=".16"></ellipse><path d="M50 92L8 26Q50 8 92 26z" fill="url(#gCh2)"></path><path d="M6 24Q50 3 94 24L90 35Q50 17 10 35z" fill="url(#gCr)"></path><path d="M12 28Q50 10 88 28" stroke="#fff" stroke-opacity=".5" stroke-width="2.5" fill="none" stroke-linecap="round"></path><circle cx="38" cy="47" r="8.5" fill="url(#gMeat)"></circle><circle cx="62" cy="45" r="7.5" fill="url(#gMeat)"></circle><circle cx="50" cy="68" r="7" fill="url(#gMeat)"></circle><g fill="#fff" opacity=".4"><circle cx="35" cy="44" r="2"></circle><circle cx="59" cy="42" r="2"></circle><circle cx="47" cy="65" r="1.8"></circle></g><path d="M48 52q8-8 14 0-6 6-14 0zM30 62q6-6 11 0-5 5-11 0z" fill="url(#gLet)"></path><path d="M44 78q3 10 6 12" stroke="#FFD66B" stroke-width="3" fill="none" stroke-linecap="round"></path></symbol>
+<symbol id="dk-kebab" viewBox="0 0 100 100"><ellipse cx="50" cy="90" rx="38" ry="4" fill="#000" opacity=".14"></ellipse><g transform="rotate(-26 50 50)"><rect x="1" y="48" width="98" height="3.6" rx="1.8" fill="#C9CED6"></rect><circle cx="96" cy="49.8" r="3.4" fill="#9AA1AB"></circle><rect x="8" y="31" width="21" height="38" rx="10" fill="url(#gMeat)"></rect><rect x="31" y="35" width="13" height="30" rx="6" fill="url(#gLet)"></rect><rect x="46" y="31" width="21" height="38" rx="10" fill="url(#gMeat)"></rect><rect x="69" y="35" width="13" height="30" rx="6.5" fill="url(#gTom)"></rect><g stroke="#fff" stroke-opacity=".45" stroke-width="2.4" stroke-linecap="round"><path d="M13 38v10M51 38v10M35 40v8M73 40v8"></path></g><g stroke="#2A1208" stroke-opacity=".5" stroke-width="2" stroke-linecap="round"><path d="M18 56v7M24 55v8M56 56v7M62 55v8"></path></g></g></symbol>
+<symbol id="dk-cafe" viewBox="0 0 100 100"><ellipse cx="50" cy="88" rx="40" ry="7" fill="url(#gCup)"></ellipse><ellipse cx="50" cy="90" rx="40" ry="5" fill="#000" opacity=".1"></ellipse><path d="M72 52h5a8.5 8.5 0 0 1 0 17H70" stroke="#E4D8CC" stroke-width="5.5" fill="none" stroke-linecap="round"></path><path d="M24 46h52v16c0 14-11 24-26 24S24 76 24 62z" fill="url(#gCup)"></path><ellipse cx="50" cy="46" rx="26" ry="7" fill="#F0E6DB"></ellipse><ellipse cx="50" cy="47" rx="22" ry="5" fill="url(#gCof)"></ellipse><path d="M34 46q8 3 18 0" stroke="#C99A72" stroke-width="1.6" fill="none" opacity=".7"></path><path d="M30 56v12" stroke="#fff" stroke-width="3" stroke-linecap="round" opacity=".8"></path></symbol>
+<symbol id="dk-cake" viewBox="0 0 100 100"><ellipse cx="50" cy="90" rx="42" ry="5" fill="#000" opacity=".14"></ellipse><path d="M10 58h64v28H10z" fill="url(#gSp)"></path><path d="M10 68h64v5H10z" fill="#FFFFFF"></path><path d="M10 74h64v4H10z" fill="#C8281E" opacity=".85"></path><path d="M10 58l22-18h66L74 58z" fill="url(#gCr2)"></path><path d="M74 58l24-18v28L74 86z" fill="#E7B060"></path><path d="M10 58h64v6q-6 6-12 0t-12 0-12 0-12 0-8 0z" fill="#fff"></path><ellipse cx="52" cy="38" rx="9" ry="10" fill="url(#gStr)"></ellipse><path d="M45 31q7-5 14 0-7 3-14 0z" fill="url(#gLet)"></path><g fill="#FFE9A8"><circle cx="49" cy="38" r="1"></circle><circle cx="55" cy="36" r="1"></circle><circle cx="52" cy="43" r="1"></circle></g></symbol>
+<symbol id="dk-all" viewBox="0 0 100 100"><ellipse cx="50" cy="90" rx="42" ry="5" fill="#000" opacity=".14"></ellipse><ellipse cx="50" cy="64" rx="44" ry="26" fill="url(#gCup)"></ellipse><ellipse cx="50" cy="62" rx="32" ry="18" fill="#F7EFE7" stroke="#E1D4C6" stroke-width="2"></ellipse><use href="#dk-burger" x="26" y="22" width="48" height="48"></use></symbol>
+<linearGradient id="gN" x1="126.54" y1="251.16" x2="126.54" y2="0" gradientUnits="userSpaceOnUse"><stop offset=".01" style="stop-color:var(--logo1,#172b50)"></stop><stop offset="1" style="stop-color:var(--logo2,#0f1b35)"></stop></linearGradient><linearGradient id="gO" x1="124.91" y1="251.16" x2="124.91" y2="61.89" gradientUnits="userSpaceOnUse"><stop offset=".01" stop-color="#f36b00"></stop><stop offset="1" stop-color="#ff9d00"></stop></linearGradient><linearGradient id="gW" x1="0" y1="172.27" x2="0" y2="78.89" gradientUnits="userSpaceOnUse"><stop offset=".01" style="stop-color:var(--logo1,#172b50)"></stop><stop offset="1" style="stop-color:var(--logo2,#0f1b35)"></stop></linearGradient><linearGradient id="gOA" x1="0" y1="123.3" x2="0" y2="78.89" gradientUnits="userSpaceOnUse"><stop offset=".01" stop-color="#f36b00"></stop><stop offset="1" stop-color="#ff9d00"></stop></linearGradient><symbol id="dk-mark" viewBox="0 0 253.08 251.16"><path fill="url(#gN)" d="M253.08,86.93v77.3c0,19.64-6.3,37.76-16.94,52.3-4.04,5.52-8.68,10.53-13.85,14.89-14.53,12.33-33.13,19.74-53.41,19.74h-78.81v-34.63c0,1.98,56.55-.8,61.88-1.75,20.39-3.65,38.48-13.8,51.58-30.49,23.68-30.16,25.56-78.32,4.81-110.64-5.8-9.04-13.22-16.96-21.81-23.2-15.05-10.95-33.83-14.53-51.93-16.09-19.33-1.67-41.56-.94-59.87,6.33-7.89,3.21-15.19,7.95-21.42,13.89-12.68,12.07-20.62,28.9-21.96,46.65-.14,1.86-.21,3.72-.21,5.58v67.48c0,7.11,0,14.21,0,21.32,0,6.73,1.42,13.46-.55,19.96-1.97,6.5-5.58,12.41-10,17.44-5.25,5.98-12.75,13.03-20.07,16.04-1.07-5.12-.17-11.63-.17-16.94v-111.63c0-14.65,0-29.3,0-43.95,0-.03,0-.07,0-.1,0-15.43,4.43-29.79,12.06-41.81,4.99-7.88,11.36-14.74,18.73-20.24C43.31,5.34,58.25,0,74.39,0h94.48c20.27,0,38.88,7.4,53.41,19.72,19.37,16.39,30.79,41.36,30.79,67.21Z"></path><path fill="url(#gO)" d="M193.98,107.42c0,13.12,1.1,26.82-.02,39.84-.83-13.16-6.6-25.37-16.08-34.22-5.52-5.15-11.79-9.36-18.51-12.64-7.97-3.89-16.74-5.97-25.56-5.97-2.45,0-4.87.15-7.25.44-7.53.94-14.65,3.32-21.06,6.85-12.23,6.76-21.93,17.73-27.28,31.05-2.94,7.31-4.56,15.33-4.56,23.75v94.63h-18.29V98.39c0-13.82,7.38-25.87,18.29-32.16,3.82-2.22,8.08-3.72,12.61-4.34h68.64c22.02,2.72,39.07,22.07,39.07,45.52Z"></path></symbol><symbol id="dk-logo" viewBox="0 0 902.92 251.16"><use href="#dk-mark" width="253.08" height="251.16"></use><path fill="url(#gW)" d="M423.97,100.16c-8.32-12.8-22.76-21.26-39.17-21.26h-42.74c-1.57,0-2.85,1.28-2.85,2.85v90.52h45.59c16.41,0,30.85-8.46,39.17-21.27,4.76-7.31,7.53-16.04,7.53-25.42s-2.77-18.1-7.53-25.42ZM390.14,150.93c-2.53.27-5.15.06-7.65.06h-17.31c-.24,0-4.46,0-4.46,0v-50.84h23.48c14.18,0,26.14,11.23,26.3,25.41.09,7.89-3.54,15.5-9.71,20.41-2.34,1.86-5.01,3.56-7.93,4.42-.89.26-1.8.43-2.72.53Z"></path><path fill="url(#gW)" d="M525.73,100.16c-8.31-12.48-22.52-20.71-38.64-20.71s-30.33,8.22-38.64,20.71c-4.9,7.36-7.76,16.2-7.76,25.71s2.72,17.89,7.39,25.13c8.26,12.8,22.65,21.27,39.01,21.27s30.75-8.47,39.01-21.27c4.67-7.24,7.39-15.86,7.39-25.13s-2.86-18.34-7.76-25.71ZM492.43,151c-1.72.37-3.51.56-5.34.56s-3.62-.19-5.34-.56c-11.63-2.45-20.36-12.77-20.36-25.13,0-14.2,11.51-25.71,25.71-25.71s25.71,11.51,25.71,25.71c0,12.36-8.73,22.68-20.36,25.13Z"></path><path fill="url(#gW)" d="M629.51,172.27h-29.07l-19.35-21.27-5.21-5.73-10.8-11.87v38.88h-21.51v-91.01c0-1.3,1.06-2.36,2.36-2.36h19.15v45.29l9.6-12.21,9.31-11.82,16.73-21.26h27.37l-16.73,21.26-22,27.97,20.79,22.87,19.35,21.27Z"></path><path fill="url(#gW)" d="M705.57,100.16c-8.31-12.48-22.52-20.71-38.64-20.71s-30.33,8.22-38.64,20.71c-4.9,7.36-7.76,16.2-7.76,25.71s2.72,17.89,7.39,25.13c8.26,12.8,22.65,21.27,39.01,21.27s30.75-8.47,39.01-21.27c4.67-7.24,7.39-15.86,7.39-25.13s-2.86-18.34-7.76-25.71ZM672.27,151c-1.72.37-3.51.56-5.34.56s-3.62-.19-5.34-.56c-11.63-2.45-20.36-12.77-20.36-25.13,0-14.2,11.51-25.71,25.71-25.71s25.71,11.51,25.71,25.71c0,12.36-8.73,22.68-20.36,25.13Z"></path><path fill="url(#gW)" d="M805.4,100.16c-8.31-12.48-22.52-20.71-38.64-20.71s-30.33,8.22-38.65,20.71c-4.9,7.36-7.76,16.2-7.76,25.71s2.72,17.89,7.39,25.13c8.27,12.8,22.66,21.27,39.02,21.27s30.75-8.47,39.01-21.27c4.67-7.24,7.39-15.86,7.39-25.13s-2.86-18.34-7.76-25.71ZM772.11,151c-1.72.37-3.51.56-5.34.56s-3.62-.19-5.34-.56c-11.63-2.45-20.36-12.77-20.36-25.13,0-14.2,11.51-25.71,25.71-25.71s25.7,11.51,25.7,25.71c0,12.36-8.73,22.68-20.35,25.13Z"></path><path fill="url(#gW)" d="M902.66,154.86v17.41h-5.66c-2.63,0-5.13-1.14-6.85-3.13l-15.69-18.14-30.4-35.15v56.42h-21.5v-90.81c0-1.42,1.15-2.56,2.56-2.56h12.47c1.88,0,3.67.82,4.9,2.24l1.58,1.82,14.88,17.2,40.98,47.39c1.76,2.03,2.72,4.63,2.72,7.31Z"></path><path fill="url(#gOA)" d="M902.66,84.55v38.75l-20.01-23.14-18.39-21.26h32.74c3.13,0,5.66,2.53,5.66,5.66Z"></path><line x1="295.15" y1="61.39" x2="295.15" y2="189.77" stroke="#101d38" stroke-width="2"></line></symbol><radialGradient id="gRice" cx=".4" cy=".3" r=".9"><stop offset="0" stop-color="#FFFFFF"></stop><stop offset="1" stop-color="#EBDDBE"></stop></radialGradient><symbol id="dk-rice" viewBox="0 0 100 100"><ellipse cx="50" cy="90" rx="42" ry="5" fill="#000" opacity=".14"></ellipse><ellipse cx="50" cy="70" rx="44" ry="22" fill="url(#gCup)"></ellipse><ellipse cx="50" cy="67" rx="32" ry="14" fill="#F7EFE7" stroke="#E1D4C6" stroke-width="2"></ellipse><path d="M20 66Q22 28 50 26Q78 28 80 66Q50 80 20 66z" fill="url(#gRice)"></path><g fill="#FFD25E" opacity=".9"><ellipse cx="38" cy="46" rx="6" ry="3"></ellipse><ellipse cx="58" cy="42" rx="6" ry="3"></ellipse><ellipse cx="66" cy="54" rx="5" ry="2.6"></ellipse></g><rect x="43" y="24" width="14" height="9" rx="3" fill="#FFE79C"></rect><path d="M30 40Q36 32 46 30" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round" opacity=".8"></path></symbol><symbol id="dk-chelo" viewBox="0 0 100 100"><use href="#dk-rice" width="100" height="100"></use><use href="#dk-kebab" x="6" y="14" width="88" height="84"></use></symbol><symbol id="dk-mix" viewBox="0 0 100 100"><use href="#dk-chelo" x="18" y="0" width="64" height="64"></use><use href="#dk-burger" x="-2" y="40" width="54" height="54"></use><use href="#dk-cafe" x="46" y="42" width="54" height="54"></use></symbol><radialGradient id="gStew" cx=".4" cy=".4" r=".8"><stop offset="0" stop-color="#6B8A32"/><stop offset="1" stop-color="#2C3F14"/></radialGradient><linearGradient id="gCola" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8A4620"/><stop offset="1" stop-color="#2A1208"/></linearGradient><symbol id="dk-stew" viewBox="0 0 100 100"><ellipse cx="50" cy="90" rx="40" ry="5" fill="#000" opacity=".14"/><path d="M10 48h80c0 26-17 42-40 42S10 74 10 48z" fill="url(#gCup)"/><ellipse cx="50" cy="48" rx="40" ry="11" fill="#EFE3D6"/><ellipse cx="50" cy="49" rx="35" ry="8.5" fill="url(#gStew)"/><g fill="url(#gMeat)"><circle cx="38" cy="48" r="5.5"/><circle cx="58" cy="51" r="5"/><circle cx="48" cy="54" r="4"/></g><g fill="#9BC24A"><ellipse cx="30" cy="51" rx="4" ry="1.8"/><ellipse cx="66" cy="47" rx="4" ry="1.8"/><ellipse cx="50" cy="45" rx="3.5" ry="1.6"/></g><path d="M22 62q28 16 56 0" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round" opacity=".6"/></symbol><symbol id="dk-salad" viewBox="0 0 100 100"><ellipse cx="50" cy="90" rx="40" ry="5" fill="#000" opacity=".14"/><path d="M10 54h80c0 22-17 36-40 36S10 76 10 54z" fill="url(#gCup)"/><path d="M12 54Q14 32 30 34 36 20 52 22 68 20 74 34 88 34 88 54z" fill="url(#gLet)"/><circle cx="36" cy="42" r="8" fill="url(#gTom)"/><circle cx="62" cy="40" r="7" fill="url(#gTom)"/><circle cx="50" cy="48" r="6" fill="url(#gTom)"/><g fill="#C6E88A" stroke="#6FA83A" stroke-width="1.5"><circle cx="26" cy="48" r="5"/><circle cx="73" cy="48" r="5"/><circle cx="48" cy="34" r="4.5"/></g><path d="M20 44q4-6 10-6" stroke="#fff" stroke-width="2.4" fill="none" stroke-linecap="round" opacity=".6"/></symbol><symbol id="dk-drink" viewBox="0 0 100 100"><ellipse cx="50" cy="92" rx="26" ry="4" fill="#000" opacity=".16"/><path d="M56 26l12-20" stroke="#E4501E" stroke-width="5" stroke-linecap="round"/><path d="M28 22h44l-5 66a4 4 0 0 1-4 4H37a4 4 0 0 1-4-4z" fill="url(#gCola)"/><path d="M28 22h44l-.8 10H28.8z" fill="#E9C9A0"/><g fill="#fff" opacity=".3"><rect x="36" y="42" width="16" height="14" rx="4" transform="rotate(-10 44 49)"/><rect x="52" y="56" width="14" height="14" rx="4" transform="rotate(12 59 63)"/></g><path d="M35 34l4 50" stroke="#fff" stroke-width="3" stroke-linecap="round" opacity=".45"/></symbol><symbol id="dk-fries" viewBox="0 0 100 100"><ellipse cx="50" cy="92" rx="30" ry="4" fill="#000" opacity=".16"/><g fill="#FFC93C" stroke="#E5A416" stroke-width="1"><rect x="28" y="14" width="9" height="42" rx="3" transform="rotate(-12 32 35)"/><rect x="38" y="8" width="9" height="46" rx="3"/><rect x="49" y="12" width="9" height="44" rx="3" transform="rotate(6 53 34)"/><rect x="60" y="16" width="9" height="40" rx="3" transform="rotate(14 64 36)"/></g><path d="M24 48h52l-6 42H30z" fill="url(#gTom)"/><ellipse cx="50" cy="68" rx="11" ry="9" fill="#fff" opacity=".9"/><path d="M24 48h52" stroke="#8E1A12" stroke-width="3"/></symbol></defs></svg>
+<sc-if value="{{ isLogin }}" hint-placeholder-val="{{ true }}">
+<div class="lg"><div class="lgh"><svg class="l" viewBox="0 0 902.92 251.16" role="img" aria-label="دکون Dokoon"><use href="#dk-logo"></use></svg><span class="tg">پنل رستوران</span><svg class="art" viewBox="0 0 100 100" aria-hidden="true"><use href="#dk-kebab"></use></svg><p>سفارش‌های رستورانت را همین‌جا مدیریت کن.</p></div>
+<div class="lgb ent d1">
+<sc-if value="{{ isPhoneStep }}" hint-placeholder-val="{{ true }}"><h2>ورود به پنل رستوران</h2><dc-import name="TextField" label="شماره‌ی موبایل مدیر رستوران" value="{{ fm.phone }}" placeholder="۰۹۱۲ ۳۴۵ ۶۷۸۹" inputmode="numeric" ltr="{{ true }}" error="{{ phoneErr }}" hint="کد تأیید برای همین شماره پیامک می‌شود." on-input="{{ inPhone }}" hint-size="100%,96px"></dc-import><button class="btn" disabled="{{ phoneOff }}" onClick="{{ sendOtp }}">دریافت کد تأیید</button><button class="lk" onClick="{{ toReg }}">رستوران جدید هستم، ثبت‌نام می‌کنم</button></sc-if>
+<sc-if value="{{ isOtpStep }}" hint-placeholder-val="{{ false }}"><h2>کد تأیید را وارد کنید</h2><dc-import name="TextField" label="کد ۴ رقمی" value="{{ fm.otp }}" placeholder="۱۲۳۴" inputmode="numeric" ltr="{{ true }}" error="{{ otpErr }}" hint="{{ otpHint }}" on-input="{{ inOtp }}" hint-size="100%,96px"></dc-import><button class="btn" disabled="{{ otpOff }}" onClick="{{ doLogin }}">ورود</button><button class="lk" onClick="{{ editPhone }}">ویرایش شماره</button></sc-if>
+</div></div>
+</sc-if>
+
+<sc-if value="{{ isReg }}" hint-placeholder-val="{{ false }}">
+<div class="sc"><dc-import name="TopBar" title="ثبت‌نام رستوران" on-back="{{ back }}" hint-size="100%,80px"></dc-import>
+<div class="bd"><div class="stk cen"><dc-import name="WizardBar" steps="{{ wizSteps }}" hint-size="100%,80px"></dc-import>
+<sc-if value="{{ regStep1 }}" hint-placeholder-val="{{ true }}"><dc-import name="TextField" label="نام رستوران" value="{{ fm.rname }}" placeholder="مثلاً کبابی سنتی زاگرس" on-input="{{ inRname }}" hint-size="100%,96px"></dc-import><dc-import name="TextField" label="آدرس رستوران" value="{{ fm.raddr }}" rows="{{ 3 }}" placeholder="شهر، خیابان، پلاک" on-input="{{ inRaddr }}" hint-size="100%,140px"></dc-import><dc-import name="MapPicker" hint-size="100%,200px"></dc-import></sc-if>
+<sc-if value="{{ regStep2 }}" hint-placeholder-val="{{ false }}"><p class="nt">برای تأیید رستوران، این مدارک را بارگذاری کنید.</p><div class="two"><sc-for list="{{ docList }}" as="x" hint-placeholder-count="3"><dc-import name="UploadTile" label="{{ x.label }}" sub="{{ x.sub }}" d="{{ x.d }}" done="{{ x.done }}" on-tap="{{ x.tap }}" hint-size="100%,128px"></dc-import></sc-for></div><p class="nt">فهرست مدارک را دکون تعیین می‌کند. اگر بعداً مدرک تازه‌ای لازم شد، برای شما اعلان می‌آید و از همین‌جا بارگذاری می‌کنید.</p></sc-if>
+<sc-if value="{{ regStep3 }}" hint-placeholder-val="{{ false }}"><dc-import name="TextField" label="شماره‌ی شبا (برای تسویه‌حساب)" value="{{ fm.sheba }}" placeholder="IR…" ltr="{{ true }}" hint="تسویه فقط به حسابی که به نام مدیر رستوران است انجام می‌شود." on-input="{{ inSheba }}" hint-size="100%,120px"></dc-import><dc-import name="ToggleRow" title="پرداخت در محل (نقدی)" sub="مشتری می‌تواند هنگام تحویل به پیک نقد بپردازد" on="{{ fm.cash }}" on-flip="{{ flipRegCash }}" hint-size="100%,72px"></dc-import></sc-if>
+<sc-if value="{{ regStep4 }}" hint-placeholder-val="{{ false }}"><dc-import name="EmptyState" art="dk-all" title="درخواست شما ثبت شد" text="تیم دکون مدارک را بررسی می‌کند و نتیجه را پیامک می‌کند. معمولاً کمتر از یک روز کاری طول می‌کشد." hint-size="100%,300px"></dc-import></sc-if>
+</div></div>
+<div class="dockw"><dc-import name="ActionBar" label="{{ regCta }}" value-text="" disabled="{{ regOff }}" on-tap="{{ regNext }}" hint-size="100%,88px"></dc-import></div></div>
+</sc-if>
+
+<sc-if value="{{ isShift }}" hint-placeholder-val="{{ false }}">
+<div class="lg"><div class="lgh"><svg class="l" viewBox="0 0 902.92 251.16" role="img" aria-label="دکون Dokoon"><use href="#dk-logo"></use></svg><span class="tg">شروع شیفت</span><svg class="art" viewBox="0 0 100 100" aria-hidden="true"><use href="#dk-cafe"></use></svg><p>برای دریافت سفارش‌ها با صدا، شیفت را شروع کنید.</p></div>
+<div class="lgb ent d1"><sc-for list="{{ shiftTips }}" as="x" hint-placeholder-count="3"><dc-import name="ListRow" title="{{ x.title }}" sub="{{ x.sub }}" d="M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM12 7v5l3 2" hint-size="100%,72px"></dc-import></sc-for><button class="btn" onClick="{{ startShift }}">شروع شیفت و فعال‌سازی صدا</button></div></div>
+</sc-if>
+
+<sc-if value="{{ isMain }}" hint-placeholder-val="{{ false }}">
+<div class="shell">
+<div class="rl"><dc-import name="RBottomNav" items="{{ navItems }}" active="{{ navActive }}" rail="{{ true }}" on-pick="{{ navPick }}" hint-size="104px,100%"></dc-import></div>
+<div class="mn">
+
+<sc-if value="{{ isOrders }}" hint-placeholder-val="{{ true }}">
+<dc-import name="RHeader" rest="{{ rest.name }}" sub="{{ rest.sub }}" open="{{ isOpen }}" on-toggle="{{ toggleOpen }}" hint-size="100%,148px"></dc-import>
+<div class="sp"></div>
+<dc-import name="SegTabs" items="{{ ordTabs }}" active="{{ ordTab }}" on-pick="{{ pickOrdTab }}" hint-size="100%,64px"></dc-import>
+<button class="demo" onClick="{{ simNew }}">شبیه‌سازی سفارش جدید (نمونه)</button>
+<sc-if value="{{ isLoading }}" hint-placeholder-val="{{ false }}"><div class="ld"><i></i></div></sc-if>
+<sc-if value="{{ isError }}" hint-placeholder-val="{{ false }}"><dc-import name="ErrorState" title="سفارش‌ها بارگذاری نشد" text="اتصال را بررسی کنید و دوباره تلاش کنید." on-retry="{{ retry }}" hint-size="100%,320px"></dc-import></sc-if>
+<sc-if value="{{ isReady }}" hint-placeholder-val="{{ true }}">
+<sc-if value="{{ isClosedBanner }}" hint-placeholder-val="{{ false }}"><p class="nt w">رستوران بسته است و سفارش جدید نمی‌گیرید. برای دریافت سفارش، کلید بالا را روشن کنید.</p><div class="sp"></div></sc-if>
+<div class="split ent d1">
+<div class="lst"><sc-if value="{{ hasOrders }}" hint-placeholder-val="{{ true }}"><sc-for list="{{ tiles }}" as="t" hint-placeholder-count="3"><dc-import name="OrderTile" order="{{ t.order }}" action-label="{{ t.actionLabel }}" action-tone="{{ t.actionTone }}" selected="{{ t.selected }}" on-open="{{ t.open }}" on-action="{{ t.act }}" hint-size="100%,250px"></dc-import></sc-for></sc-if><sc-if value="{{ noOrders }}" hint-placeholder-val="{{ false }}"><dc-import name="EmptyState" art="dk-all" title="{{ emptyTitle }}" text="{{ emptyText }}" hint-size="100%,260px"></dc-import></sc-if></div>
+<sc-if value="{{ wide }}" hint-placeholder-val="{{ false }}"><div class="dtl"><sc-if value="{{ hasSel }}" hint-placeholder-val="{{ true }}"><dc-import name="OrderDetail" order="{{ selDetail }}" on-primary="{{ selPrimary }}" on-secondary="{{ selSecondary }}" on-add-time="{{ selAddTime }}" on-print="{{ doPrint }}" on-call="{{ doCall }}" hint-size="100%,900px"></dc-import></sc-if><sc-if value="{{ noSel }}" hint-placeholder-val="{{ false }}"><dc-import name="EmptyState" art="dk-all" title="سفارشی انتخاب نشده" text="یکی از سفارش‌ها را از فهرست انتخاب کنید." hint-size="100%,260px"></dc-import></sc-if></div></sc-if>
+</div>
+</sc-if>
+</sc-if>
+
+<sc-if value="{{ isOrder }}" hint-placeholder-val="{{ false }}">
+<dc-import name="TopBar" title="{{ orderTitle }}" on-back="{{ back }}" hint-size="100%,80px"></dc-import>
+<div class="bd"><div class="stk cen"><dc-import name="OrderDetail" order="{{ selDetail }}" on-primary="{{ selPrimary }}" on-secondary="{{ selSecondary }}" on-add-time="{{ selAddTime }}" on-print="{{ doPrint }}" on-call="{{ doCall }}" hint-size="100%,900px"></dc-import></div></div>
+</sc-if>
+
+<sc-if value="{{ isMenu }}" hint-placeholder-val="{{ false }}">
+<dc-import name="RHeader" rest="{{ rest.name }}" sub="{{ rest.sub }}" open="{{ isOpen }}" on-toggle="{{ toggleOpen }}" hint-size="100%,148px"></dc-import>
+<div class="sp"></div>
+<dc-import name="SegTabs" items="{{ catTabs }}" active="{{ cat }}" on-pick="{{ pickCat }}" hint-size="100%,64px"></dc-import>
+<div class="bd"><div class="stk cen">
+<div class="rowa"><button class="btn" onClick="{{ addDish }}">افزودن غذا</button><button class="btn o" onClick="{{ openCats }}">مدیریت دسته‌ها</button></div>
+<div class="gr2 col ent d1"><sc-for list="{{ dishRows }}" as="x" hint-placeholder-count="4"><dc-import name="MenuItemRow" item="{{ x.item }}" on-toggle="{{ x.flip }}" on-edit="{{ x.edit }}" hint-size="100%,96px"></dc-import></sc-for></div>
+<sc-if value="{{ noDish }}" hint-placeholder-val="{{ false }}"><dc-import name="EmptyState" art="dk-all" title="غذایی در این دسته نیست" text="با دکمه‌ی بالا اولین غذا را اضافه کنید." hint-size="100%,240px"></dc-import></sc-if>
+</div></div>
+</sc-if>
+
+<sc-if value="{{ isDish }}" hint-placeholder-val="{{ false }}">
+<dc-import name="TopBar" title="{{ dishTitle }}" on-back="{{ back }}" hint-size="100%,80px"></dc-import>
+<div class="bd"><div class="stk cen">
+<dc-import name="TextField" label="نام غذا" value="{{ de.name }}" placeholder="مثلاً چلوکباب کوبیده" error="{{ deNameErr }}" on-input="{{ inDeName }}" hint-size="100%,96px"></dc-import>
+<div class="two"><dc-import name="TextField" label="قیمت" value="{{ de.price }}" suffix="تومان" inputmode="numeric" error="{{ dePriceErr }}" on-input="{{ inDePrice }}" hint-size="100%,96px"></dc-import><dc-import name="TextField" label="قیمت قبل از تخفیف" value="{{ de.old }}" suffix="تومان" inputmode="numeric" on-input="{{ inDeOld }}" hint-size="100%,96px"></dc-import></div>
+<dc-import name="TextField" label="توضیح کوتاه" value="{{ de.desc }}" rows="{{ 3 }}" placeholder="مواد اولیه و مقدار هر پرس" on-input="{{ inDeDesc }}" hint-size="100%,140px"></dc-import>
+<h3 class="sh" style="margin:8px 0 0">دسته‌بندی</h3>
+<div class="chs"><sc-for list="{{ deCats }}" as="c" hint-placeholder-count="3"><dc-import name="FilterChip" label="{{ c.label }}" selected="{{ c.on }}" on-pick="{{ c.pick }}" hint-size="96px,40px"></dc-import></sc-for></div>
+<h3 class="sh" style="margin:8px 0 0">تصویر غذا</h3>
+<div class="chs"><sc-for list="{{ deArts }}" as="c" hint-placeholder-count="5"><dc-import name="FilterChip" label="{{ c.label }}" art="{{ c.art }}" selected="{{ c.on }}" on-pick="{{ c.pick }}" hint-size="96px,40px"></dc-import></sc-for></div>
+<h3 class="sh" style="margin:8px 0 0">عکس غذا</h3>
+<div class="two"><dc-import name="UploadTile" label="عکس غذا" sub="{{ photoSub }}" d="M4 7h3l2-3h6l2 3h3v13H4zM12 17a4 4 0 1 0 0-8 4 4 0 0 0 0 8z" done="{{ photoDone }}" on-tap="{{ upPhoto }}" hint-size="100%,128px"></dc-import><p class="nt" style="margin:0">{{ photoNote }}</p></div>
+<dc-import name="ToggleRow" title="موجود است" sub="با خاموش کردن، غذا برای مشتری ناموجود نمایش داده می‌شود" on="{{ de.available }}" on-flip="{{ flipDeAvail }}" hint-size="100%,72px"></dc-import>
+<h3 class="sh" style="margin:8px 0 0">گروه‌های گزینه و افزودنی</h3>
+<sc-if value="{{ de.allowExtras }}" hint-placeholder-val="{{ true }}"><sc-for list="{{ deGroups }}" as="g" hint-placeholder-count="2"><dc-import name="OptionGroupCard" group="{{ g.group }}" on-add="{{ g.add }}" on-edit="{{ g.edit }}" on-delete="{{ g.del }}" hint-size="100%,240px"></dc-import></sc-for><button class="btn" style="background:var(--sf,#fff);color:var(--pr2,#C2410C);border:2px solid #E4501E;box-shadow:none" onClick="{{ addGroup }}">افزودن گروه گزینه</button></sc-if>
+<sc-if value="{{ noExtras }}" hint-placeholder-val="{{ false }}"><p class="nt w">افزودنی‌ها برای کل رستوران خاموش است. از «تنظیمات تحویل و پرداخت» می‌توانید آن را روشن کنید.</p></sc-if>
+<sc-if value="{{ isEditDish }}" hint-placeholder-val="{{ false }}"><button class="lk" style="color:#C8281E" onClick="{{ askDelDish }}">حذف این غذا</button></sc-if>
+</div></div>
+<div class="dockw"><dc-import name="ActionBar" label="ذخیره‌ی غذا" value-text="" disabled="{{ dishOff }}" on-tap="{{ saveDish }}" hint-size="100%,88px"></dc-import></div>
+</sc-if>
+
+<sc-if value="{{ isReports }}" hint-placeholder-val="{{ false }}">
+<dc-import name="RHeader" rest="{{ rest.name }}" sub="{{ rest.sub }}" open="{{ isOpen }}" on-toggle="{{ toggleOpen }}" hint-size="100%,148px"></dc-import>
+<div class="sp"></div>
+<dc-import name="SegTabs" items="{{ perTabs }}" active="{{ per }}" on-pick="{{ pickPer }}" hint-size="100%,64px"></dc-import>
+<div class="bd"><div class="stk cen">
+<div class="stats ent d1"><sc-for list="{{ stats }}" as="s" hint-placeholder-count="4"><dc-import name="StatCard" label="{{ s.label }}" value="{{ s.value }}" sub="{{ s.sub }}" d="{{ s.d }}" tone="{{ s.tone }}" hint-size="100%,116px"></dc-import></sc-for></div>
+<div class="ent d2"><dc-import name="BarChart" title="{{ chartTitle }}" bars="{{ bars }}" hint-size="100%,220px"></dc-import></div>
+<h3 class="sh" style="margin:8px 0 0">پرفروش‌ترین غذاها</h3>
+<dc-import name="InfoList" rows="{{ topDishes }}" hint-size="100%,220px"></dc-import>
+<h3 class="sh" style="margin:8px 0 0">تسویه‌حساب‌ها</h3>
+<p class="nt">سهم رستوران از سفارش‌های آنلاین هر هفته به حساب شبا واریز می‌شود. سفارش‌های نقدی را پیک از مشتری می‌گیرد و در تسویه محاسبه می‌شود.</p>
+<div class="col"><sc-for list="{{ settles }}" as="x" hint-placeholder-count="3"><dc-import name="ListRow" title="{{ x.title }}" sub="{{ x.sub }}" meta="{{ x.meta }}" d="M4 7h15a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h12M16 14h2" dot="{{ x.dot }}" on-tap="{{ x.tap }}" hint-size="100%,72px"></dc-import></sc-for></div>
+</div></div>
+</sc-if>
+
+<sc-if value="{{ isAccount }}" hint-placeholder-val="{{ false }}">
+<dc-import name="RHeader" rest="{{ rest.name }}" sub="{{ rest.sub }}" open="{{ isOpen }}" on-toggle="{{ toggleOpen }}" hint-size="100%,148px"></dc-import>
+<div class="bd"><div class="cen">
+<div class="acc ent d1"><div class="av"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#dk-kebab"></use></svg></div><div><h3>{{ rest.name }}</h3><p>{{ rest.owner }} · {{ rest.phone }}</p></div></div>
+<div class="stk gr2"><sc-for list="{{ accRows }}" as="x" hint-placeholder-count="5"><dc-import name="ListRow" title="{{ x.title }}" sub="{{ x.sub }}" d="{{ x.d }}" on-tap="{{ x.tap }}" hint-size="100%,72px"></dc-import></sc-for></div>
+<div class="stk"><dc-import name="ToggleRow" title="حالت تیره" sub="مناسب کار در شب" on="{{ dark }}" on-flip="{{ flipDark }}" hint-size="100%,72px"></dc-import><button class="lk" style="color:#C8281E" onClick="{{ askLogout }}">خروج از حساب</button><p style="text-align:center;margin:0;font-size:12px;color:var(--mu,#7A6E66)">نسخه‌ی {{ version }}</p></div>
+</div></div>
+</sc-if>
+
+<sc-if value="{{ isHours }}" hint-placeholder-val="{{ false }}">
+<dc-import name="TopBar" title="ساعت کاری" on-back="{{ back }}" hint-size="100%,80px"></dc-import>
+<div class="bd"><div class="stk cen"><p class="nt">در ساعت‌های بسته، رستوران به مشتری «بسته» نمایش داده می‌شود.</p><div class="gr2 col"><sc-for list="{{ hourRows }}" as="h" hint-placeholder-count="7"><dc-import name="HoursRow" day="{{ h.day }}" on="{{ h.on }}" from="{{ h.from }}" to="{{ h.to }}" times="{{ times }}" on-flip="{{ h.flip }}" on-from="{{ h.setFrom }}" on-to="{{ h.setTo }}" hint-size="100%,120px"></dc-import></sc-for></div></div></div>
+<div class="dockw"><dc-import name="ActionBar" label="ذخیره‌ی ساعت کاری" value-text="" disabled="{{ false }}" on-tap="{{ saveHours }}" hint-size="100%,88px"></dc-import></div>
+</sc-if>
+
+<sc-if value="{{ isDelivery }}" hint-placeholder-val="{{ false }}">
+<dc-import name="TopBar" title="تنظیمات تحویل و پرداخت" on-back="{{ back }}" hint-size="100%,80px"></dc-import>
+<div class="bd"><div class="stk cen">
+<dc-import name="ToggleRow" title="پرداخت نقدی هنگام تحویل" sub="پیک مبلغ را از مشتری می‌گیرد" on="{{ cfg.allowCash }}" on-flip="{{ flipCash }}" hint-size="100%,72px"></dc-import>
+<dc-import name="ToggleRow" title="افزودنی و گزینه‌ها" sub="اگر خاموش باشد، مشتری گزینه‌ای برای غذاها نمی‌بیند" on="{{ cfg.allowExtras }}" on-flip="{{ flipExtras }}" hint-size="100%,72px"></dc-import>
+<h3 class="sh" style="margin:8px 0 0">بازه‌ی پیش‌فرض آماده‌سازی</h3>
+<p class="nt">هنگام پذیرش هر سفارش می‌توانید زمان دقیق را تغییر دهید. مشتری فقط زمان را می‌بیند.</p>
+<div class="stp"><span>حداقل زمان</span><button aria-label="افزایش" onClick="{{ minUp }}">+</button><output>{{ etaMinText }}</output><button aria-label="کاهش" onClick="{{ minDn }}">−</button></div>
+<div class="stp"><span>حداکثر زمان</span><button aria-label="افزایش" onClick="{{ maxUp }}">+</button><output>{{ etaMaxText }}</output><button aria-label="کاهش" onClick="{{ maxDn }}">−</button></div>
+</div></div>
+<div class="dockw"><dc-import name="ActionBar" label="ذخیره‌ی تنظیمات" value-text="" disabled="{{ false }}" on-tap="{{ saveCfg }}" hint-size="100%,88px"></dc-import></div>
+</sc-if>
+
+<sc-if value="{{ isInfo }}" hint-placeholder-val="{{ false }}">
+<dc-import name="TopBar" title="اطلاعات رستوران" on-back="{{ back }}" hint-size="100%,80px"></dc-import>
+<div class="bd"><div class="stk cen">
+<dc-import name="TextField" label="نام رستوران" value="{{ fm.iname }}" on-input="{{ inIname }}" hint-size="100%,96px"></dc-import>
+<dc-import name="TextField" label="آدرس" value="{{ fm.iaddr }}" rows="{{ 3 }}" on-input="{{ inIaddr }}" hint-size="100%,140px"></dc-import>
+<div class="mask"><small>تلفن رستوران</small><b>{{ rest.phone }}</b></div>
+<div class="mask"><small>شماره‌ی شبا (برای تسویه)</small><b dir="ltr" style="text-align:right">{{ rest.shebaMasked }}</b><small>برای امنیت، شبا فقط به‌صورت پنهان نمایش داده می‌شود. تغییر آن نیازمند کد تأیید پیامکی و بررسی تیم دکون است.</small></div>
+<button class="btn" style="background:var(--sf,#fff);color:var(--pr2,#C2410C);border:2px solid #E4501E;box-shadow:none" onClick="{{ askSheba }}">درخواست تغییر شبا</button>
+<div class="two"><dc-import name="UploadTile" label="لوگو" sub="تغییر لوگو" d="M4 7h3l2-3h6l2 3h3v13H4z" done="{{ true }}" on-tap="{{ toastUpload }}" hint-size="100%,128px"></dc-import><dc-import name="UploadTile" label="مجوز کسب" sub="بارگذاری مجدد" d="M7 3h7l4 4v14H7z" done="{{ true }}" on-tap="{{ toastUpload }}" hint-size="100%,128px"></dc-import></div>
+</div></div>
+<div class="dockw"><dc-import name="ActionBar" label="ذخیره‌ی اطلاعات" value-text="" disabled="{{ false }}" on-tap="{{ saveInfo }}" hint-size="100%,88px"></dc-import></div>
+</sc-if>
+
+<sc-if value="{{ isSound }}" hint-placeholder-val="{{ false }}">
+<dc-import name="TopBar" title="صدا و اعلان" on-back="{{ back }}" hint-size="100%,80px"></dc-import>
+<div class="bd"><div class="stk cen">
+<dc-import name="SoundPanel" playing="{{ snd.playing }}" level="{{ snd.level }}" tone="زنگ سفارش جدید · تا زمان پاسخ تکرار می‌شود" on-play="{{ playSnd }}" on-level="{{ setLevel }}" hint-size="100%,300px"></dc-import>
+<dc-import name="ToggleRow" title="تکرار صدا تا پاسخ" sub="تا وقتی سفارش جدید را نپذیرید یا رد نکنید" on="{{ snd.repeat }}" on-flip="{{ flipRepeat }}" hint-size="100%,72px"></dc-import>
+<dc-import name="ToggleRow" title="لرزش" sub="فقط روی گوشی‌هایی که پشتیبانی می‌کنند" on="{{ snd.vib }}" on-flip="{{ flipVib }}" hint-size="100%,72px"></dc-import>
+<p class="nt w">روی آیفون، صدا و هشدار بلند فقط وقتی برنامه باز است قابل اطمینان است. برای رستوران‌های شلوغ، گوشی یا تبلت اندروید پیشنهاد می‌شود.</p>
+</div></div>
+</sc-if>
+
+<sc-if value="{{ isHelp }}" hint-placeholder-val="{{ false }}">
+<dc-import name="TopBar" title="راهنما و پشتیبانی" on-back="{{ back }}" hint-size="100%,80px"></dc-import>
+<div class="bd"><div class="stk cen">
+<sc-for list="{{ faqs }}" as="f" hint-placeholder-count="4"><dc-import name="FaqItem" q="{{ f.q }}" a="{{ f.a }}" open="{{ f.open }}" on-toggle="{{ f.tap }}" hint-size="100%,56px"></dc-import></sc-for>
+<button class="btn" onClick="{{ toTicket }}">ارسال پیام به پشتیبانی</button>
+<dc-import name="ContactRow" title="تماس با پشتیبانی رستوران‌ها" sub="۰۲۱ ۱۲۳۴ ۵۶۷۸" art="dk-cafe" href="tel:+982112345678" hint-size="100%,96px"></dc-import>
+</div></div>
+</sc-if>
+
+<sc-if value="{{ isGroup }}" hint-placeholder-val="{{ false }}">
+<dc-import name="TopBar" title="{{ groupTitle }}" on-back="{{ back }}" hint-size="100%,80px"></dc-import>
+<div class="bd"><div class="stk cen">
+<dc-import name="TextField" label="عنوان گروه" value="{{ ge.title }}" placeholder="مثلاً نوع برنج، افزودنی‌ها" on-input="{{ inGeTitle }}" hint-size="100%,96px"></dc-import>
+<dc-import name="ToggleRow" title="انتخاب اجباری" sub="مشتری باید حتماً از این گروه یک گزینه انتخاب کند" on="{{ ge.required }}" on-flip="{{ flipGeReq }}" hint-size="100%,72px"></dc-import>
+<div class="stp"><span>حداکثر تعداد انتخاب</span><button aria-label="افزایش" onClick="{{ geMaxUp }}">+</button><output>{{ geMaxText }}</output><button aria-label="کاهش" onClick="{{ geMaxDn }}">−</button></div>
+<h3 class="sh" style="margin:8px 0 0">گزینه‌ها و قیمت</h3>
+<p class="nt">قیمت هر گزینه به مبلغ غذا اضافه می‌شود؛ خالی یا صفر یعنی رایگان.</p>
+<sc-for list="{{ geOpts }}" as="o" hint-placeholder-count="3"><dc-import name="OptionEditRow" opt-name="{{ o.name }}" opt-price="{{ o.price }}" on-name="{{ o.setName }}" on-price="{{ o.setPrice }}" on-delete="{{ o.del }}" hint-size="100%,96px"></dc-import></sc-for>
+<button class="btn" style="background:var(--sf,#fff);color:var(--pr2,#C2410C);border:2px solid #E4501E;box-shadow:none" onClick="{{ addOpt }}">افزودن گزینه</button>
+<sc-if value="{{ isOldGroup }}" hint-placeholder-val="{{ false }}"><button class="lk" style="color:#C8281E" onClick="{{ askDelGe }}">حذف این گروه</button></sc-if>
+</div></div>
+<div class="dockw"><dc-import name="ActionBar" label="ذخیره‌ی گروه" value-text="" disabled="{{ geOff }}" on-tap="{{ saveGe }}" hint-size="100%,88px"></dc-import></div>
+</sc-if>
+
+<sc-if value="{{ isCats }}" hint-placeholder-val="{{ false }}">
+<dc-import name="TopBar" title="دسته‌بندی‌های منو" on-back="{{ back }}" hint-size="100%,80px"></dc-import>
+<div class="bd"><div class="stk cen">
+<p class="nt">نام دسته را مستقیم تغییر دهید. دسته‌ای که غذا دارد حذف نمی‌شود.</p>
+<sc-for list="{{ catRows }}" as="c" hint-placeholder-count="3"><div class="catrow"><dc-import name="TextField" label="{{ c.count }}" value="{{ c.label }}" on-input="{{ c.edit }}" hint-size="100%,96px"></dc-import><button class="lk" style="color:#C8281E" onClick="{{ c.del }}">حذف</button></div></sc-for>
+<button class="btn" style="background:var(--sf,#fff);color:var(--pr2,#C2410C);border:2px solid #E4501E;box-shadow:none" onClick="{{ addCat }}">افزودن دسته</button>
+</div></div>
+<div class="dockw"><dc-import name="ActionBar" label="ذخیره‌ی دسته‌ها" value-text="" disabled="{{ false }}" on-tap="{{ saveCats }}" hint-size="100%,88px"></dc-import></div>
+</sc-if>
+
+<sc-if value="{{ isSettle }}" hint-placeholder-val="{{ false }}">
+<dc-import name="TopBar" title="{{ stlTitle }}" on-back="{{ back }}" hint-size="100%,80px"></dc-import>
+<div class="bd"><div class="stk cen">
+<div class="acc" style="margin:0"><div class="av"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#dk-cake"></use></svg></div><div><h3>{{ stlStatus }}</h3><p>تسویه هر هفته به شبای ثبت‌شده انجام می‌شود</p></div></div>
+<dc-import name="InfoList" rows="{{ stlRows }}" hint-size="100%,260px"></dc-import>
+<p class="nt w">درصد کمیسیون را دکون تعیین می‌کند و ممکن است عوض شود؛ هر تغییر از قبل به شما اطلاع داده می‌شود. نحوه‌ی تسویه‌ی فروش نقدی هنوز نهایی نشده و اعداد این صفحه نمونه است.</p>
+<button class="btn" onClick="{{ stlPrint }}">دریافت صورت‌حساب</button>
+</div></div>
+</sc-if>
+
+<sc-if value="{{ isNotifs }}" hint-placeholder-val="{{ false }}">
+<dc-import name="TopBar" title="اعلان‌ها" action-label="خواندن همه" on-back="{{ back }}" on-action="{{ readAll }}" hint-size="100%,80px"></dc-import>
+<div class="bd"><div class="stk cen">
+<sc-if value="{{ hasNotifs }}" hint-placeholder-val="{{ true }}"><sc-for list="{{ notifRows }}" as="n" hint-placeholder-count="3"><dc-import name="ListRow" title="{{ n.title }}" sub="{{ n.sub }}" meta="{{ n.meta }}" d="{{ n.d }}" dot="{{ n.dot }}" on-tap="{{ n.tap }}" hint-size="100%,72px"></dc-import></sc-for></sc-if>
+<sc-if value="{{ noNotifs }}" hint-placeholder-val="{{ false }}"><dc-import name="EmptyState" art="dk-all" title="اعلانی نیست" text="پیام‌های دکون برای رستوران اینجا نمایش داده می‌شود." hint-size="100%,260px"></dc-import></sc-if>
+</div></div>
+</sc-if>
+
+<sc-if value="{{ isTicket }}" hint-placeholder-val="{{ false }}">
+<dc-import name="TopBar" title="ارسال پیام به پشتیبانی" on-back="{{ back }}" hint-size="100%,80px"></dc-import>
+<div class="bd"><div class="stk cen">
+<h3 class="sh" style="margin:0">موضوع</h3>
+<div class="chs"><sc-for list="{{ tkCats }}" as="c" hint-placeholder-count="4"><dc-import name="FilterChip" label="{{ c.label }}" selected="{{ c.on }}" on-pick="{{ c.pick }}" hint-size="96px,40px"></dc-import></sc-for></div>
+<dc-import name="TextField" label="توضیح مشکل یا درخواست" value="{{ tkText }}" rows="{{ 5 }}" placeholder="هرچه دقیق‌تر بنویسید، سریع‌تر پاسخ می‌گیرید" hint="حداقل ۱۰ حرف" on-input="{{ inTk }}" hint-size="100%,180px"></dc-import>
+</div></div>
+<div class="dockw"><dc-import name="ActionBar" label="ارسال پیام" value-text="" disabled="{{ tkOff }}" on-tap="{{ sendTk }}" hint-size="100%,88px"></dc-import></div>
+</sc-if>
+
+<sc-if value="{{ showBn }}" hint-placeholder-val="{{ true }}"><div class="bn"><dc-import name="RBottomNav" items="{{ navItems }}" active="{{ navActive }}" rail="{{ false }}" on-pick="{{ navPick }}" hint-size="100%,76px"></dc-import></div></sc-if>
+</div></div>
+</sc-if>
+
+<sc-if value="{{ hasOverlay }}" hint-placeholder-val="{{ false }}"><div class="scr" onClick="{{ closeOverlay }}"></div></sc-if>
+<sc-if value="{{ ovPrep }}" hint-placeholder-val="{{ false }}"><div class="sheet"><dc-import name="PrepSheet" opts="{{ prepOpts }}" custom="{{ prepCustom }}" custom-val="{{ prepCustomVal }}" preview="{{ prepPreview }}" can-confirm="{{ prepCan }}" on-pick="{{ pickPrep }}" on-step="{{ stepPrep }}" on-confirm="{{ confirmPrep }}" on-close="{{ closeOverlay }}" hint-size="100%,560px"></dc-import></div></sc-if>
+<sc-if value="{{ ovReason }}" hint-placeholder-val="{{ false }}"><div class="sheet"><dc-import name="ReasonSheet" title="دلیل رد سفارش" text="دلیل برای مشتری ارسال می‌شود و مبلغ آنلاین به او برمی‌گردد." items="{{ reasonItems }}" confirm-label="رد سفارش" can-confirm="{{ reasonCan }}" on-pick="{{ pickReason }}" on-confirm="{{ confirmReason }}" on-close="{{ closeOverlay }}" hint-size="100%,500px"></dc-import></div></sc-if>
+<sc-if value="{{ ovConfirm }}" hint-placeholder-val="{{ false }}"><div class="dlg"><dc-import name="ConfirmDialog" title="{{ dlg.title }}" text="{{ dlg.text }}" confirm-label="{{ dlg.ok }}" cancel-label="انصراف" tone="{{ dlg.tone }}" on-confirm="{{ dlgOk }}" on-cancel="{{ closeOverlay }}" hint-size="100%,240px"></dc-import></div></sc-if>
+<sc-if value="{{ hasAlert }}" hint-placeholder-val="{{ false }}"><div class="alr"><dc-import name="NewOrderAlert" order="{{ alertOrder }}" timer-text="{{ alertTimer }}" progress="{{ alertProg }}" muted="{{ snd.muted }}" on-accept="{{ alertAccept }}" on-reject="{{ alertReject }}" on-mute="{{ alertMute }}" hint-size="100%,844px"></dc-import></div></sc-if>
+<sc-if value="{{ hasToast }}" hint-placeholder-val="{{ false }}"><div class="tst"><dc-import name="Toast" text="{{ toast }}" tone="{{ toastTone }}" hint-size="100%,72px"></dc-import></div></sc-if>
+<sc-if value="{{ hasErr }}" hint-placeholder-val="{{ false }}"><div style="position:absolute;inset:0;z-index:60;background:var(--bg,#FBF0E6)"><dc-import name="ErrorPage" code="{{ err.code }}" title="{{ err.title }}" text="{{ err.text }}" d="{{ err.d }}" cta="{{ err.cta }}" cta-secondary="" on-primary="{{ errRetry }}" on-secondary="{{ errRetry }}" hint-size="100%,100%"></dc-import></div></sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"status": {"editor": "enum", "options": ["ready", "loading", "error"], "default": "ready", "section": "حالت‌های صفحه"}, "layout": {"editor": "enum", "options": ["auto", "phone", "tablet"], "default": "tablet", "section": "چیدمان"}, "$preview": {"width": 1024, "height": 768}}'>
+class Component extends DCLogic {
+constructor(...a) {
+super(...a);
+const D = this.D();
+this.state = { logged: false, stack: [{ s: 'login' }], fm: { phone: '', otp: '', rname: '', raddr: '', sheba: '', cash: true, iname: D.rest.name, iaddr: D.rest.addr }, otpSent: false, regStep: 1, docs: {}, orders: D.orders, sel: 'o1', ordTab: 'new', cat: 'all', menu: D.menu, de: null, deId: '', open: true, overlay: '', prep: null, rej: null, dlg: null, alertId: '', alertLeft: 180, toast: '', toastTone: '', per: 'today', hours: D.hours, cfg: { allowCash: true, allowExtras: true, etaMin: 20, etaMax: 35 }, snd: { level: 3, muted: false, playing: false, repeat: true, vib: true }, faqOpen: -1, commission: 12, cats: D.cats, ge: null, stl: '', tk: { cat: 'order', text: '' }, notifs: D.notifs, dark: false, err: '', nextNo: 1252, w: 0 };
+try { if (typeof window !== 'undefined') {
+window.addEventListener('offline', () => this.setS({ err: 'offline' }));
+window.addEventListener('online', () => { if (this.state.err === 'offline') this.setS({ err: '' }); });
+window.addEventListener('resize', () => this.setS({ w: window.innerWidth }));
+this.state.w = window.innerWidth;
+const th = localStorage.getItem('dkr-theme'); if (th === 'dark') this.state.dark = true;
+} } catch (e) {}
+this.tick();
+}
+tick() { setTimeout(() => { const s = this.state; if (s.alertId) { if (s.alertLeft <= 1) { this.timeoutAlert(); } else { this.setS({ alertLeft: s.alertLeft - 1 }); if (!s.snd.muted && s.alertLeft % 3 === 0) this.beep(); } } this.tick(); }, 1000); }
+beep() { try { const C = window.AudioContext || window.webkitAudioContext; if (!C) return; if (!this._ac) this._ac = new C(); const ac = this._ac; const o = ac.createOscillator(); const g = ac.createGain(); o.type = 'sine'; o.frequency.value = 880; g.gain.value = 0.05 * this.state.snd.level; o.connect(g); g.connect(ac.destination); o.start(); o.stop(ac.currentTime + 0.25); if (this.state.snd.vib && navigator.vibrate) navigator.vibrate(200); } catch (e) {} }
+fa(v) { return String(v).replace(/\d/g, (d) => '۰۱۲۳۴۵۶۷۸۹'[d]); }
+money(n) { return this.fa(String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, '٬')); }
+en(v) { return String(v).replace(/[۰-۹]/g, (d) => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d)).replace(/[٠-٩]/g, (d) => '٠١٢٣٤٥٦٧٨٩'.indexOf(d)); }
+setS(o) { this.setState(o); }
+D() {
+if (this._d) return this._d;
+const O = (id, name, price) => ({ id: id, name: name, price: price });
+const ex = { id: 'extra', title: 'افزودنی‌ها', required: false, max: 3, options: [O('a', 'برنج اضافه', 45000), O('b', 'کره', 10000), O('c', 'نان سنگک', 15000)] };
+const dr = { id: 'drink', title: 'نوشیدنی', required: false, max: 1, options: [O('a', 'دوغ محلی', 25000), O('b', 'نوشابه', 20000)] };
+const sz = { id: 'size', title: 'نوع برنج', required: true, max: 1, options: [O('a', 'چلو ساده', 0), O('b', 'ته‌چین', 20000)] };
+const M = (id, cat, name, price, old, art, desc, groups, av) => ({ photo: id === 'm1' ? 'approved' : 'none', id: id, cat: cat, name: name, price: price, old: old || 0, art: art, desc: desc, groups: groups || [], available: av !== false });
+this._d = {
+docTypes: [{ id: 'lic', label: 'مجوز کسب', sub: 'عکس یا PDF', required: true, d: 'M7 3h7l4 4v14H7zM14 3v5h4' }, { id: 'nid', label: 'کارت ملی مدیر', sub: 'عکس واضح', required: true, d: 'M4 7h3l2-3h6l2 3h3v13H4zM12 17a4 4 0 1 0 0-8 4 4 0 0 0 0 8z' }, { id: 'logo', label: 'لوگو و عکس رستوران', sub: 'اختیاری', required: false, d: 'M4 7h3l2-3h6l2 3h3v13H4z' }],
+rest: { name: 'کبابی سنتی زاگرس', sub: 'شهرضا · امتیاز ۴٫۷ · ۱٬۲۴۰ نظر', owner: 'مهدی رضایی', phone: '۰۳۱ ۳۵۲۳ ۴۵۶۷', addr: 'شهرضا، خیابان امام، نبش کوچه‌ی ۱۲', shebaMasked: 'IR۶۲ •••• •••• •••• •••• ۴۵۶۷' },
+cats: [{ key: 'kebab', label: 'کباب‌ها' }, { key: 'chelo', label: 'چلوخورش' }, { key: 'side', label: 'پیش‌غذا و نوشیدنی' }],
+arts: [{ art: 'dk-kebab', label: 'کباب' }, { art: 'dk-chelo', label: 'چلو' }, { art: 'dk-stew', label: 'خورش' }, { art: 'dk-salad', label: 'سالاد' }, { art: 'dk-drink', label: 'نوشیدنی' }, { art: 'dk-rice', label: 'برنج' }],
+menu: [M('m1', 'kebab', 'چلوکباب کوبیده', 285000, 320000, 'dk-kebab', 'دو سیخ کوبیده‌ی گوسفندی با برنج ایرانی و گوجه کبابی', [sz, ex, dr]), M('m2', 'kebab', 'جوجه‌کباب با استخوان', 265000, 0, 'dk-kebab', 'سینه و ران مرغ زعفرانی با برنج', [sz, dr]), M('m3', 'kebab', 'چلوکباب برگ', 395000, 0, 'dk-kebab', 'برگ گوسفندی ممتاز با برنج و کره', [sz, ex]), M('m4', 'chelo', 'قورمه‌سبزی', 240000, 0, 'dk-stew', 'خورش سنتی با گوشت و لوبیا قرمز', [sz]), M('m5', 'chelo', 'قیمه‌ی نثار', 255000, 0, 'dk-stew', 'قیمه با زرشک و پسته', [sz], false), M('m6', 'side', 'سالاد شیرازی', 45000, 0, 'dk-salad', 'خیار، گوجه و پیاز', []), M('m7', 'side', 'دوغ محلی', 25000, 0, 'dk-drink', 'دوغ گازدار', [])],
+orders: [
+{ id: 'o1', no: '۱۲۴۸', status: 'new', min: 0, name: 'سارا احمدی', area: 'شهرضا، خیابان امام · ۰۹۱۳•••۴۵۶۷', items: [{ q: 2, name: 'چلوکباب کوبیده', opt: 'ته‌چین · دوغ محلی', price: 570000 }, { q: 1, name: 'سالاد شیرازی', opt: '', price: 45000 }], note: 'لطفاً کباب‌ها را پخته‌تر بیاورید.', pay: 'online', total: 615000, prep: 0 },
+{ id: 'o2', no: '۱۲۴۷', status: 'new', min: 2, name: 'رضا کریمی', area: 'شهرضا، بلوار ولیعصر · ۰۹۱۲•••۱۱۰۲', items: [{ q: 1, name: 'جوجه‌کباب با استخوان', opt: 'چلو ساده', price: 265000 }], note: '', pay: 'cash', total: 265000, prep: 0 },
+{ id: 'o3', no: '۱۲۴۶', status: 'prep', min: 9, name: 'نگار حسینی', area: 'شهرضا، خیابان شهید رجایی · ۰۹۳۵•••۷۷۲۱', items: [{ q: 3, name: 'چلوکباب برگ', opt: 'چلو ساده', price: 1185000 }], note: '', pay: 'online', total: 1185000, prep: 25 },
+{ id: 'o4', no: '۱۲۴۵', status: 'ready', min: 24, name: 'علی موسوی', area: 'شهرضا، کوی امام رضا · ۰۹۱۳•••۹۹۰۳', items: [{ q: 1, name: 'قورمه‌سبزی', opt: 'ته‌چین', price: 240000 }, { q: 1, name: 'دوغ محلی', opt: '', price: 25000 }], note: '', pay: 'cash', total: 265000, prep: 20, courier: { name: 'حسین جعفری', sub: 'در راه رستوران · ۳ دقیقه' } },
+{ id: 'o5', no: '۱۲۴۴', status: 'way', min: 31, name: 'مریم صادقی', area: 'شهرضا، خیابان مطهری · ۰۹۱۱•••۳۳۴۸', items: [{ q: 2, name: 'چلوکباب کوبیده', opt: 'چلو ساده', price: 570000 }], note: '', pay: 'online', total: 570000, prep: 20, courier: { name: 'محمد نادری', sub: 'در مسیر مشتری' } },
+{ id: 'o6', no: '۱۲۴۳', status: 'done', min: 95, name: 'پریسا قاسمی', area: 'شهرضا، خیابان امام · ۰۹۱۳•••۵۵۰۱', items: [{ q: 1, name: 'جوجه‌کباب با استخوان', opt: '', price: 265000 }], note: '', pay: 'online', total: 265000, prep: 20 },
+{ id: 'o7', no: '۱۲۴۲', status: 'rej', min: 130, name: 'امیر یزدانی', area: 'شهرضا، شهرک صنعتی · ۰۹۱۹•••۲۰۸۷', items: [{ q: 1, name: 'قیمه‌ی نثار', opt: '', price: 255000 }], note: '', pay: 'online', total: 255000, prep: 0, reason: 'مواد اولیه تمام شده' }
+],
+hours: [{ day: 'شنبه', on: true, from: '۱۱:۰۰', to: '۲۳:۰۰' }, { day: 'یکشنبه', on: true, from: '۱۱:۰۰', to: '۲۳:۰۰' }, { day: 'دوشنبه', on: true, from: '۱۱:۰۰', to: '۲۳:۰۰' }, { day: 'سه‌شنبه', on: true, from: '۱۱:۰۰', to: '۲۳:۰۰' }, { day: 'چهارشنبه', on: true, from: '۱۱:۰۰', to: '۲۳:۳۰' }, { day: 'پنجشنبه', on: true, from: '۱۱:۰۰', to: '۰۰:۳۰' }, { day: 'جمعه', on: false, from: '۱۲:۰۰', to: '۲۳:۰۰' }],
+report: {
+today: { rev: 4850000, ord: 17, avg: 285000, prep: 22, chart: [['۱۱', 2], ['۱۲', 5], ['۱۳', 9], ['۱۴', 4], ['۱۵', 2], ['۱۶', 1], ['۱۷', 2], ['۱۸', 5], ['۱۹', 8], ['۲۰', 6]], title: 'سفارش‌های امروز به تفکیک ساعت', top: [['چلوکباب کوبیده', '۹ پرس'], ['جوجه‌کباب با استخوان', '۵ پرس'], ['چلوکباب برگ', '۳ پرس']], subs: ['۱۲٪ بیشتر از دیروز', '۲ سفارش بیشتر', 'مشابه دیروز', '۳ دقیقه سریع‌تر'] },
+week: { rev: 31200000, ord: 112, avg: 278000, prep: 24, chart: [['ش', 14], ['ی', 15], ['د', 12], ['س', 17], ['چ', 19], ['پ', 22], ['ج', 13]], title: 'سفارش‌های این هفته', top: [['چلوکباب کوبیده', '۵۸ پرس'], ['چلوکباب برگ', '۲۹ پرس'], ['جوجه‌کباب با استخوان', '۲۷ پرس']], subs: ['۸٪ بیشتر از هفته‌ی قبل', '۹ سفارش بیشتر', '۲٪ کمتر', 'مشابه هفته‌ی قبل'] },
+month: { rev: 128400000, ord: 463, avg: 277000, prep: 23, chart: [['هفته ۱', 98], ['هفته ۲', 112], ['هفته ۳', 121], ['هفته ۴', 132]], title: 'سفارش‌های این ماه به تفکیک هفته', top: [['چلوکباب کوبیده', '۲۳۱ پرس'], ['چلوکباب برگ', '۱۲۰ پرس'], ['قورمه‌سبزی', '۹۸ پرس']], subs: ['۵٪ بیشتر از ماه قبل', '۲۴ سفارش بیشتر', 'مشابه ماه قبل', '۱ دقیقه سریع‌تر'] }
+},
+notifs: [{ id: 'n1', title: 'واریز هفتگی انجام شد', text: 'مبلغ ۲۷٬۱۰۰٬۰۰۰ تومان به حساب شما واریز شد.', time: 'دیروز', unread: true }, { id: 'n2', title: 'غذای جدید تأیید شد', text: 'قیمت و تصویر «چلوکباب برگ» در اپ مشتری نمایش داده می‌شود.', time: '۲ روز پیش', unread: true }, { id: 'n3', title: 'به‌روزرسانی قوانین', text: 'قوانین تسویه‌حساب رستوران‌ها به‌روز شد.', time: 'هفته‌ی پیش', unread: false }],
+settles: [{ id: 's1', title: 'هفته‌ی جاری', online: 3100000, cash: 1250000, done: false, sub: 'در انتظار پایان هفته' }, { id: 's2', title: 'هفته‌ی ۴ آبان', online: 31000000, cash: 8000000, done: true, sub: 'واریز شد · بانک ملی' }, { id: 's3', title: 'هفته‌ی ۲۸ مهر', online: 27500000, cash: 6500000, done: true, sub: 'واریز شد · بانک ملی' }],
+faqs: [{ q: 'چطور سفارش را قبول کنم؟', a: 'روی «پذیرش سفارش» بزنید، زمان آماده‌سازی را انتخاب و تأیید کنید. مشتری همان زمان را می‌بیند.' }, { q: 'اگر مادهٔ اولیه تمام شد چه کنم؟', a: 'غذا را از بخش منو «ناموجود» کنید. اگر سفارشی آمده بود، آن را با دلیل رد کنید تا مبلغ به مشتری برگردد.' }, { q: 'سفارش‌های نقدی چطور تسویه می‌شوند؟', a: 'پیک پول را از مشتری می‌گیرد. نحوه‌ی تسویه با رستوران در بخش گزارش‌ها دیده می‌شود.' }, { q: 'چطور ساعت کاری را عوض کنم؟', a: 'از تب «حساب» وارد «ساعت کاری» شوید. برای بستن سریع هم می‌توانید کلید بالای صفحه را خاموش کنید.' }],
+reasons: ['مواد اولیه تمام شده', 'رستوران شلوغ است', 'نزدیک ساعت بسته شدن', 'آدرس خارج از محدوده است'],
+errors: { offline: { code: '', title: 'اینترنت متصل نیست', text: 'برای دریافت سفارش‌ها باید به اینترنت وصل باشید. اتصال را بررسی کنید.', d: 'M3 9a15 15 0 0 1 18 0M6 12.5a10 10 0 0 1 12 0M9.5 16a5 5 0 0 1 5 0M12 19.5h.01M4 4l16 16', cta: 'تلاش دوباره' } },
+times: ['۰۶:۰۰', '۰۷:۰۰', '۰۸:۰۰', '۰۹:۰۰', '۱۰:۰۰', '۱۱:۰۰', '۱۲:۰۰', '۱۳:۰۰', '۱۴:۰۰', '۱۵:۰۰', '۱۶:۰۰', '۱۷:۰۰', '۱۸:۰۰', '۱۹:۰۰', '۲۰:۰۰', '۲۱:۰۰', '۲۲:۰۰', '۲۲:۳۰', '۲۳:۰۰', '۲۳:۳۰', '۰۰:۰۰', '۰۰:۳۰', '۰۱:۰۰', '۰۲:۰۰']
+};
+return this._d;
+}
+top() { const s = this.state.stack; return s[s.length - 1].s; }
+push(s) { this.setS({ stack: this.state.stack.concat([{ s: s }]), overlay: '' }); }
+back() { const s = this.state.stack; if (s.length > 1) this.setS({ stack: s.slice(0, -1), overlay: '' }); }
+root(s) { this.setS({ stack: [{ s: s }], overlay: '' }); }
+toast(t, tone) { this.setS({ toast: t, toastTone: tone || '' }); clearTimeout(this._tt); this._tt = setTimeout(() => this.setS({ toast: '' }), 2600); }
+isWide() { const L = this.props.layout; if (L === 'tablet') return true; if (L === 'phone') return false; return (this.state.w || 0) >= 720; }
+upd(id, patch) { this.setS({ orders: this.state.orders.map((o) => (o.id === id ? Object.assign({}, o, patch) : o)) }); }
+getO(id) { return this.state.orders.find((o) => o.id === id); }
+statusInfo(o) { const m = { new: ['جدید', 'new'], prep: ['در حال آماده‌سازی', 'prep'], ready: ['آماده تحویل به پیک', 'ready'], way: ['در مسیر مشتری', 'way'], done: ['تحویل شد', 'done'], rej: ['رد شد', 'bad'] }; return m[o.status]; }
+agoText(m) { return m < 1 ? 'همین الان' : this.fa(m) + ' دقیقه پیش'; }
+payText(o) { return o.pay === 'cash' ? 'نقدی هنگام تحویل' : 'پرداخت آنلاین'; }
+actionFor(o) { if (o.status === 'new') return { label: 'پذیرش سفارش', tone: '' }; if (o.status === 'prep') return { label: 'سفارش آماده است', tone: 'ok' }; if (o.status === 'ready') return { label: 'تحویل به پیک شد', tone: 'dark' }; return null; }
+tileOf(o) { const si = this.statusInfo(o); const ac = this.actionFor(o); const items = o.items.map((i) => this.fa(i.q) + '× ' + i.name).join('، '); let extra = ''; if (o.status === 'prep') extra = 'آماده‌سازی: ' + this.fa(o.prep) + ' دقیقه'; if (o.status === 'rej') extra = o.reason; return { order: { no: '#' + o.no, name: o.name, itemsText: items, total: this.money(o.total) + ' تومان', statusLabel: si[0], tone: si[1], timeText: this.agoText(o.min), pay: o.pay, payLabel: this.payText(o), extraText: extra }, actionLabel: ac ? ac.label : '', actionTone: ac ? ac.tone : '' }; }
+detailOf(o) { if (!o) return null; const si = this.statusInfo(o); const ac = this.actionFor(o); const sub = o.items.reduce((a, i) => a + i.price, 0); return { no: '#' + o.no, statusLabel: si[0], tone: si[1], placed: this.agoText(o.min), etaText: o.status === 'prep' ? 'زمان آماده‌سازی: ' + this.fa(o.prep) + ' دقیقه' : (o.status === 'rej' ? 'دلیل رد: ' + o.reason : ''), canAddTime: o.status === 'prep', items: o.items.map((i) => ({ q: this.fa(i.q), name: i.name, opt: i.opt, price: this.money(i.price) })), note: o.note, rows: [{ label: 'جمع غذاها', value: this.money(sub) + ' تومان' }], total: this.money(o.total) + ' تومان', pay: o.pay, payText: o.pay === 'cash' ? 'نقدی هنگام تحویل؛ پیک از مشتری می‌گیرد' : 'پرداخت آنلاین انجام شده است', customer: o.name, area: o.area, courier: o.courier ? { name: o.courier.name, sub: o.courier.sub, canCall: true } : null, primary: ac ? { label: ac.label, tone: ac.tone } : { label: '' }, secondaryLabel: (o.status === 'new' || o.status === 'prep') ? 'رد یا لغو سفارش' : '' }; }
+act(id) { const o = this.getO(id); if (!o) return; if (o.status === 'new') this.openPrep(id); else if (o.status === 'prep') { this.upd(id, { status: 'ready' }); this.toast('سفارش آماده شد؛ پیک مطلع می‌شود'); } else if (o.status === 'ready') { this.upd(id, { status: 'way' }); this.toast('تحویل به پیک ثبت شد'); } }
+openPrep(id) { this.setS({ prep: { id: id, key: null, custom: 45 }, overlay: 'prep' }); }
+openReject(id) { this.setS({ rej: { id: id, reason: '' }, overlay: 'reason' }); }
+openOrder(id) { if (this.isWide()) this.setS({ sel: id }); else this.setS({ sel: id, stack: this.state.stack.concat([{ s: 'order' }]) }); }
+newOrder() { const s = this.state; const n = s.nextNo; const o = { id: 'n' + n, no: this.fa(n), status: 'new', min: 0, name: 'زهرا نوری', area: 'شهرضا، خیابان شریعتی · ۰۹۱۳•••۶۶۱۴', items: [{ q: 2, name: 'چلوکباب کوبیده', opt: 'ته‌چین', price: 570000 }, { q: 1, name: 'دوغ محلی', opt: '', price: 25000 }], note: 'بدون پیاز لطفاً', pay: 'online', total: 595000, prep: 0 }; this.setS({ orders: [o].concat(s.orders), nextNo: n + 1, alertId: o.id, alertLeft: 180, sel: o.id }); }
+timeoutAlert() { const id = this.state.alertId; this.upd(id, { status: 'rej', reason: 'پاسخی داده نشد' }); this.setS({ alertId: '' }); this.toast('پاسخی ندادید؛ سفارش لغو شد', 'warn'); }
+build() {
+const s = this.state; const D = this.D(); const wide = this.isWide(); const t = this.top(); const st = this.props.status || 'ready';
+const v = { wide: wide, rest: D.rest, version: '۱٫۰٫۰', dark: s.dark, times: D.times };
+v.appCls = (wide ? 'wide ' : '') + (s.dark ? 'dk' : '');
+v.isLogin = !s.logged && t === 'login'; v.isReg = !s.logged && t === 'reg'; v.isShift = s.logged && t === 'shift'; v.isMain = s.logged && t !== 'shift';
+v.isPhoneStep = !s.otpSent; v.isOtpStep = s.otpSent;
+const ph = this.en(s.fm.phone).replace(/\s/g, ''); const phOk = /^09\d{9}$/.test(ph);
+v.fm = s.fm; v.phoneErr = ph.length > 0 && !phOk && ph.length >= 11 ? 'شماره‌ی موبایل درست نیست' : ''; v.phoneOff = !phOk; v.otpErr = ''; v.otpHint = 'کد به ' + s.fm.phone + ' ارسال شد. برای نمونه هر کد ۴ رقمی پذیرفته می‌شود.'; v.otpOff = this.en(s.fm.otp).replace(/\D/g, '').length !== 4;
+v.inPhone = (x) => this.setS({ fm: Object.assign({}, this.state.fm, { phone: x }) });
+v.inOtp = (x) => this.setS({ fm: Object.assign({}, this.state.fm, { otp: x }) });
+v.sendOtp = () => this.setS({ otpSent: true });
+v.editPhone = () => this.setS({ otpSent: false });
+v.doLogin = () => this.setS({ logged: true, stack: [{ s: 'shift' }], otpSent: false });
+v.startShift = () => { this.beep(); this.setS({ stack: [{ s: 'orders' }] }); this.toast('شیفت شروع شد؛ صدای هشدار فعال است'); };
+v.shiftTips = [{ title: 'این صفحه را باز نگه دارید', sub: 'سفارش‌ها فقط وقتی صفحه باز و آنلاین است با صدا می‌رسند.' }, { title: 'صدا را تأیید کنید', sub: 'مرورگر بدون یک لمس اول اجازه‌ی پخش صدا نمی‌دهد؛ دکمه‌ی پایین همین کار را می‌کند.' }, { title: 'صفحه را خاموش نگذارید', sub: 'در تنظیمات سیستم، خاموش‌شدن خودکار صفحه را غیرفعال کنید.' }];
+v.toReg = () => this.setS({ stack: [{ s: 'login' }, { s: 'reg' }], regStep: 1 });
+// registration
+v.wizSteps = ['اطلاعات', 'مدارک', 'تسویه', 'بررسی'].map((l, i) => ({ label: l, state: i + 1 < s.regStep ? 'done' : (i + 1 === s.regStep ? 'cur' : 'todo') }));
+v.regStep1 = s.regStep === 1; v.regStep2 = s.regStep === 2; v.regStep3 = s.regStep === 3; v.regStep4 = s.regStep === 4;
+v.docs = s.docs; v.regCta = s.regStep === 3 ? 'ارسال برای بررسی' : (s.regStep === 4 ? 'بازگشت به ورود' : 'ادامه');
+v.regOff = (s.regStep === 1 && (s.fm.rname.trim().length < 2 || s.fm.raddr.trim().length < 8)) || (s.regStep === 2 && D.docTypes.some((x) => x.required && !s.docs[x.id])) || (s.regStep === 3 && this.en(s.fm.sheba).replace(/\s/g, '').length < 20);
+v.regNext = () => { if (s.regStep === 4) { this.setS({ stack: [{ s: 'login' }], regStep: 1 }); return; } this.setS({ regStep: s.regStep + 1 }); };
+v.inRname = (x) => this.setS({ fm: Object.assign({}, s.fm, { rname: x }) }); v.inRaddr = (x) => this.setS({ fm: Object.assign({}, s.fm, { raddr: x }) }); v.inSheba = (x) => this.setS({ fm: Object.assign({}, s.fm, { sheba: x }) });
+v.flipRegCash = () => this.setS({ fm: Object.assign({}, s.fm, { cash: !s.fm.cash }) });
+v.docList = D.docTypes.map((x) => ({ label: x.label + (x.required ? '' : ''), sub: x.required ? x.sub : 'اختیاری · ' + x.sub, d: x.d, done: !!s.docs[x.id], tap: () => { const n = Object.assign({}, s.docs); n[x.id] = true; this.setS({ docs: n }); } }));
+// nav
+v.back = () => this.back();
+const newCnt = s.orders.filter((o) => o.status === 'new').length;
+const D_ = { orders: 'M7 3h10a1 1 0 0 1 1 1v17l-3-2-3 2-3-2-3 2V4a1 1 0 0 1 1-1zM9 8h6M9 12h6', menu: 'M5 4v7a3 3 0 0 0 3 3v6M8 4v6M11 4v7a3 3 0 0 1-3 3M17 4c-2 1-3 4-3 7h3v9', reports: 'M5 20V11M12 20V5M19 20v-7', account: 'M12 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8zM4 21a8 8 0 0 1 16 0' };
+v.navItems = [{ key: 'orders', label: 'سفارش‌ها', d: D_.orders, badge: newCnt ? this.fa(newCnt) : '' }, { key: 'menu', label: 'منو', d: D_.menu }, { key: 'reports', label: 'گزارش', d: D_.reports }, { key: 'account', label: 'حساب', d: D_.account }];
+const tabRoots = ['orders', 'menu', 'reports', 'account'];
+v.navActive = ({ order: 'orders', dish: 'menu', group: 'menu', cats: 'menu', settle: 'reports', hours: 'account', delivery: 'account', info: 'account', sound: 'account', help: 'account', notifs: 'account', ticket: 'account' })[t] || t;
+v.navPick = (k) => this.root(k);
+v.showBn = tabRoots.indexOf(t) >= 0;
+v.isOrders = t === 'orders'; v.isOrder = t === 'order'; v.isMenu = t === 'menu'; v.isDish = t === 'dish'; v.isReports = t === 'reports'; v.isAccount = t === 'account'; v.isHours = t === 'hours'; v.isDelivery = t === 'delivery'; v.isInfo = t === 'info'; v.isSound = t === 'sound'; v.isHelp = t === 'help'; v.isGroup = t === 'group'; v.isCats = t === 'cats'; v.isSettle = t === 'settle'; v.isNotifs = t === 'notifs'; v.isTicket = t === 'ticket';
+v.isOpen = s.open; v.isClosedBanner = !s.open;
+v.toggleOpen = () => { if (s.open) this.setS({ dlg: { key: 'close', title: 'بستن رستوران؟', text: 'تا وقتی دوباره روشن نکنید، سفارش جدید نمی‌گیرید. سفارش‌های در جریان سر جایشان می‌مانند.', ok: 'بستن رستوران', tone: 'danger' }, overlay: 'confirm' }); else { this.setS({ open: true }); this.toast('رستوران باز شد'); } };
+// orders
+const cnt = (k) => s.orders.filter((o) => o.status === k).length;
+v.ordTabs = [{ key: 'new', label: 'جدید', count: this.fa(cnt('new')), hot: cnt('new') > 0 }, { key: 'prep', label: 'در حال آماده‌سازی', count: this.fa(cnt('prep')) }, { key: 'ready', label: 'آماده/ در مسیر', count: this.fa(cnt('ready') + cnt('way')) }, { key: 'done', label: 'تاریخچه' }];
+v.ordTab = s.ordTab; v.pickOrdTab = (k) => this.setS({ ordTab: k });
+const inTab = (o) => (s.ordTab === 'ready' ? (o.status === 'ready' || o.status === 'way') : (s.ordTab === 'done' ? (o.status === 'done' || o.status === 'rej') : o.status === s.ordTab));
+const list = s.orders.filter(inTab);
+v.tiles = list.map((o) => { const x = this.tileOf(o); return { order: x.order, actionLabel: x.actionLabel, actionTone: x.actionTone, selected: wide && s.sel === o.id, open: () => this.openOrder(o.id), act: () => this.act(o.id) }; });
+v.hasOrders = list.length > 0; v.noOrders = list.length === 0;
+v.emptyTitle = ({ new: 'سفارش جدیدی نیست', prep: 'سفارشی در حال آماده‌سازی نیست', ready: 'سفارشی در انتظار پیک نیست', done: 'هنوز سفارشی ثبت نشده' })[s.ordTab]; v.emptyText = s.open ? 'همین که سفارشی برسد، با صدا به شما خبر می‌دهیم.' : 'رستوران بسته است؛ برای دریافت سفارش آن را باز کنید.';
+v.isLoading = st === 'loading'; v.isError = st === 'error'; v.isReady = st === 'ready'; v.retry = () => this.toast('در نسخه‌ی نمونه، حالت صفحه از تنظیمات طراحی عوض می‌شود', 'warn');
+const selO = this.getO(s.sel); v.hasSel = !!selO; v.noSel = !selO; v.selDetail = this.detailOf(selO); v.orderTitle = selO ? 'سفارش #' + selO.no : 'سفارش';
+v.selPrimary = () => { if (selO) this.act(selO.id); }; v.selSecondary = () => { if (selO) this.openReject(selO.id); }; v.selAddTime = () => { if (selO) { this.upd(selO.id, { prep: selO.prep + 5 }); this.toast('۵ دقیقه به زمان آماده‌سازی اضافه شد'); } };
+v.doPrint = () => this.toast('رسید برای چاپگر ارسال شد (نمونه)'); v.doCall = () => this.toast('تماس با پیک از طریق شماره‌ی امن دکون (نمونه)');
+v.simNew = () => this.newOrder();
+// alert
+const ao = this.getO(s.alertId); v.hasAlert = !!ao && s.logged;
+v.alertOrder = ao ? { no: '#' + ao.no, items: ao.items.map((i) => ({ q: this.fa(i.q) + '×', name: i.name, opt: i.opt })), note: ao.note, pay: ao.pay, payLabel: this.payText(ao), total: this.money(ao.total) + ' تومان' } : {};
+v.alertTimer = this.fa(Math.floor(s.alertLeft / 60)) + ':' + this.fa(String(s.alertLeft % 60).padStart(2, '0')); v.alertProg = s.alertLeft / 180;
+v.alertAccept = () => { this.openPrep(s.alertId); }; v.alertReject = () => this.openReject(s.alertId); v.alertMute = () => this.setS({ snd: Object.assign({}, s.snd, { muted: !s.snd.muted }) });
+// prep sheet
+const pp = s.prep; const keys = [15, 20, 30, 40]; const cur = pp ? pp.key : null; const mins = pp ? (cur === 'c' ? pp.custom : cur) : 0;
+v.prepOpts = keys.map((k) => ({ key: k, big: this.fa(k), small: 'دقیقه', on: cur === k })).concat([{ key: 'c', big: 'دلخواه', small: 'زمان دیگر', on: cur === 'c' }]);
+v.prepCustom = cur === 'c'; v.prepCustomVal = pp ? this.fa(pp.custom) + ' دقیقه' : ''; v.prepCan = !!cur; v.prepPreview = cur ? 'حدود ' + this.fa(mins) + ' دقیقه تا آماده شدن' : 'یک زمان انتخاب کنید';
+v.pickPrep = (k) => this.setS({ prep: Object.assign({}, s.prep, { key: k }) }); v.stepPrep = (d) => this.setS({ prep: Object.assign({}, s.prep, { custom: Math.max(5, Math.min(120, s.prep.custom + d)) }) });
+v.confirmPrep = () => { const p = s.prep; if (!p || !p.key) return; const m = p.key === 'c' ? p.custom : p.key; this.upd(p.id, { status: 'prep', prep: m }); this.setS({ overlay: '', prep: null, alertId: s.alertId === p.id ? '' : s.alertId, ordTab: 'prep' }); this.toast('سفارش پذیرفته شد · ' + this.fa(m) + ' دقیقه'); };
+// reject
+v.reasonItems = D.reasons.map((r) => ({ id: r, label: r, on: s.rej && s.rej.reason === r })); v.reasonCan = !!(s.rej && s.rej.reason);
+v.pickReason = (id) => this.setS({ rej: Object.assign({}, s.rej, { reason: id }) });
+v.confirmReason = () => { const r = s.rej; if (!r || !r.reason) return; this.upd(r.id, { status: 'rej', reason: r.reason }); this.setS({ overlay: '', rej: null, alertId: s.alertId === r.id ? '' : s.alertId }); this.toast('سفارش رد شد؛ مشتری مطلع می‌شود'); };
+// overlays
+v.hasOverlay = !!s.overlay; v.ovPrep = s.overlay === 'prep'; v.ovReason = s.overlay === 'reason'; v.ovConfirm = s.overlay === 'confirm';
+v.closeOverlay = () => this.setS({ overlay: '', prep: null, rej: null, dlg: null });
+v.dlg = s.dlg || { title: '', text: '', ok: '', tone: '' };
+v.dlgOk = () => { const k = s.dlg && s.dlg.key; if (k === 'close') { this.setS({ open: false, overlay: '', dlg: null }); this.toast('رستوران بسته شد', 'warn'); } else if (k === 'logout') { this.setS({ logged: false, overlay: '', dlg: null, stack: [{ s: 'login' }], alertId: '' }); } else if (k === 'delDish') { this.setS({ menu: s.menu.filter((m) => m.id !== s.deId), overlay: '', dlg: null, stack: s.stack.slice(0, -1) }); this.toast('غذا حذف شد'); } else if (k === 'delGroup') { this.setDe({ groups: s.de.groups.filter((x) => x.id !== s.dlg.gid) }); this.setS({ overlay: '', dlg: null, stack: s.top === 'group' ? s.stack : s.stack }); this.toast('گروه حذف شد'); } else if (k === 'delGroup2') { this.setDe({ groups: s.de.groups.filter((x) => x.id !== s.ge.gid) }); this.setS({ overlay: '', dlg: null, ge: null, stack: s.stack.slice(0, -1) }); this.toast('گروه حذف شد'); } else if (k === 'sheba') { this.setS({ overlay: '', dlg: null }); this.toast('درخواست ثبت شد؛ کد تأیید پیامک می‌شود'); } };
+v.hasToast = !!s.toast; v.toast = s.toast; v.toastTone = s.toastTone;
+// menu
+v.catTabs = [{ key: 'all', label: 'همه' }].concat(s.cats.map((c) => ({ key: c.key, label: c.label, count: this.fa(s.menu.filter((m) => m.cat === c.key).length) })));
+v.cat = s.cat; v.pickCat = (k) => this.setS({ cat: k });
+const ml = s.menu.filter((m) => s.cat === 'all' || m.cat === s.cat); v.noDish = ml.length === 0;
+v.dishRows = ml.map((m) => ({ item: { name: m.name, price: this.money(m.price) + ' تومان', old: m.old ? this.money(m.old) : '', art: m.art, available: m.available }, flip: () => { this.setS({ menu: s.menu.map((x) => (x.id === m.id ? Object.assign({}, x, { available: !x.available }) : x)) }); this.toast(m.available ? m.name + ' ناموجود شد' : m.name + ' موجود شد'); }, edit: () => this.editDish(m.id) }));
+v.addDish = () => this.editDish('');
+const de = s.de || { name: '', price: '', old: '', desc: '', cat: 'kebab', art: 'dk-kebab', available: true, groups: [], allowExtras: true };
+v.de = Object.assign({}, de, { allowExtras: s.cfg.allowExtras }); v.isEditDish = !!s.deId; v.dishTitle = s.deId ? 'ویرایش غذا' : 'غذای جدید';
+v.deNameErr = ''; v.dePriceErr = ''; const pr = parseInt(this.en(de.price).replace(/\D/g, ''), 10); v.dishOff = de.name.trim().length < 2 || !(pr > 0);
+v.inDeName = (x) => this.setDe({ name: x }); v.inDePrice = (x) => this.setDe({ price: x }); v.inDeOld = (x) => this.setDe({ old: x }); v.inDeDesc = (x) => this.setDe({ desc: x }); v.flipDeAvail = () => this.setDe({ available: !de.available });
+v.deCats = s.cats.map((c) => ({ label: c.label, on: de.cat === c.key, pick: () => this.setDe({ cat: c.key }) })); v.deArts = D.arts.map((a) => ({ label: a.label, art: a.art, on: de.art === a.art, pick: () => this.setDe({ art: a.art }) }));
+v.noExtras = !s.cfg.allowExtras; const ph_ = de.photo || 'none'; v.photoDone = ph_ !== 'none'; v.photoSub = ph_ === 'pending' ? 'در انتظار تأیید دکون · تغییر' : (ph_ === 'approved' ? 'تأیید شده · تغییر' : 'عکس واقعی غذا'); v.photoNote = ph_ === 'pending' ? 'عکس شما بررسی می‌شود (معمولاً کمتر از یک روز). تا آن موقع تصویر پیش‌فرض دکون نمایش داده می‌شود.' : (ph_ === 'approved' ? 'این عکس برای مشتری‌ها نمایش داده می‌شود. عکس جدید هم قبل از نمایش بررسی می‌شود.' : 'عکس واقعی غذا فروش را بالا می‌برد. عکس از جلو و با نور روز، بدون متن و لوگو باشد.'); v.upPhoto = () => { this.setDe({ photo: 'pending' }); this.toast('عکس ارسال شد؛ بعد از تأیید دکون نمایش داده می‌شود'); };
+const rule = (g) => (g.required ? 'انتخاب ' : 'تا ') + this.fa(g.max || 1) + ' مورد · ' + (g.required ? 'اجباری' : 'اختیاری');
+v.deGroups = de.groups.map((g) => ({ group: { title: g.title, required: g.required, rule: rule(g), options: g.options.map((o) => ({ name: o.name, price: o.price ? this.money(o.price) + ' تومان' : 'رایگان' })) }, add: () => this.editGroup(g.id, true), edit: () => this.editGroup(g.id, false), del: () => this.setS({ dlg: { key: 'delGroup', gid: g.id, title: 'حذف گروه «' + g.title + '»؟', text: 'همه‌ی گزینه‌های این گروه از غذا برداشته می‌شود.', ok: 'حذف گروه', tone: 'danger' }, overlay: 'confirm' }) }));
+v.addGroup = () => this.editGroup('', true);
+v.askDelDish = () => this.setS({ dlg: { key: 'delDish', title: 'حذف این غذا؟', text: 'غذا از منوی مشتری‌ها هم برداشته می‌شود. اگر فقط موقتاً تمام شده، آن را ناموجود کنید.', ok: 'حذف غذا', tone: 'danger' }, overlay: 'confirm' });
+v.saveDish = () => { const d = s.de; const price = parseInt(this.en(d.price).replace(/\D/g, ''), 10); const old = parseInt(this.en(d.old || '').replace(/\D/g, ''), 10) || 0; const item = { id: s.deId || 'm' + Date.now(), cat: d.cat, name: d.name.trim(), price: price, old: old, art: d.art, desc: d.desc, groups: d.groups, available: d.available, photo: d.photo || 'none' }; this.setS({ menu: s.deId ? s.menu.map((m) => (m.id === s.deId ? item : m)) : s.menu.concat([item]), stack: s.stack.slice(0, -1) }); this.toast('غذا ذخیره شد'); };
+// reports
+const R = D.report[s.per]; v.perTabs = [{ key: 'today', label: 'امروز' }, { key: 'week', label: 'این هفته' }, { key: 'month', label: 'این ماه' }]; v.per = s.per; v.pickPer = (k) => this.setS({ per: k });
+v.stats = [{ label: 'درآمد', value: this.money(R.rev) + ' تومان', sub: R.subs[0], tone: 'up', d: 'M4 7h15a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h12M16 14h2' }, { label: 'تعداد سفارش', value: this.fa(R.ord), sub: R.subs[1], tone: 'up', d: 'M7 3h10a1 1 0 0 1 1 1v17l-3-2-3 2-3-2-3 2V4a1 1 0 0 1 1-1zM9 8h6M9 12h6' }, { label: 'میانگین هر سفارش', value: this.money(R.avg) + ' تومان', sub: R.subs[2], tone: '', d: 'M5 20V11M12 20V5M19 20v-7' }, { label: 'زمان آماده‌سازی', value: this.fa(R.prep) + ' دقیقه', sub: R.subs[3], tone: 'up', d: 'M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM12 7v5l3 2' }];
+const mx = Math.max.apply(null, R.chart.map((c) => c[1])); v.chartTitle = R.title; v.bars = R.chart.map((c, i) => ({ label: c[0], v: this.fa(c[1]), h: (c[1] / mx) * 100, on: c[1] === mx }));
+v.topDishes = R.top.map((x) => ({ label: x[0], value: x[1] }));
+const stlCalc = (x) => { const comm = Math.round((x.online + x.cash) * (s.commission / 100)); return { comm: comm, net: x.online - comm }; };
+v.settles = D.settles.map((x) => ({ title: x.title, sub: x.sub, meta: this.money(stlCalc(x).net) + ' تومان', dot: !x.done, tap: () => this.setS({ stl: x.id, stack: s.stack.concat([{ s: 'settle' }]) }) }));
+const sx = D.settles.find((x) => x.id === s.stl) || D.settles[0]; const sc = stlCalc(sx);
+v.stlTitle = sx.title; v.stlStatus = sx.done ? 'واریز شده' : 'در انتظار واریز';
+v.stlRows = [{ label: 'فروش آنلاین', value: this.money(sx.online) + ' تومان' }, { label: 'فروش نقدی (پیک از مشتری می‌گیرد)', value: this.money(sx.cash) + ' تومان' }, { label: 'کمیسیون دکون (' + this.fa(s.commission) + '٪)', value: '−' + this.money(sc.comm) + ' تومان' }, { label: 'مبلغ قابل واریز', value: this.money(sc.net) + ' تومان' }, { label: 'حساب مقصد', value: D.rest.shebaMasked }];
+v.stlDone = sx.done; v.stlPrint = () => this.toast('صورت‌حساب آماده‌ی دریافت است (نمونه)');
+// notifications
+v.notifRows = s.notifs.map((n) => ({ title: n.title, sub: n.text, meta: n.time, dot: n.unread, d: 'M6 16v-5a6 6 0 0 1 12 0v5l2 2H4zM10 21h4', tap: () => this.setS({ notifs: s.notifs.map((x) => (x.id === n.id ? Object.assign({}, x, { unread: false }) : x)) }) }));
+v.noNotifs = s.notifs.length === 0; v.hasNotifs = s.notifs.length > 0; v.readAll = () => { this.setS({ notifs: s.notifs.map((x) => Object.assign({}, x, { unread: false })) }); this.toast('همه خوانده شد'); };
+// ticket
+v.tkCats = [['order', 'سفارش'], ['settle', 'تسویه'], ['tech', 'مشکل فنی'], ['other', 'سایر']].map((c) => ({ label: c[1], on: s.tk.cat === c[0], pick: () => this.setS({ tk: Object.assign({}, s.tk, { cat: c[0] }) }) }));
+v.tkText = s.tk.text; v.inTk = (x) => this.setS({ tk: Object.assign({}, s.tk, { text: x }) }); v.tkOff = s.tk.text.trim().length < 10;
+v.sendTk = () => { this.setS({ tk: { cat: 'order', text: '' }, stack: s.stack.slice(0, -1) }); this.toast('پیام ارسال شد؛ پاسخ را در اعلان‌ها می‌بینید'); };
+v.toTicket = () => this.push('ticket');
+// categories manager
+v.catRows = s.cats.map((c) => ({ label: c.label, count: this.fa(s.menu.filter((m) => m.cat === c.key).length) + ' غذا', edit: (x) => this.setS({ cats: s.cats.map((y) => (y.key === c.key ? Object.assign({}, y, { label: x }) : y)) }), del: () => { if (s.menu.some((m) => m.cat === c.key)) { this.toast('اول غذاهای این دسته را به دسته‌ی دیگری ببرید', 'warn'); return; } this.setS({ cats: s.cats.filter((y) => y.key !== c.key) }); this.toast('دسته حذف شد'); } }));
+v.addCat = () => this.setS({ cats: s.cats.concat([{ key: 'c' + Date.now(), label: 'دسته‌ی جدید' }]) });
+v.openCats = () => this.push('cats'); v.saveCats = () => { this.toast('دسته‌بندی‌ها ذخیره شد'); this.back(); };
+// group editor
+const ge = s.ge || { gid: '', title: '', required: false, max: 1, options: [] };
+v.ge = ge; v.groupTitle = ge.gid ? 'ویرایش گروه گزینه' : 'گروه گزینه‌ی جدید'; v.isOldGroup = !!ge.gid; v.geMaxText = this.fa(ge.max) + ' مورد';
+v.geOpts = ge.options.map((o, i) => ({ name: o.name, price: o.price, setName: (x) => this.setGe({ options: ge.options.map((q, j) => (j === i ? Object.assign({}, q, { name: x }) : q)) }), setPrice: (x) => this.setGe({ options: ge.options.map((q, j) => (j === i ? Object.assign({}, q, { price: x }) : q)) }), del: () => this.setGe({ options: ge.options.filter((q, j) => j !== i) }) }));
+v.inGeTitle = (x) => this.setGe({ title: x }); v.flipGeReq = () => this.setGe({ required: !ge.required });
+v.geMaxUp = () => this.setGe({ max: Math.min(8, ge.max + 1) }); v.geMaxDn = () => this.setGe({ max: Math.max(1, ge.max - 1) });
+v.addOpt = () => this.setGe({ options: ge.options.concat([{ id: 'o' + Date.now(), name: '', price: '' }]) });
+v.geOff = ge.title.trim().length < 2 || !ge.options.some((o) => o.name.trim().length > 0);
+v.askDelGe = () => this.setS({ dlg: { key: 'delGroup2', title: 'حذف این گروه؟', text: 'همه‌ی گزینه‌های این گروه از غذا برداشته می‌شود.', ok: 'حذف گروه', tone: 'danger' }, overlay: 'confirm' });
+v.saveGe = () => { const g = s.ge; const out = { id: g.gid || 'g' + Date.now(), title: g.title.trim(), required: g.required, max: g.max, options: g.options.filter((o) => o.name.trim()).map((o, i) => ({ id: o.id || 'o' + i, name: o.name.trim(), price: parseInt(this.en(o.price || '').replace(/\D/g, ''), 10) || 0 })) }; const gs = s.de.groups; this.setS({ de: Object.assign({}, s.de, { groups: g.gid ? gs.map((x) => (x.id === g.gid ? out : x)) : gs.concat([out]) }), ge: null, stack: s.stack.slice(0, -1) }); this.toast('گروه گزینه ذخیره شد'); };
+// account
+const row = (title, sub, d, to) => ({ title: title, sub: sub, d: d, tap: () => this.push(to) });
+v.accRows = [row('ساعت کاری', 'برنامه‌ی هفتگی باز و بسته بودن', 'M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM12 7v5l3 2', 'hours'), row('تنظیمات تحویل و پرداخت', 'پرداخت نقدی، افزودنی‌ها، زمان آماده‌سازی', 'M4 7h10M18 7h2M4 17h2M10 17h10M14 5v4M6 15v4', 'delivery'), row('اطلاعات رستوران', 'نام، آدرس، شبا و مدارک', 'M4 9l1-5h14l1 5M4 9a3 3 0 0 0 5 2 3 3 0 0 0 6 0 3 3 0 0 0 5-2M5 12v8h14v-8', 'info'), row('اعلان‌ها', 'پیام‌های دکون برای رستوران', 'M6 16v-5a6 6 0 0 1 12 0v5l2 2H4zM10 21h4', 'notifs'), row('صدا و هشدار', 'صدای سفارش جدید و لرزش', 'M5 10v4h3l5 4V6l-5 4zM17 9a4 4 0 0 1 0 6', 'sound'), row('راهنما و پشتیبانی', 'پرسش‌های پرتکرار و تماس', 'M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM9.5 9.5a2.5 2.5 0 0 1 5 .5c0 1.5-2.5 2-2.5 3.5M12 17h.01', 'help')];
+v.flipDark = () => { const nx = !s.dark; this.setS({ dark: nx }); try { localStorage.setItem('dkr-theme', nx ? 'dark' : 'light'); } catch (e) {} };
+v.askLogout = () => this.setS({ dlg: { key: 'logout', title: 'خروج از حساب؟', text: 'برای ورود دوباره به کد تأیید پیامکی نیاز دارید.', ok: 'خروج', tone: 'danger' }, overlay: 'confirm' });
+// hours
+v.hourRows = s.hours.map((h, i) => ({ day: h.day, on: h.on, from: h.from, to: h.to, flip: () => this.setHour(i, { on: !h.on }), setFrom: (x) => this.setHour(i, { from: x }), setTo: (x) => this.setHour(i, { to: x }) }));
+v.saveHours = () => { this.toast('ساعت کاری ذخیره شد'); this.back(); };
+// delivery
+v.cfg = s.cfg; v.flipCash = () => this.setS({ cfg: Object.assign({}, s.cfg, { allowCash: !s.cfg.allowCash }) }); v.flipExtras = () => this.setS({ cfg: Object.assign({}, s.cfg, { allowExtras: !s.cfg.allowExtras }) });
+v.etaMinText = this.fa(s.cfg.etaMin) + ' دقیقه'; v.etaMaxText = this.fa(s.cfg.etaMax) + ' دقیقه';
+const setEta = (k, d) => { const c = Object.assign({}, s.cfg); c[k] = Math.max(5, Math.min(120, c[k] + d)); if (c.etaMax < c.etaMin) { if (k === 'etaMin') c.etaMax = c.etaMin; else c.etaMin = c.etaMax; } this.setS({ cfg: c }); };
+v.minUp = () => setEta('etaMin', 5); v.minDn = () => setEta('etaMin', -5); v.maxUp = () => setEta('etaMax', 5); v.maxDn = () => setEta('etaMax', -5);
+v.saveCfg = () => { this.toast('تنظیمات ذخیره شد'); this.back(); };
+// info
+v.inIname = (x) => this.setS({ fm: Object.assign({}, s.fm, { iname: x }) }); v.inIaddr = (x) => this.setS({ fm: Object.assign({}, s.fm, { iaddr: x }) });
+v.askSheba = () => this.setS({ dlg: { key: 'sheba', title: 'تغییر شماره‌ی شبا', text: 'برای امنیت، ابتدا کد تأیید پیامکی می‌فرستیم و بعد تیم دکون شبای جدید را بررسی می‌کند. تا آن موقع تسویه به شبای قبلی انجام می‌شود.', ok: 'ارسال کد تأیید', tone: '' }, overlay: 'confirm' });
+v.toastUpload = () => this.toast('بارگذاری فایل (نمونه)'); v.saveInfo = () => { this.toast('اطلاعات ذخیره شد'); this.back(); };
+// sound
+v.snd = s.snd; v.playSnd = () => { const p = !s.snd.playing; this.setS({ snd: Object.assign({}, s.snd, { playing: p }) }); if (p) { this.beep(); clearTimeout(this._sp); this._sp = setTimeout(() => this.setS({ snd: Object.assign({}, this.state.snd, { playing: false }) }), 2500); } };
+v.setLevel = (n) => this.setS({ snd: Object.assign({}, s.snd, { level: n }) }); v.flipRepeat = () => this.setS({ snd: Object.assign({}, s.snd, { repeat: !s.snd.repeat }) }); v.flipVib = () => this.setS({ snd: Object.assign({}, s.snd, { vib: !s.snd.vib }) });
+// help
+v.faqs = D.faqs.map((f, i) => ({ q: f.q, a: f.a, open: s.faqOpen === i, tap: () => this.setS({ faqOpen: s.faqOpen === i ? -1 : i }) }));
+// error
+v.hasErr = !!s.err; v.err = D.errors[s.err || 'offline']; v.errRetry = () => { try { if (typeof navigator !== 'undefined' && navigator.onLine === false) return; } catch (e) {} this.setS({ err: '' }); };
+return v;
+}
+editDish(id) { const m = id ? this.state.menu.find((x) => x.id === id) : null; this.setS({ deId: id, de: m ? { name: m.name, price: this.fa(m.price), old: m.old ? this.fa(m.old) : '', desc: m.desc, cat: m.cat, art: m.art, available: m.available, groups: m.groups, photo: m.photo || 'none' } : { name: '', price: '', old: '', desc: '', cat: 'kebab', art: 'dk-kebab', available: true, groups: [], photo: 'none' }, stack: this.state.stack.concat([{ s: 'dish' }]) }); }
+editGroup(gid, addOpt) { const g = gid ? this.state.de.groups.find((x) => x.id === gid) : null; const opts = g ? g.options.map((o) => ({ id: o.id, name: o.name, price: o.price ? this.fa(o.price) : '' })) : []; if (addOpt || !g) opts.push({ id: 'o' + Date.now(), name: '', price: '' }); this.setS({ ge: { gid: gid, title: g ? g.title : '', required: g ? g.required : false, max: g ? g.max : 1, options: opts }, stack: this.state.stack.concat([{ s: 'group' }]) }); }
+setGe(p) { this.setS({ ge: Object.assign({}, this.state.ge, p) }); }
+setDe(p) { this.setS({ de: Object.assign({}, this.state.de, p) }); }
+setHour(i, p) { this.setS({ hours: this.state.hours.map((h, j) => (j === i ? Object.assign({}, h, p) : h)) }); }
+renderVals() { return this.build(); }
+}
+</script>
+</body>
+</html>

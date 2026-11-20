@@ -1,0 +1,318 @@
+{
+ "v": 3,
+ "attachments": {},
+ "boards": {
+  "App.dc.html": {
+   "x": 0,
+   "y": 0,
+   "w": 390,
+   "h": 844,
+   "title": "اپ رستوران دکون (قاب یکپارچه)",
+   "is_interactive": true
+  },
+  "AppTablet.dc.html": {
+   "x": 470,
+   "y": 0,
+   "w": 1024,
+   "h": 768,
+   "title": "اپ رستوران دکون (تبلت)",
+   "is_interactive": true
+  },
+  "ActionBar.dc.html": {
+   "x": 1574,
+   "y": 0,
+   "w": 480,
+   "h": 360
+  },
+  "Badge.dc.html": {
+   "x": 2134,
+   "y": 0,
+   "w": 880,
+   "h": 680
+  },
+  "BarChart.dc.html": {
+   "x": 3094,
+   "y": 0,
+   "w": 480,
+   "h": 360
+  },
+  "ConfirmDialog.dc.html": {
+   "x": 3654,
+   "y": 0,
+   "w": 480,
+   "h": 360
+  },
+  "ContactRow.dc.html": {
+   "x": 4214,
+   "y": 0,
+   "w": 480,
+   "h": 360
+  },
+  "EmptyState.dc.html": {
+   "x": 4774,
+   "y": 0,
+   "w": 880,
+   "h": 680
+  },
+  "ErrorPage.dc.html": {
+   "x": 5734,
+   "y": 0,
+   "w": 480,
+   "h": 720
+  },
+  "ErrorState.dc.html": {
+   "x": 6294,
+   "y": 0,
+   "w": 880,
+   "h": 680
+  },
+  "FaqItem.dc.html": {
+   "x": 7254,
+   "y": 0,
+   "w": 480,
+   "h": 360
+  },
+  "FilterChip.dc.html": {
+   "x": 7814,
+   "y": 0,
+   "w": 880,
+   "h": 680
+  },
+  "HoursRow.dc.html": {
+   "x": 8774,
+   "y": 0,
+   "w": 480,
+   "h": 360
+  },
+  "InfoList.dc.html": {
+   "x": 9334,
+   "y": 0,
+   "w": 480,
+   "h": 360
+  },
+  "ListRow.dc.html": {
+   "x": 9894,
+   "y": 0,
+   "w": 480,
+   "h": 360
+  },
+  "LoadingState.dc.html": {
+   "x": 10454,
+   "y": 0,
+   "w": 880,
+   "h": 680
+  },
+  "MapPicker.dc.html": {
+   "x": 11414,
+   "y": 0,
+   "w": 480,
+   "h": 360
+  },
+  "MenuItemRow.dc.html": {
+   "x": 11974,
+   "y": 0,
+   "w": 480,
+   "h": 360
+  },
+  "NewOrderAlert.dc.html": {
+   "x": 12534,
+   "y": 0,
+   "w": 480,
+   "h": 924
+  },
+  "OptionEditRow.dc.html": {
+   "x": 13094,
+   "y": 0,
+   "w": 480,
+   "h": 360
+  },
+  "OptionGroupCard.dc.html": {
+   "x": 13654,
+   "y": 0,
+   "w": 480,
+   "h": 360
+  },
+  "OrderDetail.dc.html": {
+   "x": 14214,
+   "y": 0,
+   "w": 480,
+   "h": 980
+  },
+  "OrderTile.dc.html": {
+   "x": 14774,
+   "y": 0,
+   "w": 480,
+   "h": 360
+  },
+  "PrepSheet.dc.html": {
+   "x": 15334,
+   "y": 0,
+   "w": 480,
+   "h": 640
+  },
+  "Price.dc.html": {
+   "x": 15894,
+   "y": 0,
+   "w": 880,
+   "h": 680
+  },
+  "PriceSummary.dc.html": {
+   "x": 16854,
+   "y": 0,
+   "w": 480,
+   "h": 360
+  },
+  "QuantityStepper.dc.html": {
+   "x": 17414,
+   "y": 0,
+   "w": 880,
+   "h": 680
+  },
+  "RBottomNav.dc.html": {
+   "x": 18374,
+   "y": 0,
+   "w": 480,
+   "h": 360
+  },
+  "RHeader.dc.html": {
+   "x": 18934,
+   "y": 0,
+   "w": 480,
+   "h": 360
+  },
+  "ReasonSheet.dc.html": {
+   "x": 19494,
+   "y": 0,
+   "w": 480,
+   "h": 580
+  },
+  "SearchBar.dc.html": {
+   "x": 20054,
+   "y": 0,
+   "w": 880,
+   "h": 680
+  },
+  "SegTabs.dc.html": {
+   "x": 21014,
+   "y": 0,
+   "w": 480,
+   "h": 360
+  },
+  "SelectCard.dc.html": {
+   "x": 21574,
+   "y": 0,
+   "w": 480,
+   "h": 360
+  },
+  "SoundPanel.dc.html": {
+   "x": 22134,
+   "y": 0,
+   "w": 480,
+   "h": 380
+  },
+  "StatCard.dc.html": {
+   "x": 22694,
+   "y": 0,
+   "w": 480,
+   "h": 360
+  },
+  "StepBar.dc.html": {
+   "x": 23254,
+   "y": 0,
+   "w": 480,
+   "h": 420
+  },
+  "TextField.dc.html": {
+   "x": 23814,
+   "y": 0,
+   "w": 480,
+   "h": 360
+  },
+  "Toast.dc.html": {
+   "x": 24374,
+   "y": 0,
+   "w": 480,
+   "h": 360
+  },
+  "ToggleRow.dc.html": {
+   "x": 24934,
+   "y": 0,
+   "w": 480,
+   "h": 360
+  },
+  "TopBar.dc.html": {
+   "x": 25494,
+   "y": 0,
+   "w": 480,
+   "h": 360
+  },
+  "UploadTile.dc.html": {
+   "x": 26054,
+   "y": 0,
+   "w": 480,
+   "h": 360
+  },
+  "WizardBar.dc.html": {
+   "x": 26614,
+   "y": 0,
+   "w": 480,
+   "h": 360
+  }
+ },
+ "createdOnFiles": {
+  "at": "2026-11-20T00:00:00Z",
+  "v": 1
+ },
+ "designSystems": [],
+ "launch": {
+  "file": "App.dc.html",
+  "view": "focused"
+ },
+ "notes": {},
+ "order": [
+  "App.dc.html",
+  "AppTablet.dc.html",
+  "ActionBar.dc.html",
+  "Badge.dc.html",
+  "BarChart.dc.html",
+  "ConfirmDialog.dc.html",
+  "ContactRow.dc.html",
+  "EmptyState.dc.html",
+  "ErrorPage.dc.html",
+  "ErrorState.dc.html",
+  "FaqItem.dc.html",
+  "FilterChip.dc.html",
+  "HoursRow.dc.html",
+  "InfoList.dc.html",
+  "ListRow.dc.html",
+  "LoadingState.dc.html",
+  "MapPicker.dc.html",
+  "MenuItemRow.dc.html",
+  "NewOrderAlert.dc.html",
+  "OptionEditRow.dc.html",
+  "OptionGroupCard.dc.html",
+  "OrderDetail.dc.html",
+  "OrderTile.dc.html",
+  "PrepSheet.dc.html",
+  "Price.dc.html",
+  "PriceSummary.dc.html",
+  "QuantityStepper.dc.html",
+  "RBottomNav.dc.html",
+  "RHeader.dc.html",
+  "ReasonSheet.dc.html",
+  "SearchBar.dc.html",
+  "SegTabs.dc.html",
+  "SelectCard.dc.html",
+  "SoundPanel.dc.html",
+  "StatCard.dc.html",
+  "StepBar.dc.html",
+  "TextField.dc.html",
+  "Toast.dc.html",
+  "ToggleRow.dc.html",
+  "TopBar.dc.html",
+  "UploadTile.dc.html",
+  "WizardBar.dc.html"
+ ],
+ "pages": [],
+ "title": "دکون | اپ رستوران"
+}

@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>خلاصه‌ی هزینه</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:300;font-display:swap;src:url(/_blob/2ef92529418867881b213c86e0698e5f) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:400;font-display:swap;src:url(/_blob/bd549ffc7e0220163cf551aa8c12f971) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:500;font-display:swap;src:url(/_blob/2c86d88b0953b236f79c30f4ec52072f) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:700;font-display:swap;src:url(/_blob/17ce6732741785f9a10e038c7f86abc8) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:800;font-display:swap;src:url(/_blob/0208d433250cedfb8a54737f1d0176d9) format('truetype')}
+.PriceSummary_ps{background:var(--sf,#fff);border-radius:20px;box-shadow:0 4px 16px rgba(31,26,23,.06);padding:8px 16px;font-family:'Yekan Bakh',Tahoma,sans-serif;color:var(--ink,#1F1A17)}.PriceSummary_r{display:flex;justify-content:space-between;align-items:center;min-height:44px;font-size:14px;line-height:1.7}.PriceSummary_r span:first-child{color:var(--mu,#7A6E66)}.PriceSummary_r b{font-weight:700}.PriceSummary__good{color:#16A34A}.PriceSummary_t{display:flex;justify-content:space-between;align-items:center;min-height:56px;border-top:1px solid var(--ln,#F0DFD0);font-size:16px;font-weight:800}
+</style>
+</helmet>
+<div class="PriceSummary_ps" dir="rtl"><sc-for list="{{ rows }}" as="r" hint-placeholder-count="3"><div class="PriceSummary_r"><span>{{ r.label }}</span><b class="{{ r.tone }}">{{ r.value }}</b></div></sc-for><div class="PriceSummary_t"><span>{{ totalLabel }}</span><span>{{ totalValue }}</span></div></div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"rows": {"editor": null}, "totalLabel": {"editor": null}, "totalValue": {"editor": null}, "$preview": {"width": 358, "height": 200}}'>
+class Component extends DCLogic {
+renderVals() {
+const P = this.props;
+return { rows: P.rows || [], totalLabel: P.totalLabel ?? '', totalValue: P.totalValue ?? '' };
+}
+}
+</script>
+</body>
+</html>

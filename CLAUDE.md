@@ -34,3 +34,16 @@ Read its spec → reuse components → define data/states/actions → implement 
 
 ## Out of scope for now
 Wallet (open decision), live courier map, favorite foods, restaurant reviews, restaurant/courier/admin apps, domain/store accounts.
+
+## Restaurant app/panel (added)
+Scope: restaurant app + web panel (`panel.` subdomain), same codebase/backend/design system as the customer app. Docs in `restaurant/`: screen-specs, component-library, design-system (delta), openapi (contract), security-checklist. Visual reference: `prototype-restaurant/` (unverified Claude Design prototype).
+Rules specific to this app:
+1. **No green** anywhere (on = orange `#E4501E`, off = grey). Status colors per `restaurant/dokoon-restaurant-design-system.md`.
+2. Customer phone and restaurant Sheba are always **masked** (server masks). Sheba change = fresh OTP + admin review.
+3. Commission is **read-only** for restaurants (default 12%, admin-editable, stored per settlement). Cash-settlement rule is still undecided: show sample numbers only, never invent final logic.
+4. Registration documents are **data-driven** (`GET /r/doc-types`); never hardcode the list.
+5. Dish photos need admin approval (`pending/approved/rejected`); show default art until approved.
+6. New orders arrive over WebSocket with a full-screen alert, 3-minute timer, repeating sound. Browsers need a user gesture for audio → the «شروع شیفت» screen. iOS PWA cannot guarantee loud alerts (recommend Android for restaurants).
+7. Responsive: phone <720 = bottom tabs, ≥720 = side rail + list/detail split. Use CSS media/container queries (the prototype's generated `AppTablet` copy is not a pattern to copy).
+8. Formerly open items are decided in `.cloud/decisions.md` D-90…D-104 (domain `panel.dokoonapp.ir`, Android `ir.dokoonapp.restaurant`, ETA, cash settlement, multi-device, printing, sound/push, uploads, courier call, holidays, history filter, wallet, load testing). Still open: D-49, D-50, D-51, D-54. Do not decide anything else silently.
+9. Work is run **epic by epic** (D-105): one chat per Jira epic (KAN-50..54); inside it, tasks in dependency order, each on its own `feature/KAN-xxx-…` branch with its own PR, and stop after each PR for the owner to review/merge. Order and which epics may run in parallel: `TASKS.md`.

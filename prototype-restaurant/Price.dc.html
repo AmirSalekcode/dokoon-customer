@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>قیمت</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:300;font-display:swap;src:url(/_blob/2ef92529418867881b213c86e0698e5f) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:400;font-display:swap;src:url(/_blob/bd549ffc7e0220163cf551aa8c12f971) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:500;font-display:swap;src:url(/_blob/2c86d88b0953b236f79c30f4ec52072f) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:700;font-display:swap;src:url(/_blob/17ce6732741785f9a10e038c7f86abc8) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:800;font-display:swap;src:url(/_blob/0208d433250cedfb8a54737f1d0176d9) format('truetype')}
+.Price_pc{display:inline-flex;align-items:baseline;gap:4px;font-family:'Yekan Bakh',Tahoma,sans-serif;color:var(--ink,#1F1A17)}.Price_pc b{font-size:15px;font-weight:800;line-height:1.2}.Price_pc small{font-size:12px;color:var(--mu,#7A6E66)}.Price_pc s{font-size:12px;color:var(--mu,#7A6E66);margin-inline-start:4px}
+</style>
+</helmet>
+<span class="Price_pc" dir="rtl"><b>{{ price }}</b><small>تومان</small><sc-if value="{{ hasOld }}" hint-placeholder-val="{{ false }}"><s>{{ old }}</s></sc-if></span>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"price": {"editor": null}, "old": {"editor": null}}'>
+class Component extends DCLogic {
+renderVals() {
+const P = this.props;
+return { price: P.price ?? '', old: P.old ?? '', hasOld: !!P.old };
+}
+}
+</script>
+</body>
+</html>

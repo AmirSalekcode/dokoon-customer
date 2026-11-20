@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>پیام کوتاه</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:300;font-display:swap;src:url(/_blob/2ef92529418867881b213c86e0698e5f) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:400;font-display:swap;src:url(/_blob/bd549ffc7e0220163cf551aa8c12f971) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:500;font-display:swap;src:url(/_blob/2c86d88b0953b236f79c30f4ec52072f) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:700;font-display:swap;src:url(/_blob/17ce6732741785f9a10e038c7f86abc8) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:800;font-display:swap;src:url(/_blob/0208d433250cedfb8a54737f1d0176d9) format('truetype')}
+.TS_t{font-family:'Yekan Bakh',Tahoma,sans-serif;display:flex;align-items:center;gap:12px;min-height:56px;padding:12px 16px;border-radius:20px;background:#1F1A17;color:#F6EEE8;font-size:14px;font-weight:700;line-height:1.6;box-shadow:0 12px 32px rgba(0,0,0,.25);animation:TS_in .35s cubic-bezier(.2,.8,.2,1) both}
+.TS_t svg{width:24px;height:24px;flex:none;fill:none;stroke:#FF8A5C;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}.TS_bad svg{stroke:#F5B32F}
+@keyframes TS_in{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+</style>
+</helmet>
+<div class="TS_t {{ cls }}" dir="rtl" role="status"><svg class="" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5 9-10"></path></svg><span>{{ text }}</span></div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"text": {"editor": null}, "tone": {"editor": null}, "$preview": {"width": 358, "height": 72}}'>
+class Component extends DCLogic {
+renderVals() {
+const P = this.props;
+return { text: P.text ?? '', cls: P.tone === 'warn' ? 'TS_bad' : '' };
+}
+}
+</script>
+</body>
+</html>

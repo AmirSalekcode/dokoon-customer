@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>سؤال متداول</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:300;font-display:swap;src:url(/_blob/2ef92529418867881b213c86e0698e5f) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:400;font-display:swap;src:url(/_blob/bd549ffc7e0220163cf551aa8c12f971) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:500;font-display:swap;src:url(/_blob/2c86d88b0953b236f79c30f4ec52072f) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:700;font-display:swap;src:url(/_blob/17ce6732741785f9a10e038c7f86abc8) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:800;font-display:swap;src:url(/_blob/0208d433250cedfb8a54737f1d0176d9) format('truetype')}
+.FaqItem_c{background:var(--sf,#fff);border-radius:20px;box-shadow:0 4px 16px rgba(31,26,23,.06);font-family:'Yekan Bakh',Tahoma,sans-serif;color:var(--ink,#1F1A17);overflow:hidden}
+.FaqItem_q{display:flex;align-items:center;gap:12px;width:100%;min-height:56px;padding:8px 16px;border:0;background:none;cursor:pointer;font-family:inherit;font-size:14px;font-weight:700;line-height:1.7;text-align:right;color:var(--ink,#1F1A17)}
+.FaqItem_q:focus-visible{outline:3px solid #E4501E;outline-offset:-3px}.FaqItem_q span{flex:1}
+.FaqItem_cv{width:20px;height:20px;fill:none;stroke:var(--mu,#7A6E66);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none;transition:transform .25s ease-out}.FaqItem__on .FaqItem_cv{transform:rotate(-90deg)}
+.FaqItem_a{margin:0;padding:0 16px 16px;font-size:14px;line-height:1.9;color:var(--mu,#7A6E66);animation:rise .35s ease-out both}
+</style>
+</helmet>
+<div class="FaqItem_c {{ cls }}" dir="rtl"><button class="FaqItem_q" aria-expanded="{{ open }}" onClick="{{ flip }}"><span>{{ q }}</span><svg class="FaqItem_cv" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg></button><sc-if value="{{ open }}" hint-placeholder-val="{{ false }}"><p class="FaqItem_a">{{ a }}</p></sc-if></div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"q": {"editor": null}, "a": {"editor": null}, "open": {"editor": null}, "onToggle": {"editor": null}, "$preview": {"width": 358, "height": 56}}'>
+class Component extends DCLogic {
+renderVals() {
+const P = this.props;
+return { q: P.q ?? '', a: P.a ?? '', open: !!P.open, cls: P.open ? 'FaqItem__on' : '', flip: (e) => { if (P.onToggle) P.onToggle(); } };
+}
+}
+</script>
+</body>
+</html>

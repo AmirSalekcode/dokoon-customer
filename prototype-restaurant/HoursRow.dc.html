@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>ردیف ساعت کاری</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:300;font-display:swap;src:url(/_blob/2ef92529418867881b213c86e0698e5f) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:400;font-display:swap;src:url(/_blob/bd549ffc7e0220163cf551aa8c12f971) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:500;font-display:swap;src:url(/_blob/2c86d88b0953b236f79c30f4ec52072f) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:700;font-display:swap;src:url(/_blob/17ce6732741785f9a10e038c7f86abc8) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:800;font-display:swap;src:url(/_blob/0208d433250cedfb8a54737f1d0176d9) format('truetype')}
+.HR_r{font-family:'Yekan Bakh',Tahoma,sans-serif;background:var(--sf,#fff);color:var(--ink,#1F1A17);border-radius:20px;padding:12px 16px;box-shadow:0 4px 16px rgba(31,26,23,.06);display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.HR_d{flex:1;min-width:72px;font-size:15px;font-weight:700}.HR_d small{display:block;font-size:12px;font-weight:400;color:var(--mu,#7A6E66)}
+.HR_sw{position:relative;width:52px;height:32px;flex:none;border:0;border-radius:999px;background:var(--ln,#F0DFD0);cursor:pointer;padding:0;transition:background .25s ease-out}
+.HR_sw::after{content:"";position:absolute;top:4px;right:4px;width:24px;height:24px;border-radius:50%;background:#fff;box-shadow:0 2px 6px rgba(31,26,23,.2);transition:transform .25s ease-out}
+.HR_on{background:#E4501E}.HR_on::after{transform:translateX(-20px)}.HR_sw:focus-visible,.HR_sl:focus-visible{outline:3px solid #E4501E;outline-offset:2px}
+.HR_t{display:flex;align-items:center;gap:8px;width:100%;font-size:12px;color:var(--mu,#7A6E66)}
+.HR_sl{font-family:'Yekan Bakh',Tahoma,sans-serif;flex:1;height:48px;border:2px solid var(--ln,#F0DFD0);border-radius:12px;background:var(--bg,#FBF0E6);color:var(--ink,#1F1A17);font-size:15px;font-weight:700;padding:0 12px}
+.HR_off .HR_t{display:none}
+</style>
+</helmet>
+<div class="HR_r {{ cls }}" dir="rtl"><div class="HR_d">{{ day }}<small>{{ stateText }}</small></div><button class="HR_sw {{ swCls }}" role="switch" aria-checked="{{ on }}" aria-label="باز بودن در {{ day }}" onClick="{{ flip }}"></button><div class="HR_t"><label>از</label><select class="HR_sl" aria-label="ساعت شروع {{ day }}" onChange="{{ chFrom }}"><sc-for list="{{ fromOpts }}" as="o" hint-placeholder-count="3"><option value="{{ o.v }}" selected="{{ o.sel }}">{{ o.v }}</option></sc-for></select><label>تا</label><select class="HR_sl" aria-label="ساعت پایان {{ day }}" onChange="{{ chTo }}"><sc-for list="{{ toOpts }}" as="o" hint-placeholder-count="3"><option value="{{ o.v }}" selected="{{ o.sel }}">{{ o.v }}</option></sc-for></select></div></div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"day": {"editor": null}, "on": {"editor": null}, "from": {"editor": null}, "to": {"editor": null}, "times": {"editor": null}, "onFlip": {"editor": null}, "onFrom": {"editor": null}, "onTo": {"editor": null}, "$preview": {"width": 358, "height": 120}}'>
+class Component extends DCLogic {
+renderVals() {
+const P = this.props;
+const times = P.times || [];
+return { day: P.day ?? '', on: !!P.on, cls: P.on ? '' : 'HR_off', swCls: P.on ? 'HR_on' : '', stateText: P.on ? 'باز' : 'تعطیل', fromOpts: times.map((v) => ({ v: v, sel: v === P.from })), toOpts: times.map((v) => ({ v: v, sel: v === P.to })), flip: () => { if (P.onFlip) P.onFlip(); }, chFrom: (e) => { if (P.onFrom) P.onFrom(e && e.target ? e.target.value : e); }, chTo: (e) => { if (P.onTo) P.onTo(e && e.target ? e.target.value : e); } };
+}
+}
+</script>
+</body>
+</html>
