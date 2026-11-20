@@ -67,6 +67,21 @@ built by `vite.panel.config.ts` into `dist-panel/` with its own PWA manifest («
   never show green. `npm run lint:design` has a `no-green` rule for `src/panel`.
 - **Not indexed:** `<meta name="robots" content="noindex, nofollow">`, `robots.txt` and an
   `X-Robots-Tag` header on every nginx response; CSP also allows `wss:` for the live orders socket.
+- **API (KAN-56):** `src/panel/api/` — types generated from `restaurant/dokoon-restaurant-openapi.yaml`
+  (`npm run api:gen:panel`), its own session (`dk-r-session`), rotating refresh, `Idempotency-Key` on order
+  actions (kept for retries until a definite answer), and the shared HTTP layer for ErrorPage kinds.
+  Inline errors via `businessError()` / `isAlreadyAnswered()` (409 from another device, D-96).
+- **Mocks:** `src/panel/mocks/` — MSW handlers for every contract operation (checked against the contract
+  schemas in `handlers.test.ts`), prototype sample data, a mock realtime stream (socket factory) and
+  in-page mode for Android (D-71). Dev tools in mock builds:
+
+  | localStorage / global | Effect |
+  |---|---|
+  | `dk-mock-status` = `503` | every GET fails with that status (error pages) |
+  | `dk-mock-config` = `{"maintenance":true}` / `{"minVersion":"99.0.0"}` | maintenance / forced-update page |
+  | `dk-mock-neworder-ms` = `30000` (`0` = off, default 90 s) | demo new order on the live stream |
+  | `__dkPanelMocks.stream.dropAll()` | every device loses the live connection |
+  | OTP `1234`; phones `09130000001/2/3` | pending / needs_docs / rejected registration |
 
 ## Rules enforced in code
 - Tokens only: components use `var(--…)` from `design-tokens/dokoon-tokens.css`; derived transparencies live in

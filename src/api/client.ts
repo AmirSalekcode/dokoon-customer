@@ -2,16 +2,9 @@ import createClient from 'openapi-fetch';
 import type { paths } from './schema';
 import { createHttp } from './http';
 import { useSession } from '@/auth/session';
-import { config } from '@/config/env';
+import { apiBaseUrl } from '@/lib/apiBase';
 
-/** Base URL: real API from env; mock mode uses same-origin /api/v1 (intercepted by MSW). */
-export function apiBaseUrl(): string {
-  const fromEnv = config.apiBaseUrl;
-  if (fromEnv) return fromEnv;
-  if (typeof location !== 'undefined' && location.origin.startsWith('http'))
-    return `${location.origin}/api/v1`;
-  return 'http://localhost/api/v1';
-}
+export { apiBaseUrl };
 
 let refreshing: Promise<boolean> | null = null;
 

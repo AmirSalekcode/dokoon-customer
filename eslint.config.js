@@ -16,6 +16,8 @@ export default tseslint.config(
       'prototype',
       'public/mockServiceWorker.js',
       'src/api/schema.d.ts',
+      'src/panel/api/schema.d.ts',
+      'public-panel/mockServiceWorker.js',
       'test-results',
       'playwright-report',
     ],

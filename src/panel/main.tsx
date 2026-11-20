@@ -9,11 +9,20 @@ import { PanelApp } from './PanelApp';
 // Apply the theme store (panel.html already set data-theme pre-paint).
 useTheme.getState();
 
-// In mock mode the MSW worker will own the service-worker scope (KAN-56).
-if (!config.useMocks) registerPwa();
+async function start() {
+  if (config.useMocks) {
+    // Mock/demo builds only: the mock API + live stream. Exposed for E2E and dev tools
+    // (e.g. __dkPanelMocks.stream.dropAll() to see the offline page). Holds no data or secrets.
+    const mocks = await (await import('./mocks/browser')).startPanelMocks();
+    (window as unknown as { __dkPanelMocks?: typeof mocks }).__dkPanelMocks = mocks;
+  } else {
+    registerPwa();
+  }
+  createRoot(document.getElementById('root')!).render(
+    <StrictMode>
+      <PanelApp />
+    </StrictMode>,
+  );
+}
 
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <PanelApp />
-  </StrictMode>,
-);
+void start();
