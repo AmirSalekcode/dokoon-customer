@@ -40,7 +40,7 @@ for (const [label, size] of [
         'page',
       );
       await page.goBack();
-      await expect(page.getByRole('status')).toHaveText('برای خروج دوباره بزنید');
+      await expect(page.getByText('برای خروج دوباره بزنید')).toBeVisible();
     });
 
     test('close asks first and shows the banner; open is immediate', async ({ page }) => {
@@ -50,8 +50,8 @@ for (const [label, size] of [
       await sw.click();
       await page.getByRole('alertdialog').getByRole('button', { name: 'بستن رستوران' }).click();
       await expect(sw).toHaveAttribute('aria-checked', 'false');
-      await expect(page.getByRole('status')).toHaveText('رستوران بسته شد');
-      await expect(visible(page).getByText(/رستوران بسته است/)).toBeVisible();
+      await expect(page.getByText('رستوران بسته شد', { exact: true })).toBeVisible();
+      await expect(visible(page).getByText('رستوران بسته است؛ سفارش جدید دریافت نمی‌کنید.')).toBeVisible();
       await visible(page).getByRole('button', { name: 'باز کردن رستوران' }).click();
       await expect(sw).toHaveAttribute('aria-checked', 'true');
       await expect(page.getByRole('alertdialog')).toHaveCount(0);

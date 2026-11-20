@@ -11,8 +11,8 @@ test.beforeEach(async ({ page }) => {
 
 test('connection lost → offline page; restored → page closes and the list is synced', async ({ page }) => {
   await openPanel(page);
-  const summary = page.getByTestId('orders-summary');
-  await expect(summary).toContainText('۲ سفارش جدید');
+  const newTab = (n: string) => page.getByRole('tab', { name: `جدید ${n}`, exact: true });
+  await expect(newTab('۲')).toBeVisible();
   await expect
     .poll(() =>
       page.evaluate(() => (window as unknown as { __dkPanelMocks: Mocks }).__dkPanelMocks.stream.connected),
@@ -32,16 +32,16 @@ test('connection lost → offline page; restored → page closes and the list is
 
   await expect(page.getByRole('heading', { name: 'اینترنت متصل نیست' })).toBeHidden({ timeout: 10_000 });
   await expect(page.locator('main:not([hidden])')).toHaveAttribute('data-screen', 'orders');
-  await expect(summary).toContainText('۳ سفارش جدید');
+  await expect(newTab('۳')).toBeVisible();
 });
 
 test('a live new order updates the list without reload', async ({ page }) => {
   await openPanel(page);
-  await expect(page.getByTestId('orders-summary')).toContainText('۲ سفارش جدید');
+  await expect(page.getByRole('tab', { name: 'جدید ۲', exact: true })).toBeVisible();
   await page.evaluate(() => {
     const m = (window as unknown as { __dkPanelMocks: Mocks & { stream: { emit: (x: unknown) => void } } })
       .__dkPanelMocks;
     m.stream.emit({ event: 'order.created', data: m.addOrder() });
   });
-  await expect(page.getByTestId('orders-summary')).toContainText('۳ سفارش جدید');
+  await expect(page.getByRole('tab', { name: 'جدید ۳', exact: true })).toBeVisible();
 });

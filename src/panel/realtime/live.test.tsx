@@ -46,7 +46,7 @@ describe('live connection', () => {
     await boot();
     expect(testStream.connected).toBe(1);
     expect(newCount()).toBe(2);
-    expect(screen.getByTestId('orders-summary')).toHaveTextContent('۲ سفارش جدید');
+    expect(screen.getByRole('tab', { name: 'جدید ۲' })).toBeInTheDocument();
   });
 
   it('events update the store and reach listeners (new-order alert, KAN-64)', async () => {
@@ -55,7 +55,7 @@ describe('live connection', () => {
     const off = onLiveEvent((m) => seen.push(m.event));
     act(() => testStream.emit({ event: 'order.created', data: addIncomingOrder() }));
     expect(newCount()).toBe(3);
-    expect(screen.getByTestId('orders-summary')).toHaveTextContent('۳ سفارش جدید');
+    expect(screen.getByRole('tab', { name: 'جدید ۳' })).toBeInTheDocument();
     const first = Object.values(useOrders.getState().byId).find((o) => o.status === 'new')!;
     act(() => testStream.emit({ event: 'order.expired', data: { orderId: first.id! } }));
     expect(newCount()).toBe(2);

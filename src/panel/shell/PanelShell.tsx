@@ -3,7 +3,7 @@ import { ToastHost } from '@/components/base/Toast';
 import { ConfirmDialog } from '@/components/library/ConfirmDialog';
 import { LoadingState } from '@/components/library/LoadingState';
 import { ArtSprite } from '@/components/primitives/ArtSprite';
-import { formatDecimal, formatNumber } from '@/lib/format';
+import { formatDecimal, formatNumber, toFaDigits } from '@/lib/format';
 import { initConnectivity, initSystemBack } from '@/nav/systemBack';
 import { checkPanelConfig } from '../api/appConfig';
 import { panelApi } from '../api/client';
@@ -13,6 +13,7 @@ import { panelScreenFor, SHELL_SCREENS } from '../screens/registry';
 import { reconnectLive, startLive, stopLive } from '../realtime/live';
 import { useRestaurant } from '../state/restaurant';
 import { useShift } from '../state/shift';
+import { countByTab, useOrders } from '../state/orders';
 import { confirmClose, toggleOpen } from './openSwitch';
 import { RBottomNav, type RNavItem } from './RBottomNav';
 import { RHeader } from './RHeader';
@@ -108,6 +109,13 @@ export function PanelShell() {
   const switching = useRestaurant((st) => st.switching);
   const [booted, setBooted] = useState(false);
   const shiftOn = useShift((st) => st.started);
+  const newCount = useOrders((st) => countByTab(st.byId).new);
+  // Badge on the orders tab = number of new orders (screen specs §2).
+  const navItems = NAV.map((it) =>
+    it.key === 'orders' && newCount
+      ? { ...it, badge: toFaDigits(newCount), badgeLabel: `${toFaDigits(newCount)} سفارش جدید` }
+      : it,
+  );
 
   // Live orders while the shift is on (KAN-62); back online → reconnect without waiting for backoff.
   useEffect(() => {
@@ -157,7 +165,7 @@ export function PanelShell() {
           {onShell ? (
             <div className={s.rail}>
               <RBottomNav
-                items={NAV}
+                items={navItems}
                 active={isPanelTab(top.screen) ? top.screen : 'orders'}
                 onPick={(k) => resetTo(k)}
               />

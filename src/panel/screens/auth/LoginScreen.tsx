@@ -3,7 +3,7 @@ import { Button } from '@/components/base/Button';
 import { TextField } from '@/components/base/TextField';
 import { TopBar } from '@/components/library/TopBar';
 import { config } from '@/config/env';
-import { formatPhone, toFaDigits } from '@/lib/format';
+import { formatMmss, formatPhone, toFaDigits } from '@/lib/format';
 import { panelApi } from '../../api/client';
 import { businessError } from '../../api/errors';
 import { completeSignIn, panelDeviceId } from '../../auth/flow';
@@ -20,9 +20,6 @@ const NETWORK_TEXT = 'ارتباط برقرار نشد. اتصال را بررس
 
 /** Wall clock for the resend deadline (module-level: only called from event handlers). */
 const clock = () => Date.now();
-
-const mmss = (sec: number) =>
-  toFaDigits(`${String(Math.floor(sec / 60)).padStart(2, '0')}:${String(sec % 60).padStart(2, '0')}`);
 
 /**
  * Login in two phases on one screen (KAN-59): mobile number → SMS code. «ویرایش شماره» and back
@@ -244,7 +241,7 @@ export function LoginScreen({ route }: PanelScreenProps) {
               ویرایش شماره
             </button>
             <p className={s.timer} aria-live="polite">
-              {left > 0 ? `ارسال دوباره‌ی کد تا ${mmss(left)} دیگر` : 'کد را دریافت نکردید؟'}
+              {left > 0 ? `ارسال دوباره‌ی کد تا ${formatMmss(left)} دیگر` : 'کد را دریافت نکردید؟'}
             </p>
             <button
               type="button"

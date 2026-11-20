@@ -14,7 +14,7 @@ test('shift start → our alert file is loaded, orders open, toast confirms', as
   await page.getByRole('button', { name: SHIFT_BUTTON }).click();
   expect((await sound).status()).toBe(200);
   await expect(page.getByRole('heading', { level: 1, name: 'کبابی سنتی زاگرس' })).toBeVisible();
-  await expect(page.getByRole('status')).toContainText('شیفت شروع شد');
+  await expect(page.getByText(/^شیفت شروع شد/)).toBeVisible();
 });
 
 test('sound screen: preview, levels, repeat; back returns to the account tab', async ({ page }) => {
