@@ -1,7 +1,18 @@
 import { createStackNav } from '@/nav/createStackNav';
 
-/** Restaurant panel screens. Login/registration/shift/orders detail… arrive with their tasks (KAN-59+). */
-export const PANEL_SCREENS = ['orders', 'menu', 'reports', 'account', 'help', 'login', 'error'] as const;
+/** Restaurant panel screens; order detail, menu editors… arrive with their tasks (KAN-60+). */
+export const PANEL_SCREENS = [
+  'orders',
+  'menu',
+  'reports',
+  'account',
+  'help',
+  'login',
+  'reg',
+  'reg-status',
+  'shift',
+  'error',
+] as const;
 export type PanelScreen = (typeof PANEL_SCREENS)[number];
 
 /** Root tabs (restaurant/dokoon-restaurant-screen-specs.md): switching resets the stack. */
@@ -12,7 +23,7 @@ export const PANEL_TABS: readonly PanelTab[] = ['orders', 'menu', 'reports', 'ac
 export type PanelOverlay = 'confirm';
 
 const nav = createStackNav<PanelScreen, PanelTab, PanelOverlay>({
-  initial: 'orders',
+  initial: 'login',
   tabs: PANEL_TABS,
   home: 'orders',
   errorScreen: 'error',

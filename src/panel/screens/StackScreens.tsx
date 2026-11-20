@@ -7,7 +7,7 @@ import type { ErrorAction } from '@/errors/errorContent';
 import { runRetry } from '@/errors/retry';
 import { isNative } from '@/lib/platform';
 import type { StackRoute } from '@/nav/createStackNav';
-import { usePanelSession } from '../api/session';
+import { signOutLocal } from '../auth/flow';
 import { PANEL_ERROR_CONTENT } from '../errors/panelErrors';
 import { usePanelNav, type PanelScreen } from '../nav/nav';
 import s from './screens.module.css';
@@ -32,15 +32,6 @@ export function HelpScreen() {
   );
 }
 
-/** Login (target of the 401 page). Two-step phone + code login: KAN-59. */
-export function LoginScreen() {
-  return (
-    <div className={s.page}>
-      <EmptyState art="dk-kebab" title="ورود به پنل رستوران" text="ورود با شماره‌ی موبایل و کد پیامکی." />
-    </div>
-  );
-}
-
 /**
  * Full-page error with the panel's actions (D-106): «بازگشت به خانه» → orders tab,
  * «تماس با پشتیبانی» → help, «مشاهده‌ی سفارش‌ها» → orders. maintenance/update replace the stack.
@@ -62,8 +53,7 @@ export function PanelErrorScreen({ route }: PanelScreenProps) {
         nav().resetTo('orders');
         return;
       case 'login':
-        usePanelSession.getState().clear();
-        nav().resetTo('login');
+        signOutLocal();
         return;
       case 'support':
         nav().push('help');

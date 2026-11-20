@@ -1,10 +1,12 @@
 import { expect, test, type Page } from '@playwright/test';
+import { openPanel, seedSession, SHIFT_BUTTON } from './helpers';
 
 // KAN-58 / D-106: all nine full-page errors of the restaurant panel.
 const heading = (page: Page, name: string | RegExp) => page.getByRole('heading', { name });
 
 test.beforeEach(async ({ page }) => {
   await page.addInitScript(() => localStorage.setItem('dk-mock-neworder-ms', '0'));
+  await seedSession(page);
 });
 
 const BY_STATUS: [string, string, string][] = [
@@ -54,12 +56,12 @@ test('500 «تلاش دوباره» repeats the request and recovers', async ({ 
   await expect(heading(page, 'مشکلی در سرور پیش آمده')).toBeVisible();
   await page.evaluate(() => localStorage.removeItem('dk-mock-status'));
   await page.getByRole('button', { name: 'تلاش دوباره' }).click();
+  await page.getByRole('button', { name: SHIFT_BUTTON }).click();
   await expect(page.getByRole('heading', { level: 1, name: 'کبابی سنتی زاگرس' })).toBeVisible();
 });
 
 test('offline (network cut) → offline page; back online → returns', async ({ page, context }) => {
-  await page.goto('/');
-  await expect(page.getByRole('banner')).toBeVisible();
+  await openPanel(page);
   await context.setOffline(true);
   await expect(heading(page, 'اینترنت متصل نیست')).toBeVisible();
   await expect(page.getByText(/برای دریافت سفارش‌ها/)).toBeVisible();

@@ -105,3 +105,10 @@ Nothing here is implemented as an invented endpoint; the frontend works around e
     `prepMinutes`/`addMinutes`/`reasonId`, `PUT /r/settings` with `etaMax < etaMin`, `PATCH /r/me` with a
     short name/address, and `400`/`429` on OTP verify; these statuses should be added to the contract.
     Stream: a connection without a valid ticket is closed with code `4401`.
+26. **Login for a phone without a restaurant (KAN-59).** `RestaurantAuth.status` and
+    `RegistrationStatus.status` have no value for "this phone has no restaurant yet", so after the OTP the
+    panel cannot tell a new manager from an approved one. Proposal: add `new` to both enums; the panel
+    sends `new` (and a missing `status`) to the registration wizard, `pending`/`needs_docs`/`rejected`
+    to the status page and `active` to the shift screen. Registration then runs with the token of the
+    verified phone (so `POST /r/registration` and the document uploads are authenticated and bound to
+    that phone) instead of `security: []`. Declare `429` on `/r/auth/otp/verify` too.

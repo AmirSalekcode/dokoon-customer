@@ -1,4 +1,5 @@
 import { expect, test, type Page } from '@playwright/test';
+import { openPanel, seedSession } from './helpers';
 
 // KAN-58: tabs, exact back (UI and browser/Android back), open/closed switch — at 390 and 1024 wide.
 const visible = (page: Page) => page.locator('main:not([hidden])');
@@ -7,12 +8,10 @@ const nav = (page: Page) => page.getByRole('navigation', { name: 'بخش‌ها�
 test.beforeEach(async ({ page }) => {
   // No demo orders on a timer during these tests.
   await page.addInitScript(() => localStorage.setItem('dk-mock-neworder-ms', '0'));
+  await seedSession(page);
 });
 
-async function open(page: Page) {
-  await page.goto('/');
-  await expect(page.getByRole('heading', { level: 1, name: 'کبابی سنتی زاگرس' })).toBeVisible();
-}
+const open = (page: Page) => openPanel(page);
 
 for (const [label, size] of [
   ['phone 390', { width: 390, height: 844 }],

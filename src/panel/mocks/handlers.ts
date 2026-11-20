@@ -43,14 +43,22 @@ function configOverride(): Record<string, unknown> {
 
 const RESEND_SEC = 120;
 let tokenSeq = 0;
+/** Mock tokens carry the phone (`r-access-<seq>-<phone>`) so a reload still knows the demo status. */
+const phoneOf = (token: string | null | undefined) => /-(09\d{9})$/.exec(token ?? '')?.[1] ?? null;
+const statusOf = (phone: string | null): D.DemoStatus | 'active' =>
+  (phone && (db.registrations[phone] ?? D.DEMO_STATUS_PHONES[phone])) || 'active';
 function auth(phone: string | null): RestaurantAuth {
   tokenSeq += 1;
+  const tail = phone ? `-${phone}` : '';
   return {
-    accessToken: `r-access-${tokenSeq}`,
-    refreshToken: `r-refresh-${tokenSeq}`,
-    status: (phone && D.DEMO_STATUS_PHONES[phone]) || 'active',
+    accessToken: `r-access-${tokenSeq}${tail}`,
+    refreshToken: `r-refresh-${tokenSeq}${tail}`,
+    // 'new' is not in the contract enum yet (contract-notes 26).
+    status: statusOf(phone) as RestaurantAuth['status'],
   };
 }
+const bearerPhone = (request: Request) =>
+  phoneOf(request.headers.get('Authorization')?.replace(/^Bearer\s+/i, ''));
 
 const findOrder = (id: string) => db.orders.find((o) => o.id === id);
 const orderAction = (action: Transition) =>
@@ -114,7 +122,10 @@ export const panelHandlers = [
     if (code !== D.OTP_CODE) return err(400, 'OTP_INVALID', 'کد واردشده درست نیست');
     return HttpResponse.json(auth(phone ?? null));
   }),
-  http.post(p('/r/auth/refresh'), () => HttpResponse.json(auth(null))),
+  http.post(p('/r/auth/refresh'), async ({ request }) => {
+    const { refreshToken } = (await request.json().catch(() => ({}))) as { refreshToken?: string };
+    return HttpResponse.json(auth(phoneOf(refreshToken)));
+  }),
   http.post(p('/r/auth/logout'), () => noContent()),
   http.post(p('/r/stream/ticket'), () =>
     HttpResponse.json({ ticket: `t-${Date.now().toString(36)}`, expiresInSec: 30 }),
@@ -132,11 +143,22 @@ export const panelHandlers = [
       !/^IR\d{24}$/.test(b.sheba ?? '')
     )
       return err(400, 'VALIDATION', 'اطلاعات ثبت‌نام کامل نیست');
+    const phone = bearerPhone(request);
+    if (phone) db.registrations[phone] = 'pending';
     return HttpResponse.json({ status: 'pending' as const }, { status: 201 });
   }),
-  http.get(p('/r/registration/status'), () =>
-    HttpResponse.json<RegistrationStatus>({ status: 'active', missingDocTypeIds: [] }),
-  ),
+  http.get(p('/r/registration/status'), ({ request }) => {
+    const status = statusOf(bearerPhone(request));
+    // 'new' (nothing submitted yet) is the proposed extra status of contract-notes 26.
+    if (status === 'new') return HttpResponse.json({ status, missingDocTypeIds: [] });
+    const missing =
+      status === 'needs_docs' ? D.DEMO_MISSING_DOCS.filter((id) => !db.docsUploaded.includes(id)) : [];
+    return HttpResponse.json<RegistrationStatus>({
+      status,
+      ...(status === 'rejected' ? { reason: D.DEMO_REJECT_REASON } : {}),
+      missingDocTypeIds: missing,
+    });
+  }),
   http.get(p('/r/doc-types'), () =>
     HttpResponse.json(D.docTypes.map((d) => ({ ...d, uploaded: db.docsUploaded.includes(d.id!) }))),
   ),

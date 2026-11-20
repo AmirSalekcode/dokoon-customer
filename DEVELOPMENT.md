@@ -86,6 +86,11 @@ built by `vite.panel.config.ts` into `dist-panel/` with its own PWA manifest («
   (bottom bar < 720, 104px side rail ≥ 720 via CSS), stack navigation from the shared `createStackNav`
   (`src/panel/nav/nav.ts`: tabs orders/menu/reports/account, exact back, Android back + «press again to exit»),
   full-page errors with panel actions, startup `/app/config` check. Mock builds: Account → error page previews.
+- **Login (KAN-59):** `src/panel/auth/` (flow + validation) and `src/panel/screens/auth/`. Without a session the
+  panel opens at `login`; after the code: `active` → `shift`, `pending`/`needs_docs`/`rejected` → `reg-status`,
+  no restaurant (`new`) → `reg`. Mock: code `1234`; phones `09130000000` (new), `…01` pending, `…02` needs
+  documents, `…03` rejected, any other valid phone = approved restaurant. E2E helper `e2e-panel/helpers.ts`
+  (`seedSession`, `openPanel`) signs in and passes the shift screen.
 - **E2E locally:** `npm run e2e:panel` builds the mock panel and serves it on `127.0.0.1:5176`.
 
 ## Rules enforced in code

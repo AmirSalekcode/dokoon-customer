@@ -59,13 +59,14 @@ export function ReportsScreen() {
   );
 }
 
+const D_LOGOUT = 'M15 4h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-3M10 16l-4-4 4-4M6 12h10';
 const D_HELP =
   'M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM9.5 9a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6V14M12 17h.01';
 
 export function AccountScreen() {
   const theme = useTheme((st) => st.theme);
   const setMode = useTheme((st) => st.setMode);
-  const { push, showError, resetTo } = usePanelNav.getState();
+  const { push, showError, resetTo, openOverlay } = usePanelNav.getState();
   return (
     <div className={s.page}>
       <div className={s.card}>
@@ -76,6 +77,14 @@ export function AccountScreen() {
           title="حالت تیره"
           on={theme === 'dark'}
           onFlip={() => setMode(theme === 'dark' ? 'light' : 'dark')}
+        />
+      </div>
+      <div className={s.card}>
+        <ListRow
+          title="خروج از حساب"
+          sub="فقط همین دستگاه خارج می‌شود"
+          d={D_LOGOUT}
+          onTap={() => openOverlay({ kind: 'confirm', props: { action: 'logout' } })}
         />
       </div>
       {config.useMocks ? (
