@@ -39,3 +39,23 @@ export const WithError: S = {
     error: 'شماره نامعتبر است',
   },
 };
+
+export const PriceWithSuffix: S = {
+  args: { label: 'قیمت', value: '', onChange: () => {}, numeric: true, suffix: 'تومان' },
+  render: (a) => {
+    const [v, setV] = useState('285000');
+    return <TextField {...a} value={v} onChange={setV} />;
+  },
+};
+
+export const ShebaLtr: S = {
+  args: { label: 'شماره‌ی شبا', value: 'IR', onChange: () => {}, ltr: true, hint: 'با IR شروع می‌شود' },
+};
+
+export const MultiLine: S = {
+  args: { label: 'متن پیام', value: '', onChange: () => {}, rows: 4, placeholder: 'مشکل را بنویسید' },
+  render: (a) => {
+    const [v, setV] = useState('');
+    return <TextField {...a} value={v} onChange={setV} hint="حداقل ۱۰ حرف" />;
+  },
+};

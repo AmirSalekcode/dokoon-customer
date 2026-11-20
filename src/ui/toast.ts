@@ -3,7 +3,7 @@ import { create } from 'zustand';
 export interface ToastItem {
   id: number;
   text: string;
-  tone: 'info' | 'success' | 'error';
+  tone: 'info' | 'success' | 'error' | 'warn';
 }
 
 interface ToastState {
@@ -25,4 +25,6 @@ export const useToast = create<ToastState>((set, get) => ({
   dismiss: (id) => set({ toasts: get().toasts.filter((t) => t.id !== id) }),
 }));
 
-export const toast = (text: string, tone?: ToastItem['tone']) => useToast.getState().show(text, tone);
+/** Show a toast. `ms`: visible time (customer default 2.5 s; the restaurant app uses 2.6 s). */
+export const toast = (text: string, tone?: ToastItem['tone'], ms?: number) =>
+  useToast.getState().show(text, tone, ms);
