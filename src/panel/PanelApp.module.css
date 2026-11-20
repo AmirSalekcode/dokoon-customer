@@ -1,0 +1,44 @@
+.shell {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  background: var(--bg);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  min-height: var(--h-topbar);
+  padding: calc(var(--sp-2) + env(safe-area-inset-top)) var(--gutter) var(--sp-2);
+  background: var(--hd);
+}
+
+.tag {
+  padding: var(--sp-1) var(--sp-3);
+  border-radius: var(--r-pill);
+  background: var(--primary);
+  color: var(--white);
+  font-size: var(--fs-12);
+  font-weight: var(--fw-bold);
+}
+
+.main {
+  flex: 1;
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: var(--sp-6) var(--gutter);
+}
+
+.title {
+  margin: 0;
+  font-size: var(--fs-22);
+  font-weight: var(--fw-xbold);
+  color: var(--ink);
+}
+
+.lead {
+  margin: var(--sp-2) 0 0;
+  color: var(--mu);
+}
