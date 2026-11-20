@@ -11,16 +11,8 @@ import s from './screens.module.css';
 
 /*
  * Root tab screens of the shell (KAN-58). Their real content arrives with the feature tasks:
- * menu KAN-66/67, reports KAN-68, account KAN-69/70.
+ * reports KAN-68, account KAN-69/70.
  */
-
-export function MenuScreen() {
-  return (
-    <div className={s.page}>
-      <EmptyState art="dk-kebab" title="منو" text="غذاها و دسته‌های منو اینجا مدیریت می‌شوند." />
-    </div>
-  );
-}
 
 export function ReportsScreen() {
   return (

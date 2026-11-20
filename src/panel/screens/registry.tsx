@@ -9,12 +9,17 @@ import { SoundScreen } from './SoundScreen';
 import { HelpScreen, PanelErrorScreen, type PanelScreenProps } from './StackScreens';
 import { OrderScreen } from './orders/OrderScreen';
 import { OrdersScreen } from './orders/OrdersScreen';
-import { AccountScreen, MenuScreen, ReportsScreen } from './TabScreens';
+import { CatsScreen } from './menu/CatsScreen';
+import { DishScreen } from './menu/DishScreen';
+import { MenuScreen } from './menu/MenuScreen';
+import { AccountScreen, ReportsScreen } from './TabScreens';
 
 const SCREENS: Record<PanelScreen, ComponentType<PanelScreenProps>> = {
   orders: OrdersScreen,
   order: OrderScreen,
   menu: MenuScreen,
+  cats: CatsScreen,
+  dish: DishScreen,
   reports: ReportsScreen,
   account: AccountScreen,
   help: HelpScreen,
