@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>حالت خالی</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:300;font-display:swap;src:url(/_blob/2ef92529418867881b213c86e0698e5f) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:400;font-display:swap;src:url(/_blob/bd549ffc7e0220163cf551aa8c12f971) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:500;font-display:swap;src:url(/_blob/2c86d88b0953b236f79c30f4ec52072f) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:700;font-display:swap;src:url(/_blob/17ce6732741785f9a10e038c7f86abc8) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:800;font-display:swap;src:url(/_blob/0208d433250cedfb8a54737f1d0176d9) format('truetype')}
+.EmptyState_es{display:flex;flex-direction:column;align-items:center;gap:8px;padding:32px 32px;text-align:center;font-family:'Yekan Bakh',Tahoma,sans-serif;color:var(--ink,#1F1A17)}.EmptyState_es svg{width:96px;height:96px;filter:drop-shadow(0 8px 8px rgba(120,50,10,.25));animation:bob 3.4s ease-in-out infinite}.EmptyState_es h4{margin:8px 0 0;font-size:16px;font-weight:700;line-height:1.5}.EmptyState_es p{margin:0;font-size:14px;color:var(--mu,#7A6E66);line-height:1.7}
+</style>
+</helmet>
+<div class="EmptyState_es" dir="rtl"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#{{ art }}"></use></svg><h4>{{ title }}</h4><p>{{ text }}</p></div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"art": {"editor": null}, "title": {"editor": null}, "text": {"editor": null}}'>
+class Component extends DCLogic {
+renderVals() {
+const P = this.props;
+return { art: P.art ?? 'dk-all', title: P.title ?? '', text: P.text ?? '' };
+}
+}
+</script>
+</body>
+</html>

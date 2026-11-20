@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>ردیف ویرایش گزینه</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:300;font-display:swap;src:url(/_blob/2ef92529418867881b213c86e0698e5f) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:400;font-display:swap;src:url(/_blob/bd549ffc7e0220163cf551aa8c12f971) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:500;font-display:swap;src:url(/_blob/2c86d88b0953b236f79c30f4ec52072f) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:700;font-display:swap;src:url(/_blob/17ce6732741785f9a10e038c7f86abc8) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:800;font-display:swap;src:url(/_blob/0208d433250cedfb8a54737f1d0176d9) format('truetype')}
+.OE_r{font-family:'Yekan Bakh',Tahoma,sans-serif;display:flex;align-items:center;gap:8px;background:var(--sf,#fff);border-radius:20px;padding:8px 12px;box-shadow:0 4px 16px rgba(31,26,23,.06)}
+.OE_i{font-family:'Yekan Bakh',Tahoma,sans-serif;min-width:0;height:48px;border:2px solid var(--ln,#F0DFD0);border-radius:12px;background:var(--bg,#FBF0E6);color:var(--ink,#1F1A17);padding:0 12px;font-size:14px;font-weight:700}
+.OE_n{flex:1.4}.OE_p{flex:1;direction:ltr;text-align:right}
+.OE_i:focus{outline:0;border-color:#E4501E}
+.OE_d{width:48px;height:48px;flex:none;border:0;border-radius:50%;background:none;color:#C8281E;cursor:pointer;display:grid;place-items:center;padding:0}
+.OE_d svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}.OE_d:focus-visible{outline:3px solid #E4501E;outline-offset:2px}
+</style>
+</helmet>
+<div class="OE_r" dir="rtl"><input class="OE_i OE_n" type="text" aria-label="نام گزینه" placeholder="نام گزینه" value="{{ optName }}" onInput="{{ inName }}"><input class="OE_i OE_p" type="text" inputmode="numeric" aria-label="قیمت (تومان)" placeholder="۰ = رایگان" value="{{ optPrice }}" onInput="{{ inPrice }}"><button class="OE_d" aria-label="حذف گزینه" onClick="{{ del }}"><svg class="" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 7h14M10 7V4h4v3M7 7l1 13h8l1-13"></path></svg></button></div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"optName": {"editor": null}, "optPrice": {"editor": null}, "onName": {"editor": null}, "onPrice": {"editor": null}, "onDelete": {"editor": null}, "$preview": {"width": 358, "height": 96}}'>
+class Component extends DCLogic {
+renderVals() {
+const P = this.props;
+return { optName: P.optName ?? '', optPrice: P.optPrice ?? '', inName: (e) => { if (P.onName) P.onName(e && e.target ? e.target.value : e); }, inPrice: (e) => { if (P.onPrice) P.onPrice(e && e.target ? e.target.value : e); }, del: () => { if (P.onDelete) P.onDelete(); } };
+}
+}
+</script>
+</body>
+</html>

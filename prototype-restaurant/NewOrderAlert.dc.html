@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>هشدار سفارش جدید</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:300;font-display:swap;src:url(/_blob/2ef92529418867881b213c86e0698e5f) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:400;font-display:swap;src:url(/_blob/bd549ffc7e0220163cf551aa8c12f971) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:500;font-display:swap;src:url(/_blob/2c86d88b0953b236f79c30f4ec52072f) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:700;font-display:swap;src:url(/_blob/17ce6732741785f9a10e038c7f86abc8) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:800;font-display:swap;src:url(/_blob/0208d433250cedfb8a54737f1d0176d9) format('truetype')}
+.NOA_r{font-family:'Yekan Bakh',Tahoma,sans-serif;position:relative;width:100%;height:100%;min-height:844px;box-sizing:border-box;padding:24px 16px 16px;display:flex;flex-direction:column;gap:16px;background:linear-gradient(170deg,#8B2313,#C8281E 45%,#E4501E);color:#fff;overflow:hidden}
+.NOA_r *{box-sizing:border-box}
+.NOA_mu{position:absolute;top:24px;inset-inline-start:16px;height:40px;padding:0 16px;border:0;border-radius:999px;background:rgba(255,255,255,.18);color:#fff;font-family:inherit;font-size:12px;font-weight:700;display:inline-flex;align-items:center;gap:8px;cursor:pointer}
+.NOA_mu svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.NOA_mu:focus-visible,.NOA_no:focus-visible,.NOA_ok:focus-visible{outline:3px solid #fff;outline-offset:2px}
+.NOA_hd{display:flex;flex-direction:column;align-items:center;gap:8px;padding-top:24px;text-align:center}
+.NOA_bl{position:relative;width:72px;height:72px;border-radius:50%;background:#fff;color:#C8281E;display:grid;place-items:center}
+.NOA_bl svg{width:36px;height:36px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;animation:NOA_wb .9s ease-in-out infinite;transform-origin:50% 10%}
+.NOA_rg{position:absolute;inset:0;border-radius:50%;border:3px solid rgba(255,255,255,.7);animation:NOA_rp 2s ease-out infinite}.NOA_rg+.NOA_rg{animation-delay:1s}
+.NOA_hd h1{margin:8px 0 0;font-size:24px;font-weight:800;line-height:1.4}.NOA_hd p{margin:0;font-size:16px;font-weight:700;opacity:.92}
+.NOA_tm{align-self:center;position:relative;width:128px;height:128px}
+.NOA_tm svg{width:128px;height:128px;transform:rotate(-90deg)}
+.NOA_tm circle{fill:none;stroke-width:8;stroke-linecap:round}
+.NOA_tk{stroke:rgba(255,255,255,.25)}.NOA_pg{stroke:#fff;transition:stroke-dashoffset 1s linear}
+.NOA_tt{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:24px;font-weight:800;line-height:1.2}.NOA_tt small{font-size:12px;font-weight:500;opacity:.9}
+.NOA_cd{background:var(--sf,#fff);color:var(--ink,#1F1A17);border-radius:28px;padding:16px;display:flex;flex-direction:column;gap:12px;max-height:280px;overflow:auto;box-shadow:0 12px 32px rgba(0,0,0,.25)}
+.NOA_li{display:flex;gap:12px;align-items:flex-start;font-size:15px;font-weight:700;line-height:1.6}
+.NOA_q{flex:none;min-width:32px;height:32px;border-radius:12px;background:var(--soft,#FCE3D0);color:var(--pr2,#C2410C);font-weight:800;display:grid;place-items:center}
+.NOA_li small{display:block;font-size:12px;font-weight:400;color:var(--mu,#7A6E66)}
+.NOA_nt{background:var(--bg,#FBF0E6);border-radius:12px;padding:12px;font-size:14px;line-height:1.7}.NOA_nt b{display:block;font-size:12px;color:var(--mu,#7A6E66)}
+.NOA_ft{display:flex;align-items:center;gap:8px;border-top:1px solid var(--ln,#F0DFD0);padding-top:12px}
+.NOA_py{height:28px;padding:0 12px;border-radius:999px;font-size:12px;font-weight:700;line-height:28px;background:var(--bg,#FBF0E6);color:var(--ink,#1F1A17)}.NOA_cs{background:var(--soft,#FCE3D0);color:var(--pr2,#C2410C)}
+.NOA_tl{margin-inline-start:auto;font-size:20px;font-weight:800}
+.NOA_bt{margin-top:auto;display:flex;flex-direction:column;gap:12px}
+.NOA_ok{font-family:'Yekan Bakh',Tahoma,sans-serif;height:64px;border:0;border-radius:999px;background:#fff;color:#8B2313;font-size:18px;font-weight:800;cursor:pointer;box-shadow:0 8px 24px rgba(0,0,0,.25);transition:transform .2s ease-out}.NOA_ok:hover{transform:scale(1.02)}
+.NOA_no{font-family:'Yekan Bakh',Tahoma,sans-serif;height:52px;border:2px solid rgba(255,255,255,.7);border-radius:999px;background:transparent;color:#fff;font-size:15px;font-weight:700;cursor:pointer}
+@keyframes NOA_rp{0%{transform:scale(1);opacity:.9}100%{transform:scale(2.2);opacity:0}}
+@keyframes NOA_wb{0%,100%{transform:rotate(-12deg)}50%{transform:rotate(12deg)}}
+</style>
+</helmet>
+<section class="NOA_r" dir="rtl" aria-label="سفارش جدید"><button class="NOA_mu" onClick="{{ mute }}"><svg class="" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 10v4h3l5 4V6l-5 4zM17 9a4 4 0 0 1 0 6"></path></svg>{{ muteLabel }}</button><div class="NOA_hd"><div class="NOA_bl"><span class="NOA_rg"></span><span class="NOA_rg"></span><svg class="" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 16v-5a6 6 0 0 1 12 0v5l2 2H4zM10 21h4"></path></svg></div><h1>سفارش جدید!</h1><p>{{ no }}</p></div><div class="NOA_tm"><svg viewBox="0 0 128 128" aria-hidden="true"><circle class="NOA_tk" cx="64" cy="64" r="54"></circle><circle class="NOA_pg" cx="64" cy="64" r="54" stroke-dasharray="339.29" stroke-dashoffset="{{ dash }}"></circle></svg><div class="NOA_tt"><span>{{ timerText }}</span><small>تا پاسخ</small></div></div><div class="NOA_cd"><sc-for list="{{ items }}" as="x" hint-placeholder-count="3"><div class="NOA_li"><span class="NOA_q">{{ x.q }}</span><span>{{ x.name }}<small>{{ x.opt }}</small></span></div></sc-for><sc-if value="{{ hasNote }}" hint-placeholder-val="{{ false }}"><div class="NOA_nt"><b>توضیح مشتری</b>{{ note }}</div></sc-if><div class="NOA_ft"><span class="NOA_py {{ payCls }}">{{ payLabel }}</span><span class="NOA_tl">{{ total }}</span></div></div><div class="NOA_bt"><button class="NOA_ok" onClick="{{ accept }}">پذیرش سفارش</button><button class="NOA_no" onClick="{{ reject }}">رد سفارش</button></div></section>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"order": {"editor": null}, "timerText": {"editor": null}, "progress": {"editor": null}, "muted": {"editor": null}, "onAccept": {"editor": null}, "onReject": {"editor": null}, "onMute": {"editor": null}, "$preview": {"width": 390, "height": 844}}'>
+class Component extends DCLogic {
+renderVals() {
+const P = this.props;
+const o = P.order || {};
+const pr = typeof P.progress === 'number' ? Math.max(0, Math.min(1, P.progress)) : 1;
+return { no: o.no ?? '', items: o.items || [], note: o.note ?? '', hasNote: !!o.note, payLabel: o.payLabel ?? '', payCls: o.pay === 'cash' ? 'NOA_cs' : '', total: o.total ?? '', timerText: P.timerText ?? '', dash: 339.29 * (1 - pr), muteLabel: P.muted ? 'صدا قطع است' : 'قطع صدا', mute: () => { if (P.onMute) P.onMute(); }, accept: () => { if (P.onAccept) P.onAccept(); }, reject: () => { if (P.onReject) P.onReject(); } };
+}
+}
+</script>
+</body>
+</html>

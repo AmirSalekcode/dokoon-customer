@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>تب‌های بخش‌بندی</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:300;font-display:swap;src:url(/_blob/2ef92529418867881b213c86e0698e5f) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:400;font-display:swap;src:url(/_blob/bd549ffc7e0220163cf551aa8c12f971) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:500;font-display:swap;src:url(/_blob/2c86d88b0953b236f79c30f4ec52072f) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:700;font-display:swap;src:url(/_blob/17ce6732741785f9a10e038c7f86abc8) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:800;font-display:swap;src:url(/_blob/0208d433250cedfb8a54737f1d0176d9) format('truetype')}
+.SegTabs_w{font-family:'Yekan Bakh',Tahoma,sans-serif;display:flex;gap:8px;overflow-x:auto;padding:4px 16px;scrollbar-width:none}
+.SegTabs_w::-webkit-scrollbar{display:none}
+.SegTabs_t{flex:none;height:48px;padding:0 16px;border:0;border-radius:999px;background:var(--sf,#fff);color:var(--mu,#7A6E66);font-family:inherit;font-size:14px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:8px;box-shadow:0 4px 16px rgba(31,26,23,.06);transition:background .2s ease-out,transform .2s ease-out;white-space:nowrap}
+.SegTabs_t:hover{transform:scale(1.03)}
+.SegTabs_t:focus-visible{outline:3px solid #E4501E;outline-offset:2px}
+.SegTabs_on{background:#E4501E;color:#fff}
+.SegTabs_n{min-width:24px;height:24px;padding:0 6px;border-radius:999px;background:var(--soft,#FCE3D0);color:var(--pr2,#C2410C);font-size:12px;font-weight:800;line-height:24px;text-align:center}
+.SegTabs_on .SegTabs_n{background:rgba(255,255,255,.28);color:#fff}
+.SegTabs_hot .SegTabs_n{background:#C8281E;color:#fff}
+</style>
+</helmet>
+<div class="SegTabs_w" dir="rtl" role="tablist"><sc-for list="{{ items }}" as="t" hint-placeholder-count="5"><button class="SegTabs_t {{ t.cls }}" role="tab" aria-selected="{{ t.on }}" onClick="{{ t.pick }}">{{ t.label }}<sc-if value="{{ t.hasCount }}" hint-placeholder-val="{{ false }}"><b class="SegTabs_n">{{ t.count }}</b></sc-if></button></sc-for></div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"items": {"editor": null}, "active": {"editor": null}, "onPick": {"editor": null}, "$preview": {"width": 390, "height": 64}}'>
+class Component extends DCLogic {
+renderVals() {
+const P = this.props;
+const items = (P.items || []).map((x) => { const on = P.active === x.key; return { label: x.label, count: x.count, hasCount: x.count !== undefined && x.count !== null && x.count !== '', on: on, cls: (on ? 'SegTabs_on ' : '') + (x.hot ? 'SegTabs_hot' : ''), pick: () => { if (P.onPick) P.onPick(x.key); } }; });
+return { items: items };
+}
+}
+</script>
+</body>
+</html>

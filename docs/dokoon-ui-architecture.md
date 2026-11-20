@@ -148,3 +148,7 @@
 
 ### خروجی‌های تحویل فرانت‌اند (پوشه‌ی handoff)
 `dokoon-design-system.md` + `dokoon-tokens.css` + `dokoon-design-tokens.json` · `dokoon-component-library.md` · `dokoon-screen-specs.md`.
+
+
+## اپ رستوران (v1 طراحی)
+اپ رستوران در Claude Design ساخته شد (کامپوننت‌محور، توکن‌های مشترک، سربرگ تیره‌ی کسب‌وکار، layout=auto/phone/tablet). جزئیات: dokoon-screen-map.md بخش «تغییرات اپ رستوران». بررسی در مرورگر انجام نشده است.

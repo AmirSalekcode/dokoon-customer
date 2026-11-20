@@ -4,8 +4,10 @@ dev-dist
 storybook-static
 android
 prototype
+prototype-restaurant
 docs
 contract
+restaurant
 design-tokens
 assets
 public/mockServiceWorker.js

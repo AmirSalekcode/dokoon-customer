@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>ردیف غذای منو</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:300;font-display:swap;src:url(/_blob/2ef92529418867881b213c86e0698e5f) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:400;font-display:swap;src:url(/_blob/bd549ffc7e0220163cf551aa8c12f971) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:500;font-display:swap;src:url(/_blob/2c86d88b0953b236f79c30f4ec52072f) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:700;font-display:swap;src:url(/_blob/17ce6732741785f9a10e038c7f86abc8) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:800;font-display:swap;src:url(/_blob/0208d433250cedfb8a54737f1d0176d9) format('truetype')}
+.MIR_r{font-family:'Yekan Bakh',Tahoma,sans-serif;display:flex;align-items:center;gap:12px;padding:12px;background:var(--sf,#fff);border-radius:20px;box-shadow:0 4px 16px rgba(31,26,23,.06);color:var(--ink,#1F1A17)}
+.MIR_ed{font-family:'Yekan Bakh',Tahoma,sans-serif;flex:1;min-width:0;display:flex;align-items:center;gap:12px;border:0;background:none;padding:0;text-align:right;cursor:pointer;color:inherit}
+.MIR_ed:focus-visible{outline:3px solid #E4501E;outline-offset:2px;border-radius:12px}
+.MIR_ar{width:64px;height:64px;flex:none;border-radius:12px;background:var(--soft,#FCE3D0);display:grid;place-items:center}.MIR_ar svg{width:52px;height:52px}
+.MIR_off .MIR_ar{opacity:.45;filter:grayscale(.6)}
+.MIR_tx{flex:1;min-width:0}.MIR_n{font-size:15px;font-weight:700;line-height:1.6;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.MIR_pr{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:800;line-height:1.6}.MIR_pr s{font-size:12px;font-weight:400;color:var(--mu,#7A6E66)}
+.MIR_st{font-size:12px;font-weight:700;color:var(--pr2,#C2410C)}.MIR_off .MIR_st{color:var(--mu,#7A6E66)}
+.MIR_sw{position:relative;width:52px;height:32px;flex:none;border:0;border-radius:999px;background:var(--ln,#F0DFD0);cursor:pointer;padding:0;transition:background .25s ease-out}
+.MIR_sw::after{content:"";position:absolute;top:4px;right:4px;width:24px;height:24px;border-radius:50%;background:#fff;box-shadow:0 2px 6px rgba(31,26,23,.2);transition:transform .25s ease-out}
+.MIR_on{background:#E4501E}.MIR_on::after{transform:translateX(-20px)}.MIR_sw:focus-visible{outline:3px solid #E4501E;outline-offset:2px}
+</style>
+</helmet>
+<div class="MIR_r {{ cls }}" dir="rtl"><button class="MIR_ed" aria-label="ویرایش {{ name }}" onClick="{{ edit }}"><span class="MIR_ar"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#{{ art }}"></use></svg></span><span class="MIR_tx"><div class="MIR_n">{{ name }}</div><div class="MIR_pr">{{ price }}<sc-if value="{{ hasOld }}" hint-placeholder-val="{{ false }}"><s>{{ old }}</s></sc-if></div><div class="MIR_st">{{ stateText }}</div></span></button><button class="MIR_sw {{ swCls }}" role="switch" aria-checked="{{ avail }}" aria-label="موجود بودن {{ name }}" onClick="{{ flip }}"></button></div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"item": {"editor": null}, "onToggle": {"editor": null}, "onEdit": {"editor": null}, "$preview": {"width": 358, "height": 96}}'>
+class Component extends DCLogic {
+renderVals() {
+const P = this.props;
+const it = P.item || {};
+const a = it.available !== false;
+return { name: it.name ?? '', price: it.price ?? '', old: it.old ?? '', hasOld: !!it.old, art: it.art || 'dk-all', avail: a, cls: a ? '' : 'MIR_off', swCls: a ? 'MIR_on' : '', stateText: a ? 'موجود' : 'ناموجود', edit: () => { if (P.onEdit) P.onEdit(); }, flip: () => { if (P.onToggle) P.onToggle(); } };
+}
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>نمودار میله‌ای</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:300;font-display:swap;src:url(/_blob/2ef92529418867881b213c86e0698e5f) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:400;font-display:swap;src:url(/_blob/bd549ffc7e0220163cf551aa8c12f971) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:500;font-display:swap;src:url(/_blob/2c86d88b0953b236f79c30f4ec52072f) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:700;font-display:swap;src:url(/_blob/17ce6732741785f9a10e038c7f86abc8) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:800;font-display:swap;src:url(/_blob/0208d433250cedfb8a54737f1d0176d9) format('truetype')}
+.BC_c{font-family:'Yekan Bakh',Tahoma,sans-serif;background:var(--sf,#fff);color:var(--ink,#1F1A17);border-radius:28px;padding:16px;box-shadow:0 4px 16px rgba(31,26,23,.06)}
+.BC_c h4{margin:0 0 12px;font-size:14px;font-weight:800}
+.BC_g{display:flex;align-items:flex-end;gap:8px;height:132px}
+.BC_b{flex:1;min-width:0;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:4px}
+.BC_v{font-size:12px;font-weight:700;color:var(--mu,#7A6E66);line-height:1.2}
+.BC_r{width:100%;max-width:32px;border-radius:8px 8px 4px 4px;background:var(--soft,#FCE3D0);min-height:4px;transition:height .3s ease-out}
+.BC_on .BC_r{background:#E4501E}.BC_on .BC_v{color:var(--pr2,#C2410C)}
+.BC_l{display:flex;gap:8px;margin-top:8px}.BC_l span{flex:1;text-align:center;font-size:12px;color:var(--mu,#7A6E66)}
+</style>
+</helmet>
+<div class="BC_c" dir="rtl"><h4>{{ title }}</h4><div class="BC_g" role="img" aria-label="{{ title }}"><sc-for list="{{ bars }}" as="b" hint-placeholder-count="7"><div class="BC_b {{ b.cls }}"><span class="BC_v">{{ b.v }}</span><div class="BC_r" style="height: {{ b.h }}%"></div></div></sc-for></div><div class="BC_l"><sc-for list="{{ bars }}" as="b" hint-placeholder-count="7"><span>{{ b.label }}</span></sc-for></div></div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"title": {"editor": null}, "bars": {"editor": null}, "$preview": {"width": 358, "height": 220}}'>
+class Component extends DCLogic {
+renderVals() {
+const P = this.props;
+const bars = (P.bars || []).map((b) => ({ label: b.label, v: b.v, h: Math.max(3, Math.min(100, b.h || 0)), cls: b.on ? 'BC_on' : '' }));
+return { title: P.title ?? '', bars: bars };
+}
+}
+</script>
+</body>
+</html>

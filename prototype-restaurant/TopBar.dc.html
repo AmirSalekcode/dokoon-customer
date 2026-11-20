@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>نوار بالای صفحه</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:300;font-display:swap;src:url(/_blob/2ef92529418867881b213c86e0698e5f) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:400;font-display:swap;src:url(/_blob/bd549ffc7e0220163cf551aa8c12f971) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:500;font-display:swap;src:url(/_blob/2c86d88b0953b236f79c30f4ec52072f) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:700;font-display:swap;src:url(/_blob/17ce6732741785f9a10e038c7f86abc8) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:800;font-display:swap;src:url(/_blob/0208d433250cedfb8a54737f1d0176d9) format('truetype')}
+.TopBar_tb{display:flex;align-items:center;gap:12px;padding:16px;font-family:'Yekan Bakh',Tahoma,sans-serif;color:var(--ink,#1F1A17)}.TopBar_bk{width:48px;height:48px;flex:none;border:0;border-radius:50%;background:var(--sf,#fff);box-shadow:0 4px 16px rgba(31,26,23,.06);display:grid;place-items:center;cursor:pointer;color:var(--ink,#1F1A17);padding:0;transition:transform .2s ease-out}.TopBar_bk:hover{transform:scale(1.08)}.TopBar_bk:focus-visible,.TopBar_ac:focus-visible{outline:3px solid #E4501E;outline-offset:2px}.TopBar_tt{flex:1;min-width:0;margin:0;font-size:20px;font-weight:700;line-height:1.4}.TopBar_ac{height:48px;padding:0 8px;border:0;background:none;color:var(--pr2,#C2410C);font-family:inherit;font-size:14px;font-weight:700;cursor:pointer}.TopBar_ic{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+</style>
+</helmet>
+<header class="TopBar_tb" dir="rtl"><button class="TopBar_bk" aria-label="بازگشت" onClick="{{ back }}"><svg class="TopBar_ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"></path></svg></button><h2 class="TopBar_tt">{{ title }}</h2><sc-if value="{{ hasAction }}" hint-placeholder-val="{{ true }}"><button class="TopBar_ac" onClick="{{ action }}">{{ actionLabel }}</button></sc-if></header>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"title": {"editor": null}, "actionLabel": {"editor": null}, "onBack": {"editor": null}, "onAction": {"editor": null}, "$preview": {"width": 390, "height": 80}}'>
+class Component extends DCLogic {
+renderVals() {
+const P = this.props;
+return { title: P.title ?? '', actionLabel: P.actionLabel ?? '', hasAction: !!P.actionLabel, back: (e)=>{ if(e&&e.stopPropagation) e.stopPropagation(); if(P.onBack) P.onBack(); }, action: (e)=>{ if(e&&e.stopPropagation) e.stopPropagation(); if(P.onAction) P.onAction(); } };
+}
+}
+</script>
+</body>
+</html>

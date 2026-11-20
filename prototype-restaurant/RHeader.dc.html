@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>سربرگ رستوران</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:300;font-display:swap;src:url(/_blob/2ef92529418867881b213c86e0698e5f) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:400;font-display:swap;src:url(/_blob/bd549ffc7e0220163cf551aa8c12f971) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:500;font-display:swap;src:url(/_blob/2c86d88b0953b236f79c30f4ec52072f) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:700;font-display:swap;src:url(/_blob/17ce6732741785f9a10e038c7f86abc8) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:800;font-display:swap;src:url(/_blob/0208d433250cedfb8a54737f1d0176d9) format('truetype')}
+.RHeader_h{font-family:'Yekan Bakh',Tahoma,sans-serif;--logo1:#fff;--logo2:#F6EEE8;background:var(--hd,#1F1A17);color:#F6EEE8;padding:16px 16px 20px;border-radius:0 0 28px 28px;display:flex;flex-direction:column;gap:16px;box-shadow:0 8px 24px rgba(31,26,23,.18)}
+.RHeader_tp{display:flex;align-items:center;gap:12px}
+.RHeader_lg{height:26px;width:auto;flex:none}
+.RHeader_tag{height:24px;padding:0 12px;border-radius:999px;background:#E4501E;color:#fff;font-size:12px;font-weight:800;display:inline-flex;align-items:center}
+.RHeader_bt{display:flex;align-items:center;gap:12px}
+.RHeader_nm{flex:1;min-width:0}
+.RHeader_nm h1{margin:0;font-size:20px;font-weight:800;line-height:1.5;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.RHeader_nm p{margin:0;font-size:12px;line-height:1.7;color:#B3A59B}
+.RHeader_sw{font-family:'Yekan Bakh',Tahoma,sans-serif;height:48px;padding:0 16px;border:1.5px solid rgba(255,255,255,.28);border-radius:999px;display:inline-flex;align-items:center;gap:8px;flex:none;cursor:pointer;font-size:14px;font-weight:700;color:#B3A59B;background:transparent;transition:border-color .25s ease-out,color .25s ease-out}
+.RHeader_sw i{width:10px;height:10px;border-radius:50%;background:#7A6E66;transition:background .25s ease-out}
+.RHeader_on{color:#F6EEE8;border-color:#F5B32F}.RHeader_on i{background:#F5B32F;box-shadow:0 0 0 0 rgba(245,179,47,.5);animation:RHeader_pl 2.4s ease-in-out infinite}
+.RHeader_sw:focus-visible{outline:3px solid #fff;outline-offset:2px}
+@keyframes RHeader_pl{0%,100%{box-shadow:0 0 0 0 rgba(245,179,47,.5)}50%{box-shadow:0 0 0 7px rgba(245,179,47,0)}}
+</style>
+</helmet>
+<header class="RHeader_h" dir="rtl"><div class="RHeader_tp"><svg class="RHeader_lg" viewBox="0 0 902.92 251.16" role="img" aria-label="دکون Dokoon"><use href="#dk-logo"></use></svg><span class="RHeader_tag">رستوران</span></div><div class="RHeader_bt"><div class="RHeader_nm"><h1>{{ rest }}</h1><p>{{ sub }}</p></div><button class="RHeader_sw {{ cls }}" role="switch" aria-checked="{{ open }}" aria-label="باز یا بسته بودن رستوران" onClick="{{ flip }}"><i></i><span>{{ stateText }}</span></button></div></header>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"rest": {"editor": null}, "sub": {"editor": null}, "open": {"editor": null}, "onToggle": {"editor": null}, "$preview": {"width": 390, "height": 148}}'>
+class Component extends DCLogic {
+renderVals() {
+const P = this.props;
+return { rest: P.rest ?? '', sub: P.sub ?? '', open: !!P.open, cls: P.open ? 'RHeader_on' : '', stateText: P.open ? 'باز' : 'بسته', flip: () => { if (P.onToggle) P.onToggle(); } };
+}
+}
+</script>
+</body>
+</html>

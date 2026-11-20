@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>حالت خطا</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:300;font-display:swap;src:url(/_blob/2ef92529418867881b213c86e0698e5f) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:400;font-display:swap;src:url(/_blob/bd549ffc7e0220163cf551aa8c12f971) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:500;font-display:swap;src:url(/_blob/2c86d88b0953b236f79c30f4ec52072f) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:700;font-display:swap;src:url(/_blob/17ce6732741785f9a10e038c7f86abc8) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:800;font-display:swap;src:url(/_blob/0208d433250cedfb8a54737f1d0176d9) format('truetype')}
+.ErrorState_er{display:flex;flex-direction:column;align-items:center;gap:8px;padding:48px 32px;text-align:center;font-family:'Yekan Bakh',Tahoma,sans-serif;color:var(--ink,#1F1A17)}.ErrorState_er svg{width:96px;height:96px;filter:drop-shadow(0 8px 8px rgba(120,50,10,.25));animation:bob 3.4s ease-in-out infinite}.ErrorState_er h4{margin:8px 0 0;font-size:16px;font-weight:700}.ErrorState_er p{margin:0 0 8px;font-size:14px;color:var(--mu,#7A6E66);line-height:1.7}.ErrorState_rt{height:48px;padding:0 24px;border:1.5px solid #E4501E;border-radius:999px;background:var(--sf,#fff);color:var(--pr2,#C2410C);font-family:inherit;font-size:15px;font-weight:700;cursor:pointer}.ErrorState_rt:focus-visible{outline:3px solid #E4501E;outline-offset:2px}
+</style>
+</helmet>
+<div class="ErrorState_er" dir="rtl"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#dk-cafe"></use></svg><h4>{{ title }}</h4><p>{{ text }}</p><button class="ErrorState_rt" onClick="{{ retry }}">تلاش دوباره</button></div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"title": {"editor": null}, "text": {"editor": null}, "onRetry": {"editor": null}}'>
+class Component extends DCLogic {
+renderVals() {
+const P = this.props;
+return { title: P.title ?? 'مشکلی پیش آمد', text: P.text ?? 'اتصال برقرار نشد. دوباره تلاش کنید.', retry: (e)=>{ if(e&&e.stopPropagation) e.stopPropagation(); if(P.onRetry) P.onRetry(); } };
+}
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>نشان</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:300;font-display:swap;src:url(/_blob/2ef92529418867881b213c86e0698e5f) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:400;font-display:swap;src:url(/_blob/bd549ffc7e0220163cf551aa8c12f971) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:500;font-display:swap;src:url(/_blob/2c86d88b0953b236f79c30f4ec52072f) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:700;font-display:swap;src:url(/_blob/17ce6732741785f9a10e038c7f86abc8) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:800;font-display:swap;src:url(/_blob/0208d433250cedfb8a54737f1d0176d9) format('truetype')}
+.Badge_bg{display:inline-block;font-family:'Yekan Bakh',Tahoma,sans-serif;font-size:12px;font-weight:700;line-height:1.6;color:#fff;background:#C8281E;border-radius:999px;padding:0 12px;white-space:nowrap}.Badge_bg.Badge__amber{background:#F5B32F;color:var(--ink,#1F1A17)}.Badge_bg.Badge__green{background:#16A34A}.Badge_bg.Badge__ink{background:#1F1A17}
+</style>
+</helmet>
+<span class="Badge_bg {{ tone }}" dir="rtl">{{ text }}</span>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"text": {"editor": null}, "tone": {"editor": null}}'>
+class Component extends DCLogic {
+renderVals() {
+const P = this.props;
+return { text: P.text ?? '', tone: P.tone === 'amber' ? 'Badge__amber' : (P.tone === 'ink' ? 'Badge__ink' : (P.tone === 'green' ? 'Badge__green' : '')) };
+}
+}
+</script>
+</body>
+</html>

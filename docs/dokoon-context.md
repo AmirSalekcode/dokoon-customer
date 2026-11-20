@@ -771,3 +771,15 @@ The full, updated list of screens (123, of which 103 are in the MVP) for the cus
 
 ### خروجی‌های تحویل فرانت‌اند (پوشه‌ی handoff)
 `dokoon-design-system.md` + `dokoon-tokens.css` + `dokoon-design-tokens.json` · `dokoon-component-library.md` · `dokoon-screen-specs.md`.
+
+
+## اپ رستوران (v1 طراحی)
+اپ رستوران در Claude Design ساخته شد (کامپوننت‌محور، توکن‌های مشترک، سربرگ تیره‌ی کسب‌وکار، layout=auto/phone/tablet). جزئیات: dokoon-screen-map.md بخش «تغییرات اپ رستوران». بررسی در مرورگر انجام نشده است.
+
+## تصمیم: وب‌سایت‌ها و دامنه‌ها (۱۴۰۵/۰۹/۳۰)
+- دو ساب‌دامین جدا، یک بک‌اند/API و یک کتابخانه‌ی مشترک کامپوننت/توکن/فونت:
+  - `dokoonapp.ir`: لندینگ + منو و سفارش مشتری (وب‌اپ مشتری، سئو‌پذیر)
+  - `panel.dokoonapp.ir`: پنل وب رستوران = همان اپ رستوران روی صفحه‌ی بزرگ (چیدمان تبلت/دو ستونه)، PWA، پشت لاگین، noindex
+  - `admin.dokoonapp.ir`: پنل مدیریت (دسترسی محدودتر)
+- پنل رستوران روی دسکتاپ: صفحه‌ی «شروع شیفت» برای فعال‌سازی صدا (محدودیت autoplay مرورگر)، اتصال زنده با WebSocket، توصیه‌ی باز نگه‌داشتن صفحه و خاموش نشدن نمایشگر. بک‌اند باید CORS برای دو دامنه تنظیم کند.
+- دامنه طبق D-52 `dokoonapp.ir` است (خرید در چک‌لیست انتشار باز است)؛ API: `api.dokoonapp.ir`.

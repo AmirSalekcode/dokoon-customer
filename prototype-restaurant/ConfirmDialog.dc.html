@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>پنجره‌ی تأیید</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:300;font-display:swap;src:url(/_blob/2ef92529418867881b213c86e0698e5f) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:400;font-display:swap;src:url(/_blob/bd549ffc7e0220163cf551aa8c12f971) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:500;font-display:swap;src:url(/_blob/2c86d88b0953b236f79c30f4ec52072f) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:700;font-display:swap;src:url(/_blob/17ce6732741785f9a10e038c7f86abc8) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:800;font-display:swap;src:url(/_blob/0208d433250cedfb8a54737f1d0176d9) format('truetype')}
+.CD_d{font-family:'Yekan Bakh',Tahoma,sans-serif;background:var(--sf,#fff);color:var(--ink,#1F1A17);border-radius:28px;padding:24px 16px 16px;box-shadow:0 12px 32px rgba(0,0,0,.25);display:flex;flex-direction:column;gap:12px;text-align:center}
+.CD_d h3{margin:0;font-size:20px;font-weight:800;line-height:1.5}.CD_d p{margin:0;font-size:14px;line-height:1.8;color:var(--mu,#7A6E66)}
+.CD_a{display:flex;flex-direction:column;gap:8px;margin-top:8px}
+.CD_ok{font-family:'Yekan Bakh',Tahoma,sans-serif;height:56px;border:0;border-radius:999px;background:#E4501E;color:#fff;font-size:15px;font-weight:800;cursor:pointer}.CD_dn{background:#C8281E}.CD_gr{background:#E4501E}
+.CD_no{font-family:'Yekan Bakh',Tahoma,sans-serif;height:52px;border:2px solid var(--ln,#F0DFD0);border-radius:999px;background:none;color:var(--ink,#1F1A17);font-size:14px;font-weight:700;cursor:pointer}
+.CD_ok:focus-visible,.CD_no:focus-visible{outline:3px solid #1F1A17;outline-offset:2px}
+</style>
+</helmet>
+<div class="CD_d" dir="rtl" role="alertdialog" aria-label="{{ title }}"><h3>{{ title }}</h3><p>{{ text }}</p><div class="CD_a"><button class="CD_ok {{ cls }}" onClick="{{ confirm }}">{{ confirmLabel }}</button><button class="CD_no" onClick="{{ cancel }}">{{ cancelLabel }}</button></div></div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"title": {"editor": null}, "text": {"editor": null}, "confirmLabel": {"editor": null}, "cancelLabel": {"editor": null}, "tone": {"editor": null}, "onConfirm": {"editor": null}, "onCancel": {"editor": null}, "$preview": {"width": 358, "height": 240}}'>
+class Component extends DCLogic {
+renderVals() {
+const P = this.props;
+return { title: P.title ?? '', text: P.text ?? '', confirmLabel: P.confirmLabel ?? 'تأیید', cancelLabel: P.cancelLabel ?? 'انصراف', cls: P.tone === 'danger' ? 'CD_dn' : (P.tone === 'ok' ? 'CD_gr' : ''), confirm: () => { if (P.onConfirm) P.onConfirm(); }, cancel: () => { if (P.onCancel) P.onCancel(); } };
+}
+}
+</script>
+</body>
+</html>

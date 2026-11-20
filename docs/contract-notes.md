@@ -65,3 +65,25 @@ Nothing here is implemented as an invented endpoint; the frontend works around e
     Proposal: remove those three fields and the `MIN_ORDER` error code from the contract, and make sure
     `POST /checkout/quote` and `POST /orders` never reject an order for being below a minimum.
 
+
+## Restaurant contract (`restaurant/dokoon-restaurant-openapi.yaml`)
+
+16. **Domains (D-90).** `servers` and the WebSocket URL still use `api.dokoon.example`; the approved
+    domain is `dokoonapp.ir` (D-52) → `https://api.dokoonapp.ir/v1` and `wss://api.dokoonapp.ir/v1/r/stream`.
+    CORS: `https://dokoonapp.ir`, `https://panel.dokoonapp.ir` (admin on `admin.dokoonapp.ir` separately).
+17. **Courier call (D-100).** `Order.courier.canCall` exists but there is no way to get a number.
+    Proposal: `POST /r/orders/{id}/courier-call` → `{ phone: string, expiresAt: date-time }` returning a
+    short-lived Dokoon proxy number (never the courier's real number). Until it exists the panel hides
+    the call button.
+18. **ETA (D-93).** The server computes the customer ETA: `etaMin = prepMinutes + route minutes`,
+    `etaMax = etaMin + 10`. No restaurant-side field is needed; `Order` could expose `customerEtaText`
+    for the order detail if wanted.
+19. **Cash settlement (D-94).** The courier hands cash to Dokoon; restaurants never hold cash.
+    `netPayable = onlineSales + cashSales − commissionAmount`, commission on the whole food total.
+    `Settlement.note` can then be removed or kept as free text.
+20. **Multiple devices (D-96).** One manager account may be signed in on several devices at once.
+    `order.created` must reach every connected device; accept/reject on an order already answered must
+    return `409` with code `ALREADY_ANSWERED` so the other devices can close their alert.
+21. **Uploads.** Registration documents and dish photos use the customer contract's `POST /uploads`
+    (presigned). The restaurant contract should reference it (or define `/r/uploads`) so the generated
+    panel client has it; dish photo limit jpeg/png/webp ≤ 5 MB (D-99).

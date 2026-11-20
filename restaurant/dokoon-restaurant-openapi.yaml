@@ -1,0 +1,478 @@
+openapi: 3.1.0
+info:
+  title: Dokoon API — Restaurant app/panel (v1 draft)
+  version: 0.1.0
+  description: |
+    Draft contract derived from the restaurant-app prototype v7. Complements dokoon-openapi.yaml (customer).
+    Conventions: JSON, UTF-8. Money = integer TOMAN. Times = ISO-8601 UTC. IDs = opaque strings. ASCII digits on the wire; the app formats Persian digits.
+    Auth = same phone+OTP flow as customers but under /r/auth with role=restaurant. Every endpoint is scoped to the restaurant of the token (never accept a restaurantId from the client for authorization).
+    Customer phone and restaurant Sheba are ALWAYS masked in responses. All writes validate server-side (do not trust client validation).
+    Realtime: WebSocket wss://api.dokoon.example/v1/r/stream (auth by short-lived ticket from POST /r/stream/ticket). Events listed under x-realtime.
+    Commission is a server value (default 12 percent, admin-editable, overridable per restaurant); the restaurant only reads it. Each settlement stores the commission rate used at that time.
+x-realtime:
+  events:
+    - {name: order.created, payload: Order}
+    - {name: order.updated, payload: Order}
+    - {name: order.cancelled, payload: {orderId: string, reason: string}}
+    - {name: order.expired, payload: {orderId: string}}
+    - {name: notification.created, payload: Notification}
+    - {name: doc.required, payload: DocType}
+servers:
+  - url: https://api.dokoon.example/v1
+security:
+  - bearer: []
+tags:
+  - {name: auth}
+  - {name: orders}
+  - {name: menu}
+  - {name: settings}
+  - {name: reports}
+  - {name: support}
+paths:
+  /r/auth/otp/request:
+    post:
+      tags: [auth]
+      security: []
+      summary: Send SMS code to the restaurant manager
+      requestBody: {required: true, content: {application/json: {schema: {type: object, required: [phone], properties: {phone: {type: string, pattern: '^09\d{9}$'}}}}}}
+      responses:
+        '200': {description: sent, content: {application/json: {schema: {type: object, properties: {resendAfterSec: {type: integer}, codeLength: {type: integer, example: 4}}}}}}
+        '429': {$ref: '#/components/responses/Error'}
+  /r/auth/otp/verify:
+    post:
+      tags: [auth]
+      security: []
+      requestBody: {required: true, content: {application/json: {schema: {type: object, required: [phone, code], properties: {phone: {type: string}, code: {type: string}, deviceId: {type: string}}}}}}
+      responses:
+        '200': {description: ok, content: {application/json: {schema: {$ref: '#/components/schemas/RestaurantAuth'}}}}
+        '400': {$ref: '#/components/responses/Error'}
+  /r/auth/refresh:
+    post:
+      tags: [auth]
+      security: []
+      requestBody: {required: true, content: {application/json: {schema: {type: object, required: [refreshToken], properties: {refreshToken: {type: string}}}}}}
+      responses:
+        '200': {description: ok, content: {application/json: {schema: {$ref: '#/components/schemas/RestaurantAuth'}}}}
+  /r/auth/logout:
+    post:
+      tags: [auth]
+      responses:
+        '204': {description: ok}
+  /r/stream/ticket:
+    post:
+      tags: [orders]
+      summary: Short-lived ticket to open the realtime WebSocket
+      responses:
+        '200': {description: ok, content: {application/json: {schema: {type: object, properties: {ticket: {type: string}, expiresInSec: {type: integer}}}}}}
+  /r/registration:
+    post:
+      tags: [settings]
+      security: []
+      summary: Submit a new restaurant registration (after phone verification)
+      requestBody: {required: true, content: {application/json: {schema: {$ref: '#/components/schemas/RegistrationRequest'}}}}
+      responses:
+        '201': {description: submitted, content: {application/json: {schema: {type: object, properties: {status: {type: string, enum: [pending]}}}}}}
+        '400': {$ref: '#/components/responses/Error'}
+  /r/registration/status:
+    get:
+      tags: [settings]
+      summary: Approval status of this restaurant
+      responses:
+        '200': {description: ok, content: {application/json: {schema: {$ref: '#/components/schemas/RegistrationStatus'}}}}
+  /r/doc-types:
+    get:
+      tags: [settings]
+      summary: Required/optional documents (managed from the admin panel)
+      responses:
+        '200': {description: ok, content: {application/json: {schema: {type: array, items: {$ref: '#/components/schemas/DocType'}}}}}
+  /r/docs:
+    post:
+      tags: [settings]
+      summary: Attach an uploaded file to a document type
+      requestBody: {required: true, content: {application/json: {schema: {type: object, required: [docTypeId, uploadId], properties: {docTypeId: {type: string}, uploadId: {type: string}}}}}}
+      responses:
+        '201': {description: ok}
+  /r/me:
+    get:
+      tags: [settings]
+      responses:
+        '200': {description: ok, content: {application/json: {schema: {$ref: '#/components/schemas/RestaurantProfile'}}}}
+    patch:
+      tags: [settings]
+      summary: Edit name/address/coordinates (sheba and phone are not editable here)
+      requestBody: {required: true, content: {application/json: {schema: {type: object, properties: {name: {type: string, minLength: 2}, address: {type: string, minLength: 8}, lat: {type: number}, lng: {type: number}}}}}}
+      responses:
+        '200': {description: ok, content: {application/json: {schema: {$ref: '#/components/schemas/RestaurantProfile'}}}}
+  /r/me/sheba-change:
+    post:
+      tags: [settings]
+      summary: Request a Sheba change (fresh OTP required, then admin review)
+      requestBody: {required: true, content: {application/json: {schema: {type: object, required: [sheba, otpCode], properties: {sheba: {type: string, pattern: '^IR\d{24}$'}, otpCode: {type: string}}}}}}
+      responses:
+        '202': {description: pending admin review}
+  /r/open:
+    put:
+      tags: [settings]
+      summary: Manual open/closed switch (does not change weekly hours)
+      requestBody: {required: true, content: {application/json: {schema: {type: object, required: [open], properties: {open: {type: boolean}}}}}}
+      responses:
+        '200': {description: ok, content: {application/json: {schema: {type: object, properties: {open: {type: boolean}}}}}}
+  /r/hours:
+    get:
+      tags: [settings]
+      responses:
+        '200': {description: ok, content: {application/json: {schema: {type: array, items: {$ref: '#/components/schemas/DayHours'}}}}}
+    put:
+      tags: [settings]
+      requestBody: {required: true, content: {application/json: {schema: {type: array, minItems: 7, maxItems: 7, items: {$ref: '#/components/schemas/DayHours'}}}}}
+      responses:
+        '200': {description: ok}
+  /r/settings:
+    get:
+      tags: [settings]
+      responses:
+        '200': {description: ok, content: {application/json: {schema: {$ref: '#/components/schemas/RestaurantSettings'}}}}
+    put:
+      tags: [settings]
+      requestBody: {required: true, content: {application/json: {schema: {$ref: '#/components/schemas/RestaurantSettings'}}}}
+      responses:
+        '200': {description: ok}
+  /r/orders:
+    get:
+      tags: [orders]
+      summary: List orders by tab
+      parameters:
+        - {name: tab, in: query, required: true, schema: {type: string, enum: [new, prep, ready_or_way, history]}}
+        - {name: cursor, in: query, schema: {type: string}}
+        - {name: from, in: query, schema: {type: string, format: date}}
+        - {name: to, in: query, schema: {type: string, format: date}}
+      responses:
+        '200': {description: ok, content: {application/json: {schema: {type: object, properties: {items: {type: array, items: {$ref: '#/components/schemas/Order'}}, nextCursor: {type: string}}}}}}
+  /r/orders/{id}:
+    get:
+      tags: [orders]
+      parameters: [{name: id, in: path, required: true, schema: {type: string}}]
+      responses:
+        '200': {description: ok, content: {application/json: {schema: {$ref: '#/components/schemas/Order'}}}}
+  /r/orders/{id}/accept:
+    post:
+      tags: [orders]
+      summary: Accept with preparation minutes (customer sees the estimate)
+      parameters: [{name: id, in: path, required: true, schema: {type: string}}]
+      requestBody: {required: true, content: {application/json: {schema: {type: object, required: [prepMinutes], properties: {prepMinutes: {type: integer, minimum: 5, maximum: 120}}}}}}
+      responses:
+        '200': {description: ok, content: {application/json: {schema: {$ref: '#/components/schemas/Order'}}}}
+        '409': {$ref: '#/components/responses/Error'}
+  /r/orders/{id}/extend:
+    post:
+      tags: [orders]
+      summary: Add minutes to preparation time (typically +5)
+      parameters: [{name: id, in: path, required: true, schema: {type: string}}]
+      requestBody: {required: true, content: {application/json: {schema: {type: object, required: [addMinutes], properties: {addMinutes: {type: integer, minimum: 1, maximum: 30}}}}}}
+      responses:
+        '200': {description: ok, content: {application/json: {schema: {$ref: '#/components/schemas/Order'}}}}
+  /r/orders/{id}/reject:
+    post:
+      tags: [orders]
+      summary: Reject (new) or cancel (preparing) with a reason; online payments are refunded automatically
+      parameters: [{name: id, in: path, required: true, schema: {type: string}}]
+      requestBody: {required: true, content: {application/json: {schema: {type: object, required: [reasonId], properties: {reasonId: {type: string}}}}}}
+      responses:
+        '200': {description: ok, content: {application/json: {schema: {$ref: '#/components/schemas/Order'}}}}
+        '409': {$ref: '#/components/responses/Error'}
+  /r/orders/{id}/ready:
+    post:
+      tags: [orders]
+      parameters: [{name: id, in: path, required: true, schema: {type: string}}]
+      responses:
+        '200': {description: ok, content: {application/json: {schema: {$ref: '#/components/schemas/Order'}}}}
+  /r/orders/{id}/handover:
+    post:
+      tags: [orders]
+      summary: Handed to courier
+      parameters: [{name: id, in: path, required: true, schema: {type: string}}]
+      responses:
+        '200': {description: ok, content: {application/json: {schema: {$ref: '#/components/schemas/Order'}}}}
+  /r/reject-reasons:
+    get:
+      tags: [orders]
+      responses:
+        '200': {description: ok, content: {application/json: {schema: {type: array, items: {type: object, properties: {id: {type: string}, label: {type: string}}}}}}}
+  /r/menu:
+    get:
+      tags: [menu]
+      responses:
+        '200': {description: ok, content: {application/json: {schema: {type: object, properties: {categories: {type: array, items: {$ref: '#/components/schemas/MenuCategory'}}, foods: {type: array, items: {$ref: '#/components/schemas/Food'}}}}}}}
+  /r/categories:
+    post:
+      tags: [menu]
+      requestBody: {required: true, content: {application/json: {schema: {type: object, required: [label], properties: {label: {type: string, minLength: 1}}}}}}
+      responses:
+        '201': {description: ok, content: {application/json: {schema: {$ref: '#/components/schemas/MenuCategory'}}}}
+  /r/categories/{id}:
+    patch:
+      tags: [menu]
+      parameters: [{name: id, in: path, required: true, schema: {type: string}}]
+      requestBody: {required: true, content: {application/json: {schema: {type: object, properties: {label: {type: string}}}}}}
+      responses:
+        '200': {description: ok}
+    delete:
+      tags: [menu]
+      summary: Only if the category has no foods (409 otherwise)
+      parameters: [{name: id, in: path, required: true, schema: {type: string}}]
+      responses:
+        '204': {description: ok}
+        '409': {$ref: '#/components/responses/Error'}
+  /r/foods:
+    post:
+      tags: [menu]
+      requestBody: {required: true, content: {application/json: {schema: {$ref: '#/components/schemas/FoodInput'}}}}
+      responses:
+        '201': {description: ok, content: {application/json: {schema: {$ref: '#/components/schemas/Food'}}}}
+        '400': {$ref: '#/components/responses/Error'}
+  /r/foods/{id}:
+    put:
+      tags: [menu]
+      parameters: [{name: id, in: path, required: true, schema: {type: string}}]
+      requestBody: {required: true, content: {application/json: {schema: {$ref: '#/components/schemas/FoodInput'}}}}
+      responses:
+        '200': {description: ok, content: {application/json: {schema: {$ref: '#/components/schemas/Food'}}}}
+    patch:
+      tags: [menu]
+      summary: Quick toggle of availability
+      parameters: [{name: id, in: path, required: true, schema: {type: string}}]
+      requestBody: {required: true, content: {application/json: {schema: {type: object, properties: {available: {type: boolean}}}}}}
+      responses:
+        '200': {description: ok}
+    delete:
+      tags: [menu]
+      parameters: [{name: id, in: path, required: true, schema: {type: string}}]
+      responses:
+        '204': {description: ok}
+  /r/foods/{id}/photo:
+    put:
+      tags: [menu]
+      summary: Submit a real photo; goes to admin review (pending then approved or rejected)
+      parameters: [{name: id, in: path, required: true, schema: {type: string}}]
+      requestBody: {required: true, content: {application/json: {schema: {type: object, required: [uploadId], properties: {uploadId: {type: string}}}}}}
+      responses:
+        '202': {description: pending review}
+  /r/reports:
+    get:
+      tags: [reports]
+      parameters:
+        - {name: period, in: query, required: true, schema: {type: string, enum: [today, week, month]}}
+      responses:
+        '200': {description: ok, content: {application/json: {schema: {$ref: '#/components/schemas/Report'}}}}
+  /r/settlements:
+    get:
+      tags: [reports]
+      responses:
+        '200': {description: ok, content: {application/json: {schema: {type: array, items: {$ref: '#/components/schemas/Settlement'}}}}}
+  /r/settlements/{id}:
+    get:
+      tags: [reports]
+      parameters: [{name: id, in: path, required: true, schema: {type: string}}]
+      responses:
+        '200': {description: ok, content: {application/json: {schema: {$ref: '#/components/schemas/Settlement'}}}}
+  /r/settlements/{id}/invoice:
+    get:
+      tags: [reports]
+      summary: PDF invoice
+      parameters: [{name: id, in: path, required: true, schema: {type: string}}]
+      responses:
+        '200': {description: ok, content: {application/pdf: {schema: {type: string, format: binary}}}}
+  /r/notifications:
+    get:
+      tags: [support]
+      responses:
+        '200': {description: ok, content: {application/json: {schema: {type: array, items: {$ref: '#/components/schemas/Notification'}}}}}
+  /r/notifications/read:
+    post:
+      tags: [support]
+      requestBody: {content: {application/json: {schema: {type: object, properties: {ids: {type: array, items: {type: string}, description: 'omit for all'}}}}}}
+      responses:
+        '204': {description: ok}
+  /r/support/messages:
+    post:
+      tags: [support]
+      requestBody: {required: true, content: {application/json: {schema: {type: object, required: [category, text], properties: {category: {type: string, enum: [order, settle, tech, other]}, text: {type: string, minLength: 10}}}}}}
+      responses:
+        '201': {description: ok}
+  /r/push/subscribe:
+    post:
+      tags: [support]
+      summary: Register a push subscription/token for new-order alerts
+      requestBody: {required: true, content: {application/json: {schema: {type: object, required: [provider, token], properties: {provider: {type: string}, token: {type: string}}}}}}
+      responses:
+        '204': {description: ok}
+components:
+  securitySchemes:
+    bearer: {type: http, scheme: bearer, bearerFormat: JWT}
+  responses:
+    Error:
+      description: error
+      content: {application/json: {schema: {$ref: '#/components/schemas/ApiError'}}}
+  schemas:
+    ApiError:
+      type: object
+      required: [code, message]
+      properties: {code: {type: string}, message: {type: string, description: Persian message safe to show}, fields: {type: object, additionalProperties: {type: string}}}
+    RestaurantAuth:
+      type: object
+      properties:
+        accessToken: {type: string}
+        refreshToken: {type: string}
+        status: {type: string, enum: [pending, needs_docs, rejected, active]}
+    RegistrationRequest:
+      type: object
+      required: [name, address, lat, lng, sheba]
+      properties:
+        name: {type: string, minLength: 2}
+        address: {type: string, minLength: 8}
+        lat: {type: number}
+        lng: {type: number}
+        sheba: {type: string, pattern: '^IR\d{24}$'}
+        allowCash: {type: boolean}
+        docs: {type: array, items: {type: object, properties: {docTypeId: {type: string}, uploadId: {type: string}}}}
+    RegistrationStatus:
+      type: object
+      properties:
+        status: {type: string, enum: [pending, needs_docs, rejected, active]}
+        reason: {type: string}
+        missingDocTypeIds: {type: array, items: {type: string}}
+    DocType:
+      type: object
+      properties:
+        id: {type: string}
+        label: {type: string}
+        hint: {type: string}
+        required: {type: boolean}
+        accept: {type: array, items: {type: string}, description: 'mime types, e.g. image/jpeg, application/pdf'}
+        maxMb: {type: integer}
+        stage: {type: string, enum: [registration, later]}
+        uploaded: {type: boolean}
+    RestaurantProfile:
+      type: object
+      properties:
+        id: {type: string}
+        name: {type: string}
+        ownerName: {type: string}
+        phoneMasked: {type: string}
+        address: {type: string}
+        lat: {type: number}
+        lng: {type: number}
+        shebaMasked: {type: string, example: 'IR62 **** **** **** **** 4567'}
+        rating: {type: number}
+        reviewCount: {type: integer}
+        open: {type: boolean}
+        commissionPercent: {type: number, description: read-only; set by admin}
+        pendingShebaChange: {type: boolean}
+    DayHours:
+      type: object
+      required: [day, on]
+      properties:
+        day: {type: integer, minimum: 0, maximum: 6, description: '0 = Saturday'}
+        on: {type: boolean}
+        from: {type: string, pattern: '^\d{2}:\d{2}$'}
+        to: {type: string, pattern: '^\d{2}:\d{2}$', description: may be after midnight}
+    RestaurantSettings:
+      type: object
+      properties:
+        allowCash: {type: boolean}
+        allowExtras: {type: boolean}
+        etaMin: {type: integer, minimum: 5, maximum: 120}
+        etaMax: {type: integer, minimum: 5, maximum: 120}
+        acceptTimeoutSec: {type: integer, readOnly: true, example: 180}
+    OrderItem:
+      type: object
+      properties:
+        qty: {type: integer}
+        name: {type: string}
+        optionsText: {type: string}
+        price: {type: integer}
+    Order:
+      type: object
+      properties:
+        id: {type: string}
+        no: {type: string}
+        status: {type: string, enum: [new, prep, ready, way, done, rejected, expired, cancelled]}
+        placedAt: {type: string, format: date-time}
+        customerName: {type: string}
+        customerPhoneMasked: {type: string}
+        areaText: {type: string}
+        items: {type: array, items: {$ref: '#/components/schemas/OrderItem'}}
+        note: {type: string}
+        foodsTotal: {type: integer}
+        payment: {type: string, enum: [online, cash]}
+        prepMinutes: {type: integer}
+        acceptDeadline: {type: string, format: date-time}
+        rejectReason: {type: string}
+        courier: {type: object, nullable: true, properties: {name: {type: string}, statusText: {type: string}, canCall: {type: boolean}}}
+    MenuCategory:
+      type: object
+      properties: {id: {type: string}, label: {type: string}, sort: {type: integer}}
+    OptionItem:
+      type: object
+      properties: {id: {type: string}, name: {type: string}, price: {type: integer, minimum: 0}}
+    OptionGroup:
+      type: object
+      properties:
+        id: {type: string}
+        title: {type: string}
+        required: {type: boolean}
+        max: {type: integer, minimum: 1, maximum: 8}
+        options: {type: array, items: {$ref: '#/components/schemas/OptionItem'}}
+    Food:
+      type: object
+      properties:
+        id: {type: string}
+        categoryId: {type: string}
+        name: {type: string}
+        description: {type: string}
+        price: {type: integer}
+        oldPrice: {type: integer}
+        art: {type: string, description: default illustration key}
+        photo: {type: object, properties: {status: {type: string, enum: [none, pending, approved, rejected]}, url: {type: string}, rejectReason: {type: string}}}
+        available: {type: boolean}
+        groups: {type: array, items: {$ref: '#/components/schemas/OptionGroup'}}
+    FoodInput:
+      type: object
+      required: [name, price, categoryId]
+      properties:
+        name: {type: string, minLength: 2}
+        description: {type: string}
+        price: {type: integer, minimum: 1}
+        oldPrice: {type: integer, minimum: 0}
+        categoryId: {type: string}
+        art: {type: string}
+        available: {type: boolean}
+        groups: {type: array, description: ignored by the server when allowExtras is false, items: {$ref: '#/components/schemas/OptionGroup'}}
+    Report:
+      type: object
+      properties:
+        period: {type: string}
+        revenue: {type: integer}
+        orders: {type: integer}
+        avgOrder: {type: integer}
+        avgPrepMinutes: {type: integer}
+        deltas: {type: object, additionalProperties: {type: string}}
+        chart: {type: array, items: {type: object, properties: {label: {type: string}, value: {type: integer}}}}
+        topFoods: {type: array, items: {type: object, properties: {name: {type: string}, qty: {type: integer}}}}
+    Settlement:
+      type: object
+      properties:
+        id: {type: string}
+        title: {type: string}
+        status: {type: string, enum: [open, pending, paid]}
+        onlineSales: {type: integer}
+        cashSales: {type: integer}
+        commissionPercent: {type: number, description: rate used for THIS settlement}
+        commissionAmount: {type: integer}
+        netPayable: {type: integer}
+        shebaMasked: {type: string}
+        paidAt: {type: string, format: date-time}
+        note: {type: string, description: cash settlement rule text once decided}
+    Notification:
+      type: object
+      properties: {id: {type: string}, title: {type: string}, text: {type: string}, createdAt: {type: string, format: date-time}, unread: {type: boolean}}
