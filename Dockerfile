@@ -1,7 +1,9 @@
 # syntax=docker/dockerfile:1
-# Dokoon customer web app (PWA). Multi-stage: build with Node, serve with unprivileged nginx.
-#   docker build -t dokoon-web .                                  # production bundle
-#   docker build -t dokoon-web:mock --build-arg BUILD_MODE=mock . # self-contained demo with MSW mocks
+# Dokoon web apps (PWA). Multi-stage: build with Node, serve with unprivileged nginx.
+# One Dockerfile, two images (decision D-91): APP=customer (default) or APP=panel (restaurant panel).
+#   docker build -t dokoon-web .                                              # customer, production
+#   docker build -t dokoon-web:mock --build-arg BUILD_MODE=mock .             # customer demo with MSW mocks
+#   docker build -t dokoon-panel --build-arg APP=panel .                      # restaurant panel
 # Only PUBLIC VITE_* values may be passed as build args (they end up in the browser bundle).
 
 ARG NODE_VERSION=24
@@ -13,6 +15,7 @@ RUN npm ci --no-audit --no-fund --ignore-scripts
 
 COPY . .
 
+ARG APP=customer
 ARG BUILD_MODE=production
 ARG VITE_API_BASE_URL=
 ARG VITE_NESHAN_MAP_KEY=
@@ -27,11 +30,18 @@ ENV VITE_API_BASE_URL=$VITE_API_BASE_URL \
     VITE_PAYMENT_PROVIDER=$VITE_PAYMENT_PROVIDER \
     VITE_WEBPUSH_VAPID_PUBLIC_KEY=$VITE_WEBPUSH_VAPID_PUBLIC_KEY
 
-RUN npx vite build --mode "$BUILD_MODE" \
- && node scripts/secret-scan.mjs dist
+# Build the chosen app into out/ with its nginx config next to it, then scan the bundle for secrets.
+RUN case "$APP" in \
+      customer) cfg=vite.config.ts; conf=docker/nginx.conf ;; \
+      panel) cfg=vite.panel.config.ts; conf=docker/nginx.panel.conf ;; \
+      *) echo "APP must be customer or panel, got '$APP'" >&2; exit 1 ;; \
+    esac \
+ && npx vite build --config "$cfg" --mode "$BUILD_MODE" --outDir out \
+ && node scripts/secret-scan.mjs out \
+ && cp "$conf" nginx.out.conf
 
 FROM nginxinc/nginx-unprivileged:1.29-alpine AS runtime
-COPY docker/nginx.conf /etc/nginx/conf.d/default.conf
-COPY --from=build /app/dist /usr/share/nginx/html
+COPY --from=build /app/nginx.out.conf /etc/nginx/conf.d/default.conf
+COPY --from=build /app/out /usr/share/nginx/html
 EXPOSE 8080
 HEALTHCHECK --interval=30s --timeout=3s --retries=3 CMD wget -qO- http://127.0.0.1:8080/healthz || exit 1

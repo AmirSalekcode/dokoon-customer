@@ -54,8 +54,9 @@ describe('Dockerfile', () => {
 
   it('only receives PUBLIC build args and scans the bundle for secrets', () => {
     const args = [...df().matchAll(/^ARG (\w+)/gm)].map((m) => m[1]);
-    for (const a of args) expect(a, a).toMatch(/^(VITE_\w+|BUILD_MODE|NODE_VERSION)$/);
-    expect(df()).toMatch(/secret-scan\.mjs dist/);
+    // APP picks which app to build (customer | panel, D-91); it is not a value that reaches the bundle.
+    for (const a of args) expect(a, a).toMatch(/^(VITE_\w+|BUILD_MODE|NODE_VERSION|APP)$/);
+    expect(df()).toMatch(/secret-scan\.mjs out/);
   });
 
   it('has a healthcheck and exposes the unprivileged port', () => {
