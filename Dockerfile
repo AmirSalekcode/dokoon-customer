@@ -40,7 +40,7 @@ RUN case "$APP" in \
  && node scripts/secret-scan.mjs out \
  && cp "$conf" nginx.out.conf
 
-FROM nginxinc/nginx-unprivileged:1.29-alpine AS runtime
+FROM nginxinc/nginx-unprivileged:1.31-alpine AS runtime
 COPY --from=build /app/nginx.out.conf /etc/nginx/conf.d/default.conf
 COPY --from=build /app/out /usr/share/nginx/html
 EXPOSE 8080
