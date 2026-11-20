@@ -1,6 +1,7 @@
 import { Capacitor } from '@capacitor/core';
 import { installMockFetch } from '@/lib/mockFetch';
 import { readStorage } from '@/lib/storage';
+import { addIncomingOrder } from './db';
 import { panelHandlers } from './handlers';
 import { createMockStream, type MockStream } from './stream';
 
@@ -13,6 +14,8 @@ const newOrderEveryMs = () => {
 export interface PanelMocks {
   mode: 'worker' | 'in-page';
   stream: MockStream;
+  /** A new order on the server without a live event (as if it arrived during an outage). */
+  addOrder: typeof addIncomingOrder;
   stop: () => void;
 }
 
@@ -29,6 +32,7 @@ export async function startPanelMocks(): Promise<PanelMocks> {
     return {
       mode: 'in-page',
       stream,
+      addOrder: addIncomingOrder,
       stop: () => {
         uninstall();
         stream.stop();
@@ -47,6 +51,7 @@ export async function startPanelMocks(): Promise<PanelMocks> {
     return {
       mode: 'worker',
       stream,
+      addOrder: addIncomingOrder,
       stop: () => {
         worker.stop();
         stream.stop();

@@ -2,7 +2,9 @@ import { create } from 'zustand';
 import { toast } from '@/ui/toast';
 import { usePanelNav } from '../nav/nav';
 import { PANEL_TOAST_MS } from '../shell/openSwitch';
+import { stopLive } from '../realtime/live';
 import { soundEngine } from '../sound/engine';
+import { useOrders } from './orders';
 import { wakeLock } from '../sound/wakeLock';
 
 interface ShiftState {
@@ -51,6 +53,8 @@ export async function beginShift() {
 
 /** Logout / session end: stop ringing and let the screen sleep again. */
 export function endShift() {
+  stopLive();
+  useOrders.getState().reset();
   soundEngine().stopAlert();
   void wakeLock().release();
   useShift.getState().end();
