@@ -1,0 +1,72 @@
+.wrap {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  background: var(--bg);
+  color: var(--ink);
+}
+.body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+  width: 100%;
+  max-width: 560px;
+  margin: 0 auto;
+  padding: var(--sp-4) var(--gutter) var(--sp-6);
+}
+.note {
+  margin: 0;
+  padding: var(--sp-3) var(--sp-4);
+  border-radius: var(--r-xl);
+  background: var(--soft);
+  color: var(--pr2);
+  font-size: var(--fs-14);
+  font-weight: var(--fw-bold);
+  line-height: 1.8;
+}
+.label {
+  margin: 0;
+  font-size: var(--fs-14);
+  font-weight: var(--fw-bold);
+}
+.muted {
+  margin: 0;
+  font-size: var(--fs-13);
+  color: var(--mu);
+}
+.error {
+  margin: 0;
+  padding: var(--sp-3) var(--sp-4);
+  border-radius: var(--r-lg);
+  background: var(--soft);
+  color: var(--danger);
+  font-size: var(--fs-14);
+  font-weight: var(--fw-bold);
+}
+.tiles {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--sp-3);
+}
+@media (min-width: 720px) {
+  .tiles {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+.file {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+.dock {
+  position: sticky;
+  bottom: 0;
+  z-index: var(--z-sticky);
+}
+.dockInner {
+  max-width: 560px;
+  margin: 0 auto;
+}

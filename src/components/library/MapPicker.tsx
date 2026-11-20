@@ -12,6 +12,12 @@ export interface MapPickerProps {
   onLocate?: () => void;
   /** Provider name shown for transparency, e.g. «نشان». */
   providerTitle?: string;
+  /** Accessible name of the map (default: delivery point). */
+  label?: string;
+  /** Hint before a pin is placed. */
+  emptyHint?: string;
+  /** Legend under the map; null hides it (restaurant registration has no delivery zone). */
+  zoneLabel?: string | null;
 }
 
 /**
@@ -26,6 +32,9 @@ export function MapPicker({
   onPick,
   onLocate,
   providerTitle,
+  label = 'نقشه برای انتخاب محل تحویل',
+  emptyHint = 'روی نقشه ضربه بزنید تا محل تحویل را مشخص کنید',
+  zoneLabel = 'محدوده‌ی ارسال',
 }: MapPickerProps) {
   const hasPin = pinX >= 0 && pinY >= 0;
   const click = (e: MouseEvent<HTMLDivElement>) => {
@@ -37,7 +46,7 @@ export function MapPicker({
     );
   };
   return (
-    <div className={s.mp} role="application" aria-label="نقشه برای انتخاب محل تحویل" onClick={click}>
+    <div className={s.mp} role="application" aria-label={label} onClick={click}>
       {/* `app` re-scopes the light theme tokens (dokoon-tokens.css) so the map stays light in dark mode. */}
       <svg
         className={`app ${s.map}`}
@@ -78,7 +87,7 @@ export function MapPicker({
           </span>
         </>
       ) : (
-        <div className={s.hint}>روی نقشه ضربه بزنید تا محل تحویل را مشخص کنید</div>
+        <div className={s.hint}>{emptyHint}</div>
       )}
       <button
         type="button"
@@ -91,10 +100,13 @@ export function MapPicker({
         <Icon name="locate" size={20} />
         {locating ? 'در حال یافتن موقعیت…' : 'موقعیت فعلی من'}
       </button>
-      <div className={s.zn}>
-        <i />
-        محدوده‌ی ارسال{providerTitle ? ` · ${providerTitle}` : ''}
-      </div>
+      {zoneLabel !== null ? (
+        <div className={s.zn}>
+          <i />
+          {zoneLabel}
+          {providerTitle ? ` · ${providerTitle}` : ''}
+        </div>
+      ) : null}
       {hasPin && !inZone ? (
         <div className={s.out} role="alert">
           این نقطه خارج از محدوده‌ی ارسال است

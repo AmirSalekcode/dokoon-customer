@@ -10,6 +10,7 @@ export const PANEL_SCREENS = [
   'login',
   'reg',
   'reg-status',
+  'reg-docs',
   'shift',
   'error',
 ] as const;

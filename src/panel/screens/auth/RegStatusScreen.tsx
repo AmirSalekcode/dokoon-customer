@@ -135,6 +135,17 @@ export function RegStatusScreen() {
             ))}
           </ul>
         ) : null}
+        {st === 'needs_docs' && load.missing.length ? (
+          <Button
+            size="lg"
+            block
+            onClick={() =>
+              usePanelNav.getState().push('reg-docs', { ids: load.missing.map((d) => d.id).join(',') })
+            }
+          >
+            بارگذاری مدارک
+          </Button>
+        ) : null}
         {st === 'rejected' ? (
           <Button size="lg" block onClick={() => usePanelNav.getState().push('reg')}>
             ثبت‌نام دوباره

@@ -131,6 +131,22 @@ export const panelHandlers = [
     HttpResponse.json({ ticket: `t-${Date.now().toString(36)}`, expiresInSec: 30 }),
   ),
 
+  // ---- uploads (customer contract POST /uploads; contract-notes 21) ----
+  http.post(p('/uploads'), async ({ request }) => {
+    await latency();
+    // Raw check (multipart parsers differ between the browser, Node and jsdom): a part named file.
+    const isMultipart = (request.headers.get('Content-Type') ?? '').startsWith('multipart/form-data');
+    const raw = await request.arrayBuffer();
+    const head = new TextDecoder().decode(raw.slice(0, 512));
+    if (!isMultipart || !/name="file"/.test(head)) return err(400, 'FILE_REQUIRED', 'فایلی انتخاب نشده است');
+    if (raw.byteLength > 10 * 1024 * 1024) return err(413, 'FILE_TOO_LARGE', 'حجم فایل زیاد است');
+    db.seq += 1;
+    return HttpResponse.json(
+      { id: `up${db.seq}`, url: `https://cdn.example/uploads/up${db.seq}` },
+      { status: 201 },
+    );
+  }),
+
   // ---- registration ----
   http.post(p('/r/registration'), async ({ request }) => {
     await latency();
@@ -154,7 +170,8 @@ export const panelHandlers = [
     const missing =
       status === 'needs_docs' ? D.DEMO_MISSING_DOCS.filter((id) => !db.docsUploaded.includes(id)) : [];
     return HttpResponse.json<RegistrationStatus>({
-      status,
+      // All asked-for documents uploaded → back in review.
+      status: status === 'needs_docs' && !missing.length ? 'pending' : status,
       ...(status === 'rejected' ? { reason: D.DEMO_REJECT_REASON } : {}),
       missingDocTypeIds: missing,
     });

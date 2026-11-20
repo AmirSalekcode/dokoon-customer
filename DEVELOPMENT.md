@@ -91,6 +91,9 @@ built by `vite.panel.config.ts` into `dist-panel/` with its own PWA manifest («
   no restaurant (`new`) → `reg`. Mock: code `1234`; phones `09130000000` (new), `…01` pending, `…02` needs
   documents, `…03` rejected, any other valid phone = approved restaurant. E2E helper `e2e-panel/helpers.ts`
   (`seedSession`, `openPanel`) signs in and passes the shift screen.
+- **Registration + uploads (KAN-60):** `src/panel/screens/reg/` (wizard, `DocsUploader`, needs-docs screen) and the
+  shared upload tool `src/panel/upload/upload.ts` (type/size rule → `src/lib/image.ts` shrink → `POST /uploads`).
+  Sheba checksum in `src/panel/auth/validation.ts`. Use the same tool for dish photos and the logo (KAN-67/70).
 - **E2E locally:** `npm run e2e:panel` builds the mock panel and serves it on `127.0.0.1:5176`.
 
 ## Rules enforced in code

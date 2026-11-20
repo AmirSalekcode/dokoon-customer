@@ -1,7 +1,8 @@
 import type { ComponentType } from 'react';
 import type { PanelScreen } from '../nav/nav';
 import { LoginScreen } from './auth/LoginScreen';
-import { RegScreen } from './auth/RegScreen';
+import { RegDocsScreen } from './reg/RegDocsScreen';
+import { RegScreen } from './reg/RegScreen';
 import { RegStatusScreen } from './auth/RegStatusScreen';
 import { ShiftScreen } from './auth/ShiftScreen';
 import { HelpScreen, PanelErrorScreen, type PanelScreenProps } from './StackScreens';
@@ -16,6 +17,7 @@ const SCREENS: Record<PanelScreen, ComponentType<PanelScreenProps>> = {
   login: LoginScreen,
   reg: RegScreen,
   'reg-status': RegStatusScreen,
+  'reg-docs': RegDocsScreen,
   shift: ShiftScreen,
   error: PanelErrorScreen,
 };
