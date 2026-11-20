@@ -84,6 +84,31 @@ describe('design lint — TSX', () => {
   });
 });
 
+// Restaurant app rule: no green anywhere (on = orange, off = grey). Green hex values are already
+// caught by `color`; this catches the shared green tokens and the word itself.
+describe('design lint — no green in the restaurant panel (src/panel)', () => {
+  it('flags green tokens and named green in panel CSS', () => {
+    const css = `.a { background: var(--success); }\n.b { color: var(--okbg); }\n.c { border-color: var(--ln); }`;
+    const out = lintCss('src/panel/x.module.css', css);
+    expect(rules(out)).toEqual(['no-green', 'no-green']);
+    expect(out.map((i) => i.line)).toEqual([1, 2]);
+  });
+
+  it('flags green tokens, tones and class names in panel TSX/TS', () => {
+    const tsx = `export const A = () => (<>
+      <div style={{ background: 'var(--success)' }} />
+      <Toast tone="success" />
+      <span className="green" />
+    </>);`;
+    expect(rules(lintTsx('src/panel/x.tsx', tsx))).toEqual(['no-green', 'no-green', 'no-green']);
+  });
+
+  it('does not apply to the customer app', () => {
+    expect(lintCss('src/screens/x.module.css', '.a { background: var(--success); }')).toEqual([]);
+    expect(lintTsx('src/screens/x.tsx', '<Toast tone="success" />')).toEqual([]);
+  });
+});
+
 describe('design lint — the repo', () => {
   it('src/ passes `npm run lint:design`', () => {
     const out = execSync('node scripts/design-lint.mjs', { cwd: root, encoding: 'utf8' });
