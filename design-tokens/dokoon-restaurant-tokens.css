@@ -1,0 +1,23 @@
+/* Dokoon restaurant app — delta tokens on top of dokoon-tokens.css (restaurant/dokoon-restaurant-design-system.md §2).
+   Scoped to <html data-app="restaurant"> so the customer app never sees them. Loaded only by src/panel. */
+[data-app="restaurant"]{
+  --hd:#1F1A17;
+  --status-new:#E4501E; --status-new-ink:#FFFFFF;
+  --status-prep:#F5B32F; --status-prep-ink:#1F1A17;
+  --status-ready:#8B2313; --status-ready-ink:#FFFFFF;
+  --status-way:#1F1A17; --status-way-ink:#F6EEE8;
+  --status-done:var(--ln); --status-done-ink:var(--mu);
+  --status-bad:#C8281E; --status-bad-ink:#FFFFFF;
+  --open-dot:#F5B32F;
+  /* Logo always sits on the dark --hd bar, in both themes. */
+  --logo1:#F6EEE8; --logo2:#E7DCD2;
+  /* No green in the restaurant app (owner rule): shared components that read the green tokens
+     show "on" in orange instead. */
+  --success:var(--primary); --okbg:var(--soft);
+}
+[data-app="restaurant"][data-theme="dark"]{
+  --hd:#0D0907;
+  --status-way:#F6EEE8; --status-way-ink:#1F1A17;
+  --logo1:#F6EEE8; --logo2:#E7DCD2;
+  --okbg:var(--soft);
+}

@@ -1,33 +1,91 @@
-// Renders PWA / Android icons from assets/logo/Asset_13.svg with headless Chromium (Playwright).
+// Renders PWA icons with headless Chromium (Playwright).
+//   public/icons        customer app: assets/logo/Asset_13.svg (navy tile)
+//   public-panel/icons  restaurant panel (D-109): the bare Dokoon mark from the shared sprite, light on the
+//                       dark business-header tile (--hd) — same look as the panel header, and clearly a
+//                       different app from the customer icon on the same home screen.
 // Usage: node scripts/gen-icons.mjs
 import { chromium } from '@playwright/test';
-import { readFile, mkdir } from 'node:fs/promises';
+import { readFile, mkdir, writeFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 
 const root = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
-const svg = await readFile(path.join(root, 'assets/logo/Asset_13.svg'), 'utf8');
-const out = path.join(root, 'public/icons');
-await mkdir(out, { recursive: true });
+const customerSvg = await readFile(path.join(root, 'assets/logo/Asset_13.svg'), 'utf8');
+const sprite = await readFile(path.join(root, 'src/assets/art-sprite.svg'), 'utf8');
+// Icons are raster/brand assets, not UI: literal colors mirror the tokens
+// (--logo1 navy; panel: --hd, and the restaurant logo colors --logo1/--logo2 #F6EEE8/#E7DCD2).
+const NAVY = '#172b50';
+const HD = '#1F1A17';
 
-// Maskable icons need a safe zone: the mark is drawn at 80% on the brand's dark logo color.
-const targets = [
-  { file: 'icon-192.png', size: 192, pad: 0, bg: 'transparent' },
-  { file: 'icon-512.png', size: 512, pad: 0, bg: 'transparent' },
-  { file: 'icon-maskable-512.png', size: 512, pad: 0.1, bg: '#172b50' },
-  { file: 'apple-touch-icon.png', size: 180, pad: 0, bg: '#172b50' },
-];
-
-const browser = await chromium.launch();
-const page = await browser.newPage();
-for (const t of targets) {
-  const inner = Math.round(t.size * (1 - t.pad * 2));
-  await page.setViewportSize({ width: t.size, height: t.size });
-  await page.setContent(
-    `<html><body style="margin:0;background:${t.bg};display:grid;place-items:center;width:${t.size}px;height:${t.size}px">` +
-      `<div style="width:${inner}px;height:${inner}px">${svg.replace('<svg ', '<svg width="100%" height="100%" ')}</div></body></html>`,
+/** Panel icon: light mark + orange accent on the dark tile. `mark` = share of the tile the mark fills. */
+function panelSvg({ mark, rounded }) {
+  const paths = sprite.match(/<symbol id="dk-mark"[^>]*>([\s\S]*?)<\/symbol>/)[1];
+  const orange = sprite.match(/<linearGradient id="gO"[\s\S]*?<\/linearGradient>/)[0];
+  const light =
+    '<linearGradient id="gN" x1="126.54" y1="251.16" x2="126.54" y2="0" gradientUnits="userSpaceOnUse">' +
+    '<stop offset=".01" stop-color="#F6EEE8"/><stop offset="1" stop-color="#E7DCD2"/></linearGradient>';
+  const size = 128 * mark;
+  const at = (128 - size) / 2;
+  return (
+    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128"><defs>${light}${orange}</defs>` +
+    `<rect width="128" height="128" rx="${rounded ? 28 : 0}" fill="${HD}"/>` +
+    `<svg x="${at}" y="${at}" width="${size}" height="${size}" viewBox="0 0 253.08 251.16">${paths}</svg></svg>\n`
   );
-  await page.screenshot({ path: path.join(out, t.file), omitBackground: t.bg === 'transparent' });
-  console.log('wrote', t.file);
+}
+
+const customer = {
+  out: 'public/icons',
+  targets: [
+    { file: 'icon-192.png', size: 192, pad: 0, bg: 'transparent' },
+    { file: 'icon-512.png', size: 512, pad: 0, bg: 'transparent' },
+    // Maskable icons need a safe zone: the mark is drawn at 80% on the brand's dark logo color.
+    { file: 'icon-maskable-512.png', size: 512, pad: 0.1, bg: NAVY },
+    { file: 'apple-touch-icon.png', size: 180, pad: 0, bg: NAVY },
+  ],
+};
+const panel = {
+  out: 'public-panel/icons',
+  svg: panelSvg({ mark: 0.6, rounded: true }),
+  targets: [
+    { file: 'icon-192.png', size: 192, svg: panelSvg({ mark: 0.6, rounded: true }) },
+    { file: 'icon-512.png', size: 512, svg: panelSvg({ mark: 0.6, rounded: true }) },
+    // Maskable: full-bleed square, mark inside the 80% safe zone; iOS rounds the corners itself.
+    { file: 'icon-maskable-512.png', size: 512, svg: panelSvg({ mark: 0.5, rounded: false }) },
+    { file: 'apple-touch-icon.png', size: 180, svg: panelSvg({ mark: 0.6, rounded: false }) },
+  ],
+};
+
+const browser = await chromium.launch({ args: ['--disable-gpu'] });
+const page = await browser.newPage();
+
+async function render(file, size, html, transparent) {
+  await page.setViewportSize({ width: size, height: size });
+  await page.setContent(html);
+  await page.screenshot({ path: file, omitBackground: transparent });
+}
+
+await mkdir(path.join(root, customer.out), { recursive: true });
+for (const t of customer.targets) {
+  const inner = Math.round(t.size * (1 - t.pad * 2));
+  await render(
+    path.join(root, customer.out, t.file),
+    t.size,
+    `<html><body style="margin:0;background:${t.bg};display:grid;place-items:center;width:${t.size}px;height:${t.size}px">` +
+      `<div style="width:${inner}px;height:${inner}px">${customerSvg.replace('<svg ', '<svg width="100%" height="100%" ')}</div></body></html>`,
+    t.bg === 'transparent',
+  );
+  console.log('wrote', path.join(customer.out, t.file));
+}
+
+await mkdir(path.join(root, panel.out), { recursive: true });
+await writeFile(path.join(root, panel.out, 'icon.svg'), panel.svg);
+for (const t of panel.targets) {
+  await render(
+    path.join(root, panel.out, t.file),
+    t.size,
+    `<html><body style="margin:0;width:${t.size}px;height:${t.size}px">${t.svg.replace('<svg ', `<svg width="${t.size}" height="${t.size}" style="display:block" `)}</body></html>`,
+    true,
+  );
+  console.log('wrote', path.join(panel.out, t.file));
 }
 await browser.close();

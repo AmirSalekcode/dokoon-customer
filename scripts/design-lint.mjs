@@ -9,10 +9,14 @@
 //     font-weight  numeric font-weight — use var(--fw-*)
 //     font-family  anything but var(--font) / inherit (Yekan Bakh everywhere)
 //     z-index      literals above 2 (local stacking) — use var(--z-*)
-//   TSX  (src/**/*.tsx, except tests, stories and mocks):
+//     no-green     src/panel only: the shared green tokens (--success, --okbg) or "green"
+//   TSX  (src/**/*.tsx, except tests, stories and mocks; plus src/panel/**/*.ts for no-green):
 //     latin-digits ASCII digits in JSX text, text attributes or string children (Persian digits only)
 //     icon-button-label  <button>/<a> with no text and no aria-label / aria-labelledby / title
 //     color / font-family / spacing  the same rules for inline style objects
+//     no-green     src/panel only: green tokens/words in strings, tone/variant/kind="success"
+// The restaurant app has no green at all (owner rule: on = orange, off = grey). Its delta tokens also
+// repaint --success/--okbg, so shared components cannot show green there either.
 // Runtime checks that need a real browser (rendered digits, touch targets, font) live in
 // e2e/integrity.spec.ts.
 import { readdirSync, readFileSync, statSync } from 'node:fs';
@@ -40,7 +44,12 @@ const MSG = {
   'z-index': 'z-index literal — use var(--z-*)',
   'latin-digits': 'ASCII digits in UI text — use Persian digits (toFaDigits / Intl fa-IR)',
   'icon-button-label': 'icon-only control without aria-label / aria-labelledby / title',
+  'no-green': 'no green in the restaurant app — on = var(--primary), off = var(--ln)',
 };
+
+const GREEN_RE = /--(?:success|okbg)\b|\bgreen\b/i;
+const TONE_ATTRS = new Set(['tone', 'variant', 'kind']);
+const isPanel = (file) => file.split('\\').join('/').startsWith('src/panel/');
 
 const issue = (file, line, rule) => ({ file, line, rule, message: MSG[rule] });
 const pxOver = (value, limit) => [...value.matchAll(PX_RE)].some((m) => Math.abs(Number(m[1])) > limit);
@@ -50,6 +59,7 @@ export function lintCss(file, text) {
   // Blank out comments but keep newlines so line numbers stay right.
   const src = text.replace(/\/\*[\s\S]*?\*\//g, (c) => c.replace(/[^\n]/g, ' '));
   const out = [];
+  const panel = isPanel(file);
   const decl = /(?:^|[{;\s])(--?[a-zA-Z][\w-]*|[a-z][a-z-]*)\s*:\s*([^;{}]+?)\s*(?=[;}])/g;
   for (const m of src.matchAll(decl)) {
     const prop = m[1].toLowerCase();
@@ -64,6 +74,7 @@ export function lintCss(file, text) {
     if (prop === 'font-family' && !/^(?:var\(--font\)|inherit)$/.test(value)) add('font-family');
     if (prop === 'font' && value !== 'inherit' && !value.includes('var(--font)')) add('font-family');
     if (prop === 'z-index' && /^-?\d+$/.test(value) && Number(value) > 2) add('z-index');
+    if (panel && GREEN_RE.test(value)) add('no-green');
   }
   return out;
 }
@@ -110,12 +121,22 @@ function hasText(children) {
 
 /** Lints one TSX file. Returns [{ file, line, rule, message }]. */
 export function lintTsx(file, text) {
-  const sf = ts.createSourceFile(file, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
+  const kind = file.endsWith('.ts') ? ts.ScriptKind.TS : ts.ScriptKind.TSX;
+  const sf = ts.createSourceFile(file, text, ts.ScriptTarget.Latest, true, kind);
   const out = [];
+  const panel = isPanel(file);
   const add = (node, rule) =>
     out.push(issue(file, sf.getLineAndCharacterOfPosition(node.getStart(sf)).line + 1, rule));
 
   const visit = (node) => {
+    if (panel) {
+      const t = literalText(node) ?? (ts.isJsxText(node) ? node.text : null);
+      if (t && GREEN_RE.test(t)) add(node, 'no-green');
+      if (ts.isJsxAttribute(node) && TONE_ATTRS.has(node.name.getText()) && node.initializer) {
+        const init = ts.isJsxExpression(node.initializer) ? node.initializer.expression : node.initializer;
+        if (init && literalText(init) === 'success') add(node, 'no-green');
+      }
+    }
     if (ts.isJsxText(node) && DIGIT.test(node.text)) add(node, 'latin-digits');
 
     if (ts.isJsxExpression(node) && node.expression && !ts.isJsxAttribute(node.parent)) {
@@ -194,6 +215,8 @@ export function lintRepo(root) {
     const rel = f.split(path.sep).join('/');
     if (f.endsWith('.css')) out.push(...lintCss(rel, readFileSync(path.join(root, f), 'utf8')));
     else if (f.endsWith('.tsx') && !SKIP_TSX.test(f))
+      out.push(...lintTsx(rel, readFileSync(path.join(root, f), 'utf8')));
+    else if (isPanel(rel) && f.endsWith('.ts') && !/\.(?:test|d)\.ts$/.test(f))
       out.push(...lintTsx(rel, readFileSync(path.join(root, f), 'utf8')));
   }
   return out;

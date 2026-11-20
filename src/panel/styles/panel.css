@@ -1,0 +1,3 @@
+/* Panel styles: the shared base (tokens, fonts, reset, keyframes) + the restaurant delta tokens. */
+@import '../../styles/global.css';
+@import '../../../design-tokens/dokoon-restaurant-tokens.css';

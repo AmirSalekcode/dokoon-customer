@@ -33,10 +33,18 @@ jobs:
       - run: npm run secrets:scan
       - run: npm run build
       - run: npm run secrets:scan:dist
+      # Restaurant panel (D-91): same lint/types/tests above, its own bundle and scan.
+      - run: npm run build:panel
+      - run: npm run secrets:scan:dist-panel
       - uses: actions/upload-artifact@v5
         with:
           name: web-dist
           path: dist
+          retention-days: 7
+      - uses: actions/upload-artifact@v5
+        with:
+          name: panel-dist
+          path: dist-panel
           retention-days: 7
 
   gitleaks:
@@ -75,6 +83,26 @@ jobs:
           path: test-results
           retention-days: 7
 
+  e2e-panel:
+    name: E2E restaurant panel (Playwright, 390×844 + tablet)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - run: npm run e2e:panel
+      - uses: actions/upload-artifact@v5
+        if: failure()
+        with:
+          name: playwright-traces-panel
+          path: test-results
+          retention-days: 7
+
   storybook:
     name: Storybook build
     runs-on: ubuntu-latest
@@ -110,6 +138,20 @@ jobs:
             echo "$headers" | grep -qi "^$h:" || { echo "missing $h"; exit 1; }
           done
           curl -fsSI http://127.0.0.1:8080/sw.js | grep -qi 'cache-control: no-cache'
+      - name: Build and check the restaurant panel image (noindex, SPA fallback, headers)
+        run: |
+          docker build --build-arg APP=panel --build-arg BUILD_MODE=mock -t dokoon-panel:ci .
+          docker run -d --name panel -p 8081:8080 --read-only --tmpfs /tmp dokoon-panel:ci
+          for i in $(seq 1 30); do curl -fsS http://127.0.0.1:8081/healthz && break; sleep 1; done
+          curl -fsS http://127.0.0.1:8081/orders/123 | grep -q 'data-app="restaurant"'
+          for path in / /orders/123 /manifest.webmanifest; do
+            headers=$(curl -fsSI "http://127.0.0.1:8081$path")
+            for h in X-Robots-Tag X-Content-Type-Options Content-Security-Policy; do
+              [ "$path" = /manifest.webmanifest ] && [ "$h" = Content-Security-Policy ] && continue
+              echo "$headers" | grep -qi "^$h:" || { echo "missing $h on $path"; echo "$headers"; exit 1; }
+            done
+          done
+          curl -fsS http://127.0.0.1:8081/manifest.webmanifest | grep -q 'دکون رستوران'
       - uses: grafana/setup-k6-action@v1
       - name: k6 static load test
         run: k6 run --summary-export k6-static.json perf/static-load.js

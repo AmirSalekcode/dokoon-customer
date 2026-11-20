@@ -39,7 +39,34 @@ src/
   features/     API → component view models (all Persian formatting lives here)
   screens/      phase-1 demo screens only (home/restaurant/cart/account/settings lab); real screens come next
   app/          App shell: ScreenHost (keeps stack mounted for exact back), OverlayHost, BottomNav
+  panel/        restaurant panel (second entry, see below)
 ```
+
+## Restaurant panel (second entry, D-91)
+
+The restaurant app/panel (`panel.dokoonapp.ir`) lives in the same repo: `panel.html` → `src/panel/main.tsx`,
+built by `vite.panel.config.ts` into `dist-panel/` with its own PWA manifest («دکون رستوران»), icons and
+`robots.txt` from `public-panel/`. It reuses the shared code (`src/components`, `src/lib`, `src/theme`,
+`src/errors`, `src/nav`, `src/ui`, `design-tokens/`, `assets/fonts`).
+
+| Command | What it does |
+|---|---|
+| `npm run dev:panel:mock` | Panel on http://localhost:5175 with mock data |
+| `npm run dev:panel` | Panel against `VITE_API_BASE_URL` |
+| `npm run build:panel` / `build:panel:mock` | Typecheck + build into `dist-panel/` |
+| `npm run e2e:panel` | Playwright for the panel (`e2e-panel/`, against a mock build on :5176) |
+| `npm run secrets:scan:dist-panel` | Secret scan of the panel bundle |
+| `docker build --build-arg APP=panel .` | Panel image (nginx `docker/nginx.panel.conf`); `docker compose up` serves it on :8081 |
+
+- **Boundary:** ESLint rule `dokoon/app-boundaries` (`scripts/eslint-app-boundaries.mjs`): the panel may not
+  import customer-only code (`app`, `screens`, `features`, `cart`, `auth`, `consent`, `mocks`, the customer
+  API client/types), the customer app may not import `src/panel`, and shared code imports neither (only
+  `import type` of customer contract types). Tests/stories are exempt.
+- **Tokens:** restaurant delta tokens in `design-tokens/dokoon-restaurant-tokens.css`, scoped to
+  `<html data-app="restaurant">`; they also repaint `--success`/`--okbg` to orange/soft so shared components
+  never show green. `npm run lint:design` has a `no-green` rule for `src/panel`.
+- **Not indexed:** `<meta name="robots" content="noindex, nofollow">`, `robots.txt` and an
+  `X-Robots-Tag` header on every nginx response; CSP also allows `wss:` for the live orders socket.
 
 ## Rules enforced in code
 - Tokens only: components use `var(--…)` from `design-tokens/dokoon-tokens.css`; derived transparencies live in

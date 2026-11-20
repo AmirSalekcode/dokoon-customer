@@ -16,6 +16,7 @@
 # Dependencies and outputs (rebuilt inside the image)
 node_modules
 dist
+dist-panel
 dev-dist
 storybook-static
 coverage
@@ -24,6 +25,8 @@ playwright-report
 # Not needed to build the web app
 android
 prototype
+prototype-restaurant
+e2e-panel
 docs
 e2e
 perf

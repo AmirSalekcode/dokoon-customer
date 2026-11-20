@@ -18,6 +18,12 @@
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "preview:perf"],
       "port": 4173
+    },
+    {
+      "name": "panel-mock",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev:panel:mock"],
+      "port": 5175
     }
   ]
 }
