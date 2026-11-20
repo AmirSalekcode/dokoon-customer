@@ -99,6 +99,36 @@
   direction: ltr;
   text-align: right;
 }
+.control {
+  position: relative;
+}
+.textarea {
+  height: auto;
+  min-height: var(--h-input);
+  padding: var(--sp-3) var(--sp-4);
+  line-height: 1.7;
+  resize: vertical;
+}
+/* Room for the unit at the field's end (left in RTL). */
+.withSuffix {
+  padding-inline-end: calc(var(--sp-4) * 4);
+}
+/* An LTR input (digits, Sheba) inside the RTL field: the unit still sits on the field's left. */
+.ltr.withSuffix,
+.withSuffix[dir='ltr'] {
+  padding-inline-end: var(--sp-4);
+  padding-inline-start: calc(var(--sp-4) * 4);
+}
+.suffix {
+  position: absolute;
+  inset-inline-end: var(--sp-4);
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: var(--fs-13);
+  font-weight: var(--fw-bold);
+  color: var(--mu);
+  pointer-events: none;
+}
 .error {
   margin: var(--sp-2) 0 0;
   font-size: var(--fs-13);
@@ -255,6 +285,11 @@
 }
 .toast_error {
   background: var(--danger);
+}
+/* Restaurant warnings (restaurant closed, order expired): amber with dark ink. */
+.toast_warn {
+  background: var(--warning);
+  color: var(--dock);
 }
 
 /* Tablet layout (D-88): sheets and dialogs stay a comfortable width, centered. */

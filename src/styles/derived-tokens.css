@@ -10,6 +10,8 @@
   --veil-dark: color-mix(in srgb, var(--dock) 70%, transparent);
   --veil-bg: color-mix(in srgb, var(--bg) 82%, transparent);
   --on-dock-line: color-mix(in srgb, var(--white) 30%, transparent);
+  /* counter chip on a primary (orange) pill */
+  --on-primary-soft: color-mix(in srgb, var(--white) 28%, transparent);
   --art-shadow: color-mix(in srgb, var(--brand-dark) 30%, transparent);
   --halo: color-mix(in srgb, var(--warning) 50%, transparent);
   --zone-fill: color-mix(in srgb, var(--primary) 8%, transparent);

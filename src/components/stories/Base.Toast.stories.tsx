@@ -10,3 +10,4 @@ type S = StoryObj<typeof meta>;
 export const Info: S = { args: { tone: 'info', text: 'برای خروج دوباره بزنید' } };
 export const Success: S = { args: { tone: 'success' } };
 export const ErrorTone: S = { args: { tone: 'error', text: 'ارسال ناموفق بود' } };
+export const Warn: S = { args: { tone: 'warn', text: 'رستوران بسته شد' } };
