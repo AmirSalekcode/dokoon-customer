@@ -91,3 +91,17 @@ Nothing here is implemented as an invented endpoint; the frontend works around e
     customer and restaurant apps ship separate versions. Proposal: `GET /app/config?app=customer|restaurant`
     (or `minVersion: {customer, restaurant}`), and let `maintenance` be per app too. Until then both apps
     read the same fields.
+23. **Realtime frame and idempotency (KAN-56).** `x-realtime` names the events and payloads but not the
+    frame. The panel expects one JSON text frame per event: `{"event": "order.created", "data": {…}}`.
+    Order actions (`accept`, `reject`, `ready`, `handover`, `extend`) send an `Idempotency-Key` header
+    (UUID v4, reused when the same action is retried after a timeout/5xx); the contract should declare it
+    and the server should return the first result for a repeated key.
+24. **Reject vs cancel from another device (D-96).** `POST /r/orders/{id}/reject` both rejects a `new`
+    order and cancels a `prep` one. If device A accepts and device B (still showing the alert) taps
+    reject, the server would *cancel* the just-accepted order. Proposal: a separate
+    `POST /r/orders/{id}/cancel` for prep orders, so `reject` on an order that is no longer `new` returns
+    `409 ALREADY_ANSWERED`. The mock already treats a second accept as `ALREADY_ANSWERED`.
+25. **Undeclared error responses.** The mock (like a real server) returns `400` for invalid
+    `prepMinutes`/`addMinutes`/`reasonId`, `PUT /r/settings` with `etaMax < etaMin`, `PATCH /r/me` with a
+    short name/address, and `400`/`429` on OTP verify; these statuses should be added to the contract.
+    Stream: a connection without a valid ticket is closed with code `4401`.
