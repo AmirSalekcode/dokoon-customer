@@ -13,12 +13,21 @@ permissions:
 
 jobs:
   image:
-    name: Build & push web image (GHCR)
+    name: Build & push ${{ matrix.image }} image (GHCR)
     runs-on: ubuntu-latest
     timeout-minutes: 20
     permissions:
       contents: read
       packages: write
+    # One image per app (D-91): customer → …/web, restaurant panel → …/panel.
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - app: customer
+            image: web
+          - app: panel
+            image: panel
     steps:
       - uses: actions/checkout@v5
       - uses: docker/setup-buildx-action@v3
@@ -30,7 +39,7 @@ jobs:
       - id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ghcr.io/${{ github.repository }}/web
+          images: ghcr.io/${{ github.repository }}/${{ matrix.image }}
           tags: |
             type=ref,event=branch
             type=semver,pattern={{version}}
@@ -42,9 +51,10 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+          cache-from: type=gha,scope=${{ matrix.app }}
+          cache-to: type=gha,mode=max,scope=${{ matrix.app }}
           build-args: |
+            APP=${{ matrix.app }}
             BUILD_MODE=${{ vars.BUILD_MODE || 'production' }}
             VITE_API_BASE_URL=${{ vars.VITE_API_BASE_URL }}
             VITE_NESHAN_MAP_KEY=${{ vars.VITE_NESHAN_MAP_KEY }}
