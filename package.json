@@ -24,6 +24,7 @@
     "e2e": "playwright test",
     "e2e:panel": "playwright test --config playwright.panel.config.ts",
     "api:gen": "openapi-typescript contract/dokoon-openapi.yaml -o src/api/schema.d.ts",
+    "api:gen:panel": "openapi-typescript restaurant/dokoon-restaurant-openapi.yaml -o src/panel/api/schema.d.ts",
     "mock:prism": "prism mock contract/dokoon-openapi.yaml -p 4010",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
@@ -78,7 +79,8 @@
   },
   "msw": {
     "workerDirectory": [
-      "public"
+      "public",
+      "public-panel"
     ]
   }
 }
