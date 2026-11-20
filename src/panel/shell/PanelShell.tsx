@@ -11,6 +11,7 @@ import { bootPanel, logout } from '../auth/flow';
 import { isPanelTab, usePanelNav, type PanelTab } from '../nav/nav';
 import { startAlerts } from '../orders/alerts';
 import { AlertOverlay, PrepOverlay, ReasonOverlay } from '../orders/OrderOverlays';
+import { PrintHost } from '../orders/print';
 import { panelScreenFor, SHELL_SCREENS } from '../screens/registry';
 import { reconnectLive, startLive, stopLive } from '../realtime/live';
 import { useRestaurant } from '../state/restaurant';
@@ -202,6 +203,7 @@ export function PanelShell() {
         </>
       )}
       <ToastHost />
+      <PrintHost />
     </div>
   );
 }

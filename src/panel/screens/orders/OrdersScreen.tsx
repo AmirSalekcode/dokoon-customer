@@ -10,6 +10,7 @@ import type { Order } from '../../api/types';
 import { OrderTile } from '../../components/OrderTile';
 import { runOrderAction } from '../../orders/actions';
 import { useNow, useWide } from '../../orders/hooks';
+import { OrderDetailPanel } from '../../orders/OrderDetailPanel';
 import { primaryAction, sortLive, tileView } from '../../orders/present';
 import { usePanelNav } from '../../nav/nav';
 import { onLiveEvent } from '../../realtime/live';
@@ -47,7 +48,10 @@ function Tile({ order, now }: { order: Order; now: number }) {
       actionTone={act?.tone}
       busy={busy}
       selected={wide && selectedId === order.id}
-      onOpen={() => select(order.id!)}
+      onOpen={() => {
+        select(order.id!);
+        if (!wide) usePanelNav.getState().push('order', { id: order.id! });
+      }}
       onAction={
         act
           ? () =>
@@ -176,6 +180,8 @@ export function OrdersScreen() {
   const tab = useOrdersUi((st) => st.tab);
   const setTab = useOrdersUi((st) => st.setTab);
   const c = countByTab(byId);
+  const selectedId = useOrdersUi((st) => st.selectedId);
+  const wide = useWide();
 
   // Orders that finish (delivered, cancelled, expired…) belong to the history now.
   useEffect(
@@ -217,11 +223,15 @@ export function OrdersScreen() {
           {tab === 'history' ? <HistoryList /> : <LiveList tab={tab} />}
         </section>
         <section className={s.detail} aria-label="جزئیات سفارش">
-          <EmptyState
-            art="dk-kebab"
-            title="سفارشی انتخاب نشده"
-            text="یکی از سفارش‌ها را از فهرست انتخاب کنید."
-          />
+          {selectedId && wide ? (
+            <OrderDetailPanel key={selectedId} id={selectedId} />
+          ) : (
+            <EmptyState
+              art="dk-kebab"
+              title="سفارشی انتخاب نشده"
+              text="یکی از سفارش‌ها را از فهرست انتخاب کنید."
+            />
+          )}
         </section>
       </div>
     </div>

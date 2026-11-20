@@ -17,6 +17,8 @@ export const TAB_OF: Partial<Record<OrderStatus, LiveTab>> = {
 interface OrdersState {
   /** Active orders by id (new / prep / ready / way); finished ones drop out. */
   byId: Record<string, Order>;
+  /** Orders that left the live tabs in this session (the open detail keeps showing them). */
+  finished: Record<string, Order>;
   status: 'idle' | 'loading' | 'ready' | 'error';
   /** ms epoch of the last successful sync. */
   syncedAt: number | null;
@@ -64,34 +66,53 @@ export const useOrders = create<OrdersState>((set, get) => ({
 
   apply: (msg) => {
     const byId = { ...get().byId };
+    const finished = { ...get().finished };
+    const end = (id: string, patch: Partial<Order>) => {
+      const before = byId[id] ?? finished[id];
+      if (before) finished[id] = { ...before, ...patch };
+      delete byId[id];
+    };
     switch (msg.event) {
       case 'order.created':
       case 'order.updated': {
         const o = msg.data;
         if (!o.id) return;
-        if (isActive(o)) byId[o.id] = o;
-        else delete byId[o.id];
+        if (isActive(o)) {
+          byId[o.id] = o;
+          delete finished[o.id];
+        } else {
+          delete byId[o.id];
+          finished[o.id] = o;
+        }
         break;
       }
       case 'order.cancelled':
-        delete byId[msg.data.orderId];
+        end(msg.data.orderId, { status: 'cancelled', rejectReason: msg.data.reason });
         break;
       case 'order.expired':
-        delete byId[msg.data.orderId];
+        end(msg.data.orderId, { status: 'expired' });
         break;
       default:
         return;
     }
-    set({ byId });
+    set({ byId, finished });
   },
 
   upsert: (o) => {
     if (!o.id) return;
     const byId = { ...get().byId };
-    if (isActive(o)) byId[o.id] = o;
-    else delete byId[o.id];
-    set({ byId });
+    const finished = { ...get().finished };
+    if (isActive(o)) {
+      byId[o.id] = o;
+      delete finished[o.id];
+    } else {
+      delete byId[o.id];
+      finished[o.id] = o;
+    }
+    set({ byId, finished });
   },
+
+  finished: {},
 
   busy: {},
   setBusy: (id, on) => {
@@ -101,7 +122,7 @@ export const useOrders = create<OrdersState>((set, get) => ({
     set({ busy });
   },
 
-  reset: () => set({ byId: {}, status: 'idle', syncedAt: null, busy: {} }),
+  reset: () => set({ byId: {}, finished: {}, status: 'idle', syncedAt: null, busy: {} }),
 }));
 
 /** Count of active orders per live tab. */
