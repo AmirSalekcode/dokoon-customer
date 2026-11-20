@@ -141,3 +141,36 @@
     animation: none;
   }
 }
+.tips {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--r-lg);
+  background: var(--sf);
+  box-shadow: var(--sh-card);
+}
+.tips li {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sp-3);
+  padding: var(--sp-3) var(--sp-4);
+  color: var(--pr2);
+}
+.tips li + li {
+  border-top: 1px solid var(--ln);
+}
+.tips span {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-1);
+  font-size: var(--fs-13);
+  line-height: 1.7;
+  color: var(--mu);
+}
+.tips strong {
+  font-size: var(--fs-14);
+  font-weight: var(--fw-bold);
+  color: var(--ink);
+}

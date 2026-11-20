@@ -5,6 +5,7 @@ import { RegDocsScreen } from './reg/RegDocsScreen';
 import { RegScreen } from './reg/RegScreen';
 import { RegStatusScreen } from './auth/RegStatusScreen';
 import { ShiftScreen } from './auth/ShiftScreen';
+import { SoundScreen } from './SoundScreen';
 import { HelpScreen, PanelErrorScreen, type PanelScreenProps } from './StackScreens';
 import { AccountScreen, MenuScreen, OrdersScreen, ReportsScreen } from './TabScreens';
 
@@ -19,6 +20,7 @@ const SCREENS: Record<PanelScreen, ComponentType<PanelScreenProps>> = {
   'reg-status': RegStatusScreen,
   'reg-docs': RegDocsScreen,
   shift: ShiftScreen,
+  sound: SoundScreen,
   error: PanelErrorScreen,
 };
 

@@ -12,6 +12,7 @@ export const PANEL_SCREENS = [
   'reg-status',
   'reg-docs',
   'shift',
+  'sound',
   'error',
 ] as const;
 export type PanelScreen = (typeof PANEL_SCREENS)[number];

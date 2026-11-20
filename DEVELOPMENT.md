@@ -94,6 +94,9 @@ built by `vite.panel.config.ts` into `dist-panel/` with its own PWA manifest («
 - **Registration + uploads (KAN-60):** `src/panel/screens/reg/` (wizard, `DocsUploader`, needs-docs screen) and the
   shared upload tool `src/panel/upload/upload.ts` (type/size rule → `src/lib/image.ts` shrink → `POST /uploads`).
   Sheba checksum in `src/panel/auth/validation.ts`. Use the same tool for dish photos and the logo (KAN-67/70).
+- **Shift + sound (KAN-61):** `src/panel/sound/` — `engine.ts` (Web Audio, unlock on the shift tap, repeat until
+  answered, mute, 5 levels, vibration), `wakeLock.ts`, `settings.ts` (`dk-r-sound`). The alert file is generated:
+  `node scripts/gen-alert-sound.mjs` → `public-panel/sounds/new-order.wav` (a test checks the committed file matches).
 - **E2E locally:** `npm run e2e:panel` builds the mock panel and serves it on `127.0.0.1:5176`.
 
 ## Rules enforced in code
