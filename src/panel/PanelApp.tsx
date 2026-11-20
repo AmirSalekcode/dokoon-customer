@@ -1,20 +1,11 @@
-import { ArtSprite } from '@/components/primitives/ArtSprite';
-import { Logo } from '@/components/primitives/Logo';
-import s from './PanelApp.module.css';
+import { AppErrorBoundary } from '@/errors/AppErrorBoundary';
+import { PanelShell } from './shell/PanelShell';
 
-/** Restaurant panel shell (KAN-55 placeholder; header, navigation and screens come in KAN-58). */
+/** Restaurant panel root: a render crash shows the 500 page, never a blank screen. */
 export function PanelApp() {
   return (
-    <div className={s.shell}>
-      <ArtSprite />
-      <header className={s.header}>
-        <Logo height={24} />
-        <span className={s.tag}>رستوران</span>
-      </header>
-      <main className={s.main}>
-        <h1 className={s.title}>دکون رستوران</h1>
-        <p className={s.lead}>پنل مدیریت سفارش‌های رستوران.</p>
-      </main>
-    </div>
+    <AppErrorBoundary>
+      <PanelShell />
+    </AppErrorBoundary>
   );
 }

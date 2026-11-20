@@ -2,6 +2,11 @@
    Scoped to <html data-app="restaurant"> so the customer app never sees them. Loaded only by src/panel. */
 [data-app="restaurant"]{
   --hd:#1F1A17;
+  /* text on the dark --hd bar (same values as the dark theme ink/muted) */
+  --hd-ink:#F6EEE8; --hd-mu:#B3A59B; --hd-line:color-mix(in srgb, #FFFFFF 28%, transparent);
+  --hd-shadow:0 8px 24px rgba(31,26,23,.18);
+  /* side rail width on tablets/desktop (design system delta §2) */
+  --rail-w:104px; --rail-item-h:72px;
   --status-new:#E4501E; --status-new-ink:#FFFFFF;
   --status-prep:#F5B32F; --status-prep-ink:#1F1A17;
   --status-ready:#8B2313; --status-ready-ink:#FFFFFF;

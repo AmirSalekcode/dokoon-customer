@@ -1,5 +1,6 @@
 import { App as CapApp } from '@capacitor/app';
 import { isNative } from '@/lib/platform';
+import type { SystemBackTarget } from './createStackNav';
 import { useNav } from './nav';
 
 /**
@@ -8,10 +9,10 @@ import { useNav } from './nav';
  * - Web/PWA: one "guard" history entry; popstate → handleSystemBack, then re-arm the guard.
  *   On 'exit' we step out of the guard so the browser leaves normally.
  */
-export function initSystemBack(): () => void {
+export function initSystemBack(nav: SystemBackTarget = useNav): () => void {
   if (isNative()) {
     const sub = CapApp.addListener('backButton', () => {
-      if (useNav.getState().handleSystemBack() === 'exit') void CapApp.exitApp();
+      if (nav.getState().handleSystemBack() === 'exit') void CapApp.exitApp();
     });
     return () => void sub.then((h) => h.remove());
   }
@@ -19,7 +20,7 @@ export function initSystemBack(): () => void {
   const GUARD = { dkGuard: true };
   history.pushState(GUARD, '');
   const onPop = () => {
-    const res = useNav.getState().handleSystemBack();
+    const res = nav.getState().handleSystemBack();
     if (res === 'exit') {
       window.removeEventListener('popstate', onPop);
       history.back();
@@ -32,12 +33,12 @@ export function initSystemBack(): () => void {
 }
 
 /** Network status → offline ErrorPage; reconnect auto-returns (screen-specs §5). */
-export function initConnectivity(): () => void {
-  const off = () => useNav.getState().showError('offline');
+export function initConnectivity(nav: SystemBackTarget = useNav): () => void {
+  const off = () => nav.getState().showError('offline');
   const on = () => {
-    const s = useNav.getState().stack;
+    const s = nav.getState().stack;
     const top = s[s.length - 1];
-    if (top?.screen === 'error' && top.params.kind === 'offline') useNav.getState().back();
+    if (top?.screen === 'error' && top.params.kind === 'offline') nav.getState().back();
   };
   window.addEventListener('offline', off);
   window.addEventListener('online', on);
