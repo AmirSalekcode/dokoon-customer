@@ -7,6 +7,7 @@ import { panelHandlers, resetPanelMockDb } from '../mocks/handlers';
 import { usePanelNav } from '../nav/nav';
 import { useRestaurant } from '../state/restaurant';
 import { usePanelSession } from '../api/session';
+import { signedIn } from '../test/session';
 import { PanelShell } from './PanelShell';
 
 // KAN-58: the restaurant app shell — header, navigation, open/closed switch, error pages.
@@ -14,6 +15,7 @@ beforeEach(() => {
   server.use(...panelHandlers);
   resetPanelMockDb();
   localStorage.clear();
+  signedIn();
   useToast.setState({ toasts: [] });
   useRestaurant.setState({ profile: null, status: 'idle', switching: false });
   usePanelNav.getState().resetTo('orders');

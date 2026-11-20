@@ -1,13 +1,15 @@
-import { expect, test } from '@playwright/test';
+import { expect, test, type Page } from '@playwright/test';
 
 // KAN-55: the empty panel shell boots with the shared font, theme and RTL, as the restaurant app.
+// Without a session the panel opens at login (KAN-59).
+const login = (page: Page) => page.getByRole('heading', { name: 'ورود به پنل رستوران' });
 const css = (prop: string) => getComputedStyle(document.documentElement).getPropertyValue(prop).trim();
 
 test('boots Persian RTL with Yekan Bakh, marked as the restaurant app and never indexed', async ({
   page,
 }) => {
   await page.goto('/');
-  await expect(page.getByRole('banner')).toBeVisible();
+  await expect(login(page)).toBeVisible();
   const html = page.locator('html');
   await expect(html).toHaveAttribute('dir', 'rtl');
   await expect(html).toHaveAttribute('lang', 'fa');
@@ -27,7 +29,7 @@ test('boots Persian RTL with Yekan Bakh, marked as the restaurant app and never 
 
 test('restaurant tokens apply and the shared green is repainted orange', async ({ page }) => {
   await page.goto('/');
-  await expect(page.getByRole('banner')).toBeVisible();
+  await expect(login(page)).toBeVisible();
   expect((await page.evaluate(css, '--hd')).toLowerCase()).toBe('#1f1a17');
   // Shared components read --success; in the panel it resolves to the primary orange.
   const success = await page.evaluate(() => {
@@ -57,14 +59,14 @@ test('a saved light choice (dk-theme) wins over a dark phone', async ({ browser 
   await ctx.addInitScript(() => localStorage.setItem('dk-theme', 'light'));
   const page = await ctx.newPage();
   await page.goto('/');
-  await expect(page.getByRole('banner')).toBeVisible();
+  await expect(login(page)).toBeVisible();
   await expect(page.locator('html')).not.toHaveAttribute('data-theme', 'dark');
   await ctx.close();
 });
 
 test('deep links serve the panel shell, not the customer app', async ({ page }) => {
   await page.goto('/orders/123');
-  await expect(page.getByRole('banner')).toBeVisible();
+  await expect(login(page)).toBeVisible();
   await expect(page.locator('html')).toHaveAttribute('data-app', 'restaurant');
 });
 
@@ -80,7 +82,7 @@ test('has its own web app manifest «دکون رستوران»', async ({ page, 
 test('works at tablet width (≥720) without horizontal scroll', async ({ page }) => {
   await page.setViewportSize({ width: 1024, height: 768 });
   await page.goto('/');
-  await expect(page.getByRole('banner')).toBeVisible();
+  await expect(login(page)).toBeVisible();
   const overflow = await page.evaluate(
     () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
   );

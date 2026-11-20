@@ -22,12 +22,19 @@ const MIN = 60_000;
 const iso = (ms: number) => new Date(ms).toISOString();
 
 export const OTP_CODE = '1234';
-/** Demo phones for every registration status (any other valid phone = active restaurant). */
-export const DEMO_STATUS_PHONES: Record<string, 'pending' | 'needs_docs' | 'rejected'> = {
+/**
+ * Demo phones for every registration status (any other valid phone = active restaurant).
+ * `new` = no restaurant for this phone yet → registration wizard (proposed status, contract-notes 26).
+ */
+export type DemoStatus = 'new' | 'pending' | 'needs_docs' | 'rejected';
+export const DEMO_STATUS_PHONES: Record<string, DemoStatus> = {
+  '09130000000': 'new',
   '09130000001': 'pending',
   '09130000002': 'needs_docs',
   '09130000003': 'rejected',
 };
+export const DEMO_REJECT_REASON = 'تصویر مجوز کسب خوانا نبود؛ لطفاً دوباره ثبت‌نام کنید.';
+export const DEMO_MISSING_DOCS = ['lic'];
 export const ACCEPT_TIMEOUT_SEC = 180;
 
 export const appConfig = { minVersion: '0.0.0', maintenance: false };

@@ -1,9 +1,7 @@
 import { create } from 'zustand';
-import { ApiError } from '@/api/errors';
-import { setRetry } from '@/errors/retry';
 import { panelApi, type PanelApi } from '../api/client';
 import type { RestaurantProfile } from '../api/types';
-import { usePanelNav } from '../nav/nav';
+import { showFullPageError as fullPage } from '../errors/fullPage';
 
 interface RestaurantState {
   profile: RestaurantProfile | null;
@@ -13,14 +11,6 @@ interface RestaurantState {
   load: (api?: PanelApi) => Promise<void>;
   /** Saves the manual open/closed switch. Resolves true when the server accepted it. */
   setOpen: (api: PanelApi | undefined, open: boolean) => Promise<boolean>;
-}
-
-/** Full-page kinds go to the ErrorPage; inline errors are the caller's (toast). */
-function fullPage(e: unknown, retry: () => void): boolean {
-  if (!(e instanceof ApiError) || !e.isFullPage || !e.kind) return false;
-  setRetry(retry);
-  usePanelNav.getState().showError(e.kind);
-  return true;
 }
 
 /** Restaurant shown in the header (name, rating, open/closed) — GET /r/me, PUT /r/open. */

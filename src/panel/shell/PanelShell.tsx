@@ -7,6 +7,7 @@ import { formatDecimal, formatNumber } from '@/lib/format';
 import { initConnectivity, initSystemBack } from '@/nav/systemBack';
 import { checkPanelConfig } from '../api/appConfig';
 import { panelApi } from '../api/client';
+import { bootPanel, logout } from '../auth/flow';
 import { isPanelTab, usePanelNav, type PanelTab } from '../nav/nav';
 import { panelScreenFor, SHELL_SCREENS } from '../screens/registry';
 import { useRestaurant } from '../state/restaurant';
@@ -66,6 +67,20 @@ function PanelOverlayHost() {
   const overlay = usePanelNav((st) => st.overlay);
   const closeOverlay = usePanelNav((st) => st.closeOverlay);
   if (overlay?.kind !== 'confirm') return null;
+  if (overlay.props?.action === 'logout')
+    return (
+      <ConfirmDialog
+        title="از حساب خارج می‌شوید؟"
+        text="تا ورود دوباره، روی این دستگاه سفارش جدید دریافت نمی‌کنید. دستگاه‌های دیگر وارد می‌مانند."
+        confirmLabel="خروج"
+        tone="danger"
+        onConfirm={() => {
+          closeOverlay();
+          void logout();
+        }}
+        onCancel={closeOverlay}
+      />
+    );
   return (
     <ConfirmDialog
       title="رستوران بسته شود؟"
@@ -106,7 +121,7 @@ export function PanelShell() {
     void Promise.race([checkPanelConfig(panelApi(), __APP_VERSION__), wait]).then((block) => {
       if (!alive) return;
       if (block) usePanelNav.getState().resetTo('error', { kind: block });
-      else void useRestaurant.getState().load();
+      else bootPanel();
       setBooted(true);
     });
     return () => {

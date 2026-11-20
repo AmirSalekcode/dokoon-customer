@@ -26,6 +26,8 @@ export interface PanelMockDb {
   docsUploaded: string[];
   /** phone → ms epoch of the last OTP request (429 inside the resend window). */
   otpSentAt: Record<string, number>;
+  /** phone → status after a registration submitted in this page session (demo). */
+  registrations: Record<string, 'pending'>;
   seq: number;
 }
 
@@ -43,6 +45,7 @@ function fresh(now = Date.now()): PanelMockDb {
     notifications: D.seedNotifications(now),
     docsUploaded: [],
     otpSentAt: {},
+    registrations: {},
     seq: 0,
   };
 }

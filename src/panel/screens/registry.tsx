@@ -1,6 +1,10 @@
 import type { ComponentType } from 'react';
 import type { PanelScreen } from '../nav/nav';
-import { HelpScreen, LoginScreen, PanelErrorScreen, type PanelScreenProps } from './StackScreens';
+import { LoginScreen } from './auth/LoginScreen';
+import { RegScreen } from './auth/RegScreen';
+import { RegStatusScreen } from './auth/RegStatusScreen';
+import { ShiftScreen } from './auth/ShiftScreen';
+import { HelpScreen, PanelErrorScreen, type PanelScreenProps } from './StackScreens';
 import { AccountScreen, MenuScreen, OrdersScreen, ReportsScreen } from './TabScreens';
 
 const SCREENS: Record<PanelScreen, ComponentType<PanelScreenProps>> = {
@@ -10,6 +14,9 @@ const SCREENS: Record<PanelScreen, ComponentType<PanelScreenProps>> = {
   account: AccountScreen,
   help: HelpScreen,
   login: LoginScreen,
+  reg: RegScreen,
+  'reg-status': RegStatusScreen,
+  shift: ShiftScreen,
   error: PanelErrorScreen,
 };
 
