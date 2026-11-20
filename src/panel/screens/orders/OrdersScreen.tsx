@@ -11,6 +11,7 @@ import { OrderTile } from '../../components/OrderTile';
 import { runOrderAction } from '../../orders/actions';
 import { useNow, useWide } from '../../orders/hooks';
 import { primaryAction, sortLive, tileView } from '../../orders/present';
+import { usePanelNav } from '../../nav/nav';
 import { onLiveEvent } from '../../realtime/live';
 import { reopen } from '../../shell/openSwitch';
 import { RANGE_LABEL, RANGES, useHistory } from '../../state/history';
@@ -39,17 +40,22 @@ function Tile({ order, now }: { order: Order; now: number }) {
   const select = useOrdersUi((st) => st.select);
   const wide = useWide();
   const act = primaryAction(order);
-  // Accept needs the prep-time sheet (KAN-64).
-  const shown = act && act.kind !== 'accept' ? act : null;
   return (
     <OrderTile
       order={tileView(order, now)}
-      actionLabel={shown?.label ?? ''}
-      actionTone={shown?.tone}
+      actionLabel={act?.label ?? ''}
+      actionTone={act?.tone}
       busy={busy}
       selected={wide && selectedId === order.id}
       onOpen={() => select(order.id!)}
-      onAction={shown ? () => void runOrderAction(order.id!, shown.kind) : undefined}
+      onAction={
+        act
+          ? () =>
+              act.kind === 'accept'
+                ? usePanelNav.getState().openOverlay({ kind: 'prep', props: { id: order.id } })
+                : void runOrderAction(order.id!, act.kind)
+          : undefined
+      }
     />
   );
 }

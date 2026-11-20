@@ -22,7 +22,8 @@ export type PanelTab = 'orders' | 'menu' | 'reports' | 'account';
 export const PANEL_TABS: readonly PanelTab[] = ['orders', 'menu', 'reports', 'account'];
 
 /** Overlays (one at a time). */
-export type PanelOverlay = 'confirm';
+/** confirm = ConfirmDialog; alert = new-order alert; prep / reason = order sheets (props.id). */
+export type PanelOverlay = 'confirm' | 'alert' | 'prep' | 'reason';
 
 const nav = createStackNav<PanelScreen, PanelTab, PanelOverlay>({
   initial: 'login',
