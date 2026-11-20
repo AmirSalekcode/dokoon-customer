@@ -9,6 +9,8 @@ import { checkPanelConfig } from '../api/appConfig';
 import { panelApi } from '../api/client';
 import { bootPanel, logout } from '../auth/flow';
 import { isPanelTab, usePanelNav, type PanelTab } from '../nav/nav';
+import { startAlerts } from '../orders/alerts';
+import { AlertOverlay, PrepOverlay, ReasonOverlay } from '../orders/OrderOverlays';
 import { panelScreenFor, SHELL_SCREENS } from '../screens/registry';
 import { reconnectLive, startLive, stopLive } from '../realtime/live';
 import { useRestaurant } from '../state/restaurant';
@@ -69,6 +71,11 @@ function PanelScreenHost() {
 function PanelOverlayHost() {
   const overlay = usePanelNav((st) => st.overlay);
   const closeOverlay = usePanelNav((st) => st.closeOverlay);
+  if (overlay?.kind === 'alert') return <AlertOverlay />;
+  if (overlay?.kind === 'prep' && typeof overlay.props?.id === 'string')
+    return <PrepOverlay key={overlay.props.id} id={overlay.props.id} />;
+  if (overlay?.kind === 'reason' && typeof overlay.props?.id === 'string')
+    return <ReasonOverlay key={overlay.props.id} id={overlay.props.id} />;
   if (overlay?.kind !== 'confirm') return null;
   if (overlay.props?.action === 'logout')
     return (
@@ -121,9 +128,11 @@ export function PanelShell() {
   useEffect(() => {
     if (!shiftOn) return;
     startLive();
+    const stopAlerts = startAlerts();
     window.addEventListener('online', reconnectLive);
     return () => {
       window.removeEventListener('online', reconnectLive);
+      stopAlerts();
       stopLive();
     };
   }, [shiftOn]);
