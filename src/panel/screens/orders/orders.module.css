@@ -74,3 +74,8 @@
     top: var(--sp-4);
   }
 }
+
+/* Phone order screen. */
+.detailPage {
+  padding: var(--sp-4) var(--gutter) var(--sp-8);
+}

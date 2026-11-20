@@ -1,8 +1,9 @@
 import { createStackNav } from '@/nav/createStackNav';
 
-/** Restaurant panel screens; order detail, menu editors… arrive with their tasks (KAN-60+). */
+/** Restaurant panel screens (`order`: detail on phones, params.id); menu editors… arrive with their tasks. */
 export const PANEL_SCREENS = [
   'orders',
+  'order',
   'menu',
   'reports',
   'account',

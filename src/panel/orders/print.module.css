@@ -1,0 +1,96 @@
+/* Receipt print styles (D-97): 80 mm thermal roll or A4. Hidden on screen. */
+.root {
+  display: none;
+}
+.receipt {
+  color: var(--dock);
+  background: var(--white);
+  font-family: var(--font);
+  line-height: 1.6;
+}
+.receipt p {
+  margin: 0;
+}
+.head {
+  text-align: center;
+}
+.head h1 {
+  margin: 0;
+  font-weight: var(--fw-xbold);
+}
+.items {
+  width: 100%;
+  border-collapse: collapse;
+}
+.items th,
+.items td {
+  padding: var(--sp-1) 0;
+  text-align: start;
+  vertical-align: top;
+  border-bottom: 1px dashed var(--dock);
+}
+.items th:last-child,
+.items td:last-child {
+  text-align: end;
+  white-space: nowrap;
+}
+.items small {
+  display: block;
+}
+.total {
+  display: flex;
+  justify-content: space-between;
+  font-weight: var(--fw-xbold);
+}
+.foot {
+  text-align: center;
+}
+
+/* 80 mm roll: about 72 mm printable, small black text, no colours (thermal printers). */
+.thermal {
+  page: receipt80;
+  width: 72mm;
+  font-size: var(--fs-12);
+}
+.thermal .head h1 {
+  font-size: var(--fs-16);
+}
+.a4 {
+  page: receiptA4;
+  max-width: 180mm;
+  margin: 0 auto;
+  font-size: var(--fs-14);
+}
+.a4 .head h1 {
+  font-size: var(--fs-22);
+}
+.receipt > * + * {
+  margin-top: var(--sp-3);
+}
+
+@page receipt80 {
+  /* Roll paper: width 80 mm; a long page, the printer driver cuts after the content. */
+  size: 80mm 297mm;
+  margin: 4mm;
+}
+@page receiptA4 {
+  size: A4;
+  margin: 15mm;
+}
+
+@media print {
+  :global(body) > :not(.root) {
+    display: none !important;
+  }
+  :global(body) {
+    background: var(--white) !important;
+  }
+  .root {
+    display: block;
+  }
+  .receipt {
+    color: var(--dock);
+    -webkit-print-color-adjust: economy;
+    print-color-adjust: economy;
+  }
+}
