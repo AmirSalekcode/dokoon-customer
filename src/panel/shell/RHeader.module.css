@@ -1,0 +1,110 @@
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+  padding: calc(var(--sp-4) + env(safe-area-inset-top)) var(--gutter) var(--sp-5);
+  border-radius: 0 0 var(--r-xl) var(--r-xl);
+  background: var(--hd);
+  color: var(--hd-ink);
+  box-shadow: var(--hd-shadow);
+}
+.top {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+}
+.logo {
+  flex: none;
+}
+.tag {
+  display: inline-flex;
+  align-items: center;
+  height: var(--sp-6);
+  padding: 0 var(--sp-3);
+  border-radius: var(--r-pill);
+  background: var(--primary);
+  color: var(--white);
+  font-size: var(--fs-12);
+  font-weight: var(--fw-xbold);
+}
+.bottom {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+}
+.name {
+  flex: 1;
+  min-width: 0;
+}
+.name h1 {
+  margin: 0;
+  overflow: hidden;
+  font-size: var(--fs-20);
+  font-weight: var(--fw-xbold);
+  line-height: 1.5;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.name p {
+  margin: 0;
+  font-size: var(--fs-12);
+  line-height: 1.7;
+  color: var(--hd-mu);
+}
+.switch {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  min-height: var(--touch);
+  padding: 0 var(--sp-4);
+  border: 1.5px solid var(--hd-line);
+  border-radius: var(--r-pill);
+  background: transparent;
+  color: var(--hd-mu);
+  font: inherit;
+  font-size: var(--fs-14);
+  font-weight: var(--fw-bold);
+  cursor: pointer;
+  transition:
+    border-color var(--t-med),
+    color var(--t-med);
+}
+.switch:focus-visible {
+  outline-color: var(--hd-ink);
+}
+.switch:disabled {
+  cursor: progress;
+  opacity: 0.7;
+}
+.switch i {
+  width: 10px;
+  height: 10px;
+  border-radius: var(--r-circle);
+  background: var(--mu);
+}
+.on {
+  border-color: var(--open-dot);
+  color: var(--hd-ink);
+}
+.on i {
+  background: var(--open-dot);
+  animation: openPulse 2.4s ease-in-out infinite;
+}
+@keyframes openPulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 var(--halo);
+  }
+  50% {
+    box-shadow: 0 0 0 6px transparent;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .switch {
+    transition: none;
+  }
+  .on i {
+    animation: none;
+  }
+}

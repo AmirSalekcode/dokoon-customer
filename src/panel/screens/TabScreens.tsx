@@ -1,0 +1,100 @@
+import { Button } from '@/components/base/Button';
+import { EmptyState } from '@/components/library/EmptyState';
+import { FilterChip } from '@/components/library/FilterChip';
+import { ListRow } from '@/components/library/ListRow';
+import { ToggleRow } from '@/components/library/ToggleRow';
+import { config } from '@/config/env';
+import { toFaDigits } from '@/lib/format';
+import { useTheme } from '@/theme/theme';
+import { ERROR_KINDS } from '../errors/panelErrors';
+import { usePanelNav } from '../nav/nav';
+import { reopen } from '../shell/openSwitch';
+import { useRestaurant } from '../state/restaurant';
+import s from './screens.module.css';
+
+/*
+ * Root tab screens of the shell (KAN-58). Their real content arrives with the feature tasks:
+ * orders KAN-63..65, menu KAN-66/67, reports KAN-68, account KAN-69/70.
+ */
+
+/** Orders: closed banner + list/detail layout (side by side from 720px). */
+export function OrdersScreen() {
+  const open = useRestaurant((st) => st.profile?.open ?? true);
+  const switching = useRestaurant((st) => st.switching);
+  return (
+    <div className={s.page}>
+      {!open ? (
+        <div className={s.closed}>
+          <p>رستوران بسته است؛ سفارش جدید دریافت نمی‌کنید.</p>
+          <Button size="md" loading={switching} onClick={() => void reopen()} aria-label="باز کردن رستوران">
+            باز کردن
+          </Button>
+        </div>
+      ) : null}
+      <div className={s.split}>
+        <section aria-label="فهرست سفارش‌ها">
+          <EmptyState art="dk-chelo" title="سفارش‌ها" text="فهرست سفارش‌ها اینجا نمایش داده می‌شود." />
+        </section>
+        <section className={s.detail} aria-label="جزئیات سفارش">
+          <EmptyState art="dk-kebab" title="سفارشی انتخاب نشده" text="یک سفارش را از فهرست انتخاب کنید." />
+        </section>
+      </div>
+    </div>
+  );
+}
+
+export function MenuScreen() {
+  return (
+    <div className={s.page}>
+      <EmptyState art="dk-kebab" title="منو" text="غذاها و دسته‌های منو اینجا مدیریت می‌شوند." />
+    </div>
+  );
+}
+
+export function ReportsScreen() {
+  return (
+    <div className={s.page}>
+      <EmptyState art="dk-mix" title="گزارش" text="گزارش فروش و تسویه‌ها اینجا نمایش داده می‌شود." />
+    </div>
+  );
+}
+
+const D_HELP =
+  'M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM9.5 9a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6V14M12 17h.01';
+
+export function AccountScreen() {
+  const theme = useTheme((st) => st.theme);
+  const setMode = useTheme((st) => st.setMode);
+  const { push, showError, resetTo } = usePanelNav.getState();
+  return (
+    <div className={s.page}>
+      <div className={s.card}>
+        <ListRow title="راهنما و پشتیبانی" d={D_HELP} onTap={() => push('help')} />
+      </div>
+      <div className={s.card}>
+        <ToggleRow
+          title="حالت تیره"
+          on={theme === 'dark'}
+          onFlip={() => setMode(theme === 'dark' ? 'light' : 'dark')}
+        />
+      </div>
+      {config.useMocks ? (
+        // Mock/demo builds only: preview every full-page error (D-106).
+        <section aria-label="پیش‌نمایش صفحه‌های خطا">
+          <h2 className={s.title}>پیش‌نمایش صفحه‌های خطا (نسخه‌ی نمایشی)</h2>
+          <div className={s.chips}>
+            {ERROR_KINDS.map((k) => (
+              <FilterChip
+                key={k}
+                label={toFaDigits(k.replace(/^e/, ''))}
+                onPick={() =>
+                  k === 'maintenance' || k === 'update' ? resetTo('error', { kind: k }) : showError(k)
+                }
+              />
+            ))}
+          </div>
+        </section>
+      ) : null}
+    </div>
+  );
+}

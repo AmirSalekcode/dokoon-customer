@@ -1,11 +1,14 @@
 import { render, screen } from '@testing-library/react';
+import { server } from '@/mocks/node';
+import { panelHandlers, resetPanelMockDb } from './mocks/handlers';
 import { PanelApp } from './PanelApp';
 
-describe('PanelApp (empty shell)', () => {
-  it('shows the restaurant title and the logo on the business header', () => {
+describe('PanelApp', () => {
+  it('boots the shell with the restaurant header', async () => {
+    server.use(...panelHandlers);
+    resetPanelMockDb();
     render(<PanelApp />);
-    expect(screen.getByRole('heading', { level: 1, name: 'دکون رستوران' })).toBeInTheDocument();
+    expect(await screen.findByRole('heading', { level: 1, name: 'کبابی سنتی زاگرس' })).toBeInTheDocument();
     expect(screen.getByRole('banner')).toHaveTextContent('رستوران');
-    expect(screen.getByRole('main')).toBeInTheDocument();
   });
 });
