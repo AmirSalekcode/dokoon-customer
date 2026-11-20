@@ -1,5 +1,16 @@
 /** Full-page error kinds (screen-specs §5). */
-export type ErrorKind = 'offline' | 'e401' | 'e403' | 'e404' | 'e500' | 'e503' | 'e504';
+export type ErrorKind =
+  | 'offline'
+  | 'e401'
+  | 'e403'
+  | 'e404'
+  | 'e500'
+  | 'e503'
+  | 'e504'
+  /** `GET /app/config` maintenance=true (startup). */
+  | 'maintenance'
+  /** App older than `GET /app/config` minVersion: forced update (startup). */
+  | 'update';
 
 export class ApiError extends Error {
   readonly kind: ErrorKind | null;

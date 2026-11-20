@@ -23,7 +23,17 @@ import { toFaDigits } from '@/lib/format';
 import s from './account.module.css';
 import a from '../cart/addaddr.module.css';
 
-const KINDS: ErrorKind[] = ['offline', 'e401', 'e403', 'e404', 'e500', 'e503', 'e504'];
+const KINDS: ErrorKind[] = [
+  'offline',
+  'e401',
+  'e403',
+  'e404',
+  'e500',
+  'e503',
+  'e504',
+  'maintenance',
+  'update',
+];
 const MAPS: { id: MapId; title: string }[] = [
   { id: 'neshan', title: 'نشان' },
   { id: 'balad', title: 'بلد' },

@@ -158,6 +158,29 @@ test('server 503 (after retries) → e503 ErrorPage; retry goes back and reloads
   await expect(visible(page).getByRole('heading', { name: 'نزدیک شما' })).toBeVisible();
 });
 
+test('app config maintenance → maintenance page at startup; back cannot skip it', async ({ page }) => {
+  await page.addInitScript(() => localStorage.setItem('dk-mock-config', '{"maintenance":true}'));
+  await page.goto('/');
+  await expect(page.getByRole('heading', { name: 'دکون در حال به‌روزرسانی است' })).toBeVisible({
+    timeout: 10_000,
+  });
+  await page.goBack();
+  await expect(page.getByRole('heading', { name: 'دکون در حال به‌روزرسانی است' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'نزدیک شما' })).toHaveCount(0);
+});
+
+test('app older than config minVersion → forced update page; back cannot skip it', async ({ page }) => {
+  await page.addInitScript(() => localStorage.setItem('dk-mock-config', '{"minVersion":"99.0.0"}'));
+  await page.goto('/');
+  await expect(page.getByRole('heading', { name: 'نسخه‌ی جدید دکون آماده است' })).toBeVisible({
+    timeout: 10_000,
+  });
+  await expect(page.getByRole('button', { name: 'به‌روزرسانی' })).toBeVisible();
+  await page.goBack();
+  await expect(page.getByRole('heading', { name: 'نسخه‌ی جدید دکون آماده است' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'نزدیک شما' })).toHaveCount(0);
+});
+
 test('every ErrorPage kind renders from the dev preview', async ({ page }) => {
   await openHome(page);
   await page.getByRole('button', { name: 'حساب' }).click();
