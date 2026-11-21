@@ -1,0 +1,444 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>اپ پیک دکون (تبلت)</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:300;font-display:swap;src:url(/_blob/15b2679c8bfbb2516de3b480f9ed0bc5) format('truetype')}
+@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:400;font-display:swap;src:url(/_blob/6259b89db67d4999e322333ec185b1d2) format('truetype')}
+@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:500;font-display:swap;src:url(/_blob/069abf44dcbbfd0bfaeabfacfae55286) format('truetype')}
+@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:700;font-display:swap;src:url(/_blob/2c986bbf39699216ea3d18c33a6fd79e) format('truetype')}
+@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:800;font-display:swap;src:url(/_blob/92c5107a23f687f46f7f419a6489f113) format('truetype')}
+.app{--bg:#FBF0E6;--sf:#FFFFFF;--ink:#1F1A17;--mu:#7A6E66;--ln:#F0DFD0;--soft:#FCE3D0;--pr2:#C2410C;--okbg:#FCE3D0;--hd:#1F1A17;--logo1:#fff;--logo2:#FFF3EA}
+.app.dk{--bg:#17120F;--sf:#241C17;--ink:#F6EEE8;--mu:#B3A59B;--ln:#3A2E27;--soft:#3B2117;--pr2:#FF8A5C;--okbg:#3B2117;--hd:#0D0907;--logo1:#fff;--logo2:#FFF3EA;color-scheme:dark}
+.app{font-family:'Yekan Bakh',Tahoma,sans-serif;color:var(--ink,#1F1A17);background:var(--bg,#FBF0E6);position:relative;overflow:hidden;width:100%;max-width:430px;margin:0 auto;height:100%;min-height:844px;font-size:14px;line-height:1.7}
+.app.wide{max-width:none;min-height:768px}
+.app *{box-sizing:border-box}
+.app button{font-family:inherit}
+@keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+@keyframes float{0%,100%{transform:translateY(0) rotate(-6deg)}50%{transform:translateY(-8px) rotate(-2deg)}}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.18)}}
+@keyframes pop{0%{transform:scale(.92)}60%{transform:scale(1.07)}100%{transform:scale(1)}}
+@keyframes glow{0%,100%{box-shadow:0 8px 24px rgba(228,80,30,.25),0 0 0 0 rgba(228,80,30,.35)}50%{box-shadow:0 8px 24px rgba(228,80,30,.25),0 0 0 12px rgba(228,80,30,0)}}
+@keyframes slideU{from{transform:translateY(100%)}to{transform:none}}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+@keyframes spin{to{transform:rotate(360deg)}}
+.ent{animation:rise .6s cubic-bezier(.2,.8,.2,1) both}
+.d1{animation-delay:.1s}.d2{animation-delay:.2s}.d3{animation-delay:.3s}.d4{animation-delay:.4s}
+html,body{height:100%}body{margin:0;background:#EADBCB}
+.sc{position:absolute;inset:0;display:flex;flex-direction:column;overflow:hidden;background:var(--bg,#FBF0E6)}
+.bd{flex:1;min-height:0;overflow-y:auto;overflow-x:hidden;padding-bottom:16px}
+.pad{padding:0 16px}
+.stk{display:flex;flex-direction:column;gap:12px;padding:12px 16px 16px}
+.sh{margin:16px 16px 4px;font-size:16px;font-weight:800;line-height:1.5}
+.sp{height:12px}
+.shell{position:absolute;inset:0;display:flex;flex-direction:column}
+.app.wide .shell{flex-direction:row}
+.mn{flex:1;min-width:0;min-height:0;display:flex;flex-direction:column;position:relative}
+.rl{flex:none;display:none}.app.wide .rl{display:block;height:100%}
+.bn{flex:none}.app.wide .bn{display:none}
+.split{flex:1;min-height:0;display:flex;gap:16px;padding:0 16px 16px}
+.lst{flex:1.1;min-width:0;overflow-y:auto;display:flex;flex-direction:column;gap:12px;padding:4px 0 16px}
+.dtl{flex:1;min-width:0;overflow-y:auto;padding:4px 0 16px}
+.col{display:flex;flex-direction:column;gap:12px}
+.app.wide .gr2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.app.wide .cen{max-width:720px;margin:0 auto;width:100%}
+.stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.app.wide .stats{grid-template-columns:repeat(4,minmax(0,1fr))}
+.demo{margin:0 16px 4px;height:40px;padding:0 16px;border:2px dashed var(--ln,#F0DFD0);border-radius:999px;background:none;color:var(--mu,#7A6E66);font-size:12px;font-weight:700;cursor:pointer;align-self:flex-start}
+.demo:focus-visible,.lk:focus-visible,.stp button:focus-visible{outline:3px solid #E4501E;outline-offset:2px}
+.nt{margin:0 16px;padding:12px 16px;border-radius:20px;background:var(--soft,#FCE3D0);color:var(--pr2,#C2410C);font-size:14px;font-weight:700;line-height:1.8}
+.nt.w{background:#FFF3D6;color:#7A4E00}.dk .nt.w{background:#3A2C0B;color:#F5B32F}
+.dockw{flex:none;animation:rise .6s cubic-bezier(.2,.8,.2,1) both}
+.scr{position:absolute;inset:0;background:rgba(31,26,23,.52);animation:fade .35s ease-out both;z-index:20}
+.sheet{position:absolute;left:0;right:0;bottom:0;z-index:30;animation:slideU .35s cubic-bezier(.2,.8,.2,1) both}
+.dlg{position:absolute;left:16px;right:16px;top:50%;transform:translateY(-50%);z-index:40;animation:pop .35s ease-out both}
+.alr{position:absolute;inset:0;z-index:25;animation:fade .3s ease-out both}
+.tst{position:absolute;left:16px;right:16px;bottom:96px;z-index:50}
+.app.wide .tst{left:auto;right:auto;width:360px;inset-inline-start:128px}
+.lg{position:absolute;inset:0;display:flex;flex-direction:column;background:var(--bg,#FBF0E6);overflow-y:auto}
+.lgh{flex:none;background:linear-gradient(160deg,#8B2313,#C2410C 55%,#E4501E);border-radius:0 0 40px 40px;padding:48px 24px 48px;display:flex;flex-direction:column;align-items:center;gap:16px;color:#F6EEE8;text-align:center;--logo1:#fff;--logo2:#F6EEE8}
+.lgh svg.l{width:180px;height:auto}
+.lgh .tg{height:28px;padding:0 16px;border-radius:999px;background:#1F1A17;color:#fff;font-size:14px;font-weight:800;line-height:28px}
+.lgh p{margin:0;font-size:14px;line-height:1.8;color:#FFE9DA}
+.lgh .art{width:96px;height:96px;filter:drop-shadow(0 12px 12px rgba(0,0,0,.4));animation:float 4.5s ease-in-out infinite}
+.lgb{flex:1;padding:24px 16px 24px;display:flex;flex-direction:column;gap:16px;width:100%;max-width:480px;margin:0 auto}
+.lgb h2{margin:0;font-size:20px;font-weight:800}
+.btn{height:56px;border:0;border-radius:999px;background:#E4501E;color:#fff;font-size:16px;font-weight:800;cursor:pointer;box-shadow:0 8px 24px rgba(228,80,30,.25);transition:transform .2s ease-out}
+.btn:hover{transform:scale(1.02)}.btn:disabled{background:var(--ln,#F0DFD0);color:var(--mu,#7A6E66);box-shadow:none;cursor:not-allowed;transform:none}
+.btn:focus-visible{outline:3px solid #1F1A17;outline-offset:2px}
+.lk{border:0;background:none;color:var(--pr2,#C2410C);font-size:15px;font-weight:700;height:48px;cursor:pointer}
+.stp{background:var(--sf,#fff);border-radius:20px;padding:12px 16px;display:flex;align-items:center;gap:12px;box-shadow:0 4px 16px rgba(31,26,23,.06)}
+.stp span{flex:1;font-size:15px;font-weight:700}
+.stp button{width:48px;height:48px;border:0;border-radius:50%;background:var(--soft,#FCE3D0);color:var(--pr2,#C2410C);font-size:24px;font-weight:800;cursor:pointer;padding:0}
+.stp output{min-width:72px;text-align:center;font-size:16px;font-weight:800}
+.chs{display:flex;gap:8px;flex-wrap:wrap}
+.acc{background:var(--sf,#fff);border-radius:28px;padding:16px;box-shadow:0 4px 16px rgba(31,26,23,.06);display:flex;gap:12px;align-items:center;margin:12px 16px 0}
+.acc .av{width:56px;height:56px;border-radius:50%;background:var(--soft,#FCE3D0);flex:none;display:grid;place-items:center}.acc .av svg{width:44px;height:44px}
+.acc h3{margin:0;font-size:16px;font-weight:800;line-height:1.5}.acc p{margin:0;font-size:12px;color:var(--mu,#7A6E66)}
+.two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.rowa{display:flex;gap:8px}
+.rowa .btn{flex:1;height:52px;font-size:14px}.rowa .btn.o{background:var(--sf,#fff);color:var(--ink,#1F1A17);border:2px solid var(--ln,#F0DFD0);box-shadow:none}
+.mask{background:var(--sf,#fff);border-radius:20px;padding:12px 16px;display:flex;flex-direction:column;gap:4px;box-shadow:0 4px 16px rgba(31,26,23,.06)}
+.mask small{font-size:12px;color:var(--mu,#7A6E66);line-height:1.7}.mask b{font-size:16px;letter-spacing:.5px}
+.catrow{display:flex;align-items:flex-start;gap:8px}.catrow>*:first-child{flex:1;min-width:0}.catrow .lk{margin-top:28px}
+.ld{display:flex;justify-content:center;padding:48px}.ld i{width:40px;height:40px;border:4px solid var(--ln,#F0DFD0);border-top-color:#E4501E;border-radius:50%;animation:spin 1s linear infinite}
+@media(prefers-reduced-motion:reduce){.app *,.app *::after,.app *::before{animation:none!important;transition:none!important}}
+
+.bnr{width:100%;border:0;text-align:right;font-family:inherit;background:var(--sf,#fff);color:var(--ink,#1F1A17);border-radius:28px;padding:16px;box-shadow:0 4px 16px rgba(31,26,23,.06);border:2px solid #E4501E;display:flex;align-items:center;gap:12px;cursor:pointer;min-height:80px}
+.bnr:focus-visible{outline:3px solid #1F1A17;outline-offset:2px}
+.bnr .ic{width:48px;height:48px;border-radius:50%;background:#E4501E;color:#fff;display:grid;place-items:center;flex:none;animation:glow 2.6s ease-in-out infinite}
+.bnr .ic svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.bnr div{flex:1;min-width:0}.bnr small{display:block;font-size:12px;color:var(--pr2,#C2410C);font-weight:800}.bnr b{font-size:16px;font-weight:800;line-height:1.5}
+.bnr .go{font-size:14px;font-weight:800;color:var(--pr2,#C2410C);flex:none}
+.trk{margin:0 16px;font-size:12px;color:var(--mu,#7A6E66);line-height:1.8;text-align:center}
+.act{display:flex;flex-direction:column;gap:8px}
+.mn .bd{padding-top:4px}
+.alr{background:#8B2313}
+
+.ckb{position:absolute;left:16px;right:16px;bottom:16px;z-index:35;max-width:480px;margin:0 auto;background:var(--sf,#fff);color:var(--ink,#1F1A17);border-radius:28px;padding:16px;box-shadow:0 12px 32px rgba(31,26,23,.25);display:flex;flex-direction:column;gap:8px}
+.ckb b{font-size:16px;font-weight:800}.ckb p{margin:0;font-size:14px;line-height:1.8;color:var(--mu,#7A6E66)}
+.ckb .lk{height:40px}
+.app.wide .rl{display:block;height:100%}
+.app.wide .tk{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-items:start;max-width:960px}
+.app.wide .tk>*:first-child{grid-column:1/-1}
+.app.wide .sheet{left:0;right:0;max-width:520px;margin:0 auto}
+.app.wide .dlg{max-width:480px;margin:0 auto}
+.app.wide .alr>*{max-width:560px;margin:0 auto}
+.app.wide .lgb{max-width:520px}
+.app.wide .dockw{max-width:720px;width:100%;margin:0 auto}
+@media(max-width:360px){.app .two{grid-template-columns:1fr}}
+</style>
+</helmet>
+<div class="app {{ appCls }}" dir="rtl" lang="fa">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<linearGradient id="gBun" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F9BE5C"></stop><stop offset="1" stop-color="#C77A24"></stop></linearGradient>
+<linearGradient id="gBun2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#EBA640"></stop><stop offset="1" stop-color="#B5651A"></stop></linearGradient>
+<linearGradient id="gLet" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8ACB4B"></stop><stop offset="1" stop-color="#3F8A25"></stop></linearGradient>
+<linearGradient id="gChe" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFDA5A"></stop><stop offset="1" stop-color="#EFA21A"></stop></linearGradient>
+<linearGradient id="gPat" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7A4228"></stop><stop offset="1" stop-color="#3A1D10"></stop></linearGradient>
+<linearGradient id="gTom" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F25C40"></stop><stop offset="1" stop-color="#B0221A"></stop></linearGradient>
+<radialGradient id="gCh2" cx=".5" cy=".4" r=".7"><stop offset="0" stop-color="#FFE79C"></stop><stop offset="1" stop-color="#F0A92E"></stop></radialGradient>
+<linearGradient id="gCr" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F7D18C"></stop><stop offset="1" stop-color="#C9863A"></stop></linearGradient>
+<radialGradient id="gMeat" cx=".35" cy=".3" r=".9"><stop offset="0" stop-color="#C45A35"></stop><stop offset="1" stop-color="#5A2411"></stop></radialGradient>
+<linearGradient id="gCup" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFFFFF"></stop><stop offset="1" stop-color="#E3D6C9"></stop></linearGradient>
+<radialGradient id="gCof" cx=".4" cy=".4" r=".8"><stop offset="0" stop-color="#7A4D35"></stop><stop offset="1" stop-color="#2E1A10"></stop></radialGradient>
+<linearGradient id="gSp" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFEBB9"></stop><stop offset="1" stop-color="#EDBB62"></stop></linearGradient>
+<linearGradient id="gCr2" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#FFE3EC"></stop><stop offset="1" stop-color="#FFB9CF"></stop></linearGradient>
+<radialGradient id="gStr" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#FF6A4D"></stop><stop offset="1" stop-color="#B01E1E"></stop></radialGradient>
+<symbol id="dk-burger" viewBox="0 0 100 100"><ellipse cx="50" cy="93" rx="38" ry="5" fill="#000" opacity=".16"></ellipse><path d="M50 91c-28 0-38-2-38-14h76c0 12-10 14-38 14z" fill="url(#gBun2)"></path><rect x="11" y="64" width="78" height="9" rx="4.5" fill="url(#gTom)"></rect><rect x="10" y="52" width="80" height="14" rx="7" fill="url(#gPat)"></rect><path d="M10 51l8 9 10-8 10 9 12-9 12 9 10-8 8 8V48H10z" fill="url(#gChe)"></path><path d="M8 45q5 8 11 1t11 1 11-1 11 1 11-1 11 1 8-1v5H8z" fill="url(#gLet)"></path><path d="M12 45C12 25 28 12 50 12s38 13 38 33z" fill="url(#gBun)"></path><path d="M22 31C26 23 36 18 48 17" stroke="#fff" stroke-opacity=".55" stroke-width="3.5" fill="none" stroke-linecap="round"></path><g fill="#FFF3D2"><ellipse cx="38" cy="26" rx="3" ry="1.6" transform="rotate(-25 38 26)"></ellipse><ellipse cx="52" cy="22" rx="3" ry="1.6" transform="rotate(10 52 22)"></ellipse><ellipse cx="66" cy="28" rx="3" ry="1.6" transform="rotate(30 66 28)"></ellipse><ellipse cx="58" cy="35" rx="3" ry="1.6"></ellipse><ellipse cx="44" cy="35" rx="3" ry="1.6" transform="rotate(-15 44 35)"></ellipse><ellipse cx="74" cy="38" rx="3" ry="1.6" transform="rotate(40 74 38)"></ellipse></g></symbol>
+<symbol id="dk-pizza" viewBox="0 0 100 100"><ellipse cx="52" cy="94" rx="24" ry="4" fill="#000" opacity=".16"></ellipse><path d="M50 92L8 26Q50 8 92 26z" fill="url(#gCh2)"></path><path d="M6 24Q50 3 94 24L90 35Q50 17 10 35z" fill="url(#gCr)"></path><path d="M12 28Q50 10 88 28" stroke="#fff" stroke-opacity=".5" stroke-width="2.5" fill="none" stroke-linecap="round"></path><circle cx="38" cy="47" r="8.5" fill="url(#gMeat)"></circle><circle cx="62" cy="45" r="7.5" fill="url(#gMeat)"></circle><circle cx="50" cy="68" r="7" fill="url(#gMeat)"></circle><g fill="#fff" opacity=".4"><circle cx="35" cy="44" r="2"></circle><circle cx="59" cy="42" r="2"></circle><circle cx="47" cy="65" r="1.8"></circle></g><path d="M48 52q8-8 14 0-6 6-14 0zM30 62q6-6 11 0-5 5-11 0z" fill="url(#gLet)"></path><path d="M44 78q3 10 6 12" stroke="#FFD66B" stroke-width="3" fill="none" stroke-linecap="round"></path></symbol>
+<symbol id="dk-kebab" viewBox="0 0 100 100"><ellipse cx="50" cy="90" rx="38" ry="4" fill="#000" opacity=".14"></ellipse><g transform="rotate(-26 50 50)"><rect x="1" y="48" width="98" height="3.6" rx="1.8" fill="#C9CED6"></rect><circle cx="96" cy="49.8" r="3.4" fill="#9AA1AB"></circle><rect x="8" y="31" width="21" height="38" rx="10" fill="url(#gMeat)"></rect><rect x="31" y="35" width="13" height="30" rx="6" fill="url(#gLet)"></rect><rect x="46" y="31" width="21" height="38" rx="10" fill="url(#gMeat)"></rect><rect x="69" y="35" width="13" height="30" rx="6.5" fill="url(#gTom)"></rect><g stroke="#fff" stroke-opacity=".45" stroke-width="2.4" stroke-linecap="round"><path d="M13 38v10M51 38v10M35 40v8M73 40v8"></path></g><g stroke="#2A1208" stroke-opacity=".5" stroke-width="2" stroke-linecap="round"><path d="M18 56v7M24 55v8M56 56v7M62 55v8"></path></g></g></symbol>
+<symbol id="dk-cafe" viewBox="0 0 100 100"><ellipse cx="50" cy="88" rx="40" ry="7" fill="url(#gCup)"></ellipse><ellipse cx="50" cy="90" rx="40" ry="5" fill="#000" opacity=".1"></ellipse><path d="M72 52h5a8.5 8.5 0 0 1 0 17H70" stroke="#E4D8CC" stroke-width="5.5" fill="none" stroke-linecap="round"></path><path d="M24 46h52v16c0 14-11 24-26 24S24 76 24 62z" fill="url(#gCup)"></path><ellipse cx="50" cy="46" rx="26" ry="7" fill="#F0E6DB"></ellipse><ellipse cx="50" cy="47" rx="22" ry="5" fill="url(#gCof)"></ellipse><path d="M34 46q8 3 18 0" stroke="#C99A72" stroke-width="1.6" fill="none" opacity=".7"></path><path d="M30 56v12" stroke="#fff" stroke-width="3" stroke-linecap="round" opacity=".8"></path></symbol>
+<symbol id="dk-cake" viewBox="0 0 100 100"><ellipse cx="50" cy="90" rx="42" ry="5" fill="#000" opacity=".14"></ellipse><path d="M10 58h64v28H10z" fill="url(#gSp)"></path><path d="M10 68h64v5H10z" fill="#FFFFFF"></path><path d="M10 74h64v4H10z" fill="#C8281E" opacity=".85"></path><path d="M10 58l22-18h66L74 58z" fill="url(#gCr2)"></path><path d="M74 58l24-18v28L74 86z" fill="#E7B060"></path><path d="M10 58h64v6q-6 6-12 0t-12 0-12 0-12 0-8 0z" fill="#fff"></path><ellipse cx="52" cy="38" rx="9" ry="10" fill="url(#gStr)"></ellipse><path d="M45 31q7-5 14 0-7 3-14 0z" fill="url(#gLet)"></path><g fill="#FFE9A8"><circle cx="49" cy="38" r="1"></circle><circle cx="55" cy="36" r="1"></circle><circle cx="52" cy="43" r="1"></circle></g></symbol>
+<symbol id="dk-all" viewBox="0 0 100 100"><ellipse cx="50" cy="90" rx="42" ry="5" fill="#000" opacity=".14"></ellipse><ellipse cx="50" cy="64" rx="44" ry="26" fill="url(#gCup)"></ellipse><ellipse cx="50" cy="62" rx="32" ry="18" fill="#F7EFE7" stroke="#E1D4C6" stroke-width="2"></ellipse><use href="#dk-burger" x="26" y="22" width="48" height="48"></use></symbol>
+<linearGradient id="gN" x1="126.54" y1="251.16" x2="126.54" y2="0" gradientUnits="userSpaceOnUse"><stop offset=".01" style="stop-color:var(--logo1,#172b50)"></stop><stop offset="1" style="stop-color:var(--logo2,#0f1b35)"></stop></linearGradient><linearGradient id="gO" x1="124.91" y1="251.16" x2="124.91" y2="61.89" gradientUnits="userSpaceOnUse"><stop offset=".01" stop-color="#f36b00"></stop><stop offset="1" stop-color="#ff9d00"></stop></linearGradient><linearGradient id="gW" x1="0" y1="172.27" x2="0" y2="78.89" gradientUnits="userSpaceOnUse"><stop offset=".01" style="stop-color:var(--logo1,#172b50)"></stop><stop offset="1" style="stop-color:var(--logo2,#0f1b35)"></stop></linearGradient><linearGradient id="gOA" x1="0" y1="123.3" x2="0" y2="78.89" gradientUnits="userSpaceOnUse"><stop offset=".01" stop-color="#f36b00"></stop><stop offset="1" stop-color="#ff9d00"></stop></linearGradient><symbol id="dk-mark" viewBox="0 0 253.08 251.16"><path fill="url(#gN)" d="M253.08,86.93v77.3c0,19.64-6.3,37.76-16.94,52.3-4.04,5.52-8.68,10.53-13.85,14.89-14.53,12.33-33.13,19.74-53.41,19.74h-78.81v-34.63c0,1.98,56.55-.8,61.88-1.75,20.39-3.65,38.48-13.8,51.58-30.49,23.68-30.16,25.56-78.32,4.81-110.64-5.8-9.04-13.22-16.96-21.81-23.2-15.05-10.95-33.83-14.53-51.93-16.09-19.33-1.67-41.56-.94-59.87,6.33-7.89,3.21-15.19,7.95-21.42,13.89-12.68,12.07-20.62,28.9-21.96,46.65-.14,1.86-.21,3.72-.21,5.58v67.48c0,7.11,0,14.21,0,21.32,0,6.73,1.42,13.46-.55,19.96-1.97,6.5-5.58,12.41-10,17.44-5.25,5.98-12.75,13.03-20.07,16.04-1.07-5.12-.17-11.63-.17-16.94v-111.63c0-14.65,0-29.3,0-43.95,0-.03,0-.07,0-.1,0-15.43,4.43-29.79,12.06-41.81,4.99-7.88,11.36-14.74,18.73-20.24C43.31,5.34,58.25,0,74.39,0h94.48c20.27,0,38.88,7.4,53.41,19.72,19.37,16.39,30.79,41.36,30.79,67.21Z"></path><path fill="url(#gO)" d="M193.98,107.42c0,13.12,1.1,26.82-.02,39.84-.83-13.16-6.6-25.37-16.08-34.22-5.52-5.15-11.79-9.36-18.51-12.64-7.97-3.89-16.74-5.97-25.56-5.97-2.45,0-4.87.15-7.25.44-7.53.94-14.65,3.32-21.06,6.85-12.23,6.76-21.93,17.73-27.28,31.05-2.94,7.31-4.56,15.33-4.56,23.75v94.63h-18.29V98.39c0-13.82,7.38-25.87,18.29-32.16,3.82-2.22,8.08-3.72,12.61-4.34h68.64c22.02,2.72,39.07,22.07,39.07,45.52Z"></path></symbol><symbol id="dk-logo" viewBox="0 0 902.92 251.16"><use href="#dk-mark" width="253.08" height="251.16"></use><path fill="url(#gW)" d="M423.97,100.16c-8.32-12.8-22.76-21.26-39.17-21.26h-42.74c-1.57,0-2.85,1.28-2.85,2.85v90.52h45.59c16.41,0,30.85-8.46,39.17-21.27,4.76-7.31,7.53-16.04,7.53-25.42s-2.77-18.1-7.53-25.42ZM390.14,150.93c-2.53.27-5.15.06-7.65.06h-17.31c-.24,0-4.46,0-4.46,0v-50.84h23.48c14.18,0,26.14,11.23,26.3,25.41.09,7.89-3.54,15.5-9.71,20.41-2.34,1.86-5.01,3.56-7.93,4.42-.89.26-1.8.43-2.72.53Z"></path><path fill="url(#gW)" d="M525.73,100.16c-8.31-12.48-22.52-20.71-38.64-20.71s-30.33,8.22-38.64,20.71c-4.9,7.36-7.76,16.2-7.76,25.71s2.72,17.89,7.39,25.13c8.26,12.8,22.65,21.27,39.01,21.27s30.75-8.47,39.01-21.27c4.67-7.24,7.39-15.86,7.39-25.13s-2.86-18.34-7.76-25.71ZM492.43,151c-1.72.37-3.51.56-5.34.56s-3.62-.19-5.34-.56c-11.63-2.45-20.36-12.77-20.36-25.13,0-14.2,11.51-25.71,25.71-25.71s25.71,11.51,25.71,25.71c0,12.36-8.73,22.68-20.36,25.13Z"></path><path fill="url(#gW)" d="M629.51,172.27h-29.07l-19.35-21.27-5.21-5.73-10.8-11.87v38.88h-21.51v-91.01c0-1.3,1.06-2.36,2.36-2.36h19.15v45.29l9.6-12.21,9.31-11.82,16.73-21.26h27.37l-16.73,21.26-22,27.97,20.79,22.87,19.35,21.27Z"></path><path fill="url(#gW)" d="M705.57,100.16c-8.31-12.48-22.52-20.71-38.64-20.71s-30.33,8.22-38.64,20.71c-4.9,7.36-7.76,16.2-7.76,25.71s2.72,17.89,7.39,25.13c8.26,12.8,22.65,21.27,39.01,21.27s30.75-8.47,39.01-21.27c4.67-7.24,7.39-15.86,7.39-25.13s-2.86-18.34-7.76-25.71ZM672.27,151c-1.72.37-3.51.56-5.34.56s-3.62-.19-5.34-.56c-11.63-2.45-20.36-12.77-20.36-25.13,0-14.2,11.51-25.71,25.71-25.71s25.71,11.51,25.71,25.71c0,12.36-8.73,22.68-20.36,25.13Z"></path><path fill="url(#gW)" d="M805.4,100.16c-8.31-12.48-22.52-20.71-38.64-20.71s-30.33,8.22-38.65,20.71c-4.9,7.36-7.76,16.2-7.76,25.71s2.72,17.89,7.39,25.13c8.27,12.8,22.66,21.27,39.02,21.27s30.75-8.47,39.01-21.27c4.67-7.24,7.39-15.86,7.39-25.13s-2.86-18.34-7.76-25.71ZM772.11,151c-1.72.37-3.51.56-5.34.56s-3.62-.19-5.34-.56c-11.63-2.45-20.36-12.77-20.36-25.13,0-14.2,11.51-25.71,25.71-25.71s25.7,11.51,25.7,25.71c0,12.36-8.73,22.68-20.35,25.13Z"></path><path fill="url(#gW)" d="M902.66,154.86v17.41h-5.66c-2.63,0-5.13-1.14-6.85-3.13l-15.69-18.14-30.4-35.15v56.42h-21.5v-90.81c0-1.42,1.15-2.56,2.56-2.56h12.47c1.88,0,3.67.82,4.9,2.24l1.58,1.82,14.88,17.2,40.98,47.39c1.76,2.03,2.72,4.63,2.72,7.31Z"></path><path fill="url(#gOA)" d="M902.66,84.55v38.75l-20.01-23.14-18.39-21.26h32.74c3.13,0,5.66,2.53,5.66,5.66Z"></path><line x1="295.15" y1="61.39" x2="295.15" y2="189.77" stroke="#101d38" stroke-width="2"></line></symbol><radialGradient id="gRice" cx=".4" cy=".3" r=".9"><stop offset="0" stop-color="#FFFFFF"></stop><stop offset="1" stop-color="#EBDDBE"></stop></radialGradient><symbol id="dk-rice" viewBox="0 0 100 100"><ellipse cx="50" cy="90" rx="42" ry="5" fill="#000" opacity=".14"></ellipse><ellipse cx="50" cy="70" rx="44" ry="22" fill="url(#gCup)"></ellipse><ellipse cx="50" cy="67" rx="32" ry="14" fill="#F7EFE7" stroke="#E1D4C6" stroke-width="2"></ellipse><path d="M20 66Q22 28 50 26Q78 28 80 66Q50 80 20 66z" fill="url(#gRice)"></path><g fill="#FFD25E" opacity=".9"><ellipse cx="38" cy="46" rx="6" ry="3"></ellipse><ellipse cx="58" cy="42" rx="6" ry="3"></ellipse><ellipse cx="66" cy="54" rx="5" ry="2.6"></ellipse></g><rect x="43" y="24" width="14" height="9" rx="3" fill="#FFE79C"></rect><path d="M30 40Q36 32 46 30" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round" opacity=".8"></path></symbol><symbol id="dk-chelo" viewBox="0 0 100 100"><use href="#dk-rice" width="100" height="100"></use><use href="#dk-kebab" x="6" y="14" width="88" height="84"></use></symbol><symbol id="dk-mix" viewBox="0 0 100 100"><use href="#dk-chelo" x="18" y="0" width="64" height="64"></use><use href="#dk-burger" x="-2" y="40" width="54" height="54"></use><use href="#dk-cafe" x="46" y="42" width="54" height="54"></use></symbol><radialGradient id="gStew" cx=".4" cy=".4" r=".8"><stop offset="0" stop-color="#6B8A32"/><stop offset="1" stop-color="#2C3F14"/></radialGradient><linearGradient id="gCola" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8A4620"/><stop offset="1" stop-color="#2A1208"/></linearGradient><symbol id="dk-stew" viewBox="0 0 100 100"><ellipse cx="50" cy="90" rx="40" ry="5" fill="#000" opacity=".14"/><path d="M10 48h80c0 26-17 42-40 42S10 74 10 48z" fill="url(#gCup)"/><ellipse cx="50" cy="48" rx="40" ry="11" fill="#EFE3D6"/><ellipse cx="50" cy="49" rx="35" ry="8.5" fill="url(#gStew)"/><g fill="url(#gMeat)"><circle cx="38" cy="48" r="5.5"/><circle cx="58" cy="51" r="5"/><circle cx="48" cy="54" r="4"/></g><g fill="#9BC24A"><ellipse cx="30" cy="51" rx="4" ry="1.8"/><ellipse cx="66" cy="47" rx="4" ry="1.8"/><ellipse cx="50" cy="45" rx="3.5" ry="1.6"/></g><path d="M22 62q28 16 56 0" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round" opacity=".6"/></symbol><symbol id="dk-salad" viewBox="0 0 100 100"><ellipse cx="50" cy="90" rx="40" ry="5" fill="#000" opacity=".14"/><path d="M10 54h80c0 22-17 36-40 36S10 76 10 54z" fill="url(#gCup)"/><path d="M12 54Q14 32 30 34 36 20 52 22 68 20 74 34 88 34 88 54z" fill="url(#gLet)"/><circle cx="36" cy="42" r="8" fill="url(#gTom)"/><circle cx="62" cy="40" r="7" fill="url(#gTom)"/><circle cx="50" cy="48" r="6" fill="url(#gTom)"/><g fill="#C6E88A" stroke="#6FA83A" stroke-width="1.5"><circle cx="26" cy="48" r="5"/><circle cx="73" cy="48" r="5"/><circle cx="48" cy="34" r="4.5"/></g><path d="M20 44q4-6 10-6" stroke="#fff" stroke-width="2.4" fill="none" stroke-linecap="round" opacity=".6"/></symbol><symbol id="dk-drink" viewBox="0 0 100 100"><ellipse cx="50" cy="92" rx="26" ry="4" fill="#000" opacity=".16"/><path d="M56 26l12-20" stroke="#E4501E" stroke-width="5" stroke-linecap="round"/><path d="M28 22h44l-5 66a4 4 0 0 1-4 4H37a4 4 0 0 1-4-4z" fill="url(#gCola)"/><path d="M28 22h44l-.8 10H28.8z" fill="#E9C9A0"/><g fill="#fff" opacity=".3"><rect x="36" y="42" width="16" height="14" rx="4" transform="rotate(-10 44 49)"/><rect x="52" y="56" width="14" height="14" rx="4" transform="rotate(12 59 63)"/></g><path d="M35 34l4 50" stroke="#fff" stroke-width="3" stroke-linecap="round" opacity=".45"/></symbol><symbol id="dk-fries" viewBox="0 0 100 100"><ellipse cx="50" cy="92" rx="30" ry="4" fill="#000" opacity=".16"/><g fill="#FFC93C" stroke="#E5A416" stroke-width="1"><rect x="28" y="14" width="9" height="42" rx="3" transform="rotate(-12 32 35)"/><rect x="38" y="8" width="9" height="46" rx="3"/><rect x="49" y="12" width="9" height="44" rx="3" transform="rotate(6 53 34)"/><rect x="60" y="16" width="9" height="40" rx="3" transform="rotate(14 64 36)"/></g><path d="M24 48h52l-6 42H30z" fill="url(#gTom)"/><ellipse cx="50" cy="68" rx="11" ry="9" fill="#fff" opacity=".9"/><path d="M24 48h52" stroke="#8E1A12" stroke-width="3"/></symbol></defs></svg>
+<sc-if value="{{ isLogin }}" hint-placeholder-val="{{ true }}">
+<div class="lg"><div class="lgh"><svg class="l" viewBox="0 0 902.92 251.16" role="img" aria-label="دکون Dokoon"><use href="#dk-logo"></use></svg><span class="tg">اپ پیک</span><svg class="art" viewBox="0 0 100 100" aria-hidden="true"><use href="#dk-fries"></use></svg><p>سفارش بگیر، تحویل بده، درآمدت را همان روز ببین.</p></div>
+<div class="lgb ent d1">
+<sc-if value="{{ isPhoneStep }}" hint-placeholder-val="{{ true }}"><h2>ورود به اپ پیک</h2><dc-import name="TextField" label="شماره‌ی موبایل" value="{{ fm.phone }}" placeholder="۰۹۱۲ ۳۴۵ ۶۷۸۹" inputmode="numeric" ltr="{{ true }}" error="{{ phoneErr }}" hint="کد تأیید برای همین شماره پیامک می‌شود." on-input="{{ inPhone }}" hint-size="100%,96px"></dc-import><button class="btn" disabled="{{ phoneOff }}" onClick="{{ sendOtp }}">دریافت کد تأیید</button><button class="lk" onClick="{{ toReg }}">پیک جدید هستم، ثبت‌نام می‌کنم</button></sc-if>
+<sc-if value="{{ isOtpStep }}" hint-placeholder-val="{{ false }}"><h2>کد تأیید را وارد کنید</h2><dc-import name="TextField" label="کد ۴ رقمی" value="{{ fm.otp }}" placeholder="۱۲۳۴" inputmode="numeric" ltr="{{ true }}" error="" hint="{{ otpHint }}" on-input="{{ inOtp }}" hint-size="100%,96px"></dc-import><button class="btn" disabled="{{ otpOff }}" onClick="{{ doLogin }}">ورود</button><button class="lk" onClick="{{ editPhone }}">ویرایش شماره</button></sc-if>
+</div></div>
+</sc-if>
+
+<sc-if value="{{ isReg }}" hint-placeholder-val="{{ false }}">
+<div class="sc"><dc-import name="TopBar" title="ثبت‌نام پیک" on-back="{{ back }}" hint-size="100%,80px"></dc-import>
+<div class="bd"><div class="stk cen"><dc-import name="WizardBar" steps="{{ wizSteps }}" hint-size="100%,80px"></dc-import>
+<sc-if value="{{ regStep1 }}" hint-placeholder-val="{{ true }}"><dc-import name="TextField" label="نام و نام خانوادگی" value="{{ fm.name }}" placeholder="مثلاً مهدی کریمی" on-input="{{ inName }}" hint-size="100%,96px"></dc-import><dc-import name="TextField" label="کد ملی" value="{{ fm.nid }}" placeholder="۱۰ رقم" inputmode="numeric" ltr="{{ true }}" on-input="{{ inNid }}" hint-size="100%,96px"></dc-import><dc-import name="TextField" label="پلاک موتورسیکلت" value="{{ fm.plate }}" placeholder="مثلاً ۱۲ ۳۴۵ ۶۷" ltr="{{ true }}" on-input="{{ inPlate }}" hint-size="100%,96px"></dc-import></sc-if>
+<sc-if value="{{ regStep2 }}" hint-placeholder-val="{{ false }}"><p class="nt">این مدارک را بارگذاری کنید. عکس‌ها باید واضح و کامل باشد.</p><div class="two"><sc-for list="{{ docList }}" as="x" hint-placeholder-count="3"><dc-import name="UploadTile" label="{{ x.label }}" sub="{{ x.sub }}" d="{{ x.d }}" done="{{ x.done }}" on-tap="{{ x.tap }}" hint-size="100%,128px"></dc-import></sc-for></div><p class="nt">فهرست مدارک را دکون تعیین می‌کند. اگر بعداً مدرک تازه‌ای لازم شد، برای شما اعلان می‌آید و از «مدارک من» بارگذاری می‌کنید.</p></sc-if>
+<sc-if value="{{ regStep3 }}" hint-placeholder-val="{{ false }}"><dc-import name="TextField" label="شماره‌ی شبا (برای تسویه‌حساب)" value="{{ fm.sheba }}" placeholder="IR…" ltr="{{ true }}" hint="تسویه فقط به حسابی که به نام خودتان است انجام می‌شود." on-input="{{ inSheba }}" hint-size="100%,120px"></dc-import></sc-if>
+<sc-if value="{{ regStep4 }}" hint-placeholder-val="{{ false }}"><dc-import name="EmptyState" art="dk-fries" title="درخواست شما ثبت شد" text="مدیر شهر مدارک را بررسی می‌کند و نتیجه را پیامک می‌کند. معمولاً کمتر از یک روز کاری طول می‌کشد." hint-size="100%,300px"></dc-import></sc-if>
+</div></div>
+<div class="dockw"><dc-import name="ActionBar" label="{{ regCta }}" value-text="" disabled="{{ regOff }}" on-tap="{{ regNext }}" hint-size="100%,88px"></dc-import></div></div>
+</sc-if>
+
+<sc-if value="{{ isPending }}" hint-placeholder-val="{{ false }}">
+<div class="sc"><div class="bd"><div class="stk cen" style="padding-top:72px"><dc-import name="EmptyState" art="dk-fries" title="حساب شما در انتظار تأیید است" text="مدیر شهر در حال بررسی مدارک شماست. بعد از تأیید، پیامک می‌گیرید و می‌توانید آنلاین شوید." hint-size="100%,300px"></dc-import><button class="demo" onClick="{{ approveDemo }}">شبیه‌سازی تأیید مدیر (نمونه)</button><button class="lk" onClick="{{ logout }}">خروج از حساب</button></div></div></div>
+</sc-if>
+
+<sc-if value="{{ isPerm }}" hint-placeholder-val="{{ false }}">
+<div class="sc"><dc-import name="TopBar" title="مجوزهای دستگاه" on-back="{{ back }}" hint-size="100%,80px"></dc-import>
+<div class="bd"><div class="stk cen"><p class="nt">برای دریافت و تحویل سفارش، این سه مجوز لازم است. موقعیت شما فقط وقتی آنلاین هستید یا سفارش دارید ثبت می‌شود.</p>
+<sc-for list="{{ permList }}" as="p" hint-placeholder-count="3"><dc-import name="PermissionCard" perm="{{ p.perm }}" on-grant="{{ p.grant }}" hint-size="100%,168px"></dc-import></sc-for></div></div>
+<sc-if value="{{ permFirst }}" hint-placeholder-val="{{ false }}"><div class="dockw"><dc-import name="ActionBar" label="ادامه" value-text="" disabled="{{ permOff }}" on-tap="{{ permGo }}" hint-size="100%,88px"></dc-import></div></sc-if></div>
+</sc-if>
+
+<sc-if value="{{ isMain }}" hint-placeholder-val="{{ false }}">
+<div class="shell"><div class="rl"><dc-import name="RBottomNav" items="{{ navItems }}" active="{{ navActive }}" rail="{{ true }}" on-pick="{{ navPick }}" hint-size="104px,100%"></dc-import></div><div class="mn">
+
+<sc-if value="{{ isOrders }}" hint-placeholder-val="{{ true }}">
+<dc-import name="CHeader" who="{{ cour.name }}" sub="{{ cour.sub }}" earn="{{ earnToday }}" hint-size="100%,150px"></dc-import>
+<div class="bd"><div class="stk cen ent d1">
+<dc-import name="OnlineSwitch" online="{{ online }}" note="{{ onlineNote }}" on-flip="{{ flipOnline }}" hint-size="100%,120px"></dc-import>
+<sc-if value="{{ hasActive }}" hint-placeholder-val="{{ false }}"><button class="bnr" onClick="{{ openTask }}"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="{{ bikeD }}"></path></svg></span><div><small>سفارش در جریان</small><b>{{ activeRest }} · {{ activeStage }}</b></div><span class="go">ادامه</span></button></sc-if>
+<sc-if value="{{ showOffers }}" hint-placeholder-val="{{ true }}"><h2 class="sh" style="margin:8px 0 0">سفارش‌های نزدیک شما</h2><div class="col gr2"><sc-for list="{{ offerList }}" as="o" hint-placeholder-count="2"><dc-import name="OfferCard" offer="{{ o.offer }}" on-open="{{ o.open }}" hint-size="100%,230px"></dc-import></sc-for></div></sc-if>
+<sc-if value="{{ waitMsg }}" hint-placeholder-val="{{ false }}"><dc-import name="EmptyState" art="dk-fries" title="منتظر سفارش باشید" text="تا سفارشی نزدیک شما ثبت شود، همین‌جا بمانید. با صدا خبر می‌دهیم." hint-size="100%,260px"></dc-import></sc-if>
+<sc-if value="{{ offMsg }}" hint-placeholder-val="{{ false }}"><dc-import name="EmptyState" art="dk-fries" title="آفلاین هستید" text="برای دیدن و گرفتن سفارش‌ها، کلید بالا را روشن کنید." hint-size="100%,260px"></dc-import></sc-if>
+<sc-if value="{{ online }}" hint-placeholder-val="{{ true }}"><button class="demo" style="margin:0" onClick="{{ simOffer }}">شبیه‌سازی سفارش جدید (نمونه)</button></sc-if>
+<p class="trk">{{ trackNote }}</p>
+</div></div>
+</sc-if>
+
+<sc-if value="{{ isEarn }}" hint-placeholder-val="{{ false }}">
+<dc-import name="TopBar" title="درآمد" hint-size="100%,80px"></dc-import>
+<div class="bd"><div class="stk cen ent d1">
+<dc-import name="SegTabs" items="{{ perTabs }}" active="{{ per }}" on-pick="{{ pickPer }}" hint-size="100%,64px"></dc-import>
+<dc-import name="EarnBalance" balance="{{ eb.balance }}" cash="{{ eb.cash }}" dokoon="{{ eb.dokoon }}" note="{{ eb.note }}" hint-size="100%,200px"></dc-import>
+<div class="stats"><sc-for list="{{ stats }}" as="s" hint-placeholder-count="4"><dc-import name="StatCard" label="{{ s.label }}" value="{{ s.value }}" sub="{{ s.sub }}" d="{{ s.d }}" tone="{{ s.tone }}" hint-size="100%,116px"></dc-import></sc-for></div>
+<dc-import name="BarChart" title="{{ chartTitle }}" bars="{{ bars }}" hint-size="100%,220px"></dc-import>
+<dc-import name="ListRow" title="تاریخچه‌ی سفارش‌ها" sub="همه‌ی سفارش‌های تحویل‌شده" d="M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM12 7v5l3 2" on-tap="{{ goHist }}" hint-size="100%,72px"></dc-import>
+<dc-import name="ListRow" title="تسویه‌حساب‌ها" sub="واریزهای دکون به حساب شما" d="M4 7h15a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h12M16 14h2" on-tap="{{ goSettle }}" hint-size="100%,72px"></dc-import>
+</div></div>
+</sc-if>
+
+<sc-if value="{{ isAccount }}" hint-placeholder-val="{{ false }}">
+<dc-import name="TopBar" title="حساب من" hint-size="100%,80px"></dc-import>
+<div class="bd"><div class="acc"><span class="av"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#dk-fries"></use></svg></span><div><h3>{{ cour.name }}</h3><p>{{ cour.phone }} · {{ cour.sub }}</p></div></div>
+<div class="stk cen ent d1">
+<sc-for list="{{ accRows }}" as="x" hint-placeholder-count="5"><dc-import name="ListRow" title="{{ x.title }}" sub="{{ x.sub }}" meta="{{ x.meta }}" d="{{ x.d }}" dot="{{ x.dot }}" on-tap="{{ x.tap }}" hint-size="100%,72px"></dc-import></sc-for>
+<dc-import name="ToggleRow" title="حالت تیره" sub="مناسب رانندگی شبانه" on="{{ dark }}" on-flip="{{ flipDark }}" hint-size="100%,72px"></dc-import>
+<button class="lk" onClick="{{ askLogout }}">خروج از حساب</button>
+<p class="trk">دکون پیک · نسخه‌ی {{ version }}</p>
+</div></div>
+</sc-if>
+
+<div class="bn"><dc-import name="RBottomNav" items="{{ navItems }}" active="{{ navActive }}" rail="{{ false }}" on-pick="{{ navPick }}" hint-size="100%,76px"></dc-import></div>
+</div></div>
+</sc-if>
+
+<sc-if value="{{ isTask }}" hint-placeholder-val="{{ false }}">
+<div class="sc"><dc-import name="TopBar" title="{{ taskTitle }}" on-back="{{ back }}" hint-size="100%,80px"></dc-import>
+<div class="bd"><div class="stk cen tk">
+<sc-if value="{{ notDone }}" hint-placeholder-val="{{ true }}"><dc-import name="StageBar" stages="{{ stageList }}" hint-size="100%,88px"></dc-import></sc-if>
+<sc-if value="{{ stToRest }}" hint-placeholder-val="{{ true }}"><dc-import name="RouteMap" label="تا رستوران" eta-text="{{ a.etaText }}" dist-text="{{ a.restDist }}" tracking="{{ true }}" on-neshan="{{ openNeshan }}" on-balad="{{ openBalad }}" hint-size="100%,260px"></dc-import><dc-import name="PlaceCard" title="{{ a.rest }}" kind="رستوران" address="{{ a.fromFull }}" extra="" can-call="{{ true }}" on-call="{{ callRest }}" on-copy="{{ copyAddr }}" hint-size="100%,150px"></dc-import><button class="lk" onClick="{{ askWithdraw }}">انصراف از سفارش</button></sc-if>
+<sc-if value="{{ stPickup }}" hint-placeholder-val="{{ false }}"><p class="nt">غذاها را با فهرست تطبیق دهید و هر کدام را تیک بزنید.</p><sc-for list="{{ itemList }}" as="i" hint-placeholder-count="3"><dc-import name="ItemCheckRow" item="{{ i.item }}" on-toggle="{{ i.tog }}" hint-size="100%,72px"></dc-import></sc-for><button class="lk" onClick="{{ askMismatch }}">مشکل در سفارش دارم</button><button class="lk" onClick="{{ askWithdraw }}">انصراف از سفارش</button></sc-if>
+<sc-if value="{{ stToCust }}" hint-placeholder-val="{{ false }}"><dc-import name="RouteMap" label="تا مشتری" eta-text="{{ a.etaText }}" dist-text="{{ a.custDist }}" tracking="{{ true }}" on-neshan="{{ openNeshan }}" on-balad="{{ openBalad }}" hint-size="100%,260px"></dc-import><dc-import name="PlaceCard" title="{{ a.cust }}" kind="مشتری" address="{{ a.toFull }}" extra="{{ a.note }}" can-call="{{ true }}" on-call="{{ callCust }}" on-copy="{{ copyAddr }}" hint-size="100%,170px"></dc-import><sc-if value="{{ a.reported }}" hint-placeholder-val="{{ false }}"><p class="nt w">گزارش برای مدیر شهر ارسال شد. منتظر راهنمایی او بمانید.</p></sc-if><button class="lk" onClick="{{ askUnreach }}">مشتری در دسترس نیست</button></sc-if>
+<sc-if value="{{ stHandover }}" hint-placeholder-val="{{ false }}"><sc-if value="{{ a.cash }}" hint-placeholder-val="{{ true }}"><dc-import name="CashPanel" due="{{ a.dueText }}" value="{{ cashIn }}" error="{{ cashErr }}" on-input="{{ inCash }}" on-exact="{{ exactCash }}" hint-size="100%,230px"></dc-import></sc-if><sc-if value="{{ a.online }}" hint-placeholder-val="{{ false }}"><p class="nt">پرداخت به‌صورت آنلاین انجام شده است. فقط سفارش را به مشتری تحویل دهید.</p></sc-if></sc-if>
+<sc-if value="{{ stDone }}" hint-placeholder-val="{{ false }}"><dc-import name="TripSummary" earn="{{ sum.earn }}" rows="{{ sum.rows }}" on-done="{{ finishTask }}" hint-size="100%,360px"></dc-import></sc-if>
+</div></div>
+<sc-if value="{{ hasDock }}" hint-placeholder-val="{{ true }}"><div class="dockw"><dc-import name="ActionBar" label="{{ dock.label }}" value-text="" disabled="{{ dock.off }}" on-tap="{{ dock.tap }}" hint-size="100%,88px"></dc-import></div></sc-if></div>
+</sc-if>
+
+<sc-if value="{{ isHist }}" hint-placeholder-val="{{ false }}">
+<div class="sc"><dc-import name="TopBar" title="تاریخچه‌ی سفارش‌ها" on-back="{{ back }}" hint-size="100%,80px"></dc-import>
+<div class="bd"><div class="stk cen"><sc-for list="{{ histList }}" as="h" hint-placeholder-count="4"><dc-import name="HistoryRow" order="{{ h.order }}" on-tap="{{ h.tap }}" hint-size="100%,88px"></dc-import></sc-for></div></div></div>
+</sc-if>
+
+<sc-if value="{{ isHistDetail }}" hint-placeholder-val="{{ false }}">
+<div class="sc"><dc-import name="TopBar" title="{{ hd.title }}" on-back="{{ back }}" hint-size="100%,80px"></dc-import>
+<div class="bd"><div class="stk cen"><dc-import name="InfoList" rows="{{ hd.rows }}" hint-size="100%,260px"></dc-import><p class="nt">برای مشکل در همین سفارش، با پشتیبانی تماس بگیرید.</p><button class="btn" onClick="{{ goSupport }}">تماس با پشتیبانی</button></div></div></div>
+</sc-if>
+
+<sc-if value="{{ isSettle }}" hint-placeholder-val="{{ false }}">
+<div class="sc"><dc-import name="TopBar" title="تسویه‌حساب‌ها" on-back="{{ back }}" hint-size="100%,80px"></dc-import>
+<div class="bd"><div class="stk cen"><p class="nt">دکون هر هفته درآمد شما را به شبای ثبت‌شده واریز می‌کند.</p><sc-for list="{{ settleList }}" as="x" hint-placeholder-count="3"><dc-import name="ListRow" title="{{ x.title }}" sub="{{ x.sub }}" meta="{{ x.meta }}" d="M4 7h15a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h12M16 14h2" hint-size="100%,72px"></dc-import></sc-for></div></div></div>
+</sc-if>
+
+<sc-if value="{{ isDetails }}" hint-placeholder-val="{{ false }}">
+<div class="sc"><dc-import name="TopBar" title="اطلاعات من" on-back="{{ back }}" hint-size="100%,80px"></dc-import>
+<div class="bd"><div class="stk cen"><dc-import name="InfoList" rows="{{ detRows }}" hint-size="100%,260px"></dc-import><p class="nt">برای تغییر شماره‌ی شبا، کد تأیید پیامکی لازم است و مدیر شهر آن را بررسی می‌کند.</p><button class="btn" onClick="{{ changeSheba }}">درخواست تغییر شبا</button></div></div></div>
+</sc-if>
+
+<sc-if value="{{ isDocs }}" hint-placeholder-val="{{ false }}">
+<div class="sc"><dc-import name="TopBar" title="مدارک من" on-back="{{ back }}" hint-size="100%,80px"></dc-import>
+<div class="bd"><div class="stk cen"><p class="nt">مدارک منقضی‌شده باید تمدید شود، وگرنه امکان دریافت سفارش بسته می‌شود.</p><sc-for list="{{ docRows }}" as="x" hint-placeholder-count="4"><dc-import name="DocStatusRow" doc="{{ x.doc }}" on-renew="{{ x.renew }}" hint-size="100%,88px"></dc-import></sc-for></div></div></div>
+</sc-if>
+
+<sc-if value="{{ isSupport }}" hint-placeholder-val="{{ false }}">
+<div class="sc"><dc-import name="TopBar" title="پشتیبانی" on-back="{{ back }}" hint-size="100%,80px"></dc-import>
+<div class="bd"><div class="stk cen"><dc-import name="ContactRow" title="تماس فوری با مدیر شهر" sub="مشکل در مسیر، مشتری یا رستوران" art="dk-fries" href="tel:+983112345678" hint-size="100%,96px"></dc-import><dc-import name="ContactRow" title="پشتیبانی دکون" sub="۰۲۱ ۱۲۳۴ ۵۶۷۸" art="dk-cafe" href="tel:+982112345678" hint-size="100%,96px"></dc-import><h2 class="sh" style="margin:8px 0 0">پرسش‌های پرتکرار</h2><sc-for list="{{ faqs }}" as="f" hint-placeholder-count="3"><dc-import name="FaqItem" q="{{ f.q }}" a="{{ f.a }}" open="{{ f.open }}" on-toggle="{{ f.tap }}" hint-size="100%,56px"></dc-import></sc-for></div></div></div>
+</sc-if>
+
+<sc-if value="{{ isCookies }}" hint-placeholder-val="{{ false }}">
+<div class="sc"><dc-import name="TopBar" title="کوکی‌ها و حریم خصوصی" on-back="{{ back }}" hint-size="100%,80px"></dc-import>
+<div class="bd"><div class="stk cen"><p class="nt">دکون فقط داده‌ای را نگه می‌دارد که برای کار برنامه لازم است. موارد اختیاری را می‌توانید خاموش کنید.</p>
+<dc-import name="ToggleRow" title="ضروری" sub="ورود به حساب، سفارش فعال و امنیت. خاموش نمی‌شود" on="{{ true }}" on-flip="{{ flipNecessary }}" hint-size="100%,72px"></dc-import>
+<dc-import name="ToggleRow" title="عملکرد و خطاها" sub="گزارش خطا برای بهتر شدن سرعت و پایداری" on="{{ ck.perf }}" on-flip="{{ flipPerf }}" hint-size="100%,72px"></dc-import>
+<dc-import name="ToggleRow" title="آمار استفاده" sub="آمار گمنام برای بهبود برنامه، بدون نام و شماره" on="{{ ck.an }}" on-flip="{{ flipAn }}" hint-size="100%,72px"></dc-import>
+<p class="trk" style="margin:0">موقعیت مکانی کوکی نیست و جداگانه در «مجوزهای دستگاه» مدیریت می‌شود.</p>
+</div></div><div class="dockw"><dc-import name="ActionBar" label="ذخیره‌ی انتخاب" value-text="" disabled="{{ false }}" on-tap="{{ saveCk }}" hint-size="100%,88px"></dc-import></div></div>
+</sc-if>
+
+<sc-if value="{{ hasCk }}" hint-placeholder-val="{{ false }}"><div class="ckb ent"><b>کوکی‌ها</b><p>برای ورود امن و بهتر شدن برنامه از کوکی استفاده می‌کنیم. موارد اختیاری با اجازه‌ی شماست.</p><div class="rowa"><button class="btn" onClick="{{ ckAll }}">قبول همه</button><button class="btn o" onClick="{{ ckMin }}">فقط ضروری</button></div><button class="lk" onClick="{{ ckSet }}">تنظیمات</button></div></sc-if>
+<sc-if value="{{ hasAlert }}" hint-placeholder-val="{{ false }}"><div class="alr"><dc-import name="OfferAlert" offer="{{ alertOffer }}" timer-text="{{ alertTimer }}" progress="{{ alertProg }}" on-accept="{{ acceptOffer }}" on-reject="{{ rejectOffer }}" hint-size="100%,100%"></dc-import></div></sc-if>
+<sc-if value="{{ hasSheet }}" hint-placeholder-val="{{ false }}"><div class="scr" onClick="{{ closeOverlay }}"></div><div class="sheet"><dc-import name="ReasonSheet" title="{{ sheet.title }}" text="{{ sheet.text }}" items="{{ reasonItems }}" confirm-label="{{ sheet.cta }}" can-confirm="{{ reasonCan }}" on-pick="{{ pickReason }}" on-confirm="{{ confirmReason }}" on-close="{{ closeOverlay }}" hint-size="100%,500px"></dc-import></div></sc-if>
+<sc-if value="{{ hasDlg }}" hint-placeholder-val="{{ false }}"><div class="scr" onClick="{{ closeOverlay }}"></div><div class="dlg"><dc-import name="ConfirmDialog" title="{{ dlg.title }}" text="{{ dlg.text }}" confirm-label="{{ dlg.ok }}" cancel-label="انصراف" tone="{{ dlg.tone }}" on-confirm="{{ dlgOk }}" on-cancel="{{ closeOverlay }}" hint-size="100%,240px"></dc-import></div></sc-if>
+<sc-if value="{{ hasToast }}" hint-placeholder-val="{{ false }}"><div class="tst"><dc-import name="Toast" text="{{ toast }}" tone="{{ toastTone }}" hint-size="100%,72px"></dc-import></div></sc-if>
+<sc-if value="{{ hasErr }}" hint-placeholder-val="{{ false }}"><div style="position:absolute;inset:0;z-index:60;background:var(--bg,#FBF0E6)"><dc-import name="ErrorPage" code="{{ err.code }}" title="{{ err.title }}" text="{{ err.text }}" d="{{ err.d }}" cta="{{ err.cta }}" cta-secondary="" on-primary="{{ errRetry }}" on-secondary="{{ errRetry }}" hint-size="100%,100%"></dc-import></div></sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"status": {"editor": "enum", "options": ["ready", "loading", "error"], "default": "ready", "section": "حالت‌های صفحه"}, "layout": {"editor": "enum", "options": ["auto", "phone", "tablet"], "default": "tablet", "section": "چیدمان"}, "$preview": {"width": 1024, "height": 768}}'>
+class Component extends DCLogic {
+constructor(...a) {
+super(...a);
+const D = this.D();
+this.state = { logged: false, stack: [{ s: 'login' }], fm: { phone: '', otp: '', name: '', nid: '', plate: '', sheba: '' }, otpSent: false, regStep: 1, docs: {}, appr: false, perms: { loc: false, notif: false, batt: false }, permFirst: true, online: false, offers: D.offers, active: null, alertId: '', alertLeft: 30, overlay: '', sheet: null, dlg: null, cashIn: '', per: 'today', earned: 480000, trips: 6, cashHeld: 0, histId: '', docSt: D.docSt, dark: false, faqOpen: -1, toast: '', toastTone: '', err: '', simN: 0, tab: 'orders', w: 0, ck: { perf: true, an: true }, ckAsk: true };
+try { if (typeof window !== 'undefined') {
+window.addEventListener('offline', () => this.setS({ err: 'offline' }));
+window.addEventListener('online', () => { if (this.state.err === 'offline') this.setS({ err: '' }); });
+window.addEventListener('resize', () => this.setS({ w: window.innerWidth })); this.state.w = window.innerWidth; const th = localStorage.getItem('dkc-theme'); if (th === 'dark') this.state.dark = true;
+} } catch (e) {}
+this.tick();
+}
+tick() { setTimeout(() => { const s = this.state; if (s.alertId) { if (s.alertLeft <= 1) { this.expireOffer(); } else { this.setS({ alertLeft: s.alertLeft - 1 }); if (s.alertLeft % 3 === 0) this.beep(); } } this.tick(); }, 1000); }
+beep() { try { const C = window.AudioContext || window.webkitAudioContext; if (!C) return; if (!this._ac) this._ac = new C(); const ac = this._ac; const o = ac.createOscillator(); const g = ac.createGain(); o.type = 'sine'; o.frequency.value = 880; g.gain.value = 0.12; o.connect(g); g.connect(ac.destination); o.start(); o.stop(ac.currentTime + 0.25); if (navigator.vibrate) navigator.vibrate(200); } catch (e) {} }
+fa(v) { return String(v).replace(/\d/g, (d) => '۰۱۲۳۴۵۶۷۸۹'[d]); }
+money(n) { return this.fa(String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, '٬')); }
+en(v) { return String(v).replace(/[۰-۹]/g, (d) => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d)).replace(/[٠-٩]/g, (d) => '٠١٢٣٤٥٦٧٨٩'.indexOf(d)); }
+setS(o) { this.setState(o); }
+D() {
+const It = (id, q, name, opt) => ({ id: id, q: q, name: name, opt: opt });
+const offers = [
+{ id: 'o1', no: 4821, rest: 'کبابی سنتی زاگرس', from: 'شهرضا، خیابان امام', fromFull: 'شهرضا، خیابان امام، نبش کوچه ۱۲', to: 'شهرضا، خیابان شریعتی', toFull: 'خیابان شریعتی، کوچه ۷، پلاک ۱۴', cust: 'زهرا نوری', note: 'طبقه ۲، واحد ۴؛ زنگ را دوبار بزنید', km: 2.4, kmRest: 0.8, min: 11, earn: 68000, cash: true, due: 412000, items: [It('i1', 2, 'چلوکباب کوبیده', 'با ته‌چین'), It('i2', 1, 'دوغ محلی', ''), It('i3', 1, 'سالاد شیرازی', '')] },
+{ id: 'o2', no: 4822, rest: 'پیتزا ماهان', from: 'شهرضا، بلوار مدرس', fromFull: 'شهرضا، بلوار مدرس، روبه‌روی بانک ملی', to: 'شهرضا، خیابان ارم', toFull: 'خیابان ارم، کوچه گلها، پلاک ۳', cust: 'علی رضایی', note: 'درب سفید، زنگ سمت راست', km: 1.8, kmRest: 1.2, min: 9, earn: 52000, cash: false, due: 0, items: [It('i1', 1, 'پیتزا پپرونی', 'خمیر نازک'), It('i2', 2, 'نوشابه', '')] },
+{ id: 'o3', no: 4823, rest: 'کافه پاتوق', from: 'شهرضا، خیابان انقلاب', fromFull: 'شهرضا، خیابان انقلاب، پاساژ آفتاب', to: 'شهرضا، کوی معلم', toFull: 'کوی معلم، خیابان دوم، پلاک ۲۱', cust: 'مریم احمدی', note: '', km: 3.1, kmRest: 0.5, min: 14, earn: 41000, cash: false, due: 0, items: [It('i1', 2, 'لاته', 'شیر کم‌چرب'), It('i2', 1, 'کیک هویج', '')] }];
+return {
+cour: { name: 'مهدی کریمی', phone: '۰۹۱۳•••۴۴۲۱', sub: 'شهرضا · موتورسیکلت' },
+offers: offers,
+extra: [{ rest: 'ساندویچ نارنج', from: 'شهرضا، خیابان مطهری', to: 'شهرضا، خیابان وحدت', cust: 'سارا کاظمی', km: 2.0, kmRest: 0.6, min: 10, earn: 47000, cash: true, due: 186000 }, { rest: 'سفره‌خانه باغ', from: 'شهرضا، میدان امام', to: 'شهرضا، خیابان کاشانی', cust: 'رضا محمدی', km: 3.4, kmRest: 1.0, min: 16, earn: 74000, cash: false, due: 0 }],
+docTypes: [{ id: 'nid', label: 'کارت ملی', sub: 'عکس روی کارت', d: 'M3 6h18v12H3zM7 11h4M7 14h6M16 11a1.5 1.5 0 1 0 0 .01', required: true }, { id: 'lic', label: 'گواهینامه موتور', sub: 'عکس روی گواهینامه', d: 'M3 6h18v12H3zM7 10h5M7 13h8', required: true }, { id: 'card', label: 'کارت موتورسیکلت', sub: 'عکس کارت موتور', d: 'M4 8l8-4 8 4v8l-8 4-8-4z', required: true }, { id: 'ins', label: 'بیمه‌نامه', sub: 'بیمه‌ی شخص ثالث', d: 'M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z', required: true }, { id: 'photo', label: 'عکس پرسنلی', sub: 'عکس واضح از صورت', d: 'M4 7h3l2-3h6l2 3h3v13H4zM12 17a4 4 0 1 0 0-8 4 4 0 0 0 0 8z', required: true }],
+docSt: [{ id: 'nid', label: 'کارت ملی', sub: 'تأیید‌شده', status: 'ok', statusLabel: 'تأیید شده', canRenew: false }, { id: 'lic', label: 'گواهینامه موتور', sub: 'اعتبار تا ۱۴۰۸/۰۳', status: 'ok', statusLabel: 'تأیید شده', canRenew: false }, { id: 'card', label: 'کارت موتورسیکلت', sub: 'تأیید‌شده', status: 'ok', statusLabel: 'تأیید شده', canRenew: false }, { id: 'ins', label: 'بیمه‌نامه', sub: 'تا ۹ روز دیگر منقضی می‌شود', status: 'bad', statusLabel: 'نزدیک انقضا', canRenew: true }, { id: 'photo', label: 'عکس پرسنلی', sub: 'تأیید‌شده', status: 'ok', statusLabel: 'تأیید شده', canRenew: false }],
+hist: [{ id: 'h1', title: 'کبابی سنتی زاگرس → خیابان شریعتی', sub: 'امروز · ۱۴:۲۰ · ۲٫۴ کیلومتر', earn: 68000, pay: 'نقدی' }, { id: 'h2', title: 'پیتزا ماهان → خیابان ارم', sub: 'امروز · ۱۳:۰۵ · ۱٫۸ کیلومتر', earn: 52000, pay: 'آنلاین' }, { id: 'h3', title: 'کافه پاتوق → کوی معلم', sub: 'امروز · ۱۲:۱۰ · ۳٫۱ کیلومتر', earn: 41000, pay: 'آنلاین' }, { id: 'h4', title: 'ساندویچ نارنج → خیابان وحدت', sub: 'دیروز · ۲۰:۴۰ · ۲٫۰ کیلومتر', earn: 47000, pay: 'نقدی' }],
+settles: [{ title: 'هفته‌ی گذشته', sub: 'واریز به شبا ••••۴۲۱۰', meta: '۲٬۱۴۰٬۰۰۰ تومان' }, { title: 'دو هفته قبل', sub: 'واریز به شبا ••••۴۲۱۰', meta: '۱٬۸۹۰٬۰۰۰ تومان' }],
+earn: { today: { total: 480000, label: 'امروز', trips: 6, hours: 5.5, avg: 80000, chartTitle: 'درآمد ساعتی امروز (هزار تومان)', chart: [['۱۰', 40], ['۱۲', 120], ['۱۴', 150], ['۱۶', 60], ['۱۸', 110]] }, week: { total: 2860000, label: 'این هفته', trips: 38, hours: 34, avg: 75000, chartTitle: 'درآمد روزانه (هزار تومان)', chart: [['ش', 420], ['ی', 380], ['د', 510], ['س', 350], ['چ', 450], ['پ', 270], ['ج', 480]] }, month: { total: 11200000, label: 'این ماه', trips: 151, hours: 128, avg: 74000, chartTitle: 'درآمد هفتگی (هزار تومان)', chart: [['۱', 2400], ['۲', 2900], ['۳', 2750], ['۴', 3150]] } },
+faqs: [{ q: 'اگر مشتری جواب نداد چه کنم؟', a: 'دو بار تماس بگیرید، ۵ دقیقه صبر کنید و از صفحه‌ی سفارش «مشتری در دسترس نیست» را بزنید. مدیر شهر راهنمایی می‌کند.' }, { q: 'نقدی که از مشتری گرفتم چه می‌شود؟', a: 'مبلغ نقد ثبت می‌شود و از طلب شما از دکون کم می‌شود. جزئیات در بخش درآمد است.' }, { q: 'چرا موقعیتم ثبت می‌شود؟', a: 'فقط وقتی آنلاین هستید یا سفارش دارید تا نزدیک‌ترین پیک پیشنهاد شود. با آفلاین شدن متوقف می‌شود.' }],
+errors: { offline: { code: '', title: 'اینترنت متصل نیست', text: 'برای دریافت سفارش‌ها باید به اینترنت وصل باشید. اتصال را بررسی کنید.', d: 'M3 9a15 15 0 0 1 18 0M6 12.5a10 10 0 0 1 12 0M9.5 16a5 5 0 0 1 5 0M12 19.5h.01M4 4l16 16', cta: 'تلاش دوباره' } },
+perms: [{ id: 'loc', title: 'موقعیت مکانی (همیشه)', text: 'برای پیشنهاد نزدیک‌ترین سفارش و نمایش مسیر به مشتری، حتی وقتی برنامه در پس‌زمینه است.', d: 'M12 21s-6-5.5-6-10a6 6 0 1 1 12 0c0 4.5-6 10-6 10zM12 8a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5z' }, { id: 'notif', title: 'اعلان‌ها', text: 'برای هشدار سفارش جدید با صدا.', d: 'M6 16v-5a6 6 0 0 1 12 0v5l2 2H4zM10 21h4' }, { id: 'batt', title: 'عدم محدودیت باتری', text: 'تا گوشی برنامه را وسط سفارش نبندد. (اندروید)', d: 'M5 8h12v8H5zM17 11h3v2h-3' }],
+reasonsW: ['موتورم خراب شد', 'مسیر بسته است', 'مشکل شخصی پیش آمد', 'رستوران خیلی دیر آماده می‌کند'],
+reasonsM: ['غذا کم است', 'غذای اشتباه است', 'بسته‌بندی آسیب دیده', 'سفارش هنوز آماده نیست']
+};
+}
+isWide() { const L = this.props.layout; if (L === 'tablet') return true; if (L === 'phone') return false; return (this.state.w || 0) >= 720; }
+top() { const s = this.state.stack; return s[s.length - 1].s; }
+push(s) { this.setS({ stack: this.state.stack.concat([{ s: s }]), overlay: '' }); }
+back() { const s = this.state.stack; if (s.length > 1) this.setS({ stack: s.slice(0, -1), overlay: '' }); }
+root(s) { this.setS({ stack: [{ s: s }], overlay: '' }); }
+toast(t, tone) { this.setS({ toast: t, toastTone: tone || '' }); clearTimeout(this._tt); this._tt = setTimeout(() => this.setS({ toast: '' }), 2600); }
+offerView(o) { return { rest: o.rest, earn: this.money(o.earn) + ' تومان', from: o.from, to: o.to, dist: this.fa(o.km) + ' کیلومتر', time: this.fa(o.min) + ' دقیقه', pay: o.cash ? 'نقدی · دریافت از مشتری' : 'پرداخت آنلاین', cash: o.cash, d1: this.fa(o.kmRest) + ' کیلومتر تا شما', d2: this.fa(o.km) + ' کیلومتر مسیر' }; }
+dropOffer(id) { this.setS({ offers: this.state.offers.filter((o) => o.id !== id), alertId: '' }); }
+expireOffer() { const id = this.state.alertId; this.dropOffer(id); this.toast('زمان پذیرش تمام شد', 'warn'); }
+build() {
+const s = this.state; const D = this.D(); const t = this.top(); const st = this.props.status || 'ready';
+const v = { version: '۱٫۰٫۰', cour: D.cour, dark: s.dark, wide: this.isWide(), appCls: (this.isWide() ? 'wide ' : '') + (s.dark ? 'dk' : ''), bikeD: 'M3 7h11v9H3zM14 10h4l3 3v3h-7M7 19a2 2 0 1 0 0-4 2 2 0 0 0 0 4zM17 19a2 2 0 1 0 0-4 2 2 0 0 0 0 4z' };
+const tabs = ['orders', 'earn', 'account'];
+v.isLogin = !s.logged && t === 'login'; v.isReg = !s.logged && t === 'reg'; v.isPending = s.logged && t === 'pending'; v.isPerm = s.logged && t === 'perm';
+v.isMain = s.logged && tabs.indexOf(t) >= 0; v.isOrders = t === 'orders'; v.isEarn = t === 'earn'; v.isAccount = t === 'account';
+v.isTask = s.logged && t === 'task'; v.isHist = t === 'hist'; v.isHistDetail = t === 'histd'; v.isSettle = t === 'settle'; v.isDetails = t === 'details'; v.isDocs = t === 'docs'; v.isSupport = t === 'support'; v.isCookies = t === 'cookies';
+v.isPhoneStep = !s.otpSent; v.isOtpStep = s.otpSent;
+const ph = this.en(s.fm.phone).replace(/\s/g, ''); const phOk = /^09\d{9}$/.test(ph);
+v.fm = s.fm; v.phoneErr = ph.length >= 11 && !phOk ? 'شماره‌ی موبایل درست نیست' : ''; v.phoneOff = !phOk; v.otpOff = this.en(s.fm.otp).length < 4; v.otpHint = 'کد به ' + s.fm.phone + ' ارسال شد. برای نمونه هر کد ۴ رقمی را بزنید.';
+v.inPhone = (x) => this.setS({ fm: Object.assign({}, s.fm, { phone: x }) }); v.inOtp = (x) => this.setS({ fm: Object.assign({}, s.fm, { otp: x }) });
+v.sendOtp = () => this.setS({ otpSent: true }); v.editPhone = () => this.setS({ otpSent: false });
+v.doLogin = () => { if (s.appr) this.setS({ logged: true, otpSent: false, stack: [{ s: 'orders' }] }); else this.setS({ logged: true, otpSent: false, stack: [{ s: 'pending' }] }); };
+v.toReg = () => this.setS({ stack: [{ s: 'login' }, { s: 'reg' }], regStep: 1 });
+v.approveDemo = () => this.setS({ appr: true, permFirst: true, stack: [{ s: 'perm' }] });
+v.logout = () => this.setS({ logged: false, online: false, stack: [{ s: 'login' }], otpSent: false });
+v.wizSteps = ['اطلاعات', 'مدارک', 'شبا', 'بررسی'].map((l, i) => ({ label: l, state: i + 1 < s.regStep ? 'done' : (i + 1 === s.regStep ? 'cur' : 'todo') }));
+v.regStep1 = s.regStep === 1; v.regStep2 = s.regStep === 2; v.regStep3 = s.regStep === 3; v.regStep4 = s.regStep === 4;
+v.regCta = s.regStep === 3 ? 'ارسال برای بررسی' : (s.regStep === 4 ? 'بازگشت به ورود' : 'ادامه');
+v.regOff = (s.regStep === 1 && (s.fm.name.trim().length < 3 || this.en(s.fm.nid).replace(/\s/g, '').length < 10 || s.fm.plate.trim().length < 5)) || (s.regStep === 2 && D.docTypes.some((x) => x.required && !s.docs[x.id])) || (s.regStep === 3 && this.en(s.fm.sheba).replace(/\s/g, '').length < 20);
+v.regNext = () => { if (s.regStep === 4) { this.setS({ stack: [{ s: 'login' }], regStep: 1 }); return; } this.setS({ regStep: s.regStep + 1 }); };
+v.inName = (x) => this.setS({ fm: Object.assign({}, s.fm, { name: x }) }); v.inNid = (x) => this.setS({ fm: Object.assign({}, s.fm, { nid: x }) }); v.inPlate = (x) => this.setS({ fm: Object.assign({}, s.fm, { plate: x }) }); v.inSheba = (x) => this.setS({ fm: Object.assign({}, s.fm, { sheba: x }) });
+v.docList = D.docTypes.map((x) => ({ label: x.label, sub: x.sub, d: x.d, done: !!s.docs[x.id], tap: () => { const n = Object.assign({}, s.docs); n[x.id] = true; this.setS({ docs: n }); } }));
+// permissions
+v.permFirst = s.permFirst; v.permOff = !(s.perms.loc && s.perms.notif);
+v.permList = D.perms.map((p) => ({ perm: { title: p.title, text: p.text, d: p.d, granted: !!s.perms[p.id], cta: p.id === 'batt' ? 'باز کردن تنظیمات' : 'اجازه می‌دهم' }, grant: () => { const n = Object.assign({}, s.perms); n[p.id] = true; this.setS({ perms: n }); } }));
+v.permGo = () => this.setS({ stack: [{ s: 'orders' }] });
+v.back = () => this.back();
+// tabs
+const hasActive = !!s.active;
+v.online = s.online; v.hasActive = hasActive; v.earnToday = this.money(s.earned) + ' ت';
+v.onlineNote = s.online ? 'موقعیت شما ثبت می‌شود و سفارش‌ها نمایش داده می‌شود' : 'برای دریافت سفارش، آنلاین شوید';
+v.trackNote = s.online || hasActive ? 'موقعیت شما فقط تا وقتی آنلاین هستید یا سفارش دارید ثبت می‌شود.' : 'در حالت آفلاین موقعیت شما ثبت نمی‌شود.';
+v.flipOnline = () => { if (hasActive && s.online) { this.toast('تا پایان سفارش نمی‌توانید آفلاین شوید', 'warn'); return; } if (!s.perms.loc) { this.setS({ permFirst: false, stack: s.stack.concat([{ s: 'perm' }]) }); return; } this.setS({ online: !s.online }); this.toast(s.online ? 'آفلاین شدید' : 'آنلاین شدید'); };
+v.showOffers = s.online && !hasActive && s.offers.length > 0 && st === 'ready';
+v.waitMsg = s.online && !hasActive && s.offers.length === 0; v.offMsg = !s.online && !hasActive;
+v.offerList = s.offers.map((o) => ({ offer: this.offerView(o), open: () => this.setS({ alertId: o.id, alertLeft: 30 }) }));
+v.simOffer = () => { const n = s.simN; const e = D.extra[n % D.extra.length]; const o = Object.assign({ id: 'n' + n, no: 4830 + n, fromFull: e.from + '، پلاک ۸', toFull: e.to + '، پلاک ۱۹', note: '', items: [{ id: 'i1', q: 1, name: 'غذای نمونه', opt: '' }] }, e); this.setS({ offers: s.offers.concat([o]), simN: n + 1, alertId: o.id, alertLeft: 30 }); this.beep(); };
+const a = s.active;
+v.activeRest = a ? a.rest : ''; v.activeStage = a ? this.stageLabel(a.stage) : '';
+v.openTask = () => this.push('task');
+const navD = { orders: 'M3 7h11v9H3zM14 10h4l3 3v3h-7M7 19a2 2 0 1 0 0-4 2 2 0 0 0 0 4zM17 19a2 2 0 1 0 0-4 2 2 0 0 0 0 4z', earn: 'M4 7h15a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h12M16 14h2', account: 'M12 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8zM4 21a8 8 0 0 1 16 0' };
+v.navItems = [{ key: 'orders', label: 'سفارش‌ها', d: navD.orders, badge: s.online && !hasActive && s.offers.length ? this.fa(s.offers.length) : '' }, { key: 'earn', label: 'درآمد', d: navD.earn }, { key: 'account', label: 'حساب', d: navD.account }];
+v.navActive = t; v.navPick = (k) => this.root(k);
+// earnings
+const E = D.earn[s.per]; v.per = s.per; v.perTabs = [{ key: 'today', label: 'امروز' }, { key: 'week', label: 'این هفته' }, { key: 'month', label: 'این ماه' }]; v.pickPer = (k) => this.setS({ per: k });
+const tot = s.per === 'today' ? s.earned : E.total;
+v.eb = { balance: this.money(s.earned + 2140000 - s.cashHeld) + ' تومان', cash: this.money(s.cashHeld) + ' تومان', dokoon: this.money(s.earned + 2140000) + ' تومان', note: 'نقدی که از مشتری می‌گیرید از طلب شما کم می‌شود و هفتگی تسویه می‌شود.' };
+v.stats = [{ label: E.label, value: this.money(tot) + ' ت', sub: 'درآمد', d: 'M4 7h15a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h12M16 14h2', tone: '' }, { label: 'سفارش‌ها', value: this.fa(s.per === 'today' ? s.trips : E.trips), sub: 'تحویل‌شده', d: 'M7 3h10a1 1 0 0 1 1 1v17l-3-2-3 2-3-2-3 2V4a1 1 0 0 1 1-1z', tone: '' }, { label: 'ساعت آنلاین', value: this.fa(E.hours), sub: 'ساعت', d: 'M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM12 7v5l3 2', tone: '' }, { label: 'میانگین هر سفارش', value: this.money(E.avg) + ' ت', sub: 'درآمد', d: 'M5 20V11M12 20V5M19 20v-7', tone: '' }];
+const mx = Math.max.apply(null, E.chart.map((c) => c[1])); v.chartTitle = E.chartTitle; v.bars = E.chart.map((c) => ({ label: c[0], v: this.fa(c[1]), h: (c[1] / mx) * 100, on: c[1] === mx }));
+v.goHist = () => this.push('hist'); v.goSettle = () => this.push('settle');
+// account
+const docWarn = s.docSt.some((d) => d.status === 'bad');
+const ic = { det: 'M12 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8zM4 21a8 8 0 0 1 16 0', doc: 'M7 3h7l4 4v14H7zM14 3v5h4', hist: 'M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM12 7v5l3 2', set: 'M4 7h15a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h12M16 14h2', perm: 'M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z', help: 'M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.4-1 .9-1 1.7M12 17h.01' };
+v.accRows = [{ title: 'اطلاعات من', sub: 'نام، پلاک، شبا', d: ic.det, tap: () => this.push('details') }, { title: 'مدارک من', sub: docWarn ? 'یک مدرک نزدیک انقضاست' : 'همه‌ی مدارک تأیید شده', d: ic.doc, dot: docWarn, tap: () => this.push('docs') }, { title: 'تاریخچه‌ی سفارش‌ها', sub: 'سفارش‌های تحویل‌شده', d: ic.hist, tap: () => this.push('hist') }, { title: 'تسویه‌حساب‌ها', sub: 'واریزهای هفتگی', d: ic.set, tap: () => this.push('settle') }, { title: 'مجوزهای دستگاه', sub: s.perms.loc && s.perms.notif ? 'فعال' : 'نیاز به بررسی', d: ic.perm, tap: () => this.setS({ permFirst: false, stack: s.stack.concat([{ s: 'perm' }]) }) }, { title: 'کوکی‌ها و حریم خصوصی', sub: 'مدیریت داده‌های اختیاری', d: ic.perm, tap: () => this.push('cookies') }, { title: 'پشتیبانی', sub: 'تماس فوری با مدیر شهر', d: ic.help, tap: () => this.push('support') }];
+v.flipDark = () => { const n = !s.dark; this.setS({ dark: n }); try { localStorage.setItem('dkc-theme', n ? 'dark' : 'light'); } catch (e) {} };
+v.askLogout = () => this.setS({ dlg: { title: 'خروج از حساب؟', text: 'آفلاین می‌شوید و دیگر سفارشی نمی‌گیرید.', ok: 'خروج', tone: 'danger', kind: 'logout' }, overlay: 'dlg' });
+// sub-screens
+v.histList = D.hist.map((h) => ({ order: { title: h.title, sub: h.sub, earn: this.money(h.earn) + ' ت', pay: h.pay }, tap: () => this.setS({ histId: h.id, stack: s.stack.concat([{ s: 'histd' }]) }) }));
+const h = D.hist.find((x) => x.id === s.histId) || D.hist[0];
+v.hd = { title: 'جزئیات سفارش', rows: [{ label: 'مسیر', value: h.title }, { label: 'زمان', value: h.sub }, { label: 'درآمد شما', value: this.money(h.earn) + ' تومان' }, { label: 'نحوه‌ی پرداخت', value: h.pay }] };
+v.goSupport = () => this.push('support');
+v.settleList = D.settles;
+v.detRows = [{ label: 'نام', value: D.cour.name }, { label: 'موبایل', value: D.cour.phone }, { label: 'کد ملی', value: '۰۰۷•••••۱۲' }, { label: 'پلاک موتور', value: '۱۲ ۳۴۵ ۶۷' }, { label: 'شماره‌ی شبا', value: 'IR••••••••••••••••••4210' }];
+v.changeSheba = () => this.toast('کد تأیید برای شماره‌ی شما پیامک شد (نمونه)');
+v.docRows = s.docSt.map((d) => ({ doc: d, renew: () => this.setS({ docSt: s.docSt.map((x) => x.id === d.id ? Object.assign({}, x, { status: 'wait', statusLabel: 'در حال بررسی', sub: 'برای بررسی مدیر شهر ارسال شد', canRenew: false }) : x) }) }));
+v.faqs = D.faqs.map((f, i) => ({ q: f.q, a: f.a, open: s.faqOpen === i, tap: () => this.setS({ faqOpen: s.faqOpen === i ? -1 : i }) }));
+v.ck = s.ck; v.hasCk = s.ckAsk && v.isLogin;
+v.flipNecessary = () => this.toast('این مورد ضروری است و خاموش نمی‌شود'); v.flipPerf = () => this.setS({ ck: Object.assign({}, s.ck, { perf: !s.ck.perf }) }); v.flipAn = () => this.setS({ ck: Object.assign({}, s.ck, { an: !s.ck.an }) });
+v.saveCk = () => { this.setS({ ckAsk: false }); this.back(); this.toast('انتخاب شما ذخیره شد'); };
+v.ckAll = () => this.setS({ ckAsk: false, ck: { perf: true, an: true } }); v.ckMin = () => this.setS({ ckAsk: false, ck: { perf: false, an: false } }); v.ckSet = () => this.setS({ ckAsk: false, stack: s.stack.concat([{ s: 'cookies' }]) });
+// offer alert
+const ao = s.offers.find((o) => o.id === s.alertId);
+v.hasAlert = !!ao; v.alertOffer = ao ? this.offerView(ao) : {}; v.alertTimer = this.fa(s.alertLeft); v.alertProg = s.alertLeft / 30;
+v.acceptOffer = () => { if (!ao) return; const item = Object.assign({}, ao, { stage: 'toRest', chk: {}, reported: false }); this.setS({ active: item, offers: s.offers.filter((o) => o.id !== ao.id), alertId: '', cashIn: '', stack: [{ s: 'orders' }, { s: 'task' }] }); };
+v.rejectOffer = () => { if (ao) { this.dropOffer(ao.id); this.toast('سفارش رد شد'); } };
+// task
+const stg = ['toRest', 'pickup', 'toCust', 'handover'];
+const labs = ['رستوران', 'تحویل‌گیری', 'مشتری', 'تحویل'];
+v.taskTitle = a ? 'سفارش #' + this.fa(a.no) : 'سفارش';
+v.a = a ? Object.assign({}, a, { etaText: this.fa(a.min) + ' دقیقه', restDist: this.fa(a.kmRest) + ' کیلومتر', custDist: this.fa(a.km) + ' کیلومتر', dueText: this.money(a.due) + ' تومان', online: !a.cash }) : {};
+const cur = a ? a.stage : 'toRest';
+v.stToRest = cur === 'toRest'; v.stPickup = cur === 'pickup'; v.stToCust = cur === 'toCust'; v.stHandover = cur === 'handover'; v.stDone = cur === 'done'; v.notDone = cur !== 'done';
+v.stageList = labs.map((l, i) => ({ label: l, state: cur === 'done' || stg.indexOf(cur) > i ? 'done' : (stg.indexOf(cur) === i ? 'cur' : 'todo') }));
+v.itemList = a ? a.items.map((it) => ({ item: { q: this.fa(it.q), name: it.name, opt: it.opt, checked: !!a.chk[it.id] }, tog: () => { const c = Object.assign({}, a.chk); c[it.id] = !c[it.id]; this.setS({ active: Object.assign({}, a, { chk: c }) }); } })) : [];
+const allChk = a ? a.items.every((it) => a.chk[it.id]) : false;
+const go = (stage) => this.setS({ active: Object.assign({}, a, { stage: stage }) });
+const cashNum = Number(this.en(s.cashIn).replace(/[^0-9]/g, '')) || 0;
+v.cashIn = s.cashIn; v.cashErr = a && a.cash && cashNum > 0 && cashNum !== a.due ? 'با مبلغ سفارش یکی نیست. اگر درست است ادامه دهید؛ به مدیر شهر گزارش می‌شود.' : '';
+v.inCash = (x) => this.setS({ cashIn: x }); v.exactCash = () => this.setS({ cashIn: a ? this.fa(a.due) : '' });
+const docks = { toRest: { label: 'به رستوران رسیدم', off: false, tap: () => go('pickup') }, pickup: { label: 'سفارش را تحویل گرفتم', off: !allChk, tap: () => go('toCust') }, toCust: { label: 'به مشتری رسیدم', off: false, tap: () => go('handover') }, handover: { label: 'سفارش تحویل شد', off: !!(a && a.cash) && cashNum === 0, tap: () => this.finishDelivery() } };
+v.hasDock = !!a && cur !== 'done'; v.dock = docks[cur] || { label: '', off: true, tap: () => {} };
+v.openNeshan = () => this.toast('بازکردن نشان (نمونه)'); v.openBalad = () => this.toast('بازکردن بلد (نمونه)');
+v.callRest = () => this.toast('تماس با رستوران (نمونه)'); v.callCust = () => this.toast('تماس با مشتری (نمونه)'); v.copyAddr = () => this.toast('آدرس کپی شد');
+v.askWithdraw = () => this.setS({ sheet: { kind: 'withdraw', title: 'انصراف از سفارش', text: 'سفارش به پیک دیگری داده می‌شود. انصراف‌های زیاد روی امتیاز شما اثر دارد.', cta: 'انصراف از سفارش', reason: '' }, overlay: 'sheet' });
+v.askMismatch = () => this.setS({ sheet: { kind: 'mismatch', title: 'مشکل در سفارش', text: 'مشکل برای رستوران و پشتیبانی دکون ثبت می‌شود.', cta: 'ثبت گزارش', reason: '' }, overlay: 'sheet' });
+v.askUnreach = () => this.setS({ dlg: { title: 'مشتری در دسترس نیست؟', text: 'ابتدا دو بار تماس بگیرید و ۵ دقیقه صبر کنید. بعد گزارش برای مدیر شهر ارسال می‌شود.', ok: 'گزارش به مدیر شهر', tone: '', kind: 'unreach' }, overlay: 'dlg' });
+v.hasSheet = s.overlay === 'sheet' && !!s.sheet; v.sheet = s.sheet || {};
+v.reasonItems = s.sheet ? (s.sheet.kind === 'withdraw' ? D.reasonsW : D.reasonsM).map((r) => ({ id: r, label: r, on: s.sheet.reason === r })) : [];
+v.reasonCan = !!(s.sheet && s.sheet.reason); v.pickReason = (id) => this.setS({ sheet: Object.assign({}, s.sheet, { reason: id }) });
+v.confirmReason = () => { const k = s.sheet.kind; if (k === 'withdraw') { this.setS({ active: null, sheet: null, overlay: '', stack: [{ s: 'orders' }] }); this.toast('از سفارش انصراف دادید', 'warn'); } else { this.setS({ sheet: null, overlay: '' }); this.toast('مشکل ثبت شد؛ منتظر پاسخ پشتیبانی بمانید'); } };
+v.hasDlg = s.overlay === 'dlg' && !!s.dlg; v.dlg = s.dlg || {};
+v.dlgOk = () => { const k = s.dlg.kind; if (k === 'logout') { this.setS({ dlg: null, overlay: '', logged: false, online: false, stack: [{ s: 'login' }], otpSent: false }); } else if (k === 'unreach') { this.setS({ dlg: null, overlay: '', active: Object.assign({}, a, { reported: true }) }); this.toast('گزارش برای مدیر شهر ارسال شد'); } };
+v.closeOverlay = () => this.setS({ overlay: '' });
+v.sum = a ? { earn: this.money(a.earn) + ' تومان', rows: [{ label: 'مسیر', value: this.fa(a.km + a.kmRest) + ' کیلومتر' }, { label: 'پرداخت', value: a.cash ? 'نقدی' : 'آنلاین' }, { label: 'نقد دریافتی', value: a.cash ? this.money(cashNum || a.due) + ' تومان' : '—' }] } : { earn: '', rows: [] };
+v.finishTask = () => this.setS({ active: null, cashIn: '', stack: [{ s: 'orders' }] });
+// misc
+v.hasToast = !!s.toast; v.toast = s.toast; v.toastTone = s.toastTone;
+v.hasErr = !!s.err; v.err = D.errors[s.err || 'offline']; v.errRetry = () => { try { if (typeof navigator !== 'undefined' && navigator.onLine === false) return; } catch (e) {} this.setS({ err: '' }); };
+return v;
+}
+stageLabel(k) { return { toRest: 'در مسیر رستوران', pickup: 'تحویل‌گیری غذا', toCust: 'در مسیر مشتری', handover: 'تحویل به مشتری', done: 'تحویل شد' }[k] || ''; }
+finishDelivery() { const a = this.state.active; if (!a) return; const n = Number(this.en(this.state.cashIn).replace(/[^0-9]/g, '')) || a.due; this.setS({ active: Object.assign({}, a, { stage: 'done' }), earned: this.state.earned + a.earn, trips: this.state.trips + 1, cashHeld: this.state.cashHeld + (a.cash ? n : 0) }); }
+renderVals() { return this.build(); }
+}
+</script>
+</body>
+</html>

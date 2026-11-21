@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>کلید بزرگ آنلاین</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:300;font-display:swap;src:url(/_blob/15b2679c8bfbb2516de3b480f9ed0bc5) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:400;font-display:swap;src:url(/_blob/6259b89db67d4999e322333ec185b1d2) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:500;font-display:swap;src:url(/_blob/069abf44dcbbfd0bfaeabfacfae55286) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:700;font-display:swap;src:url(/_blob/2c986bbf39699216ea3d18c33a6fd79e) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:800;font-display:swap;src:url(/_blob/92c5107a23f687f46f7f419a6489f113) format('truetype')}
+.OS_b{font-family:'Yekan Bakh',Tahoma,sans-serif;width:100%;min-height:96px;border:0;border-radius:28px;display:flex;align-items:center;gap:16px;padding:16px 20px;cursor:pointer;text-align:right;background:var(--sf,#fff);color:var(--ink,#1F1A17);box-shadow:0 4px 16px rgba(31,26,23,.06);transition:background .3s ease-out,color .3s ease-out}
+.OS_b:focus-visible{outline:3px solid #E4501E;outline-offset:3px}
+.OS_tx{flex:1;min-width:0}.OS_tx b{display:block;font-size:20px;font-weight:800;line-height:1.5}.OS_tx span{display:block;font-size:12px;line-height:1.7;opacity:.85}
+.OS_k{position:relative;width:76px;height:44px;border-radius:999px;background:var(--ln,#F0DFD0);flex:none;transition:background .3s ease-out}
+.OS_k::after{content:"";position:absolute;top:4px;right:4px;width:36px;height:36px;border-radius:50%;background:#fff;box-shadow:0 2px 8px rgba(31,26,23,.25);transition:transform .3s ease-out}
+.OS_on{background:#E4501E;color:#fff;animation:OS_gl 2.6s ease-in-out infinite}.OS_on .OS_k{background:rgba(255,255,255,.35)}.OS_on .OS_k::after{transform:translateX(-32px)}
+@keyframes OS_gl{0%,100%{box-shadow:0 8px 24px rgba(228,80,30,.25),0 0 0 0 rgba(228,80,30,.35)}50%{box-shadow:0 8px 24px rgba(228,80,30,.25),0 0 0 10px rgba(228,80,30,0)}}
+</style>
+</helmet>
+<button class="OS_b {{ cls }}" dir="rtl" role="switch" aria-checked="{{ online }}" onClick="{{ flip }}"><span class="OS_tx"><b>{{ title }}</b><span>{{ note }}</span></span><span class="OS_k"></span></button>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"online": {"editor": null}, "note": {"editor": null}, "onFlip": {"editor": null}, "$preview": {"width": 358, "height": 120}}'>
+class Component extends DCLogic {
+renderVals() {
+const P = this.props;
+return { online: !!P.online, cls: P.online ? 'OS_on' : '', title: P.online ? 'آنلاین هستید' : 'آفلاین هستید', note: P.note ?? '', flip: () => { if (P.onFlip) P.onFlip(); } };
+}
+}
+</script>
+</body>
+</html>

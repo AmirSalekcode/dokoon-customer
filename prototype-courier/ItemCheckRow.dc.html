@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>ردیف بررسی غذا</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:300;font-display:swap;src:url(/_blob/15b2679c8bfbb2516de3b480f9ed0bc5) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:400;font-display:swap;src:url(/_blob/6259b89db67d4999e322333ec185b1d2) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:500;font-display:swap;src:url(/_blob/069abf44dcbbfd0bfaeabfacfae55286) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:700;font-display:swap;src:url(/_blob/2c986bbf39699216ea3d18c33a6fd79e) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:800;font-display:swap;src:url(/_blob/92c5107a23f687f46f7f419a6489f113) format('truetype')}
+.IC_r{font-family:'Yekan Bakh',Tahoma,sans-serif;width:100%;min-height:64px;border:2px solid var(--ln,#F0DFD0);border-radius:20px;background:var(--sf,#fff);color:var(--ink,#1F1A17);display:flex;align-items:center;gap:12px;padding:8px 16px;cursor:pointer;text-align:right;transition:background .2s ease-out,border-color .2s ease-out}
+.IC_r:focus-visible{outline:3px solid #E4501E;outline-offset:2px}
+.IC_b{width:32px;height:32px;flex:none;border-radius:12px;border:2px solid var(--ln,#F0DFD0);display:grid;place-items:center;color:#fff}.IC_b svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;opacity:0}
+.IC_on{border-color:#E4501E;background:var(--soft,#FCE3D0)}.IC_on .IC_b{background:#E4501E;border-color:#E4501E}.IC_on .IC_b svg{opacity:1}
+.IC_q{min-width:32px;height:32px;border-radius:12px;background:var(--bg,#FBF0E6);font-weight:800;display:grid;place-items:center}.IC_n{flex:1;font-size:15px;font-weight:700;line-height:1.6}.IC_n small{display:block;font-size:12px;font-weight:400;color:var(--mu,#7A6E66)}
+</style>
+</helmet>
+<button class="IC_r {{ cls }}" dir="rtl" role="checkbox" aria-checked="{{ checked }}" onClick="{{ tog }}"><span class="IC_b"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5 9-10"></path></svg></span><span class="IC_q">{{ q }}</span><span class="IC_n">{{ name }}<small>{{ opt }}</small></span></button>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"item": {"editor": null}, "onToggle": {"editor": null}, "$preview": {"width": 358, "height": 72}}'>
+class Component extends DCLogic {
+renderVals() {
+const P = this.props;
+const it = P.item || {};
+return { q: it.q ?? '', name: it.name ?? '', opt: it.opt ?? '', checked: !!it.checked, cls: it.checked ? 'IC_on' : '', tog: () => { if (P.onToggle) P.onToggle(); } };
+}
+}
+</script>
+</body>
+</html>
