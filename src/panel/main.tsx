@@ -6,6 +6,7 @@ import { config } from '@/config/env';
 import { registerPwa } from '@/pwa';
 import { PanelApp } from './PanelApp';
 import { setSocketFactory } from './realtime/live';
+import { hydratePanelSession } from './api/session';
 
 // Apply the theme store (panel.html already set data-theme pre-paint).
 useTheme.getState();
@@ -20,6 +21,10 @@ async function start() {
   } else {
     registerPwa();
   }
+  // Android app: the Keystore session must be in memory before routing (D-38, KAN-72).
+  await hydratePanelSession().catch((err: unknown) =>
+    console.error('[panel] secure session unavailable', err),
+  );
   createRoot(document.getElementById('root')!).render(
     <StrictMode>
       <PanelApp />

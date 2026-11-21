@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
-import { createWakeLock, type WakeLockApi } from './wakeLock';
+import { createWakeLock, nativeWakeLockApi, type WakeLockApi } from './wakeLock';
 
 // KAN-61: Screen Wake Lock during the shift, taken again after the tab comes back (D-98).
 function fakeDoc() {
@@ -67,5 +67,19 @@ describe('wake lock', () => {
   it('a refused request (battery saver) resolves false', async () => {
     const api: WakeLockApi = { request: vi.fn(async () => Promise.reject(new Error('NotAllowedError'))) };
     expect(await createWakeLock(api, fakeDoc() as unknown as Document).acquire()).toBe(false);
+  });
+});
+
+describe('nativeWakeLockApi (Android app, KAN-72)', () => {
+  it('keeps the window on during the shift and lets it sleep after', async () => {
+    const keepAwake = vi.fn(async () => ({ ok: true }));
+    const doc = { visibilityState: 'visible', addEventListener: vi.fn(), removeEventListener: vi.fn() };
+    const w = createWakeLock(nativeWakeLockApi({ keepAwake }), doc as never);
+    expect(w.supported).toBe(true);
+    expect(await w.acquire()).toBe(true);
+    expect(keepAwake).toHaveBeenLastCalledWith({ on: true });
+    await w.release();
+    expect(keepAwake).toHaveBeenLastCalledWith({ on: false });
+    expect(w.held).toBe(false);
   });
 });

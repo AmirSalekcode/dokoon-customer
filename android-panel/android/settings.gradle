@@ -3,3 +3,7 @@ include ':capacitor-cordova-android-plugins'
 project(':capacitor-cordova-android-plugins').projectDir = new File('./capacitor-cordova-android-plugins/')
 
 apply from: 'capacitor.settings.gradle'
+
+// Dokoon's own native plugin shared by both apps (KAN-72).
+include ':dokoon-plugins'
+project(':dokoon-plugins').projectDir = new File('../../native-android/dokoon-plugins')

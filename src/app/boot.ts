@@ -1,5 +1,6 @@
 import { captureDeepLink } from '@/nav/deepLink';
 import { useNav } from '@/nav/nav';
+import { hydrateSession } from '@/auth/session';
 
 export interface BootDeps {
   useMocks: boolean;
@@ -28,6 +29,11 @@ export async function boot({ useMocks, startMocks, registerPwa, renderApp }: Boo
     } catch (err) {
       console.error('[boot] PWA registration failed', err);
     }
+  }
+  try {
+    await hydrateSession();
+  } catch (err) {
+    console.error('[boot] secure session unavailable', err);
   }
   renderApp();
 }

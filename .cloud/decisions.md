@@ -95,7 +95,7 @@
 | D-35 | 2026-11-18 | فایل `.env` (git-ignored) و `.env.example`؛ کد فقط از `src/config/env.ts` تنظیمات را می‌خواند. | درخواست مالک | approved |
 | D-36 | 2026-11-18 | هر چیز `VITE_*` عمومی است و در bundle مرورگر می‌رود؛ کلیدهای مخفی (مرچنت درگاه، SMS، FCM، keystore) فقط در بک‌اند یا GitHub Secrets. | امنیت | approved |
 | D-37 | 2026-11-18 | اسکنر راز (`npm run secrets:scan`) روی فایل‌های گیت و خروجی build؛ در CI هم gitleaks. | درخواست مالک | approved |
-| D-38 | 2026-11-18 | نشست فعلاً در localStorage؛ قبل از انتشار اندروید باید به ذخیره‌ی امن منتقل شود. | پیاده‌سازی فاز ۱ | proposed |
+| D-38 | 2026-11-18 | نشست در PWA در localStorage؛ در هر دو اپ اندروید با کلید AES-256-GCM داخل Android Keystore (افزونه‌ی بومی خودمان `native-android/dokoon-plugins`، بدون افزونه‌ی شخص ثالث؛ KAN-72، 2026-11-21). مقدار غیرقابل رمزگشایی = خروج. | پیاده‌سازی فاز ۱ + تفویض مالک (KAN-54) | approved |
 | D-39 | 2026-11-18 | مخزن GitHub خصوصی (به‌خاطر مجوز فونت). | تأیید مالک | approved |
 
 ## ۱۲. Workflow (روند کار)

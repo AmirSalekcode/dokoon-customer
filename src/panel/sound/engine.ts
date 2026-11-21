@@ -1,3 +1,5 @@
+import { DokoonNative } from '@/lib/native';
+import { isNative } from '@/lib/platform';
 import { gainFor, useSoundSettings } from './settings';
 
 /**
@@ -58,10 +60,16 @@ function browserDeps(): SoundDeps {
       return C ? new C() : null;
     },
     fetchImpl: (i, init) => globalThis.fetch(i, init),
-    vibrate: (p) =>
-      typeof navigator !== 'undefined' && typeof navigator.vibrate === 'function'
+    vibrate: (p) => {
+      // Android app (KAN-72): the system vibrator through Dokoon's plugin (WebView vibration is unreliable).
+      if (isNative()) {
+        void DokoonNative.vibrate({ pattern: p }).catch(() => {});
+        return true;
+      }
+      return typeof navigator !== 'undefined' && typeof navigator.vibrate === 'function'
         ? navigator.vibrate(p)
-        : false,
+        : false;
+    },
     setTimer: (fn, ms) => setTimeout(fn, ms),
     clearTimer: (id) => clearTimeout(id as ReturnType<typeof setTimeout>),
     url: `${import.meta.env.BASE_URL}sounds/new-order.wav`,
