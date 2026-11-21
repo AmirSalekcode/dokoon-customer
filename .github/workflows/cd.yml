@@ -5,7 +5,8 @@ name: CD
 on:
   push:
     branches: [main]
-    tags: ['v*']
+    # v*: customer app release · panel-v*: restaurant Android release (KAN-73)
+    tags: ['v*', 'panel-v*']
   workflow_dispatch:
 
 permissions:
@@ -14,6 +15,8 @@ permissions:
 jobs:
   image:
     name: Build & push ${{ matrix.image }} image (GHCR)
+    # A restaurant app tag only releases the APK; images follow main and v* tags.
+    if: ${{ !startsWith(github.ref, 'refs/tags/panel-v') }}
     runs-on: ubuntu-latest
     timeout-minutes: 20
     permissions:
@@ -128,3 +131,76 @@ jobs:
       - uses: softprops/action-gh-release@v2
         with:
           files: android/app/build/outputs/apk/release/app-release.apk
+
+  # Restaurant Android store build (KAN-73, D-92, D-84): only from a panel-vX.Y.Z tag, signed with its OWN
+  # keystore (PANEL_ANDROID_KEYSTORE_* secrets — never the customer key), versionCode from the tag.
+  android-panel-release:
+    name: Signed restaurant APK (panel-v* tags only)
+    if: startsWith(github.ref, 'refs/tags/panel-v')
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: gradle
+      - name: Preflight — refuse to publish an unsigned, unversioned or API-less store build
+        env:
+          PANEL_ANDROID_KEYSTORE_BASE64: ${{ secrets.PANEL_ANDROID_KEYSTORE_BASE64 }}
+          PANEL_ANDROID_KEYSTORE_PASSWORD: ${{ secrets.PANEL_ANDROID_KEYSTORE_PASSWORD }}
+          PANEL_ANDROID_KEY_ALIAS: ${{ secrets.PANEL_ANDROID_KEY_ALIAS }}
+          PANEL_ANDROID_KEY_PASSWORD: ${{ secrets.PANEL_ANDROID_KEY_PASSWORD }}
+          VITE_API_BASE_URL: ${{ vars.VITE_API_BASE_URL }}
+          TAG: ${{ github.ref_name }}
+        run: |
+          missing=0
+          for v in PANEL_ANDROID_KEYSTORE_BASE64 PANEL_ANDROID_KEYSTORE_PASSWORD PANEL_ANDROID_KEY_ALIAS PANEL_ANDROID_KEY_PASSWORD VITE_API_BASE_URL; do
+            if [ -z "${!v}" ]; then echo "::error::$v is not set"; missing=1; fi
+          done
+          [[ "$TAG" =~ ^panel-v([0-9]+)\.([0-9]+)\.([0-9]+)$ ]] || { echo "::error::tag must be panel-vX.Y.Z, got $TAG"; missing=1; }
+          [ "$missing" = 0 ] || exit 1
+          echo "ANDROID_VERSION_NAME=${TAG#panel-v}" >> "$GITHUB_ENV"
+          echo "ANDROID_VERSION_CODE=$(( BASH_REMATCH[1] * 10000 + BASH_REMATCH[2] * 100 + BASH_REMATCH[3] ))" >> "$GITHUB_ENV"
+      - run: npm ci
+      - run: npm run build:panel
+        env:
+          VITE_API_BASE_URL: ${{ vars.VITE_API_BASE_URL }}
+          VITE_NESHAN_MAP_KEY: ${{ vars.VITE_NESHAN_MAP_KEY }}
+          VITE_BALAD_MAP_KEY: ${{ vars.VITE_BALAD_MAP_KEY }}
+          VITE_WEBPUSH_VAPID_PUBLIC_KEY: ${{ vars.VITE_WEBPUSH_VAPID_PUBLIC_KEY }}
+      - run: npm run secrets:scan:dist-panel
+      - run: node scripts/panel-android-web.mjs
+      - run: npx cap sync android
+        working-directory: android-panel
+      - name: Decode keystore (secret never written to the repo)
+        run: echo "$PANEL_ANDROID_KEYSTORE_BASE64" | base64 -d > "$RUNNER_TEMP/panel-release.keystore"
+        env:
+          PANEL_ANDROID_KEYSTORE_BASE64: ${{ secrets.PANEL_ANDROID_KEYSTORE_BASE64 }}
+      - name: Gradle assembleRelease
+        working-directory: android-panel/android
+        run: chmod +x gradlew && ./gradlew assembleRelease --no-daemon
+        env:
+          ANDROID_KEYSTORE_FILE: ${{ runner.temp }}/panel-release.keystore
+          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.PANEL_ANDROID_KEYSTORE_PASSWORD }}
+          ANDROID_KEY_ALIAS: ${{ secrets.PANEL_ANDROID_KEY_ALIAS }}
+          ANDROID_KEY_PASSWORD: ${{ secrets.PANEL_ANDROID_KEY_PASSWORD }}
+      - name: Verify the APK signature, package and version
+        run: |
+          apk=android-panel/android/app/build/outputs/apk/release/app-release.apk
+          test -f "$apk" || { echo "::error::signed app-release.apk not produced"; ls android-panel/android/app/build/outputs/apk/release; exit 1; }
+          tools="$(ls -d "$ANDROID_HOME"/build-tools/* | sort -V | tail -1)"
+          "$tools/apksigner" verify --print-certs "$apk"
+          "$tools/aapt" dump badging "$apk" | grep -q "package: name='ir.dokoonapp.restaurant' versionCode='$ANDROID_VERSION_CODE'" \
+            || { echo "::error::package id or versionCode mismatch"; exit 1; }
+          mv "$apk" "dokoon-restaurant-$ANDROID_VERSION_NAME.apk"
+      - uses: softprops/action-gh-release@v2
+        with:
+          files: dokoon-restaurant-*.apk

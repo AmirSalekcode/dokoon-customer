@@ -234,27 +234,72 @@ jobs:
           path: android/app/build/outputs/apk/debug/app-debug.apk
           retention-days: 14
 
-  # Phone testing: after every merge to main, the mock-data debug APK is published as the
-  # «test-build» prerelease, always at the same link:
+  # Restaurant app (KAN-73, D-92): debug APK with demo data from its own Capacitor project.
+  android-panel:
+    name: Android debug APK (restaurant)
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    needs: quality
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: gradle
+      - run: npm ci
+      - run: npm run build:panel:mock
+      - run: node scripts/panel-android-web.mjs
+      - run: npx cap sync android
+        working-directory: android-panel
+      - name: Gradle assembleDebug
+        working-directory: android-panel/android
+        run: chmod +x gradlew && ./gradlew assembleDebug --no-daemon
+      - name: Check package id and name
+        run: |
+          aapt="$(ls -d "$ANDROID_HOME"/build-tools/* | sort -V | tail -1)/aapt"
+          badging="$("$aapt" dump badging android-panel/android/app/build/outputs/apk/debug/app-debug.apk)"
+          echo "$badging" | grep -E "^package|application-label:"
+          echo "$badging" | grep -q "package: name='ir.dokoonapp.restaurant'" || { echo "::error::wrong package id"; exit 1; }
+          echo "$badging" | grep -q "application-label:'دکون رستوران'" || { echo "::error::wrong app name"; exit 1; }
+      - uses: actions/upload-artifact@v5
+        with:
+          name: panel-debug-apk
+          path: android-panel/android/app/build/outputs/apk/debug/app-debug.apk
+          retention-days: 14
+
+  # Phone testing: after every merge to main, the mock-data debug APKs of both apps are published as the
+  # «test-build» prerelease, always at the same links (D-72, KAN-73):
   #   https://github.com/<owner>/<repo>/releases/download/test-build/dokoon-test.apk
+  #   https://github.com/<owner>/<repo>/releases/download/test-build/dokoon-restaurant-test.apk
   # Private repo → only collaborators can download it. Not a store build (no real API, debug-signed).
   test-apk-release:
     name: Publish test APK (main only)
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    needs: android
+    needs: [android, android-panel]
     permissions:
       contents: write
     steps:
       - uses: actions/download-artifact@v5
         with:
           name: app-debug-apk
+          path: customer
+      - uses: actions/download-artifact@v5
+        with:
+          name: panel-debug-apk
+          path: restaurant
       - name: Replace the test-build prerelease
         env:
           GH_TOKEN: ${{ github.token }}
           REPO: ${{ github.repository }}
         run: |
-          mv app-debug.apk dokoon-test.apk
+          mv customer/app-debug.apk dokoon-test.apk
+          mv restaurant/app-debug.apk dokoon-restaurant-test.apk
           gh release delete test-build --repo "$REPO" --yes --cleanup-tag || true
-          gh release create test-build dokoon-test.apk --repo "$REPO" --prerelease             --target "$GITHUB_SHA"             --title "نسخه‌ی آزمایشی (داده‌ی نمایشی) — ${GITHUB_SHA::7}"             --notes "APK آزمایشی با داده‌ی نمایشی (بدون سرور واقعی). برای نصب نسخه‌ی جدید، اگر نصب با خطای امضا متوقف شد، اول نسخه‌ی قبلی را حذف کنید. کد ورود آزمایشی: 1234"
+          gh release create test-build dokoon-test.apk dokoon-restaurant-test.apk --repo "$REPO" --prerelease             --target "$GITHUB_SHA"             --title "نسخه‌ی آزمایشی (داده‌ی نمایشی) — ${GITHUB_SHA::7}"             --notes "دو APK آزمایشی با داده‌ی نمایشی (بدون سرور واقعی): dokoon-test.apk اپ مشتری، dokoon-restaurant-test.apk اپ رستوران. برای نصب نسخه‌ی جدید، اگر نصب با خطای امضا متوقف شد، اول نسخه‌ی قبلی را حذف کنید. کد ورود آزمایشی: 1234"
