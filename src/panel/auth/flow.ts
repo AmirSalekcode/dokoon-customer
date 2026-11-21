@@ -5,7 +5,8 @@ import { usePanelSession } from '../api/session';
 import type { RestaurantAuth, RestaurantStatus } from '../api/types';
 import { usePanelNav, type PanelScreen } from '../nav/nav';
 import { useRestaurant } from '../state/restaurant';
-import { endShift, useShift } from '../state/shift';
+import { canAutoStartShift } from '../native/app';
+import { beginShift, endShift, useShift } from '../state/shift';
 
 /**
  * Restaurant sign-in flow (KAN-59, restaurant screen specs §1):
@@ -55,11 +56,14 @@ export function completeSignIn(auth: RestaurantAuth, mode: 'login' | 'register' 
  * appeared while starting (e.g. offline) stay on top of it, so «تلاش دوباره» lands on the right screen.
  */
 export function enter(status: AuthStatus | null, { keepErrors = false } = {}) {
-  const screen = routeFor(status);
+  // Android app (KAN-71): sound needs no tap there, so the shift starts by itself.
+  const autoShift = status === 'active' && !useShift.getState().started && canAutoStartShift();
+  const screen = autoShift ? 'orders' : routeFor(status);
   const nav = usePanelNav.getState();
   const errors = keepErrors ? nav.stack.filter((r) => r.screen === 'error') : [];
   if (status === 'active') void useRestaurant.getState().load();
   nav.resetTo(screen);
+  if (autoShift) void beginShift({ navigate: false });
   for (const e of errors) usePanelNav.getState().push('error', e.params);
 }
 

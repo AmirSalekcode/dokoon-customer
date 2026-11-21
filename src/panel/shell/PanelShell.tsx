@@ -5,6 +5,7 @@ import { LoadingState } from '@/components/library/LoadingState';
 import { ArtSprite } from '@/components/primitives/ArtSprite';
 import { formatDecimal, formatNumber, toFaDigits } from '@/lib/format';
 import { initConnectivity, initSystemBack } from '@/nav/systemBack';
+import { initPanelDeepLinks } from '../native/app';
 import { checkPanelConfig } from '../api/appConfig';
 import { panelApi } from '../api/client';
 import { bootPanel, logout } from '../auth/flow';
@@ -156,9 +157,11 @@ export function PanelShell() {
   useEffect(() => {
     const a = initSystemBack(usePanelNav);
     const b = initConnectivity(usePanelNav);
+    const c = initPanelDeepLinks();
     return () => {
       a();
       b();
+      c();
     };
   }, []);
 

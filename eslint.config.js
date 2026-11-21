@@ -13,6 +13,7 @@ export default tseslint.config(
       'dev-dist',
       'storybook-static',
       'android',
+      'android-panel/android',
       'prototype',
       'public/mockServiceWorker.js',
       'src/api/schema.d.ts',

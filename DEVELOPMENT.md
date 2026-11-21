@@ -16,6 +16,13 @@ React 19 + TypeScript + Vite 8, PWA (vite-plugin-pwa / Workbox) and Capacitor 8 
 | `npm run mock:prism` | Contract-only mock (Prism) on :4010, alternative to MSW |
 | `npm run lighthouse` | Lighthouse mobile on the URL entry points of a running `preview:perf` (budget: Performance & Accessibility ≥ 90); reports in `perf/results/` |
 | `npm run android:debug` | Mock build → `cap sync` → `android/app/build/outputs/apk/debug/app-debug.apk` |
+| `npm run android:panel:debug` | Restaurant app (KAN-71): panel mock build → `android-panel/` `cap sync` → `android-panel/android/app/build/outputs/apk/debug/app-debug.apk` (`ir.dokoonapp.restaurant`, «دکون رستوران») |
+
+Restaurant Android app (`android-panel/`, its own `capacitor.config.ts`, `webDir: ../dist-panel`): phones are
+locked to portrait and tablets rotate (MainActivity); the WebView plays sound without a tap, so the app skips the
+«شروع شیفت» screen (`src/panel/native/app.ts`); deep links `ir.dokoonapp.restaurant://order/<id>` (also
+`orders|menu|reports|account|notifs|sound|help`). Icons/splash: `node scripts/gen-android-panel-icons.mjs`.
+Never `npm install` inside `android-panel/` — its `package.json` only marks the Capacitor root.
 
 Android build needs `JAVA_HOME` (JDK 21) and `ANDROID_HOME` (Android SDK, platform 35).
 

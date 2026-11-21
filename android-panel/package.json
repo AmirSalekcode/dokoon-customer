@@ -1,0 +1,10 @@
+{
+  "name": "dokoon-restaurant-android",
+  "private": true,
+  "description": "Capacitor root for the restaurant panel Android app (KAN-71). Packages resolve from ../node_modules; never npm install here.",
+  "dependencies": {
+    "@capacitor/android": "^8.6.2",
+    "@capacitor/app": "^8.1.2",
+    "@capacitor/core": "^8.6.2"
+  }
+}
