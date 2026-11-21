@@ -18,7 +18,15 @@ test('boots Persian RTL with Yekan Bakh, marked as the courier app and never ind
   await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', 'noindex, nofollow');
 
   expect(await page.evaluate(() => getComputedStyle(document.body).fontFamily)).toContain('Yekan Bakh');
-  await page.evaluate(() => document.fonts.ready);
+  // Load the faces explicitly: the browser fetches a weight only when text uses it, and this placeholder
+  // shell has no 700 text, so checking without loading depends on what happens to be cached.
+  for (const weight of [400, 700, 800]) {
+    const faces = await page.evaluate(
+      (w) => document.fonts.load(`${w} 16px "Yekan Bakh"`).then((f) => f.length),
+      weight,
+    );
+    expect(faces, `Yekan Bakh ${weight}`).toBeGreaterThan(0);
+  }
   expect(await page.evaluate(() => document.fonts.check('700 16px "Yekan Bakh"'))).toBe(true);
   expect(await overflow(page)).toBeLessThanOrEqual(0);
 });
