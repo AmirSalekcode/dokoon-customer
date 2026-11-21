@@ -16,6 +16,8 @@ export const PANEL_SCREENS = [
   'reports',
   'settle',
   'account',
+  'hours',
+  'delivery',
   'help',
   'login',
   'reg',
