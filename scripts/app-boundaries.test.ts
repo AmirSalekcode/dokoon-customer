@@ -80,3 +80,50 @@ describe('ESLint app boundaries (customer ↔ panel)', () => {
     expect(await errors('src/screens/CartScreen.tsx', code)).toEqual([]);
   });
 });
+
+// D-125: the courier app (src/courier) is a third zone with the same rules.
+describe('ESLint app boundaries (courier ↔ customer ↔ panel)', () => {
+  it('courier may import shared code and its own code', async () => {
+    const code = [
+      "import { Button } from '@/components/base/Button';",
+      "import { useTheme } from '@/theme/theme';",
+      "import { createHttp } from '@/api/http';",
+      "import { CourierApp } from './CourierApp';",
+      "import { OrdersScreen } from './screens/OrdersScreen';",
+      'export { Button, useTheme, createHttp, CourierApp, OrdersScreen };',
+    ].join('\n');
+    expect(await errors('src/courier/main.tsx', code)).toEqual([]);
+    // A courier folder named like a customer folder is still the courier's own code.
+    const nested = "import { OrdersScreen } from '../screens/OrdersScreen';\nexport { OrdersScreen };";
+    expect(await errors('src/courier/shell/Shell.tsx', nested)).toEqual([]);
+  });
+
+  it('courier may import neither the customer app nor the panel', async () => {
+    const code = [
+      "import { App } from '@/app/App';",
+      "import { useCart } from '@/cart/cart';",
+      "import type { LatLng } from '@/api/types';",
+      "import { PanelApp } from '@/panel/PanelApp';",
+      "void import('../panel/realtime/live');",
+      'export { App, useCart, PanelApp };',
+      'export type { LatLng };',
+    ].join('\n');
+    const out = await errors('src/courier/main.tsx', code);
+    expect(out).toHaveLength(5);
+    expect(out.filter((m) => /customer/i.test(m))).toHaveLength(3);
+    expect(out.filter((m) => /restaurant-panel/i.test(m))).toHaveLength(2);
+  });
+
+  it('neither the customer app, the panel nor shared code may import the courier app', async () => {
+    const code = "import { CourierApp } from '@/courier/CourierApp';\nexport { CourierApp };";
+    for (const file of [
+      'src/screens/HomeScreen.tsx',
+      'src/panel/PanelApp.tsx',
+      'src/components/library/Thing.tsx',
+    ]) {
+      const out = await errors(file, code);
+      expect(out, file).toHaveLength(1);
+      expect(out[0], file).toMatch(/courier-app code/);
+    }
+  });
+});

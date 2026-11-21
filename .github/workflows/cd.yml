@@ -22,7 +22,7 @@ jobs:
     permissions:
       contents: read
       packages: write
-    # One image per app (D-91): customer → …/web, restaurant panel → …/panel.
+    # One image per app (D-91, D-125): customer → …/web, restaurant panel → …/panel, courier → …/courier.
     strategy:
       fail-fast: false
       matrix:
@@ -31,6 +31,8 @@ jobs:
             image: web
           - app: panel
             image: panel
+          - app: courier
+            image: courier
     steps:
       - uses: actions/checkout@v5
       - uses: docker/setup-buildx-action@v3

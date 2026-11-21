@@ -106,7 +106,7 @@ describe('panel Docker image', () => {
     expect(df).toMatch(/^ARG APP=customer$/m);
     expect(df).toMatch(/customer\) cfg=vite\.config\.ts; conf=docker\/nginx\.conf/);
     expect(df).toMatch(/panel\) cfg=vite\.panel\.config\.ts; conf=docker\/nginx\.panel\.conf/);
-    expect(df).toMatch(/\*\) echo "APP must be customer or panel/);
+    expect(df).toMatch(/\*\) echo "APP must be customer, panel or courier/);
     expect(df).toMatch(/secret-scan\.mjs out/);
   });
 
@@ -165,10 +165,13 @@ describe('panel CI/CD', () => {
 
   it('CD pushes a separate GHCR image per app', () => {
     const job = jobs('.github/workflows/cd.yml').image;
-    expect(job.strategy?.matrix.include).toEqual([
-      { app: 'customer', image: 'web' },
-      { app: 'panel', image: 'panel' },
-    ]);
+    // The courier image (KAN-85) is checked in courier-foundation.test.ts.
+    expect(job.strategy?.matrix.include).toEqual(
+      expect.arrayContaining([
+        { app: 'customer', image: 'web' },
+        { app: 'panel', image: 'panel' },
+      ]),
+    );
     const build = job.steps.find((s) => s.uses?.startsWith('docker/build-push-action@'))!;
     expect(String(build.with?.['build-args'])).toMatch(/APP=\$\{\{ matrix\.app \}\}/);
     expect(String(build.with?.['cache-from'])).toMatch(/scope=\$\{\{ matrix\.app \}\}/);

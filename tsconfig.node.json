@@ -18,8 +18,11 @@
     "vite.panel.config.ts",
     "playwright.config.ts",
     "playwright.panel.config.ts",
+    "vite.courier.config.ts",
+    "playwright.courier.config.ts",
     "capacitor.config.ts",
     "e2e",
-    "e2e-panel"
+    "e2e-panel",
+    "e2e-courier"
   ]
 }

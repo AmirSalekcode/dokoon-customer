@@ -24,6 +24,12 @@
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "dev:panel:mock"],
       "port": 5175
+    },
+    {
+      "name": "courier-mock",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev:courier:mock"],
+      "port": 5177
     }
   ]
 }

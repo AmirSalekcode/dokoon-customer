@@ -1,9 +1,11 @@
 # syntax=docker/dockerfile:1
 # Dokoon web apps (PWA). Multi-stage: build with Node, serve with unprivileged nginx.
-# One Dockerfile, two images (decision D-91): APP=customer (default) or APP=panel (restaurant panel).
+# One Dockerfile, three images (decisions D-91, D-125): APP=customer (default), APP=panel (restaurant
+# panel) or APP=courier (courier app).
 #   docker build -t dokoon-web .                                              # customer, production
 #   docker build -t dokoon-web:mock --build-arg BUILD_MODE=mock .             # customer demo with MSW mocks
 #   docker build -t dokoon-panel --build-arg APP=panel .                      # restaurant panel
+#   docker build -t dokoon-courier --build-arg APP=courier .                  # courier app
 # Only PUBLIC VITE_* values may be passed as build args (they end up in the browser bundle).
 
 ARG NODE_VERSION=24
@@ -34,7 +36,8 @@ ENV VITE_API_BASE_URL=$VITE_API_BASE_URL \
 RUN case "$APP" in \
       customer) cfg=vite.config.ts; conf=docker/nginx.conf ;; \
       panel) cfg=vite.panel.config.ts; conf=docker/nginx.panel.conf ;; \
-      *) echo "APP must be customer or panel, got '$APP'" >&2; exit 1 ;; \
+      courier) cfg=vite.courier.config.ts; conf=docker/nginx.courier.conf ;; \
+      *) echo "APP must be customer, panel or courier, got '$APP'" >&2; exit 1 ;; \
     esac \
  && npx vite build --config "$cfg" --mode "$BUILD_MODE" --outDir out \
  && node scripts/secret-scan.mjs out \

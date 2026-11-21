@@ -1,4 +1,5 @@
-# Local run: `docker compose up --build` → customer app http://localhost:8080, restaurant panel http://localhost:8081
+# Local run: `docker compose up --build` → customer app http://localhost:8080, restaurant panel http://localhost:8081,
+# courier app http://localhost:8082
 # Uses mock mode (MSW) until the backend exists. Public values come from .env (VITE_* only).
 x-public-args: &public-args
   BUILD_MODE: ${BUILD_MODE:-mock}
@@ -33,6 +34,20 @@ services:
     image: dokoon-panel:local
     ports:
       - '8081:8080'
+    read_only: true
+    tmpfs:
+      - /tmp
+    restart: unless-stopped
+
+  courier:
+    build:
+      context: .
+      args:
+        <<: *public-args
+        APP: courier
+    image: dokoon-courier:local
+    ports:
+      - '8082:8080'
     read_only: true
     tmpfs:
       - /tmp

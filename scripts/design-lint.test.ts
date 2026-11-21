@@ -109,6 +109,28 @@ describe('design lint — no green in the restaurant panel (src/panel)', () => {
   });
 });
 
+// Courier app rule (CLAUDE.md «Courier app» 1): no green either — on = orange, off = grey.
+describe('design lint — no green in the courier app (src/courier)', () => {
+  it('flags green tokens and named green in courier CSS', () => {
+    const css = `.a { background: var(--success); }\n.b { color: var(--okbg); }\n.c { border-color: var(--ln); }`;
+    const out = lintCss('src/courier/x.module.css', css);
+    expect(rules(out)).toEqual(['no-green', 'no-green']);
+    expect(out.map((i) => i.line)).toEqual([1, 2]);
+  });
+
+  it('flags green tokens, tones and class names in courier TSX/TS', () => {
+    const tsx = `export const A = () => (<>
+      <div style={{ background: 'var(--success)' }} />
+      <Toast tone="success" />
+      <span className="green" />
+    </>);`;
+    expect(rules(lintTsx('src/courier/x.tsx', tsx))).toEqual(['no-green', 'no-green', 'no-green']);
+    expect(rules(lintTsx('src/courier/state.ts', `export const tone = 'success-green';`))).toEqual([
+      'no-green',
+    ]);
+  });
+});
+
 describe('design lint — the repo', () => {
   it('src/ passes `npm run lint:design`', () => {
     const out = execSync('node scripts/design-lint.mjs', { cwd: root, encoding: 'utf8' });
