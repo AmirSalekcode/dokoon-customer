@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>دریافت وجه نقد</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:300;font-display:swap;src:url(/_blob/15b2679c8bfbb2516de3b480f9ed0bc5) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:400;font-display:swap;src:url(/_blob/6259b89db67d4999e322333ec185b1d2) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:500;font-display:swap;src:url(/_blob/069abf44dcbbfd0bfaeabfacfae55286) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:700;font-display:swap;src:url(/_blob/2c986bbf39699216ea3d18c33a6fd79e) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:800;font-display:swap;src:url(/_blob/92c5107a23f687f46f7f419a6489f113) format('truetype')}
+.CP_c{font-family:'Yekan Bakh',Tahoma,sans-serif;background:var(--sf,#fff);color:var(--ink,#1F1A17);border-radius:28px;padding:16px;box-shadow:0 4px 16px rgba(31,26,23,.06);display:flex;flex-direction:column;gap:12px}
+.CP_d{text-align:center;padding:12px;border-radius:20px;background:var(--soft,#FCE3D0);color:var(--pr2,#C2410C)}.CP_d small{display:block;font-size:12px;font-weight:700}.CP_d b{font-size:28px;font-weight:800;line-height:1.5}
+.CP_f label{font-size:14px;font-weight:700}.CP_w{display:flex;align-items:center;gap:8px;min-height:56px;padding:0 16px;margin-top:4px;border:2px solid var(--ln,#F0DFD0);border-radius:12px;background:var(--bg,#FBF0E6)}.CP_w:focus-within{border-color:#E4501E}
+.CP_i{font-family:'Yekan Bakh',Tahoma,sans-serif;flex:1;min-width:0;height:52px;border:0;outline:0;background:none;color:inherit;font-size:20px;font-weight:800;direction:ltr;text-align:right}.CP_w span{font-size:14px;font-weight:700;color:var(--mu,#7A6E66)}
+.CP_e{font-size:12px;font-weight:700;color:#C8281E}
+.CP_x{font-family:'Yekan Bakh',Tahoma,sans-serif;height:52px;border:2px solid #E4501E;border-radius:999px;background:none;color:var(--pr2,#C2410C);font-size:14px;font-weight:800;cursor:pointer}.CP_x:focus-visible{outline:3px solid #1F1A17;outline-offset:2px}
+</style>
+</helmet>
+<div class="CP_c" dir="rtl"><div class="CP_d"><small>مبلغ قابل دریافت از مشتری (نقد)</small><b>{{ due }}</b></div><div class="CP_f"><label>مبلغی که دریافت کردید</label><div class="CP_w"><input class="CP_i" type="text" inputmode="numeric" placeholder="۰" aria-label="مبلغ دریافت‌شده" value="{{ value }}" onInput="{{ inp }}"><span>تومان</span></div></div><sc-if value="{{ hasErr }}" hint-placeholder-val="{{ false }}"><div class="CP_e" role="alert">{{ error }}</div></sc-if><button class="CP_x" onClick="{{ exact }}">مبلغ دقیق دریافت شد</button></div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"due": {"editor": null}, "value": {"editor": null}, "error": {"editor": null}, "onInput": {"editor": null}, "onExact": {"editor": null}, "$preview": {"width": 358, "height": 230}}'>
+class Component extends DCLogic {
+renderVals() {
+const P = this.props;
+return { due: P.due ?? '', value: P.value ?? '', error: P.error ?? '', hasErr: !!P.error, inp: (e) => { if (P.onInput) P.onInput(e && e.target ? e.target.value : e); }, exact: () => { if (P.onExact) P.onExact(); } };
+}
+}
+</script>
+</body>
+</html>

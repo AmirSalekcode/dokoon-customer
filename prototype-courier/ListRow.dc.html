@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>ردیف فهرست</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:300;font-display:swap;src:url(/_blob/15b2679c8bfbb2516de3b480f9ed0bc5) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:400;font-display:swap;src:url(/_blob/6259b89db67d4999e322333ec185b1d2) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:500;font-display:swap;src:url(/_blob/069abf44dcbbfd0bfaeabfacfae55286) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:700;font-display:swap;src:url(/_blob/2c986bbf39699216ea3d18c33a6fd79e) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:800;font-display:swap;src:url(/_blob/92c5107a23f687f46f7f419a6489f113) format('truetype')}
+.ListRow_r{display:flex;align-items:center;gap:12px;width:100%;min-height:72px;padding:12px;border:0;border-radius:20px;background:var(--sf,#fff);box-shadow:0 4px 16px rgba(31,26,23,.06);cursor:pointer;text-align:right;font-family:'Yekan Bakh',Tahoma,sans-serif;color:var(--ink,#1F1A17);transition:transform .2s ease-out}
+.ListRow_r:hover{transform:translateY(-2px)}.ListRow_r:focus-visible{outline:3px solid #E4501E;outline-offset:2px}
+.ListRow_ib{position:relative;width:48px;height:48px;border-radius:12px;background:radial-gradient(circle at 50% 60%,var(--sf,#FFFFFF),var(--soft,#FCE3D0));color:var(--pr2,#C2410C);display:grid;place-items:center;flex:none}
+.ListRow_ib svg{width:32px;height:32px}.ListRow_ib svg.ListRow_ln{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.ListRow_dt{position:absolute;top:-2px;left:-2px;width:12px;height:12px;border-radius:50%;background:#C8281E;border:2px solid var(--sf,#fff)}
+.ListRow_tx{flex:1;min-width:0}.ListRow_t{font-size:14px;font-weight:700;line-height:1.6}.ListRow_s{font-size:12px;color:var(--mu,#7A6E66);line-height:1.7}
+.ListRow_m{font-size:12px;color:var(--mu,#7A6E66);flex:none}.ListRow_cv{width:20px;height:20px;fill:none;stroke:var(--mu,#7A6E66);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+</style>
+</helmet>
+<button class="ListRow_r" dir="rtl" onClick="{{ tap }}"><span class="ListRow_ib"><sc-if value="{{ hasArt }}" hint-placeholder-val="{{ true }}"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#{{ art }}"></use></svg></sc-if><sc-if value="{{ hasIcon }}" hint-placeholder-val="{{ false }}"><svg class="ListRow_ln" viewBox="0 0 24 24" aria-hidden="true"><path d="{{ d }}"></path></svg></sc-if><sc-if value="{{ dot }}" hint-placeholder-val="{{ false }}"><i class="ListRow_dt"></i></sc-if></span><span class="ListRow_tx"><div class="ListRow_t">{{ title }}</div><div class="ListRow_s">{{ sub }}</div></span><span class="ListRow_m">{{ meta }}</span><svg class="ListRow_cv" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg></button>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"title": {"editor": null}, "sub": {"editor": null}, "meta": {"editor": null}, "art": {"editor": null}, "d": {"editor": null}, "dot": {"editor": null}, "onTap": {"editor": null}, "$preview": {"width": 358, "height": 72}}'>
+class Component extends DCLogic {
+renderVals() {
+const P = this.props;
+return { title: P.title ?? '', sub: P.sub ?? '', meta: P.meta ?? '', art: P.art ?? '', d: P.d ?? '', hasArt: !!P.art, hasIcon: !P.art && !!P.d, dot: !!P.dot, tap: (e) => { if (P.onTap) P.onTap(); } };
+}
+}
+</script>
+</body>
+</html>

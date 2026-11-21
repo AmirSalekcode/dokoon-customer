@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>کاشی بارگذاری</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:300;font-display:swap;src:url(/_blob/15b2679c8bfbb2516de3b480f9ed0bc5) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:400;font-display:swap;src:url(/_blob/6259b89db67d4999e322333ec185b1d2) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:500;font-display:swap;src:url(/_blob/069abf44dcbbfd0bfaeabfacfae55286) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:700;font-display:swap;src:url(/_blob/2c986bbf39699216ea3d18c33a6fd79e) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:800;font-display:swap;src:url(/_blob/92c5107a23f687f46f7f419a6489f113) format('truetype')}
+.UT_b{font-family:'Yekan Bakh',Tahoma,sans-serif;width:100%;min-height:112px;border:2px dashed #E4501E;border-radius:20px;background:var(--sf,#fff);color:var(--pr2,#C2410C);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:12px;cursor:pointer;text-align:center;transition:transform .2s ease-out}
+.UT_b:hover{transform:scale(1.02)}.UT_b:focus-visible{outline:3px solid #E4501E;outline-offset:2px}
+.UT_b svg{width:28px;height:28px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.UT_b b{font-size:14px;font-weight:800;line-height:1.5}.UT_b small{font-size:12px;color:var(--mu,#7A6E66)}
+.UT_ok{border-style:solid;border-color:#E4501E;background:var(--bg,#FBF0E6);color:var(--ink,#1F1A17)}
+</style>
+</helmet>
+<button class="UT_b {{ cls }}" dir="rtl" onClick="{{ tap }}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="{{ d }}"></path></svg><b>{{ label }}</b><small>{{ sub }}</small></button>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"label": {"editor": null}, "sub": {"editor": null}, "d": {"editor": null}, "done": {"editor": null}, "onTap": {"editor": null}, "$preview": {"width": 172, "height": 128}}'>
+class Component extends DCLogic {
+renderVals() {
+const P = this.props;
+return { label: P.label ?? '', sub: P.done ? 'بارگذاری شد · تغییر' : (P.sub ?? ''), d: P.done ? 'M5 12l5 5 9-10' : (P.d ?? ''), cls: P.done ? 'UT_ok' : '', tap: () => { if (P.onTap) P.onTap(); } };
+}
+}
+</script>
+</body>
+</html>

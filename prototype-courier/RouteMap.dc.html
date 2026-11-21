@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>نقشه‌ی مسیر</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:300;font-display:swap;src:url(/_blob/15b2679c8bfbb2516de3b480f9ed0bc5) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:400;font-display:swap;src:url(/_blob/6259b89db67d4999e322333ec185b1d2) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:500;font-display:swap;src:url(/_blob/069abf44dcbbfd0bfaeabfacfae55286) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:700;font-display:swap;src:url(/_blob/2c986bbf39699216ea3d18c33a6fd79e) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:800;font-display:swap;src:url(/_blob/92c5107a23f687f46f7f419a6489f113) format('truetype')}
+.RM_w{font-family:'Yekan Bakh',Tahoma,sans-serif;position:relative;border-radius:28px;overflow:hidden;background:#EADBCB;height:260px;box-shadow:0 4px 16px rgba(31,26,23,.06);color:#1F1A17}
+.RM_w svg.m{position:absolute;inset:0;width:100%;height:100%}
+.RM_top{position:absolute;top:12px;inset-inline:12px;display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
+.RM_chip{background:#fff;border-radius:20px;padding:8px 16px;box-shadow:0 4px 16px rgba(31,26,23,.15)}.RM_chip small{display:block;font-size:12px;color:#7A6E66}.RM_chip b{font-size:16px;font-weight:800}
+.RM_trk{background:#1F1A17;color:#fff;border-radius:999px;padding:0 12px;height:28px;font-size:12px;font-weight:700;line-height:28px;display:inline-flex;align-items:center;gap:8px}.RM_trk i{width:8px;height:8px;border-radius:50%;background:#F5B32F;animation:RM_p 2.4s ease-in-out infinite}
+@keyframes RM_p{0%,100%{transform:scale(1)}50%{transform:scale(1.5)}}
+.RM_bt{position:absolute;bottom:12px;inset-inline:12px;display:flex;gap:8px}
+.RM_bt button{font-family:'Yekan Bakh',Tahoma,sans-serif;flex:1;height:48px;border:0;border-radius:999px;background:#fff;color:#1F1A17;font-size:14px;font-weight:800;cursor:pointer;box-shadow:0 4px 16px rgba(31,26,23,.15);display:inline-flex;align-items:center;justify-content:center;gap:8px}
+.RM_bt button svg{width:20px;height:20px;fill:none;stroke:#E4501E;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}.RM_bt button:focus-visible{outline:3px solid #E4501E;outline-offset:2px}
+.RM_rt{stroke-dasharray:10 8;animation:RM_d 1.2s linear infinite}@keyframes RM_d{to{stroke-dashoffset:-18}}
+</style>
+</helmet>
+<div class="RM_w" dir="rtl"><svg class="m" viewBox="0 0 358 260" preserveAspectRatio="xMidYMid slice" role="img" aria-label="مسیر روی نقشه (نمایش نمونه)"><rect width="358" height="260" fill="#EADBCB"></rect><path d="M0 70h358M0 150h358M0 220h358M60 0v260M150 0v260M250 0v260M320 0v260" stroke="#F7EFE7" stroke-width="14"></path><path d="M0 110L358 90" stroke="#fff" stroke-width="8"></path><rect x="170" y="165" width="60" height="40" rx="8" fill="#D8E6C8"></rect><path class="RM_rt" d="M70 190C70 150 150 150 150 110S250 80 290 60" fill="none" stroke="#E4501E" stroke-width="6" stroke-linecap="round"></path><circle cx="70" cy="190" r="10" fill="#1F1A17"></circle><circle cx="70" cy="190" r="4" fill="#fff"></circle><path d="M290 24c-9 0-15 7-15 15 0 11 15 26 15 26s15-15 15-26c0-8-6-15-15-15z" fill="#E4501E"></path><circle cx="290" cy="39" r="6" fill="#fff"></circle></svg><div class="RM_top"><div class="RM_chip"><small>{{ label }}</small><b>{{ etaText }} · {{ distText }}</b></div><sc-if value="{{ tracking }}" hint-placeholder-val="{{ true }}"><span class="RM_trk"><i></i>ردیابی فعال</span></sc-if></div><div class="RM_bt"><button onClick="{{ neshan }}"><svg class="" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12l16-8-6 16-3-7z"></path></svg>مسیریابی با نشان</button><button onClick="{{ balad }}"><svg class="" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12l16-8-6 16-3-7z"></path></svg>مسیریابی با بلد</button></div></div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"label": {"editor": null}, "etaText": {"editor": null}, "distText": {"editor": null}, "tracking": {"editor": null}, "onNeshan": {"editor": null}, "onBalad": {"editor": null}, "$preview": {"width": 358, "height": 260}}'>
+class Component extends DCLogic {
+renderVals() {
+const P = this.props;
+return { label: P.label ?? '', etaText: P.etaText ?? '', distText: P.distText ?? '', tracking: P.tracking !== false, neshan: () => { if (P.onNeshan) P.onNeshan(); }, balad: () => { if (P.onBalad) P.onBalad(); } };
+}
+}
+</script>
+</body>
+</html>

@@ -47,3 +47,17 @@ Rules specific to this app:
 7. Responsive: phone <720 = bottom tabs, ≥720 = side rail + list/detail split. Use CSS media/container queries (the prototype's generated `AppTablet` copy is not a pattern to copy).
 8. Formerly open items are decided in `.cloud/decisions.md` D-90…D-104 (domain `panel.dokoonapp.ir`, Android `ir.dokoonapp.restaurant`, ETA, cash settlement, multi-device, printing, sound/push, uploads, courier call, holidays, history filter, wallet, load testing). Still open: D-49, D-50, D-51, D-54. Do not decide anything else silently.
 9. Work is run **epic by epic** (D-105): one chat per Jira epic (KAN-50..54); inside it, tasks in dependency order, each on its own `feature/KAN-xxx-…` branch with its own PR, and stop after each PR for the owner to review/merge. Order and which epics may run in parallel: `TASKS.md`.
+
+## Courier app (added)
+Scope: courier app (PWA + Capacitor Android), same codebase/backend/design system. Docs in `courier/`. Visual reference: `prototype-courier/` (unverified Claude Design prototype, mobile + tablet boards).
+Rules specific to this app:
+1. **No green.** Courier look = orange gradient header with white logo, 56–64px touch targets. On = orange, off = grey.
+2. Customer phone/exact address are visible **only after accepting** and only until delivery; offers show the neighbourhood only. Sheba always masked; Sheba change = fresh OTP + admin review.
+3. Location is tracked **only while online or with an active order**, always shown in the UI; no tracking when offline. Cannot go offline during an active order.
+4. Offer acceptance is **atomic on the server** (first courier wins); the client must handle "already taken".
+5. Cash orders: courier enters collected amount (`cash_collected`); mismatch with order total is allowed but reported. Cash settlement rule is **undecided** — show sample numbers only.
+6. Registration documents are **data-driven** (`GET /c/doc-types`); expiring documents (e.g. insurance) show a renew action.
+7. iOS PWA cannot track location in background → couriers are told to prefer Android. Android needs a foreground location service, notification permission and battery-optimisation exemption (Capacitor plugins).
+8. Maps: Neshan or Balad via deep link (user picks, fallback to the other). The prototype's map is a stylized SVG, not a real map.
+9. Responsive via CSS media/container queries: <720 bottom tabs, ≥720 side rail. Do not copy the prototype's separate tablet file.
+10. Open decisions (do not decide silently): cash settlement, safe-call number, Push/sound provider, cancel penalties/rating, final map provider.

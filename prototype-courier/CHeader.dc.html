@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>سربرگ پیک</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:300;font-display:swap;src:url(/_blob/15b2679c8bfbb2516de3b480f9ed0bc5) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:400;font-display:swap;src:url(/_blob/6259b89db67d4999e322333ec185b1d2) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:500;font-display:swap;src:url(/_blob/069abf44dcbbfd0bfaeabfacfae55286) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:700;font-display:swap;src:url(/_blob/2c986bbf39699216ea3d18c33a6fd79e) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:800;font-display:swap;src:url(/_blob/92c5107a23f687f46f7f419a6489f113) format('truetype')}
+.CH_h{font-family:'Yekan Bakh',Tahoma,sans-serif;--logo1:#fff;--logo2:#FFF3EA;background:linear-gradient(160deg,#C2410C,#E4501E);color:#fff;padding:16px 16px 24px;border-radius:0 0 28px 28px;display:flex;flex-direction:column;gap:16px;box-shadow:0 8px 24px rgba(194,65,12,.25)}
+.CH_t{display:flex;align-items:center;gap:12px}.CH_lg{height:26px;width:auto;flex:none}
+.CH_tag{height:24px;padding:0 12px;border-radius:999px;background:#1F1A17;color:#fff;font-size:12px;font-weight:800;line-height:24px}
+.CH_b{display:flex;align-items:flex-end;gap:12px}.CH_n{flex:1;min-width:0}
+.CH_n h1{margin:0;font-size:20px;font-weight:800;line-height:1.5;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.CH_n p{margin:0;font-size:12px;line-height:1.7;opacity:.9}
+.CH_e{text-align:left;background:rgba(255,255,255,.18);border-radius:20px;padding:8px 16px;flex:none}.CH_e small{display:block;font-size:12px;opacity:.9}.CH_e b{font-size:16px;font-weight:800}
+</style>
+</helmet>
+<header class="CH_h" dir="rtl"><div class="CH_t"><svg class="CH_lg" viewBox="0 0 902.92 251.16" role="img" aria-label="دکون Dokoon"><use href="#dk-logo"></use></svg><span class="CH_tag">پیک</span></div><div class="CH_b"><div class="CH_n"><h1>{{ who }}</h1><p>{{ sub }}</p></div><div class="CH_e"><small>درآمد امروز</small><b>{{ earn }}</b></div></div></header>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"who": {"editor": null}, "sub": {"editor": null}, "earn": {"editor": null}, "$preview": {"width": 390, "height": 150}}'>
+class Component extends DCLogic {
+renderVals() {
+const P = this.props;
+return { who: P.who ?? '', sub: P.sub ?? '', earn: P.earn ?? '' };
+}
+}
+</script>
+</body>
+</html>

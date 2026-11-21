@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>صفحه‌ی خطا</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:300;font-display:swap;src:url(/_blob/15b2679c8bfbb2516de3b480f9ed0bc5) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:400;font-display:swap;src:url(/_blob/6259b89db67d4999e322333ec185b1d2) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:500;font-display:swap;src:url(/_blob/069abf44dcbbfd0bfaeabfacfae55286) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:700;font-display:swap;src:url(/_blob/2c986bbf39699216ea3d18c33a6fd79e) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:800;font-display:swap;src:url(/_blob/92c5107a23f687f46f7f419a6489f113) format('truetype')}
+.ErrorPage_w{display:flex;flex-direction:column;align-items:center;text-align:center;padding:64px 24px 32px;min-height:100%;box-sizing:border-box;background:var(--bg,#FBF0E6);font-family:'Yekan Bakh',Tahoma,sans-serif;color:var(--ink,#1F1A17)}
+.ErrorPage_ic{position:relative;width:120px;height:120px;border-radius:50%;background:var(--soft,#FCE3D0);color:var(--pr2,#C2410C);display:grid;place-items:center;animation:float 4.5s ease-in-out infinite}
+.ErrorPage_ic svg{width:56px;height:56px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.ErrorPage_cd{margin-top:24px;font-size:48px;font-weight:800;line-height:1.2;color:var(--mu,#7A6E66);letter-spacing:2px}
+.ErrorPage_t{margin:8px 0 0;font-size:20px;font-weight:800;line-height:1.5}.ErrorPage_x{margin:8px 0 0;font-size:14px;color:var(--mu,#7A6E66);line-height:1.9;max-width:300px}
+.ErrorPage_a{margin-top:auto;width:100%;padding-top:32px;display:flex;flex-direction:column;gap:8px}
+.ErrorPage_p{height:52px;border:0;border-radius:999px;background:#E4501E;color:#fff;font-family:inherit;font-size:15px;font-weight:700;cursor:pointer;box-shadow:0 8px 24px rgba(228,80,30,.25);transition:transform .2s ease-out}.ErrorPage_p:hover{transform:scale(1.02)}
+.ErrorPage_s{height:48px;border:0;background:none;color:var(--pr2,#C2410C);font-family:inherit;font-size:15px;font-weight:700;cursor:pointer}
+.ErrorPage_p:focus-visible,.ErrorPage_s:focus-visible{outline:3px solid #E4501E;outline-offset:2px}
+</style>
+</helmet>
+<div class="ErrorPage_w" dir="rtl" role="alert"><div class="ErrorPage_ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="{{ d }}"></path></svg></div><sc-if value="{{ hasCode }}" hint-placeholder-val="{{ true }}"><div class="ErrorPage_cd">{{ code }}</div></sc-if><h1 class="ErrorPage_t">{{ title }}</h1><p class="ErrorPage_x">{{ text }}</p><div class="ErrorPage_a"><button class="ErrorPage_p" onClick="{{ primary }}">{{ cta }}</button><sc-if value="{{ hasSecondary }}" hint-placeholder-val="{{ true }}"><button class="ErrorPage_s" onClick="{{ secondary }}">{{ ctaSecondary }}</button></sc-if></div></div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"code": {"editor": null}, "title": {"editor": null}, "text": {"editor": null}, "d": {"editor": null}, "cta": {"editor": null}, "ctaSecondary": {"editor": null}, "onPrimary": {"editor": null}, "onSecondary": {"editor": null}, "$preview": {"width": 390, "height": 640}}'>
+class Component extends DCLogic {
+renderVals() {
+const P = this.props;
+return { code: P.code ?? '', hasCode: !!P.code, title: P.title ?? '', text: P.text ?? '', d: P.d ?? '', cta: P.cta ?? 'تلاش دوباره', ctaSecondary: P.ctaSecondary ?? '', hasSecondary: !!P.ctaSecondary, primary: (e) => { if (P.onPrimary) P.onPrimary(); }, secondary: (e) => { if (P.onSecondary) P.onSecondary(); } };
+}
+}
+</script>
+</body>
+</html>

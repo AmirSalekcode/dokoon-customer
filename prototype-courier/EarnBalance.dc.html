@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>موجودی و طلب</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:300;font-display:swap;src:url(/_blob/15b2679c8bfbb2516de3b480f9ed0bc5) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:400;font-display:swap;src:url(/_blob/6259b89db67d4999e322333ec185b1d2) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:500;font-display:swap;src:url(/_blob/069abf44dcbbfd0bfaeabfacfae55286) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:700;font-display:swap;src:url(/_blob/2c986bbf39699216ea3d18c33a6fd79e) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:800;font-display:swap;src:url(/_blob/92c5107a23f687f46f7f419a6489f113) format('truetype')}
+.EB_c{font-family:'Yekan Bakh',Tahoma,sans-serif;background:linear-gradient(160deg,#8B2313,#C2410C 55%,#E4501E);color:#fff;border-radius:28px;padding:20px 16px;display:flex;flex-direction:column;gap:12px;box-shadow:0 8px 24px rgba(194,65,12,.25)}
+.EB_c small{font-size:12px;opacity:.9}.EB_b{font-size:32px;font-weight:800;line-height:1.4}
+.EB_r{display:flex;gap:12px}.EB_r div{flex:1;background:rgba(255,255,255,.16);border-radius:20px;padding:8px 12px}.EB_r b{display:block;font-size:15px;font-weight:800}
+.EB_n{font-size:12px;line-height:1.7;opacity:.92}
+</style>
+</helmet>
+<div class="EB_c" dir="rtl"><div><small>مانده‌ی قابل تسویه</small><div class="EB_b">{{ balance }}</div></div><div class="EB_r"><div><small>نقدی در دست شما</small><b>{{ cash }}</b></div><div><small>طلب از دکون</small><b>{{ dokoon }}</b></div></div><div class="EB_n">{{ note }}</div></div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"balance": {"editor": null}, "cash": {"editor": null}, "dokoon": {"editor": null}, "note": {"editor": null}, "$preview": {"width": 358, "height": 200}}'>
+class Component extends DCLogic {
+renderVals() {
+const P = this.props;
+return { balance: P.balance ?? '', cash: P.cash ?? '', dokoon: P.dokoon ?? '', note: P.note ?? '' };
+}
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>فیلد متنی</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:300;font-display:swap;src:url(/_blob/15b2679c8bfbb2516de3b480f9ed0bc5) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:400;font-display:swap;src:url(/_blob/6259b89db67d4999e322333ec185b1d2) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:500;font-display:swap;src:url(/_blob/069abf44dcbbfd0bfaeabfacfae55286) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:700;font-display:swap;src:url(/_blob/2c986bbf39699216ea3d18c33a6fd79e) format('truetype')}@font-face{font-family:'Yekan Bakh';font-style:normal;font-weight:800;font-display:swap;src:url(/_blob/92c5107a23f687f46f7f419a6489f113) format('truetype')}
+.TF_f{font-family:'Yekan Bakh',Tahoma,sans-serif;display:flex;flex-direction:column;gap:4px;color:var(--ink,#1F1A17)}
+.TF_l{font-size:14px;font-weight:700;line-height:1.7}
+.TF_w{display:flex;align-items:center;gap:8px;min-height:52px;padding:0 16px;border:2px solid var(--ln,#F0DFD0);border-radius:12px;background:var(--sf,#fff);transition:border-color .2s ease-out}
+.TF_w:focus-within{border-color:#E4501E}
+.TF_i{font-family:'Yekan Bakh',Tahoma,sans-serif;flex:1;min-width:0;height:48px;border:0;outline:0;background:none;color:inherit;font-size:15px;font-weight:500}
+.TF_i::placeholder{color:var(--mu,#7A6E66);opacity:.8}
+.TF_ta{height:auto;min-height:96px;padding:12px 0;resize:none;line-height:1.7}
+.TF_sf{font-size:14px;font-weight:700;color:var(--mu,#7A6E66);flex:none}
+.TF_ltr{direction:ltr;text-align:right}
+.TF_h{font-size:12px;color:var(--mu,#7A6E66);line-height:1.7}.TF_e{font-size:12px;font-weight:700;color:#C8281E}
+.TF_er .TF_w{border-color:#C8281E}
+</style>
+</helmet>
+<div class="TF_f {{ cls }}" dir="rtl"><label class="TF_l">{{ label }}</label><div class="TF_w"><sc-if value="{{ multi }}" hint-placeholder-val="{{ false }}"><textarea class="TF_i TF_ta" rows="{{ rows }}" placeholder="{{ placeholder }}" aria-label="{{ label }}" onInput="{{ input }}">{{ value }}</textarea></sc-if><sc-if value="{{ single }}" hint-placeholder-val="{{ true }}"><input class="TF_i {{ ltrCls }}" type="text" inputmode="{{ inputmode }}" placeholder="{{ placeholder }}" aria-label="{{ label }}" value="{{ value }}" onInput="{{ input }}"></sc-if><sc-if value="{{ hasSuffix }}" hint-placeholder-val="{{ false }}"><span class="TF_sf">{{ suffix }}</span></sc-if></div><sc-if value="{{ hasError }}" hint-placeholder-val="{{ false }}"><span class="TF_e" role="alert">{{ error }}</span></sc-if><sc-if value="{{ showHint }}" hint-placeholder-val="{{ false }}"><span class="TF_h">{{ hint }}</span></sc-if></div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"label": {"editor": null}, "value": {"editor": null}, "placeholder": {"editor": null}, "hint": {"editor": null}, "error": {"editor": null}, "suffix": {"editor": null}, "ltr": {"editor": null}, "rows": {"editor": null}, "inputmode": {"editor": null}, "onInput": {"editor": null}, "$preview": {"width": 358, "height": 96}}'>
+class Component extends DCLogic {
+renderVals() {
+const P = this.props;
+const multi = !!P.rows && P.rows > 1;
+return { label: P.label ?? '', value: P.value ?? '', placeholder: P.placeholder ?? '', hint: P.hint ?? '', error: P.error ?? '', hasError: !!P.error, showHint: !!P.hint && !P.error, suffix: P.suffix ?? '', hasSuffix: !!P.suffix, rows: P.rows || 1, multi: multi, single: !multi, inputmode: P.inputmode || 'text', ltrCls: P.ltr ? 'TF_ltr' : '', cls: P.error ? 'TF_er' : '', input: (e) => { if (P.onInput) P.onInput(e && e.target ? e.target.value : e); } };
+}
+}
+</script>
+</body>
+</html>
