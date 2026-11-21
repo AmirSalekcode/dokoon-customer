@@ -17,6 +17,7 @@
 node_modules
 dist
 dist-panel
+dist-courier
 dev-dist
 storybook-static
 coverage
@@ -26,6 +27,8 @@ playwright-report
 android
 prototype
 prototype-restaurant
+prototype-courier
+e2e-courier
 e2e-panel
 docs
 e2e
