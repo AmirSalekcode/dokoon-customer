@@ -41,6 +41,9 @@ export default function ({ assets }) {
   ]);
   check(batch, { 'assets 200': (rs) => rs.every((r) => r.status === 200) });
   // SPA deep link must fall back to index.html.
-  check(http.get(`${BASE_URL}/some/deep/link`), { 'spa fallback 200': (r) => r.status === 200 });
+  // Sent like a browser navigation (Accept: text/html), which is what the SPA fallback serves.
+  check(http.get(`${BASE_URL}/some/deep/link`, { headers: { Accept: 'text/html' } }), {
+    'spa fallback 200': (r) => r.status === 200,
+  });
   sleep(1);
 }

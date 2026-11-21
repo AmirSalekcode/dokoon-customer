@@ -268,3 +268,32 @@ describe('restaurant Android app', () => {
     expect(text).toContain('secrets.PANEL_ANDROID_KEYSTORE_PASSWORD');
   });
 });
+
+// KAN-74 (D-104): panel speed/load budgets in CI.
+describe('restaurant panel speed and load', () => {
+  const ci = wf('.github/workflows/ci.yml');
+
+  it('audits the panel with Lighthouse on its own preview', () => {
+    const job = ci.jobs['lighthouse-panel'];
+    expect(job.needs).toBe('quality');
+    expect(runs(job)).toContain('npm run build:panel:mock');
+    expect(runs(job)).toContain('npm run preview:panel:perf');
+    expect(JSON.stringify(job)).toContain('"LH_APP":"panel"');
+  });
+
+  it('load-tests the panel image and smoke-runs the backend scenarios on the mock', () => {
+    const job = ci.jobs['docker-perf'];
+    const steps = job.steps.map((x) => JSON.stringify(x)).join(' ');
+    expect(steps).toContain('http://127.0.0.1:8081');
+    expect(runs(job)).toContain('node perf/backend/mock-server.mjs');
+    expect(runs(job)).toContain('-e PROFILE=smoke');
+    expect(runs(job)).toContain('perf/backend/restaurant.js');
+  });
+
+  it('the backend script carries the D-104 target load', () => {
+    const src = read('perf/backend/restaurant.js');
+    expect(src).toContain('sockets: 500');
+    expect(src).toContain('ordersPerMinute: 2000');
+    expect(src).toContain("ws_connected: ['rate>0.99']");
+  });
+});

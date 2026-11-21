@@ -157,6 +157,15 @@ jobs:
         run: k6 run --summary-export k6-static.json perf/static-load.js
         env:
           BASE_URL: http://127.0.0.1:8080
+      - name: k6 static load test — restaurant panel image (KAN-74)
+        run: k6 run --summary-export k6-static-panel.json perf/static-load.js
+        env:
+          BASE_URL: http://127.0.0.1:8081
+      - name: k6 backend scenarios — smoke on the stand-in mock (REST + WebSocket + orders; KAN-74)
+        run: |
+          node perf/backend/mock-server.mjs > backend-mock.log 2>&1 &
+          for i in $(seq 1 20); do curl -fsS http://127.0.0.1:4020/healthz && break; sleep 0.5; done
+          k6 run --summary-export k6-backend-smoke.json -e PROFILE=smoke -e BASE_URL=http://127.0.0.1:4020/v1 perf/backend/restaurant.js
       - name: k6 speed test for every screen
         env:
           BASE_URL: http://127.0.0.1:8080
@@ -204,6 +213,35 @@ jobs:
         with:
           name: lighthouse-reports
           path: perf/results/lighthouse-*
+          retention-days: 30
+
+  # Same budget for the restaurant panel (KAN-74, D-104): login and shift entry points.
+  lighthouse-panel:
+    name: Lighthouse mobile — restaurant panel (≥ 90)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    needs: quality
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - run: npm run build:panel:mock
+      - name: Serve the panel build and audit
+        run: |
+          npm run preview:panel:perf > preview-panel.log 2>&1 &
+          for i in $(seq 1 30); do curl -fsS -o /dev/null http://127.0.0.1:4175/ && break; sleep 1; done
+          npm run lighthouse
+        env:
+          LH_APP: panel
+      - uses: actions/upload-artifact@v5
+        if: always()
+        with:
+          name: lighthouse-panel-reports
+          path: perf/results/lighthouse-panel-*
           retention-days: 30
 
   android:
