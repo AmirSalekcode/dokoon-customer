@@ -1,3 +1,4 @@
+import { readFileSync } from 'node:fs';
 import { expect, test, type Page } from '@playwright/test';
 import { openPanel, seedSession } from './helpers';
 
@@ -16,7 +17,7 @@ async function openReports(page: Page) {
   await expect(visible(page).getByText('۴٬۸۵۰٬۰۰۰ تومان')).toBeVisible();
 }
 
-test('periods switch the report; a settlement opens its detail and the invoice downloads', async ({
+test('periods switch the report; a settlement opens its detail and the statement downloads as PDF and Excel', async ({
   page,
 }) => {
   await openReports(page);
@@ -32,9 +33,18 @@ test('periods switch the report; a settlement opens its detail and the invoice d
   await expect(visible(page).getByText('۳۴٬۳۲۰٬۰۰۰ تومان')).toBeVisible();
   await expect(nav(page)).toHaveCount(0);
 
-  const download = page.waitForEvent('download');
-  await visible(page).getByRole('button', { name: 'دریافت صورت‌حساب' }).click();
-  expect((await download).suggestedFilename()).toBe('dokoon-invoice-s2.pdf');
+  const pdf = page.waitForEvent('download');
+  await visible(page).getByRole('button', { name: 'دریافت صورت‌حساب PDF' }).click();
+  expect((await pdf).suggestedFilename()).toBe('dokoon-settlement-s2.pdf');
+
+  // KAN-75: Excel statement built from the server numbers — a real .xlsx (ZIP) file.
+  const xlsx = page.waitForEvent('download');
+  await visible(page).getByRole('button', { name: 'دریافت صورت‌حساب اکسل' }).click();
+  const file = await xlsx;
+  expect(file.suggestedFilename()).toBe('dokoon-settlement-s2.xlsx');
+  const bytes = readFileSync((await file.path())!);
+  expect([...bytes.subarray(0, 4)]).toEqual([0x50, 0x4b, 0x03, 0x04]);
+  expect(bytes.toString('utf8')).toContain('34320000');
 
   await page.goBack();
   await expect(visible(page)).toHaveAttribute('data-screen', 'reports');
@@ -50,4 +60,15 @@ test.describe('tablet 1024', () => {
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
     expect(overflow).toBeLessThanOrEqual(0);
   });
+});
+
+test('all settlements download as one Excel file (KAN-75)', async ({ page }) => {
+  await openReports(page);
+  const xlsx = page.waitForEvent('download');
+  await visible(page).getByRole('button', { name: 'دریافت اکسل همه‌ی تسویه‌ها' }).click();
+  const file = await xlsx;
+  expect(file.suggestedFilename()).toMatch(/^dokoon-settlements-\d{4}-\d{2}-\d{2}\.xlsx$/);
+  const text = readFileSync((await file.path())!).toString('utf8');
+  expect(text).toContain('xl/worksheets/sheet1.xml');
+  expect(text).toContain('rightToLeft="1"');
 });

@@ -115,3 +115,16 @@
   font-weight: var(--fw-medium);
   line-height: 1.8;
 }
+
+/* Statement downloads (KAN-75): PDF and Excel side by side. */
+.dl {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--sp-3);
+}
+.sectionHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-3);
+}

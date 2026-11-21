@@ -122,3 +122,10 @@ Nothing here is implemented as an invented endpoint; the frontend works around e
     (`phoneMasked`). Today the manager types the mobile again. Proposal:
     `POST /r/me/sheba-change/otp` (no body, bearer auth) → `{resendAfterSec, codeLength}`, sent to the
     account's own phone; the server must reject a code that was sent to any other number.
+
+29. **Settlement lines for accounting (KAN-75).** Restaurants download each settlement as PDF (server
+    invoice) and Excel; the Excel is built in the panel from `Settlement` totals only, because the contract
+    has no per-order breakdown and the panel must not compute money (D-94). Proposal:
+    `GET /r/settlements/{id}/lines` → `[{orderId, no, placedAt, payment: online|cash, foodTotal,
+    commissionAmount, netAmount}]` (server-computed), or `GET /r/settlements/{id}/invoice?format=xlsx`
+    returning the same as a spreadsheet. The panel adds the lines as a second sheet when available.
