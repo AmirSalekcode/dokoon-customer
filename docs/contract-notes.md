@@ -129,3 +129,70 @@ Nothing here is implemented as an invented endpoint; the frontend works around e
     `GET /r/settlements/{id}/lines` → `[{orderId, no, placedAt, payment: online|cash, foodTotal,
     commissionAmount, netAmount}]` (server-computed), or `GET /r/settlements/{id}/invoice?format=xlsx`
     returning the same as a spreadsheet. The panel adds the lines as a second sheet when available.
+
+
+## Courier contract (`courier/dokoon-courier-openapi.yaml`, KAN-86)
+
+30. **Session: cookie on the web, token in the app.** The courier security checklist says «HttpOnly cookie
+    on the web, Keystore on Android, never localStorage», but `/c/auth/verify` returns only `Me` and the
+    contract declares bearer auth only. The client sends `X-Dokoon-Client: courier-web | courier-android`
+    on every request. Proposal: for `courier-web`, verify answers with
+    `Set-Cookie: dkc_session=…; HttpOnly; Secure; SameSite=Strict; Path=/` and no token in the body (the
+    server accepts the cookie on every `/c/*` call, the web client sends `credentials: 'include'`); for
+    `courier-android`, the body is `Me & {accessToken}` and the app keeps it in the Keystore. Declare the
+    cookie as a second security scheme (`cookieAuth`) and the header as a parameter. CSRF: SameSite=Strict
+    plus the required custom header (a cross-site write then always needs a CORS preflight); CORS for
+    `https://courier.dokoonapp.ir` with credentials. Offer and order actions (`/c/offers/{id}/accept|reject`,
+    `/c/orders/{id}/stage|withdraw|issue|unreachable|deliver`) send an `Idempotency-Key` (UUID v4, kept for
+    a retry after a timeout/5xx, as in note 23); the server should return the first result for a repeated
+    key — especially for `deliver`, so cash is never booked twice.
+31. **Phone without a courier account.** `Me.status` has `pending | approved | suspended` but no value for
+    "not registered" or "rejected", so after the OTP the app cannot tell whether to open registration or the
+    waiting page. Proposal: add `new` (the mock returns it for demo phone `09120000001`) and `rejected` with
+    a `rejectReason` (then the app shows the reason and lets the courier fix and resubmit). Also state that `POST /c/registration`,
+    `GET /c/doc-types` and `POST /c/documents/{type}` run with the session of the verified phone.
+32. **Refresh and logout.** There is no refresh or logout endpoint. Today the client treats any `401` on a
+    signed-in call as the end of the session (e401 page → login) and «خروج» only forgets the app token —
+    on the web the HttpOnly cookie cannot be removed by the page. Proposal: `POST /c/auth/refresh`
+    (rotating; cookie on the web, `{refreshToken}` in the app) and `POST /c/auth/logout` (clears the
+    cookie / revokes the token). The client does not call either until they are in the contract.
+33. **Live offers (WebSocket).** The screen-specs say «WS offers» but the contract has no `x-realtime`.
+    Proposal (same frame as note 23, one JSON text frame per event `{"event", "data"}`):
+    `wss://api.dokoonapp.ir/v1/c/stream`, authenticated by the cookie on the web and by a one-time ticket
+    in the app (`POST /c/stream/ticket` → `{ticket, expiresInSec}`, as `/r/stream/ticket`). Events:
+    `offer.created` (`Offer`, only to online and free couriers near the restaurant), `offer.gone`
+    (`{offerId, reason: taken | expired | cancelled}`, to every courier who saw it), `order.updated`
+    (`ActiveOrder`, e.g. the restaurant marked it ready) and `order.cancelled` (`{orderId, reason}`).
+    The mock stream (`src/courier/mocks/stream.ts`) implements exactly these.
+34. **Untyped responses.** `GET /c/orders/history`, `GET /c/earnings`, `GET /c/settlements` and
+    `PUT /c/status` declare no body. The app and the mock use (see `src/courier/api/types.ts`):
+    history `{items: [{id, no, rest, toArea, deliveredAt, km, earn, cash, cashCollected?}], nextCursor?}`;
+    earnings `{period, total, trips, hours, avg, balance, cashHeld, chart: [{label, amount}]}` (all
+    server-computed integers; the cash rule is undecided, so the app never computes money);
+    settlements `[{id, periodStart, periodEnd, amount, status: paid | pending, paidAt?, shebaMasked}]`;
+    `PUT /c/status` → `{online}`. A history detail screen also needs the items and the restaurant
+    address of a past trip (`GET /c/orders/history/{id}`, or the same fields in the list).
+35. **Sheba change body.** `POST /c/sheba-change` has no request body. It needs `{sheba, otpCode}` and a
+    way to send the fresh code to the account's own phone (same proposal as note 28:
+    `POST /c/sheba-change/otp`). `Me` should also carry `nationalIdMasked` and `shebaMasked` for «اطلاعات
+    من» (the app must never receive the full Sheba).
+36. **Support and map data.** The support page needs the city manager's call number and the FAQ, and
+    calling the customer/restaurant should go through a proxy number (open decision «safe-call number»),
+    but the contract has neither: proposal `GET /c/support` → `{cityManagerPhone, supportPhone, faqs:
+    [{q, a}]}` and `POST /c/orders/{id}/call` → `{phone, expiresAt}` (like note 17). `ActiveOrder` has
+    addresses but no coordinates, so the Neshan/Balad deep links can only search by text: add
+    `restLat/restLng/custLat/custLng`. Also note `withdraw` and `issue` take a free-text `reason`; the app
+    shows fixed reason lists from the prototype until a `GET /c/reasons` exists.
+37. **Error body and undeclared statuses.** The courier contract has no error schema. The client and mock
+    use the restaurant `ApiError` shape `{code, message, fields?}`. Codes the app reacts to: `OTP_INVALID`
+    (verify `401` — the app keeps it on the login screen; a `400` would be more consistent with the other
+    apps), `RATE_LIMITED` (`429`), `OFFER_TAKEN` / `OFFER_EXPIRED` (accept `409`, first courier wins),
+    `ACTIVE_ORDER` (`PUT /c/status` offline `409`, and accept while busy), `WITHDRAW_CLOSED` (`409`),
+    `VALIDATION` with `fields` (registration `422`). Undeclared statuses the mock returns like a real server:
+    `401` on every signed-in path without a session, `403 NOT_APPROVED` (status/offers/orders for a
+    pending or suspended courier), `400` for a bad phone, missing reason, bad location, unchecked items
+    (`ITEMS_UNCHECKED`, leaving pickup), missing cash amount (`CASH_REQUIRED`), bad cursor/period,
+    `404` for an unknown offer/order/document type, `409 INVALID_STAGE` (skipping a stage) and
+    `409 NOT_TRACKING` (location while offline with no active order, courier rule 3), `413` for a large
+    document. Also: `servers` is `/api`; the other contracts use `/v1` (`https://api.dokoonapp.ir/v1`),
+    which the client uses too.

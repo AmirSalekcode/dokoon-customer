@@ -146,6 +146,20 @@ from `public-courier/` (icons: `node scripts/gen-icons.mjs courier`). Plan and p
   `src/courier/styles/courier.css`: orange gradient header (`--hd-bg`, white logo in both themes), alert gradient
   (`--alert-bg`), touch targets `--tap-main` 56 / `--tap-alert` 64, status colors `--status-ok|wait|bad|on|off`.
   No green: `--success`/`--okbg` are repainted orange, and `npm run lint:design` applies `no-green` to `src/courier`.
+- **API (KAN-86):** `src/courier/api/` — typed client from `courier/dokoon-courier-openapi.yaml`
+  (`npm run api:gen:courier`) on the shared HTTP layer (timeout, GET retry, ErrorPage kinds; `401` → session
+  cleared → login, no refresh until the contract has one). Session: **HttpOnly cookie on the web**
+  (`credentials: 'include'`, no token in JS or localStorage), **Keystore token in the Android app**
+  (`dkc-session`, `hydrateCourierSession()` before the first render); every request sends
+  `X-Dokoon-Client: courier-web|courier-android`. `Idempotency-Key` on offer/order actions
+  (shared `src/api/idempotency.ts`). Inline 409s: `isOfferGone` (another courier won / expired),
+  `hasActiveOrder` (cannot go offline). Contract gaps: `docs/contract-notes.md` 30–37.
+- **Mocks:** `src/courier/mocks/` — MSW handlers for every operation (checked against the contract in
+  `handlers.test.ts`), an in-memory server (`db.ts`: offers, atomic accept, stages, cash delivery) and a mock
+  WebSocket (`stream.ts`: `offer.created`, `offer.gone`, `order.updated`, `order.cancelled`). Demo phones:
+  `09120000001` new, `…002` pending, `…003` suspended, any other approved; OTP `1234`. Dev tools in mock
+  builds: `__dkCourierMocks.stream.takeByOther('of1')`, `.pushOffer()`, `.outage(true)`; localStorage
+  `dkc-mock-offer-ms` (new offer interval, default 45 s, 0 = off) and `dkc-mock-status` (force a GET status).
 
 ## Rules enforced in code
 - Tokens only: components use `var(--…)` from `design-tokens/dokoon-tokens.css`; derived transparencies live in
