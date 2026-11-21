@@ -13,18 +13,21 @@ export interface RNavItem<K extends string = string> {
 }
 
 export interface RBottomNavProps<K extends string> {
+  /** Spoken name of the navigation, e.g. «بخش‌های رستوران» / «بخش‌های پیک». */
+  label: string;
   items: RNavItem<K>[];
   active: K;
   onPick: (key: K) => void;
 }
 
 /**
- * Flat 4-tab navigation: bottom bar on phones (<720), side rail (104px) on tablets/desktop.
- * The switch is pure CSS (media query), so one component serves both layouts.
+ * Flat tab navigation of the restaurant and courier apps: bottom bar on phones (<720), side rail
+ * (`--rail-w`) on tablets/desktop. The switch is pure CSS (media query), so one component serves both
+ * layouts. Needs the app delta tokens `--rail-w` / `--rail-item-h` (restaurant and courier define them).
  */
-export function RBottomNav<K extends string>({ items, active, onPick }: RBottomNavProps<K>) {
+export function RBottomNav<K extends string>({ label, items, active, onPick }: RBottomNavProps<K>) {
   return (
-    <nav className={s.nav} aria-label="بخش‌های رستوران">
+    <nav className={s.nav} aria-label={label}>
       {items.map((it) => {
         const on = it.key === active;
         return (

@@ -53,7 +53,10 @@ export { TopBar } from './library/TopBar';
 // Restaurant app additions (restaurant/dokoon-restaurant-component-library.md §2, KAN-57)
 export { BarChart } from './library/BarChart';
 export { ConfirmDialog } from './library/ConfirmDialog';
+export { RBottomNav, type RNavItem } from './library/RBottomNav';
+export { ReasonSheet } from './library/ReasonSheet';
 export { SegTabs } from './library/SegTabs';
+export { SheetConfirm, SheetHead } from './library/SheetParts';
 export { StatCard } from './library/StatCard';
 export { UploadTile } from './library/UploadTile';
 export { WizardBar } from './library/WizardBar';

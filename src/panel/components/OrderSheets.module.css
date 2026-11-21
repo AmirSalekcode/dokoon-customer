@@ -1,42 +1,8 @@
-/* PrepSheet + ReasonSheet (restaurant component library). */
-.hd {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: var(--sp-3) var(--sp-4);
-}
-.hd h2 {
-  margin: 0;
-  font-size: var(--fs-20);
-  font-weight: var(--fw-bold);
-  line-height: 1.4;
-}
-.x {
-  display: grid;
-  place-items: center;
-  flex: none;
-  width: var(--touch);
-  height: var(--touch);
-  padding: 0;
-  border: 0;
-  border-radius: var(--r-circle);
-  background: var(--sf);
-  color: var(--ink);
-  box-shadow: var(--sh-card);
-  cursor: pointer;
-}
-.body {
-  display: flex;
-  flex-direction: column;
-  gap: var(--sp-4);
-  padding: 0 var(--sp-4) var(--sp-6);
-  overflow-y: auto;
-}
-.p {
-  margin: 0;
-  font-size: var(--fs-14);
-  line-height: 1.8;
-  color: var(--mu);
+/* PrepSheet (restaurant component library); head/body/confirm come from library/SheetParts. */
+/* Accept = the restaurant «new» orange (`button.` beats SheetParts' default .ok colours). */
+button.accept {
+  background: var(--status-new);
+  color: var(--status-new-ink);
 }
 
 .grid {
@@ -123,91 +89,8 @@
   font-weight: var(--fw-bold);
 }
 
-.reasons {
-  display: flex;
-  flex-direction: column;
-  gap: var(--sp-2);
-}
-.reason {
-  display: flex;
-  align-items: center;
-  gap: var(--sp-3);
-  min-height: 56px;
-  padding: 0 var(--sp-4);
-  border: 2px solid transparent;
-  border-radius: var(--r-lg);
-  background: var(--sf);
-  color: var(--ink);
-  font: inherit;
-  font-size: var(--fs-15);
-  font-weight: var(--fw-bold);
-  text-align: start;
-  box-shadow: var(--sh-card);
-  cursor: pointer;
-}
-.reason.on {
-  border-color: var(--primary);
-}
-.mark {
-  flex: none;
-  width: 22px;
-  height: 22px;
-  border: 2px solid var(--ln);
-  border-radius: var(--r-circle);
-}
-.reason.on .mark {
-  border: 7px solid var(--primary);
-}
-
-.ok {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--sp-2);
-  min-height: 56px;
-  border: 0;
-  border-radius: var(--r-pill);
-  background: var(--status-new);
-  color: var(--status-new-ink);
-  font: inherit;
-  font-size: var(--fs-16);
-  font-weight: var(--fw-xbold);
-  box-shadow: var(--sh-cta);
-  cursor: pointer;
-}
-.ok.danger {
-  background: var(--status-bad);
-  color: var(--status-bad-ink);
-  box-shadow: none;
-}
-.ok:disabled {
-  opacity: 0.45;
-  box-shadow: none;
-  cursor: default;
-}
 .opt:focus-visible,
-.reason:focus-visible,
-.ok:focus-visible,
-.x:focus-visible,
 .step button:focus-visible {
   outline: 3px solid var(--primary);
   outline-offset: 2px;
-}
-.spin {
-  width: 18px;
-  height: 18px;
-  border: 2px solid currentColor;
-  border-top-color: transparent;
-  border-radius: var(--r-circle);
-  animation: spin 0.8s linear infinite;
-}
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  .spin {
-    animation: none;
-  }
 }

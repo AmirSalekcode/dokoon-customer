@@ -23,7 +23,7 @@ import { useShift } from '../state/shift';
 import { countByTab, useOrders } from '../state/orders';
 import { CustomConfirm, type ConfirmSpec } from './confirm';
 import { confirmClose, toggleOpen } from './openSwitch';
-import { RBottomNav, type RNavItem } from './RBottomNav';
+import { RBottomNav, type RNavItem } from '@/components/library/RBottomNav';
 import { RHeader } from './RHeader';
 import s from './PanelShell.module.css';
 
@@ -197,6 +197,7 @@ export function PanelShell() {
           {onShell ? (
             <div className={s.rail}>
               <RBottomNav
+                label="بخش‌های رستوران"
                 items={navItems}
                 active={isPanelTab(top.screen) ? top.screen : 'orders'}
                 onPick={(k) => resetTo(k)}

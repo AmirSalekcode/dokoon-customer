@@ -1,0 +1,46 @@
+/* ReasonSheet (restaurant + courier component libraries). */
+.reasons {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+}
+.reason {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  min-height: 56px;
+  padding: 0 var(--sp-4);
+  border: 2px solid transparent;
+  border-radius: var(--r-lg);
+  background: var(--sf);
+  color: var(--ink);
+  font: inherit;
+  font-size: var(--fs-15);
+  font-weight: var(--fw-bold);
+  text-align: start;
+  box-shadow: var(--sh-card);
+  cursor: pointer;
+}
+.reason.on {
+  border-color: var(--primary);
+}
+.reason:focus-visible {
+  outline: 3px solid var(--primary);
+  outline-offset: 2px;
+}
+.mark {
+  flex: none;
+  width: 22px;
+  height: 22px;
+  border: 2px solid var(--ln);
+  border-radius: var(--r-circle);
+}
+.reason.on .mark {
+  border: 7px solid var(--primary);
+}
+/* Red confirm (`button.` so it beats SheetParts' .ok whatever the CSS order): the app delta `--status-bad` (restaurant, courier), the base danger red otherwise. */
+button.danger {
+  background: var(--status-bad, var(--danger));
+  color: var(--status-bad-ink, var(--white));
+  box-shadow: none;
+}
