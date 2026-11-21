@@ -19,5 +19,7 @@ public/mockServiceWorker.js
 src/api/schema.d.ts
 src/panel/api/schema.d.ts
 public-panel/mockServiceWorker.js
+src/courier/api/schema.d.ts
+public-courier/mockServiceWorker.js
 package-lock.json
 *.md

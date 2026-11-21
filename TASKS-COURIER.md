@@ -28,6 +28,7 @@
 - **توضیح:** `api:gen:courier` از `courier/dokoon-courier-openapi.yaml`؛ client با همان الگوی پنل (نگاشت خطا به ErrorPage، ۴۰۱ ← ورود، Idempotency-Key برای اقدام‌ها). نشست: کوکی HttpOnly در وب، Keystore در اندروید، هرگز localStorage. موک MSW برای همه‌ی endpointها + موک WS پیشنهادها. کمبودهای قرارداد به `docs/contract-notes.md` اضافه می‌شود (فهرست زیر).
 - **پذیرش:** تست client (۴۰۱/۴۰۹/۵۰۳/آفلاین)؛ هر endpoint موک تست دارد؛ هیچ endpoint اختراعی نیست.
 - **وابستگی:** CP-01
+- **وضعیت (2026-11-21):** ساخته شد، PR در انتظار مرج. `src/courier/api` + `src/courier/mocks` + `src/courier/realtime/events.ts`؛ کمبودهای قرارداد = یادداشت‌های ۳۰–۳۷؛ تصمیم‌ها D-127.
 
 ### CP-03 (KAN-87): انتقال کامپوننت‌های مشترک به `src/components`
 - **توضیح:** `RBottomNav` (با `rail`) و `ReasonSheet` الان داخل `src/panel` هستند؛ به کتابخانه‌ی مشترک منتقل می‌شوند تا پیک دوباره ننویسد. رفتار پنل عوض نمی‌شود. (نیاز به تأیید معماری — سؤال ۱.)
