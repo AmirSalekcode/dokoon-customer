@@ -1,0 +1,150 @@
+/* OptionGroupCard (358×240) and OptionEditRow (358×96), restaurant component library. */
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+  padding: var(--sp-4);
+  border-radius: var(--r-xl);
+  background: var(--sf);
+  box-shadow: var(--sh-card);
+  color: var(--ink);
+}
+.head {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+}
+.head h3 {
+  flex: 1;
+  margin: 0;
+  font-size: var(--fs-16);
+  font-weight: var(--fw-xbold);
+  line-height: 1.5;
+}
+.tag {
+  padding: var(--sp-1) var(--sp-3);
+  border-radius: var(--r-pill);
+  background: var(--soft);
+  color: var(--pr2);
+  font-size: var(--fs-12);
+  font-weight: var(--fw-xbold);
+}
+.req {
+  background: var(--ink);
+  color: var(--sf);
+}
+.rule {
+  margin: 0;
+  font-size: var(--fs-12);
+  color: var(--mu);
+}
+.opts {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.opt {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--sp-3);
+  padding: var(--sp-3);
+  border-radius: var(--r-md);
+  background: var(--bg);
+  font-size: var(--fs-14);
+  font-weight: var(--fw-bold);
+}
+.price {
+  color: var(--pr2);
+}
+.acts {
+  display: flex;
+  gap: var(--sp-2);
+}
+.btn {
+  flex: 1;
+  min-height: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-2);
+  border: 2px solid var(--ln);
+  border-radius: var(--r-pill);
+  background: none;
+  color: var(--ink);
+  font: inherit;
+  font-size: var(--fs-14);
+  font-weight: var(--fw-bold);
+  cursor: pointer;
+}
+.icon {
+  flex: none;
+  width: 48px;
+  padding: 0;
+}
+.danger {
+  border-color: var(--danger);
+  color: var(--danger);
+}
+.btn svg,
+.del svg {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.btn:focus-visible,
+.del:focus-visible {
+  outline: 3px solid var(--primary);
+  outline-offset: 2px;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  padding: var(--sp-2) var(--sp-3);
+  border-radius: var(--r-xl);
+  background: var(--sf);
+  box-shadow: var(--sh-card);
+}
+.in {
+  min-width: 0;
+  height: 48px;
+  padding: 0 var(--sp-3);
+  border: 2px solid var(--ln);
+  border-radius: var(--r-md);
+  background: var(--bg);
+  color: var(--ink);
+  font: inherit;
+  font-size: var(--fs-16);
+  font-weight: var(--fw-bold);
+}
+.in:focus {
+  outline: 0;
+  border-color: var(--primary);
+}
+.name {
+  flex: 1.4;
+}
+.pr {
+  flex: 1;
+}
+.del {
+  width: 48px;
+  height: 48px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  border-radius: var(--r-circle);
+  background: none;
+  color: var(--danger);
+  cursor: pointer;
+}

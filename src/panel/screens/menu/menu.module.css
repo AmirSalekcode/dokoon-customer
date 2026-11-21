@@ -81,3 +81,109 @@
   outline: 3px solid var(--primary);
   outline-offset: 2px;
 }
+
+/* Dish / group editors. */
+.two {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--sp-3);
+  align-items: start;
+}
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+}
+.sh {
+  margin: 0;
+  font-size: var(--fs-15);
+  font-weight: var(--fw-xbold);
+  color: var(--ink);
+}
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-2);
+}
+.err {
+  margin: 0;
+  font-size: var(--fs-13);
+  font-weight: var(--fw-bold);
+  color: var(--danger);
+}
+.file {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+.warn {
+  margin: 0;
+  padding: var(--sp-3) var(--sp-4);
+  border-radius: var(--r-xl);
+  background: color-mix(in srgb, var(--warning) 18%, var(--sf));
+  color: var(--ink);
+  font-size: var(--fs-14);
+  font-weight: var(--fw-medium);
+  line-height: 1.8;
+}
+.danger {
+  align-self: center;
+  min-height: 48px;
+  padding: 0 var(--sp-4);
+  border: 0;
+  border-radius: var(--r-md);
+  background: none;
+  color: var(--danger);
+  font: inherit;
+  font-size: var(--fs-14);
+  font-weight: var(--fw-bold);
+  cursor: pointer;
+}
+.danger:focus-visible {
+  outline: 3px solid var(--primary);
+  outline-offset: 2px;
+}
+.stepper {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: var(--sp-3) var(--sp-4);
+  border-radius: var(--r-lg);
+  background: var(--sf);
+  box-shadow: var(--sh-card);
+  color: var(--ink);
+}
+.stepper > span {
+  flex: 1;
+  font-size: var(--fs-14);
+  font-weight: var(--fw-bold);
+}
+.stepper output {
+  min-width: 40px;
+  text-align: center;
+  font-size: var(--fs-16);
+  font-weight: var(--fw-xbold);
+}
+.stepper button {
+  width: 48px;
+  height: 48px;
+  flex: none;
+  border: 2px solid var(--ln);
+  border-radius: var(--r-circle);
+  background: var(--bg);
+  color: var(--ink);
+  font: inherit;
+  font-size: var(--fs-20);
+  font-weight: var(--fw-bold);
+  cursor: pointer;
+}
+.stepper button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+.stepper button:focus-visible {
+  outline: 3px solid var(--primary);
+  outline-offset: 2px;
+}
