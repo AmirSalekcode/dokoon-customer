@@ -17,6 +17,7 @@ import { reconnectLive, startLive, stopLive } from '../realtime/live';
 import { useRestaurant } from '../state/restaurant';
 import { useShift } from '../state/shift';
 import { countByTab, useOrders } from '../state/orders';
+import { CustomConfirm, type ConfirmSpec } from './confirm';
 import { confirmClose, toggleOpen } from './openSwitch';
 import { RBottomNav, type RNavItem } from './RBottomNav';
 import { RHeader } from './RHeader';
@@ -78,6 +79,8 @@ function PanelOverlayHost() {
   if (overlay?.kind === 'reason' && typeof overlay.props?.id === 'string')
     return <ReasonOverlay key={overlay.props.id} id={overlay.props.id} />;
   if (overlay?.kind !== 'confirm') return null;
+  if (overlay.props?.action === 'custom' && overlay.props.spec)
+    return <CustomConfirm spec={overlay.props.spec as ConfirmSpec} />;
   if (overlay.props?.action === 'logout')
     return (
       <ConfirmDialog

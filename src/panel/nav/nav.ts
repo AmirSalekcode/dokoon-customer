@@ -2,7 +2,8 @@ import { createStackNav } from '@/nav/createStackNav';
 
 /**
  * Restaurant panel screens. `order`: detail on phones (params.id); `cats`: menu categories;
- * `dish`: food editor (params.id = edit, params.cat = new food in that category).
+ * `dish`: food editor (params.id = edit, params.cat = new food in that category);
+ * `group`: option-group editor of the dish being edited (params.i = index, none = new; params.add = add an option).
  */
 export const PANEL_SCREENS = [
   'orders',
@@ -10,6 +11,7 @@ export const PANEL_SCREENS = [
   'menu',
   'cats',
   'dish',
+  'group',
   'reports',
   'account',
   'help',
