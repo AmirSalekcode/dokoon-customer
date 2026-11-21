@@ -18,3 +18,13 @@ describe('Lighthouse release budget (scripts/lighthouse.mjs)', () => {
     expect(failures({ performance: 99 })).toEqual(['accessibility n/a < 90']);
   });
 });
+
+describe('restaurant panel audit (KAN-74)', () => {
+  it('audits the panel login and shift entry points on its own preview port, same budget', async () => {
+    const { PANEL_PAGES, target } = await import('./lighthouse.mjs');
+    expect(PANEL_PAGES.map((p: { id: string }) => p.id)).toEqual(['panel-login', 'panel-shift']);
+    expect(target('panel').base).toBe('http://127.0.0.1:4175');
+    expect(target().pages).toBe(PAGES);
+    expect(Object.keys(PANEL_PAGES[1].seed)).toEqual(['dk-r-session']);
+  });
+});

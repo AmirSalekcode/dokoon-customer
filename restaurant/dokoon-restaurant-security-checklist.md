@@ -23,8 +23,17 @@
 14. بازگشت وجه خودکار هنگام رد/لغو سفارش آنلاین؛ لاگ ممیزی (چه کسی، چه زمانی، IP).
 
 ## زیرساخت
-15. CORS فقط دو دامنه‌ی مجاز (`dokoonapp.ir`، `panel.dokoonapp.ir`؛ ادمین جدا `admin.dokoonapp.ir`)؛ کوکی‌ها `HttpOnly; Secure; SameSite`.
+15. CORS فقط Originهای مجاز: `https://dokoonapp.ir`، `https://panel.dokoonapp.ir` و `https://localhost` (WebView هر دو اپ اندروید، Capacitor؛ KAN-74)؛ ادمین جدا `admin.dokoonapp.ir`؛ کوکی‌ها `HttpOnly; Secure; SameSite`.
 16. HTTPS اجباری + HSTS؛ هدرهای امنیتی؛ rate-limit عمومی؛ لاگ بدون اطلاعات حساس.
 17. کلیدها فقط در متغیرهای محیطی/secret manager؛ هرگز در مخزن.
 18. پشتیبان‌گیری دوره‌ای و آزمون بازیابی؛ تست نفوذ پیش از انتشار.
 19. تست بار (k6) روی سناریوی (اعداد پیشنهادی، قابل تغییر): ۵۰۰ رستوران هم‌زمان با WebSocket باز + ۲۰۰۰ سفارش در دقیقه؛ معیار: p95 < ۳۰۰ms برای REST، تأخیر رسیدن رویداد < ۲ثانیه.
+20. بررسی Origin در WebSocket همان فهرست ردیف ۱۵ (اپ اندروید رستوران از `https://localhost` وصل می‌شود).
+
+## سمت فرانت/انتشار (انجام‌شده در Epic KAN-54)
+- پنل: CSP، `X-Frame-Options: DENY`، `nosniff`، Referrer-Policy، Permissions-Policy، `X-Robots-Tag: noindex` (`docker/nginx.panel.conf`، در CI بررسی می‌شود).
+- اپ‌های اندروید: نشست با کلید AES-GCM در Android Keystore (D-38)؛ بدون نسخه‌ی متنی در localStorage.
+- امضای اپ رستوران با keystore جدا از اپ مشتری؛ فقط از GitHub Secrets؛ `apksigner verify` در CD.
+- لینک عمیق اپ رستوران فقط چند صفحه‌ی مشخص را باز می‌کند و قبل از ورود و شروع شیفت نادیده گرفته می‌شود؛ شناسه‌ی سفارش اعتبارسنجی می‌شود.
+- فایل‌های صورت‌حساب در اپ اندروید فقط در cache خود اپ نوشته و با FileProvider (دسترسی موقت خواندن) به اشتراک گذاشته می‌شوند.
+- چک‌لیست انتشار: `docs/release-checklist-restaurant.md`.

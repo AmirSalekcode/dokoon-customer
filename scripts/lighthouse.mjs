@@ -32,6 +32,33 @@ export const PAGES = [
   { id: 'restaurant-link', path: '/?restaurant=naghsh', seed: RETURNING },
 ];
 
+/**
+ * Restaurant panel (KAN-74, D-104), same budget: `LH_APP=panel` against `npm run preview:panel:perf`
+ * (port 4175). The login page and the «شروع شیفت» page of a signed-in manager (mock token) are the URL
+ * entry points; the screens behind the shift are covered by the panel E2E suite.
+ */
+export const PANEL_PAGES = [
+  { id: 'panel-login', path: '/', seed: {} },
+  {
+    id: 'panel-shift',
+    path: '/',
+    seed: {
+      'dk-r-session': {
+        accessToken: 'r-access-0-09131234567',
+        refreshToken: 'r-refresh-0-09131234567',
+        status: 'active',
+      },
+    },
+  },
+];
+
+/** Pages and default URL for `LH_APP` (customer | panel). */
+export function target(app = 'customer') {
+  return app === 'panel'
+    ? { pages: PANEL_PAGES, base: 'http://127.0.0.1:4175' }
+    : { pages: PAGES, base: 'http://127.0.0.1:4173' };
+}
+
 /** Category scores (0–100) that are under budget. */
 export function failures(scores, budget = BUDGET) {
   return Object.entries(budget)
@@ -40,7 +67,8 @@ export function failures(scores, budget = BUDGET) {
 }
 
 async function main() {
-  const base = (process.env.BASE_URL || 'http://127.0.0.1:4173').replace(/\/$/, '');
+  const app = target(process.env.LH_APP);
+  const base = (process.env.BASE_URL || app.base).replace(/\/$/, '');
   const port = Number(process.env.LH_PORT || 9223);
   const outDir = path.resolve('perf/results');
   mkdirSync(outDir, { recursive: true });
@@ -54,7 +82,7 @@ async function main() {
   const summary = [];
   let failed = false;
   try {
-    for (const p of PAGES) {
+    for (const p of app.pages) {
       // Reset storage, then seed exactly this page's state.
       const seedPage = await ctx.newPage();
       // A blank same-origin page (the app itself never runs here, so it cannot overwrite the seed).
@@ -126,7 +154,9 @@ async function main() {
     await ctx.close();
     rmSync(profile, { recursive: true, force: true });
   }
-  writeFileSync(path.join(outDir, 'lighthouse-summary.json'), JSON.stringify(summary, null, 2));
+  const summaryFile =
+    process.env.LH_APP === 'panel' ? 'lighthouse-panel-summary.json' : 'lighthouse-summary.json';
+  writeFileSync(path.join(outDir, summaryFile), JSON.stringify(summary, null, 2));
   if (failed) process.exitCode = 1;
 }
 
