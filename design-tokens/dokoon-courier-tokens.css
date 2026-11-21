@@ -1,0 +1,41 @@
+/* Dokoon courier app — delta tokens on top of dokoon-tokens.css (courier/dokoon-courier-design-system.md).
+   Scoped to <html data-app="courier"> so the customer app and the restaurant panel never see them.
+   Loaded only by src/courier. */
+[data-app="courier"]{
+  /* Header: orange gradient with a white logo, rounded bottom corners (radius = --r-xl, 28). */
+  --hd-from:#C2410C; --hd-to:#E4501E;
+  --hd:var(--hd-from);
+  --hd-bg:linear-gradient(160deg,var(--hd-from),var(--hd-to));
+  --hd-ink:#FFFFFF; --hd-mu:color-mix(in srgb, #FFFFFF 90%, transparent);
+  --hd-chip:color-mix(in srgb, #FFFFFF 18%, transparent);
+  --hd-tag:#1F1A17; --hd-tag-ink:#FFFFFF;
+  --hd-shadow:0 8px 24px rgba(194,65,12,.25);
+  /* New-offer alert: full-screen gradient, white card, white 64px accept button. */
+  --alert-bg:linear-gradient(160deg,#8B2313,#C2410C 55%,#E4501E);
+  --alert-card:#FFFFFF; --alert-ink:#1F1A17;
+  /* Touch targets for use while riding: main actions 56, the alert's accept 64 (secondary stays 48). */
+  --tap-main:56px; --tap-alert:64px;
+  /* Side rail on tablets (≥720), same as the restaurant app. */
+  --rail-w:104px; --rail-item-h:72px;
+  /* Status colors (owner rule: orange/grey/black/yellow/red only): approved = black, in review = yellow, error / near expiry = red,
+     online = orange, offline = grey. */
+  --status-ok:#1F1A17; --status-ok-ink:#FFFFFF;
+  --status-wait:#F5B32F; --status-wait-ink:#1F1A17;
+  --status-bad:#C8281E; --status-bad-ink:#FFFFFF;
+  --status-on:var(--primary); --status-on-ink:#FFFFFF;
+  --status-off:var(--ln); --status-off-ink:var(--mu);
+  /* Logo is white on the orange header, in both themes. */
+  --logo1:#FFFFFF; --logo2:#FFF3EA;
+  /* Owner rule: no colour of the go/ok family in this app. Shared components that read the success
+     tokens show "on" in orange instead. */
+  --success:var(--primary); --okbg:var(--soft);
+}
+[data-app="courier"][data-theme="dark"]{
+  --hd-shadow:0 8px 24px rgba(0,0,0,.45);
+  /* A black "approved" badge would vanish on the dark surface: invert it. */
+  --status-ok:#F6EEE8; --status-ok-ink:#1F1A17;
+  --status-wait-ink:#1F1A17;
+  --alert-card:#241C17; --alert-ink:#F6EEE8;
+  --logo1:#FFFFFF; --logo2:#FFF3EA;
+  --okbg:var(--soft);
+}

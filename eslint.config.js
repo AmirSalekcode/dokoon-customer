@@ -10,6 +10,7 @@ export default tseslint.config(
     ignores: [
       'dist',
       'dist-panel',
+      'dist-courier',
       'dev-dist',
       'storybook-static',
       'android',
