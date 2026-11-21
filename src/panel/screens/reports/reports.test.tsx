@@ -90,17 +90,35 @@ describe('settlements', () => {
     expect(route().screen).toBe('reports');
   });
 
-  it('downloads the PDF invoice', async () => {
+  it('downloads the statement as PDF and as Excel (KAN-75)', async () => {
     const create = vi.fn(() => 'blob:x');
     const revoke = vi.fn();
     Object.assign(URL, { createObjectURL: create, revokeObjectURL: revoke });
     const click = vi.spyOn(HTMLAnchorElement.prototype, 'click').mockImplementation(() => undefined);
     const user = await openReports();
     await user.click(await screen.findByRole('button', { name: /هفته‌ی ۴ آبان/ }));
-    await user.click(await screen.findByRole('button', { name: 'دریافت صورت‌حساب' }));
-    await waitFor(() => expect(click).toHaveBeenCalled());
-    expect(create).toHaveBeenCalledWith(expect.any(Blob));
-    expect(useToast.getState().toasts[0]?.text).toBe('صورت‌حساب دریافت شد');
+    await user.click(await screen.findByRole('button', { name: 'دریافت صورت‌حساب PDF' }));
+    await waitFor(() => expect(click).toHaveBeenCalledTimes(1));
+    expect((create.mock.calls[0] as unknown as [Blob])[0].type).toBe('application/pdf');
+    expect(useToast.getState().toasts[0]?.text).toBe('صورت‌حساب دانلود شد');
+
+    await user.click(screen.getByRole('button', { name: 'دریافت صورت‌حساب اکسل' }));
+    await waitFor(() => expect(click).toHaveBeenCalledTimes(2));
+    expect((create.mock.calls[1] as unknown as [Blob])[0].type).toBe(
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    );
+    click.mockRestore();
+  });
+
+  it('exports every settlement to one Excel file from the reports tab', async () => {
+    const create = vi.fn(() => 'blob:x');
+    Object.assign(URL, { createObjectURL: create, revokeObjectURL: vi.fn() });
+    const click = vi.spyOn(HTMLAnchorElement.prototype, 'click').mockImplementation(() => undefined);
+    const user = await openReports();
+    await user.click(await screen.findByRole('button', { name: 'دریافت اکسل همه‌ی تسویه‌ها' }));
+    await waitFor(() => expect(click).toHaveBeenCalledTimes(1));
+    expect((create.mock.calls[0] as unknown as [Blob])[0].type).toContain('spreadsheetml');
+    expect(useToast.getState().toasts[0]?.text).toBe('صورت‌حساب دانلود شد');
     click.mockRestore();
   });
 });

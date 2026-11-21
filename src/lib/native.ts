@@ -18,6 +18,8 @@ export interface DokoonNativePlugin {
   /** Local notification on the «سفارش جدید» channel (alert sound); tap opens the order. */
   notifyOrder(o: { id: string; title: string; body: string }): Promise<{ shown: boolean }>;
   cancelOrder(o: { id: string }): Promise<void>;
+  /** Writes the file to the app cache and opens the system share sheet (KAN-75). name: [A-Za-z0-9._-]. */
+  shareFile(o: { name: string; base64: string; mime: string; title?: string }): Promise<{ shared: boolean }>;
 }
 
 export const DokoonNative = registerPlugin<DokoonNativePlugin>('DokoonNative');

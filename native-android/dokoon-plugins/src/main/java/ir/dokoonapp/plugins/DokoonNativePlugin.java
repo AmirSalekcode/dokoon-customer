@@ -10,6 +10,10 @@ import android.media.AudioAttributes;
 import android.net.Uri;
 import android.os.Build;
 import android.os.VibrationEffect;
+import android.util.Base64;
+import androidx.core.content.FileProvider;
+import java.io.File;
+import java.io.FileOutputStream;
 import android.os.Vibrator;
 import android.view.WindowManager;
 import androidx.core.app.NotificationCompat;
@@ -157,6 +161,40 @@ public class DokoonNativePlugin extends Plugin {
     public void cancelOrder(PluginCall call) {
         NotificationManagerCompat.from(getContext()).cancel(call.getString("id", ""), NOTIFICATION_ID);
         call.resolve();
+    }
+
+    /**
+     * Exported file (statement PDF / Excel, KAN-75): the WebView cannot download blobs, so the file is written
+     * to the app cache and handed to the system share sheet (save to Files, Drive, send to the accountant…).
+     */
+    @PluginMethod
+    public void shareFile(PluginCall call) {
+        String name = call.getString("name", "");
+        String data = call.getString("base64", "");
+        String mime = call.getString("mime", "application/octet-stream");
+        if (!name.matches("[A-Za-z0-9._-]{1,80}") || data.isEmpty()) {
+            call.reject("invalid file");
+            return;
+        }
+        try {
+            File dir = new File(getContext().getCacheDir(), "exports");
+            if (!dir.exists() && !dir.mkdirs()) throw new IllegalStateException("no cache dir");
+            File file = new File(dir, name);
+            try (FileOutputStream out = new FileOutputStream(file)) {
+                out.write(Base64.decode(data, Base64.DEFAULT));
+            }
+            Uri uri = FileProvider.getUriForFile(getContext(), getContext().getPackageName() + ".fileprovider", file);
+            Intent send = new Intent(Intent.ACTION_SEND);
+            send.setType(mime);
+            send.putExtra(Intent.EXTRA_STREAM, uri);
+            send.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            Intent chooser = Intent.createChooser(send, call.getString("title", name));
+            chooser.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            getActivity().startActivity(chooser);
+            call.resolve(result("shared", true));
+        } catch (Exception e) {
+            call.reject("share failed", e);
+        }
     }
 
     private boolean notificationsOn() {

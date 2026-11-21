@@ -1,4 +1,5 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { Button } from '@/components/base/Button';
 import { BarChart } from '@/components/library/BarChart';
 import { EmptyState } from '@/components/library/EmptyState';
 import { ErrorState } from '@/components/library/ErrorState';
@@ -7,7 +8,12 @@ import { ListRow } from '@/components/library/ListRow';
 import { LoadingState } from '@/components/library/LoadingState';
 import { SegTabs } from '@/components/library/SegTabs';
 import { StatCard } from '@/components/library/StatCard';
+import { saveFile } from '@/lib/saveFile';
+import { toast } from '@/ui/toast';
+import type { Settlement } from '../../api/types';
 import { usePanelNav } from '../../nav/nav';
+import { SAVED_TEXT, settlementsFileName, XLSX_FAILED } from '../../reports/names';
+import { PANEL_TOAST_MS } from '../../shell/openSwitch';
 import {
   CHART_TITLE,
   chartBars,
@@ -55,6 +61,34 @@ function PeriodReport({ period }: { period: Period }) {
   );
 }
 
+/** «اکسل همه‌ی تسویه‌ها» (KAN-75): one row per settlement, server numbers only. */
+function ExportAll({ list }: { list: Settlement[] }) {
+  const [busy, setBusy] = useState(false);
+  const run = async () => {
+    if (busy) return;
+    setBusy(true);
+    try {
+      const { settlementsXlsx } = await import('../../reports/export');
+      const how = await saveFile(settlementsXlsx(list), settlementsFileName(), 'تسویه‌حساب‌های دکون');
+      toast(SAVED_TEXT[how], 'info', PANEL_TOAST_MS);
+    } catch {
+      toast(XLSX_FAILED, 'error', PANEL_TOAST_MS);
+    } finally {
+      setBusy(false);
+    }
+  };
+  return (
+    <Button
+      variant="secondary"
+      loading={busy}
+      aria-label="دریافت اکسل همه‌ی تسویه‌ها"
+      onClick={() => void run()}
+    >
+      اکسل همه
+    </Button>
+  );
+}
+
 function Settlements() {
   const load = useReports((st) => st.settlements);
   useEffect(() => {
@@ -99,9 +133,12 @@ function Settlements() {
     );
   return (
     <section className={s.section} aria-labelledby="rep-settle">
-      <h2 id="rep-settle" className={s.sh}>
-        تسویه‌حساب‌ها
-      </h2>
+      <div className={s.sectionHead}>
+        <h2 id="rep-settle" className={s.sh}>
+          تسویه‌حساب‌ها
+        </h2>
+        {list?.length ? <ExportAll list={list} /> : null}
+      </div>
       <p className={s.note}>
         سهم رستوران از سفارش‌های آنلاین و نقدی هر هفته به حساب شبا واریز می‌شود. پول نقد را پیک از مشتری
         می‌گیرد و دکون در تسویه به شما می‌پردازد.

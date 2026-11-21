@@ -6,11 +6,13 @@ import { LoadingState } from '@/components/library/LoadingState';
 import { TopBar } from '@/components/library/TopBar';
 import { Art } from '@/components/primitives/Art';
 import { toFaDigits } from '@/lib/format';
+import { saveFile } from '@/lib/saveFile';
 import { toast } from '@/ui/toast';
 import { panelApi } from '../../api/client';
 import type { Settlement } from '../../api/types';
 import { showFullPageError } from '../../errors/fullPage';
 import { usePanelNav } from '../../nav/nav';
+import { PDF_FAILED, SAVED_TEXT, settlementFileName, XLSX_FAILED } from '../../reports/names';
 import { SETTLE_STATUS, settlementRows } from '../../reports/present';
 import { PANEL_TOAST_MS } from '../../shell/openSwitch';
 import { useReports } from '../../state/reports';
@@ -19,28 +21,17 @@ import s from './reports.module.css';
 
 type Load = { kind: 'loading' } | { kind: 'error' } | { kind: 'ready'; data: Settlement };
 
-/** Save a blob as a file (desktop / Android browser); the name is ASCII. */
-function saveBlob(blob: Blob, name: string) {
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = name;
-  document.body.appendChild(a);
-  a.click();
-  a.remove();
-  setTimeout(() => URL.revokeObjectURL(url), 10_000);
-}
-
 /**
  * Settlement detail (KAN-68): status, online / cash sales, Dokoon commission (rate stored in this
- * settlement, read-only), amount paid, masked Sheba, PDF invoice. All numbers come from the server.
+ * settlement, read-only), amount paid, masked Sheba. Statement as PDF (the server's invoice) or Excel (built
+ * here from the server's numbers, KAN-75) for the restaurant's accounting. All numbers come from the server.
  */
 export function SettleScreen({ route }: PanelScreenProps) {
   const id = route.params.id ?? '';
   const cached = useReports((st) => st.settlements.data?.find((x) => x.id === id));
   const [load, setLoad] = useState<Load>(cached ? { kind: 'ready', data: cached } : { kind: 'loading' });
   const [nonce, setNonce] = useState(0);
-  const [downloading, setDownloading] = useState(false);
+  const [busy, setBusy] = useState<'pdf' | 'xlsx' | null>(null);
 
   useEffect(() => {
     let alive = true;
@@ -63,22 +54,41 @@ export function SettleScreen({ route }: PanelScreenProps) {
     };
   }, [id, nonce]);
 
-  const download = async () => {
-    if (downloading) return;
-    setDownloading(true);
+  const downloadPdf = async () => {
+    if (busy) return;
+    setBusy('pdf');
     try {
       const { data, error } = await panelApi().GET('/r/settlements/{id}/invoice', {
         params: { path: { id } },
         parseAs: 'blob',
       });
       if (error !== undefined || !data) throw new Error('invoice');
-      saveBlob(data as Blob, `dokoon-invoice-${id}.pdf`);
-      toast('صورت‌حساب دریافت شد', 'info', PANEL_TOAST_MS);
+      const blob = data as Blob;
+      const how = await saveFile(
+        blob.type ? blob : new Blob([blob], { type: 'application/pdf' }),
+        settlementFileName(id, 'pdf'),
+        'صورت‌حساب تسویه',
+      );
+      toast(SAVED_TEXT[how], 'info', PANEL_TOAST_MS);
     } catch (e) {
-      if (!showFullPageError(e, () => void download()))
-        toast('صورت‌حساب دریافت نشد؛ دوباره تلاش کنید', 'error', PANEL_TOAST_MS);
+      if (!showFullPageError(e, () => void downloadPdf())) toast(PDF_FAILED, 'error', PANEL_TOAST_MS);
     } finally {
-      setDownloading(false);
+      setBusy(null);
+    }
+  };
+
+  const downloadXlsx = async (data: Settlement) => {
+    if (busy) return;
+    setBusy('xlsx');
+    try {
+      // Loaded on demand: the spreadsheet writer is only needed here.
+      const { settlementXlsx } = await import('../../reports/export');
+      const how = await saveFile(settlementXlsx(data), settlementFileName(id, 'xlsx'), 'صورت‌حساب تسویه');
+      toast(SAVED_TEXT[how], 'info', PANEL_TOAST_MS);
+    } catch {
+      toast(XLSX_FAILED, 'error', PANEL_TOAST_MS);
+    } finally {
+      setBusy(null);
     }
   };
 
@@ -108,9 +118,33 @@ export function SettleScreen({ route }: PanelScreenProps) {
               همان دوره حساب شده است. پول نقد سفارش‌ها را پیک می‌گیرد و دکون همراه فروش آنلاین به شما واریز
               می‌کند.
             </p>
-            <Button block loading={downloading} onClick={() => void download()}>
-              دریافت صورت‌حساب
-            </Button>
+            <section className={s.section} aria-labelledby="settle-dl">
+              <h2 id="settle-dl" className={s.sh}>
+                دریافت صورت‌حساب
+              </h2>
+              <p className={s.note}>برای حسابداری: PDF برای چاپ و بایگانی، اکسل برای جمع و گزارش‌گیری.</p>
+              <div className={s.dl}>
+                <Button
+                  block
+                  loading={busy === 'pdf'}
+                  disabled={busy === 'xlsx'}
+                  aria-label="دریافت صورت‌حساب PDF"
+                  onClick={() => void downloadPdf()}
+                >
+                  PDF
+                </Button>
+                <Button
+                  block
+                  variant="secondary"
+                  loading={busy === 'xlsx'}
+                  disabled={busy === 'pdf'}
+                  aria-label="دریافت صورت‌حساب اکسل"
+                  onClick={() => void downloadXlsx(load.data)}
+                >
+                  اکسل
+                </Button>
+              </div>
+            </section>
           </>
         ) : null}
       </div>
