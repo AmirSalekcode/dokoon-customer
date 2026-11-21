@@ -1,0 +1,117 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+  padding: var(--sp-4) 0 var(--sp-8);
+}
+.page > :not(.tabs) {
+  margin-inline: var(--gutter);
+}
+/* One column on phones; report + settlements side by side from 960px. */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--sp-6);
+}
+@media (min-width: 960px) {
+  .grid {
+    grid-template-columns: 1.3fr 1fr;
+    align-items: start;
+  }
+}
+.col {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+  min-width: 0;
+}
+.stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--sp-3);
+}
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+}
+.sh {
+  margin: 0;
+  font-size: var(--fs-16);
+  font-weight: var(--fw-xbold);
+  color: var(--ink);
+}
+.note {
+  margin: 0;
+  font-size: var(--fs-13);
+  line-height: 1.8;
+  color: var(--mu);
+}
+.card {
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--r-lg);
+  background: var(--sf);
+  box-shadow: var(--sh-card);
+  overflow: hidden;
+}
+
+/* Settlement detail. */
+.wrap {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+  width: 100%;
+  max-width: 720px;
+  margin-inline: auto;
+  padding: var(--sp-4) var(--gutter) var(--sp-8);
+  box-sizing: border-box;
+}
+.head {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: var(--sp-4);
+  border-radius: var(--r-xl);
+  background: var(--sf);
+  box-shadow: var(--sh-card);
+  color: var(--ink);
+}
+.head h2 {
+  margin: 0;
+  font-size: var(--fs-16);
+  font-weight: var(--fw-xbold);
+}
+.head p {
+  margin: 0;
+  font-size: var(--fs-13);
+  color: var(--mu);
+}
+.av {
+  width: 56px;
+  height: 56px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  border-radius: var(--r-circle);
+  background: var(--soft);
+}
+.av svg {
+  width: 44px;
+  height: 44px;
+}
+.warn {
+  margin: 0;
+  padding: var(--sp-3) var(--sp-4);
+  border-radius: var(--r-xl);
+  background: color-mix(in srgb, var(--warning) 18%, var(--sf));
+  color: var(--ink);
+  font-size: var(--fs-14);
+  font-weight: var(--fw-medium);
+  line-height: 1.8;
+}

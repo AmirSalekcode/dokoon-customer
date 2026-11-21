@@ -1,4 +1,3 @@
-import { EmptyState } from '@/components/library/EmptyState';
 import { FilterChip } from '@/components/library/FilterChip';
 import { ListRow } from '@/components/library/ListRow';
 import { ToggleRow } from '@/components/library/ToggleRow';
@@ -11,16 +10,8 @@ import s from './screens.module.css';
 
 /*
  * Root tab screens of the shell (KAN-58). Their real content arrives with the feature tasks:
- * reports KAN-68, account KAN-69/70.
+ * account KAN-69/70.
  */
-
-export function ReportsScreen() {
-  return (
-    <div className={s.page}>
-      <EmptyState art="dk-mix" title="گزارش" text="گزارش فروش و تسویه‌ها اینجا نمایش داده می‌شود." />
-    </div>
-  );
-}
 
 const D_SOUND = 'M5 10v4h3l5 4V6l-5 4zM17 9a4 4 0 0 1 0 6';
 const D_LOGOUT = 'M15 4h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-3M10 16l-4-4 4-4M6 12h10';

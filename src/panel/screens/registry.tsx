@@ -13,7 +13,9 @@ import { CatsScreen } from './menu/CatsScreen';
 import { DishScreen } from './menu/DishScreen';
 import { GroupScreen } from './menu/GroupScreen';
 import { MenuScreen } from './menu/MenuScreen';
-import { AccountScreen, ReportsScreen } from './TabScreens';
+import { ReportsScreen } from './reports/ReportsScreen';
+import { SettleScreen } from './reports/SettleScreen';
+import { AccountScreen } from './TabScreens';
 
 const SCREENS: Record<PanelScreen, ComponentType<PanelScreenProps>> = {
   orders: OrdersScreen,
@@ -23,6 +25,7 @@ const SCREENS: Record<PanelScreen, ComponentType<PanelScreenProps>> = {
   dish: DishScreen,
   group: GroupScreen,
   reports: ReportsScreen,
+  settle: SettleScreen,
   account: AccountScreen,
   help: HelpScreen,
   login: LoginScreen,
