@@ -1,0 +1,65 @@
+.row {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  min-height: 72px;
+  padding: var(--sp-3) var(--sp-4);
+  border-radius: var(--r-lg);
+  background: var(--sf);
+  color: var(--ink);
+  box-shadow: var(--sh-card);
+}
+.text {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+}
+.text b {
+  display: block;
+  font-size: var(--fs-15);
+  font-weight: var(--fw-bold);
+  line-height: 1.6;
+}
+.text small {
+  display: block;
+  color: var(--mu);
+  font-size: var(--fs-12);
+}
+.badge {
+  flex: none;
+  height: 28px;
+  padding: 0 var(--sp-3);
+  border-radius: var(--r-pill);
+  font-size: var(--fs-12);
+  font-weight: var(--fw-xbold);
+  line-height: 28px;
+}
+.ok {
+  background: var(--status-ok);
+  color: var(--status-ok-ink);
+}
+.wait {
+  background: var(--status-wait);
+  color: var(--status-wait-ink);
+}
+.bad {
+  background: var(--status-bad);
+  color: var(--status-bad-ink);
+}
+.renew {
+  flex: none;
+  min-height: var(--touch);
+  padding: 0 var(--sp-4);
+  border: 2px solid var(--primary);
+  border-radius: var(--r-pill);
+  background: none;
+  color: var(--pr2);
+  font: inherit;
+  font-size: var(--fs-12);
+  font-weight: var(--fw-xbold);
+  cursor: pointer;
+}
+.renew:focus-visible {
+  outline: 3px solid var(--ink);
+  outline-offset: 2px;
+}

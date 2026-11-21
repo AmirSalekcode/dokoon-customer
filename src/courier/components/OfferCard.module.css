@@ -1,0 +1,110 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+  width: 100%;
+  min-height: var(--tap-main);
+  padding: var(--sp-4);
+  border: 0;
+  border-radius: var(--r-lg);
+  background: var(--sf);
+  color: var(--ink);
+  font: inherit;
+  text-align: start;
+  box-shadow: var(--sh-card);
+  cursor: pointer;
+  transition: transform var(--t-fast);
+}
+.card:hover {
+  transform: scale(1.01);
+}
+.card:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: 2px;
+}
+.head {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+}
+.head b {
+  flex: 1;
+  min-width: 0;
+  font-size: var(--fs-16);
+  font-weight: var(--fw-xbold);
+  line-height: 1.5;
+}
+.earn {
+  flex: none;
+  color: var(--pr2);
+  font-size: var(--fs-20);
+  font-weight: var(--fw-xbold);
+}
+.route {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sp-3);
+}
+.dots {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: calc(var(--sp-1) * 1.5);
+}
+.dots i {
+  width: 12px;
+  height: 12px;
+  border-radius: var(--r-circle);
+  background: var(--primary);
+}
+.dots i + u + i {
+  background: var(--dock);
+}
+.dots u {
+  width: 2px;
+  height: 28px;
+  background: var(--ln);
+}
+.places {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--sp-2);
+  font-size: var(--fs-14);
+  line-height: 1.7;
+}
+.places > span {
+  display: flex;
+  flex-direction: column-reverse;
+}
+.places small {
+  color: var(--mu);
+  font-size: var(--fs-12);
+}
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-2);
+}
+.meta span {
+  height: 28px;
+  padding: 0 var(--sp-3);
+  border-radius: var(--r-pill);
+  background: var(--bg);
+  color: var(--ink);
+  font-size: var(--fs-12);
+  font-weight: var(--fw-bold);
+  line-height: 28px;
+}
+.meta .cash {
+  background: var(--soft);
+  color: var(--pr2);
+}
+@media (prefers-reduced-motion: reduce) {
+  .card {
+    transition: none;
+  }
+  .card:hover {
+    transform: none;
+  }
+}

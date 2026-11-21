@@ -1,0 +1,80 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: var(--sp-6) var(--sp-4) var(--sp-4);
+  border-radius: var(--r-xl);
+  background: var(--sf);
+  color: var(--ink);
+  text-align: center;
+  box-shadow: var(--sh-card);
+}
+.card:focus {
+  outline: none;
+}
+.art {
+  width: 96px;
+  height: 96px;
+  filter: drop-shadow(0 8px 8px var(--art-shadow));
+  animation: float 4.5s ease-in-out infinite;
+}
+.card h2 {
+  margin: 0;
+  font-size: var(--fs-20);
+  font-weight: var(--fw-xbold);
+}
+.earn {
+  margin: 0;
+  color: var(--pr2);
+  font-size: calc(var(--fs-16) * 2);
+  font-weight: var(--fw-xbold);
+  line-height: 1.3;
+}
+.sub {
+  color: var(--mu);
+  font-size: var(--fs-12);
+}
+.rows {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-1);
+  width: 100%;
+  margin: 0;
+  padding-top: var(--sp-3);
+  border-top: 1px solid var(--ln);
+}
+.rows div {
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--fs-14);
+}
+.rows dt {
+  color: var(--mu);
+}
+.rows dd {
+  margin: 0;
+  font-weight: var(--fw-bold);
+}
+.done {
+  width: 100%;
+  min-height: 60px;
+  border: 0;
+  border-radius: var(--r-pill);
+  background: var(--primary);
+  color: var(--white);
+  font: inherit;
+  font-size: var(--fs-16);
+  font-weight: var(--fw-xbold);
+  box-shadow: var(--sh-cta);
+  cursor: pointer;
+}
+.done:focus-visible {
+  outline: 3px solid var(--ink);
+  outline-offset: 2px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .art {
+    animation: none;
+  }
+}
