@@ -39,12 +39,12 @@ jobs:
       # Courier app (D-125): its own bundle and scan.
       - run: npm run build:courier
       - run: npm run secrets:scan:dist-courier
-      - uses: actions/upload-artifact@v5
+      - uses: actions/upload-artifact@v7
         with:
           name: web-dist
           path: dist
           retention-days: 7
-      - uses: actions/upload-artifact@v5
+      - uses: actions/upload-artifact@v7
         with:
           name: panel-dist
           path: dist-panel
@@ -79,7 +79,7 @@ jobs:
       - run: npm ci
       - run: npx playwright install --with-deps chromium
       - run: npm run e2e
-      - uses: actions/upload-artifact@v5
+      - uses: actions/upload-artifact@v7
         if: failure()
         with:
           name: playwright-traces
@@ -99,7 +99,7 @@ jobs:
       - run: npm ci
       - run: npx playwright install --with-deps chromium
       - run: npm run e2e:panel
-      - uses: actions/upload-artifact@v5
+      - uses: actions/upload-artifact@v7
         if: failure()
         with:
           name: playwright-traces-panel
@@ -119,7 +119,7 @@ jobs:
       - run: npm ci
       - run: npx playwright install --with-deps chromium
       - run: npm run e2e:courier
-      - uses: actions/upload-artifact@v5
+      - uses: actions/upload-artifact@v7
         if: failure()
         with:
           name: playwright-traces-courier
@@ -215,7 +215,7 @@ jobs:
             k6 run --summary-export "k6-$(basename "$p" .js).json" "$p"
             echo "::endgroup::"
           done
-      - uses: actions/upload-artifact@v5
+      - uses: actions/upload-artifact@v7
         if: always()
         with:
           name: k6-results
@@ -245,7 +245,7 @@ jobs:
           npm run preview:perf > preview.log 2>&1 &
           for i in $(seq 1 30); do curl -fsS -o /dev/null http://127.0.0.1:4173/ && break; sleep 1; done
           npm run lighthouse
-      - uses: actions/upload-artifact@v5
+      - uses: actions/upload-artifact@v7
         if: always()
         with:
           name: lighthouse-reports
@@ -274,7 +274,7 @@ jobs:
           npm run lighthouse
         env:
           LH_APP: panel
-      - uses: actions/upload-artifact@v5
+      - uses: actions/upload-artifact@v7
         if: always()
         with:
           name: lighthouse-panel-reports
@@ -303,7 +303,7 @@ jobs:
       - name: Gradle assembleDebug
         working-directory: android
         run: chmod +x gradlew && ./gradlew assembleDebug --no-daemon
-      - uses: actions/upload-artifact@v5
+      - uses: actions/upload-artifact@v7
         with:
           name: app-debug-apk
           path: android/app/build/outputs/apk/debug/app-debug.apk
@@ -341,7 +341,7 @@ jobs:
           echo "$badging" | grep -E "^package|application-label:"
           echo "$badging" | grep -q "package: name='ir.dokoonapp.restaurant'" || { echo "::error::wrong package id"; exit 1; }
           echo "$badging" | grep -q "application-label:'دکون رستوران'" || { echo "::error::wrong app name"; exit 1; }
-      - uses: actions/upload-artifact@v5
+      - uses: actions/upload-artifact@v7
         with:
           name: panel-debug-apk
           path: android-panel/android/app/build/outputs/apk/debug/app-debug.apk
