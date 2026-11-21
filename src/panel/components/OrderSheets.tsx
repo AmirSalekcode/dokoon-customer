@@ -1,45 +1,7 @@
-import type { ReactNode } from 'react';
 import { Sheet, SheetHandle } from '@/components/base/Sheet';
+import { SheetConfirm, SheetHead, sheetBody, sheetText } from '@/components/library/SheetParts';
 import { Icon } from '@/components/primitives/Icon';
 import s from './OrderSheets.module.css';
-
-function SheetHead({ title, onClose }: { title: string; onClose: () => void }) {
-  return (
-    <div className={s.hd}>
-      <h2>{title}</h2>
-      <button type="button" className={s.x} aria-label="بستن" onClick={onClose}>
-        <Icon name="close" />
-      </button>
-    </div>
-  );
-}
-
-function Confirm({
-  label,
-  disabled,
-  busy,
-  danger,
-  onClick,
-}: {
-  label: string;
-  disabled: boolean;
-  busy?: boolean;
-  danger?: boolean;
-  onClick: () => void;
-}) {
-  return (
-    <button
-      type="button"
-      className={[s.ok, danger && s.danger].filter(Boolean).join(' ')}
-      disabled={disabled || busy}
-      aria-busy={busy || undefined}
-      onClick={onClick}
-    >
-      {busy ? <i className={s.spin} aria-hidden="true" /> : null}
-      {label}
-    </button>
-  );
-}
 
 export interface PrepOption {
   key: string;
@@ -73,8 +35,8 @@ export function PrepSheet(p: PrepSheetProps) {
     <Sheet label="زمان آماده‌سازی" onClose={p.onClose}>
       <SheetHandle />
       <SheetHead title="زمان آماده‌سازی سفارش" onClose={p.onClose} />
-      <div className={s.body}>
-        <p className={s.p}>
+      <div className={sheetBody}>
+        <p className={sheetText}>
           این زمان به مشتری نمایش داده می‌شود. هر وقت لازم شد می‌توانید زمان را افزایش دهید.
         </p>
         <div className={s.grid} role="group" aria-label="زمان آماده‌سازی">
@@ -116,52 +78,13 @@ export function PrepSheet(p: PrepSheetProps) {
           <small>به مشتری اعلام می‌شود</small>
           <b>{p.preview}</b>
         </div>
-        <Confirm label="تأیید و پذیرش سفارش" disabled={!p.canConfirm} busy={p.busy} onClick={p.onConfirm} />
-      </div>
-    </Sheet>
-  );
-}
-
-export interface ReasonSheetProps {
-  title: string;
-  text: string;
-  items: { id: string; label: string; on: boolean }[];
-  confirmLabel: string;
-  canConfirm: boolean;
-  busy?: boolean;
-  /** Loading / error content instead of the list. */
-  status?: ReactNode;
-  onPick: (id: string) => void;
-  onConfirm: () => void;
-  onClose: () => void;
-}
-
-/** Reject / cancel reason (restaurant component library). */
-export function ReasonSheet(p: ReasonSheetProps) {
-  return (
-    <Sheet label={p.title} onClose={p.onClose}>
-      <SheetHandle />
-      <SheetHead title={p.title} onClose={p.onClose} />
-      <div className={s.body}>
-        <p className={s.p}>{p.text}</p>
-        {p.status ?? (
-          <div className={s.reasons} role="radiogroup" aria-label={p.title}>
-            {p.items.map((x) => (
-              <button
-                key={x.id}
-                type="button"
-                role="radio"
-                aria-checked={x.on}
-                className={[s.reason, x.on && s.on].filter(Boolean).join(' ')}
-                onClick={() => p.onPick(x.id)}
-              >
-                <span className={s.mark} aria-hidden="true" />
-                {x.label}
-              </button>
-            ))}
-          </div>
-        )}
-        <Confirm label={p.confirmLabel} disabled={!p.canConfirm} busy={p.busy} danger onClick={p.onConfirm} />
+        <SheetConfirm
+          label="تأیید و پذیرش سفارش"
+          disabled={!p.canConfirm}
+          busy={p.busy}
+          className={s.accept}
+          onClick={p.onConfirm}
+        />
       </div>
     </Sheet>
   );
