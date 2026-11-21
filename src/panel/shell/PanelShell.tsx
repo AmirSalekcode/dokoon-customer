@@ -13,7 +13,9 @@ import { startAlerts } from '../orders/alerts';
 import { AlertOverlay, PrepOverlay, ReasonOverlay } from '../orders/OrderOverlays';
 import { PrintHost } from '../orders/print';
 import { panelScreenFor, SHELL_SCREENS } from '../screens/registry';
-import { reconnectLive, startLive, stopLive } from '../realtime/live';
+import { onLiveEvent, reconnectLive, startLive, stopLive } from '../realtime/live';
+import { useNotifs } from '../state/notifs';
+import { toast } from '@/ui/toast';
 import { useRestaurant } from '../state/restaurant';
 import { useShift } from '../state/shift';
 import { countByTab, useOrders } from '../state/orders';
@@ -133,10 +135,20 @@ export function PanelShell() {
     if (!shiftOn) return;
     startLive();
     const stopAlerts = startAlerts();
+    // Dokoon's messages and newly required documents (KAN-70): a toast; the lists pick them up.
+    const stopNotes = onLiveEvent((m) => {
+      if (m.event === 'notification.created') {
+        useNotifs.getState().add(m.data);
+        toast(`پیام تازه از دکون: ${m.data.title ?? ''}`, 'info', 2600);
+      } else if (m.event === 'doc.required') {
+        toast(`دکون مدرک تازه‌ای لازم دارد: ${m.data.label ?? ''} (حساب ← اطلاعات رستوران)`, 'warn', 4000);
+      }
+    });
     window.addEventListener('online', reconnectLive);
     return () => {
       window.removeEventListener('online', reconnectLive);
       stopAlerts();
+      stopNotes();
       stopLive();
     };
   }, [shiftOn]);

@@ -6,7 +6,11 @@ import { RegScreen } from './reg/RegScreen';
 import { RegStatusScreen } from './auth/RegStatusScreen';
 import { ShiftScreen } from './auth/ShiftScreen';
 import { SoundScreen } from './SoundScreen';
-import { HelpScreen, PanelErrorScreen, type PanelScreenProps } from './StackScreens';
+import { PanelErrorScreen, type PanelScreenProps } from './StackScreens';
+import { InfoScreen } from './account/InfoScreen';
+import { NotifsScreen } from './account/NotifsScreen';
+import { ShebaScreen } from './account/ShebaScreen';
+import { HelpScreen, TicketScreen } from './account/SupportScreens';
 import { OrderScreen } from './orders/OrderScreen';
 import { OrdersScreen } from './orders/OrdersScreen';
 import { CatsScreen } from './menu/CatsScreen';
@@ -31,7 +35,11 @@ const SCREENS: Record<PanelScreen, ComponentType<PanelScreenProps>> = {
   account: AccountScreen,
   hours: HoursScreen,
   delivery: DeliveryScreen,
+  info: InfoScreen,
+  sheba: ShebaScreen,
+  notifs: NotifsScreen,
   help: HelpScreen,
+  ticket: TicketScreen,
   login: LoginScreen,
   reg: RegScreen,
   'reg-status': RegStatusScreen,
