@@ -33,7 +33,9 @@ describe('shared native plugin', () => {
       expect(read(`${a.dir}/app/build.gradle`)).toContain("implementation project(':dokoon-plugins')");
       const m = read(a.main);
       expect(m.indexOf('registerPlugin(DokoonNativePlugin.class)')).toBeGreaterThan(-1);
-      expect(m.indexOf('registerPlugin(DokoonNativePlugin.class)')).toBeLessThan(m.indexOf('super.onCreate(savedInstanceState);'));
+      expect(m.indexOf('registerPlugin(DokoonNativePlugin.class)')).toBeLessThan(
+        m.indexOf('super.onCreate(savedInstanceState);'),
+      );
     });
   }
 
