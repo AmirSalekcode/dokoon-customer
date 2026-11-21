@@ -1,7 +1,5 @@
 import type { ErrorKind } from '@/api/errors';
-import { EmptyState } from '@/components/library/EmptyState';
 import { ErrorPage } from '@/components/library/ErrorPage';
-import { TopBar } from '@/components/library/TopBar';
 import { config } from '@/config/env';
 import type { ErrorAction } from '@/errors/errorContent';
 import { runRetry } from '@/errors/retry';
@@ -10,26 +8,9 @@ import type { StackRoute } from '@/nav/createStackNav';
 import { signOutLocal } from '../auth/flow';
 import { PANEL_ERROR_CONTENT } from '../errors/panelErrors';
 import { usePanelNav, type PanelScreen } from '../nav/nav';
-import s from './screens.module.css';
 
 export interface PanelScreenProps {
   route: StackRoute<PanelScreen>;
-}
-
-/** Help & support (pushed from account and from error pages). Content: KAN-70. */
-export function HelpScreen() {
-  return (
-    <>
-      <TopBar title="راهنما و پشتیبانی" level={1} onBack={() => usePanelNav.getState().back()} />
-      <div className={s.page}>
-        <EmptyState
-          art="dk-cafe"
-          title="پرسش‌های پرتکرار"
-          text="پاسخ پرسش‌ها و راه‌های تماس با پشتیبانی اینجا می‌آید."
-        />
-      </div>
-    </>
-  );
 }
 
 /**

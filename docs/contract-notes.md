@@ -117,3 +117,8 @@ Nothing here is implemented as an invented endpoint; the frontend works around e
     Proposal: `Report.trends: {revenue|orders|avgOrder|avgPrepMinutes: 'up' | 'down' | 'flat'}` where
     `up` means better for the restaurant (for prep time: faster). Until then the cards show the text
     without colour. Also declare `400 PERIOD_INVALID` on `GET /r/reports`.
+28. **Sheba-change code (KAN-70).** `POST /r/me/sheba-change` needs a fresh `otpCode`, but the only way to
+    get one is `POST /r/auth/otp/request {phone}`, and the panel never holds the full phone
+    (`phoneMasked`). Today the manager types the mobile again. Proposal:
+    `POST /r/me/sheba-change/otp` (no body, bearer auth) → `{resendAfterSec, codeLength}`, sent to the
+    account's own phone; the server must reject a code that was sent to any other number.

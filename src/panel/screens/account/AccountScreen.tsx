@@ -8,6 +8,7 @@ import { toFaDigits } from '@/lib/format';
 import { useTheme } from '@/theme/theme';
 import { ERROR_KINDS } from '../../errors/panelErrors';
 import { usePanelNav, type PanelScreen } from '../../nav/nav';
+import { unreadCount, useNotifs } from '../../state/notifs';
 import { useRestaurant } from '../../state/restaurant';
 import s from './account.module.css';
 
@@ -33,6 +34,18 @@ export const ACCOUNT_ROWS: Row[] = [
     to: 'delivery',
   },
   {
+    title: 'اطلاعات رستوران',
+    sub: 'نام، آدرس، شبا و مدارک',
+    d: 'M4 9l1-5h14l1 5M4 9a3 3 0 0 0 5 2 3 3 0 0 0 6 0 3 3 0 0 0 5-2M5 12v8h14v-8',
+    to: 'info',
+  },
+  {
+    title: 'اعلان‌ها',
+    sub: 'پیام‌های دکون برای رستوران',
+    d: 'M6 16v-5a6 6 0 0 1 12 0v5l2 2H4zM10 21h4',
+    to: 'notifs',
+  },
+  {
     title: 'صدا و هشدار',
     sub: 'صدای سفارش جدید و لرزش',
     d: 'M5 10v4h3l5 4V6l-5 4zM17 9a4 4 0 0 1 0 6',
@@ -51,11 +64,13 @@ export function AccountScreen() {
   const theme = useTheme((st) => st.theme);
   const setMode = useTheme((st) => st.setMode);
   const profile = useRestaurant((st) => st.profile);
+  const unread = useNotifs((st) => unreadCount(st.list));
   const { push, showError, resetTo, openOverlay } = usePanelNav.getState();
 
   useEffect(() => {
     if (!useRestaurant.getState().profile && useRestaurant.getState().status !== 'loading')
       void useRestaurant.getState().load();
+    if (useNotifs.getState().status === 'idle') void useNotifs.getState().load();
   }, []);
 
   return (
@@ -77,7 +92,14 @@ export function AccountScreen() {
       ) : null}
       <div className={s.card}>
         {ACCOUNT_ROWS.map((r) => (
-          <ListRow key={r.to} title={r.title} sub={r.sub} d={r.d} onTap={() => push(r.to)} />
+          <ListRow
+            key={r.to}
+            title={r.title}
+            sub={r.to === 'notifs' && unread ? `${toFaDigits(unread)} پیام خوانده‌نشده` : r.sub}
+            d={r.d}
+            dot={r.to === 'notifs' && unread > 0}
+            onTap={() => push(r.to)}
+          />
         ))}
       </div>
       <ToggleRow
