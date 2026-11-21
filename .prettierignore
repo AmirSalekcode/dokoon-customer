@@ -10,6 +10,8 @@ prototype-restaurant
 docs
 contract
 restaurant
+courier
+prototype-courier
 design-tokens
 assets
 public/mockServiceWorker.js
