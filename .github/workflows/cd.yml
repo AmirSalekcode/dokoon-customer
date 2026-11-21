@@ -128,7 +128,7 @@ jobs:
           test -f "$apk" || { echo "::error::signed app-release.apk not produced"; ls android/app/build/outputs/apk/release; exit 1; }
           "$(ls -d "$ANDROID_HOME"/build-tools/* | sort -V | tail -1)/apksigner" verify --print-certs "$apk"
           echo "versionCode=$ANDROID_VERSION_CODE versionName=$ANDROID_VERSION_NAME"
-      - uses: softprops/action-gh-release@v2
+      - uses: softprops/action-gh-release@v3
         with:
           files: android/app/build/outputs/apk/release/app-release.apk
 
@@ -201,6 +201,6 @@ jobs:
           "$tools/aapt" dump badging "$apk" | grep -q "package: name='ir.dokoonapp.restaurant' versionCode='$ANDROID_VERSION_CODE'" \
             || { echo "::error::package id or versionCode mismatch"; exit 1; }
           mv "$apk" "dokoon-restaurant-$ANDROID_VERSION_NAME.apk"
-      - uses: softprops/action-gh-release@v2
+      - uses: softprops/action-gh-release@v3
         with:
           files: dokoon-restaurant-*.apk
