@@ -1,10 +1,15 @@
 import { createStackNav } from '@/nav/createStackNav';
 
-/** Restaurant panel screens (`order`: detail on phones, params.id); menu editors… arrive with their tasks. */
+/**
+ * Restaurant panel screens. `order`: detail on phones (params.id); `cats`: menu categories;
+ * `dish`: food editor (params.id = edit, params.cat = new food in that category).
+ */
 export const PANEL_SCREENS = [
   'orders',
   'order',
   'menu',
+  'cats',
+  'dish',
   'reports',
   'account',
   'help',

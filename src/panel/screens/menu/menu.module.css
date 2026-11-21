@@ -1,0 +1,83 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+  padding: var(--sp-4) 0 var(--sp-8);
+}
+.page > :not(.tabs) {
+  margin-inline: var(--gutter);
+}
+.actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--sp-3);
+}
+/* One column on phones, two from 720px (tablet / desktop panel). */
+.list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--sp-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+@media (min-width: 720px) {
+  .list {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* Sub-screens (cats, dish, group): scrolling body + docked save bar. */
+.wrap {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+.body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+  width: 100%;
+  max-width: 720px;
+  margin-inline: auto;
+  padding: var(--sp-4) var(--gutter) var(--sp-8);
+  box-sizing: border-box;
+}
+.dock {
+  position: sticky;
+  bottom: 0;
+  z-index: 2;
+}
+.note {
+  margin: 0;
+  font-size: var(--fs-13);
+  line-height: 1.8;
+  color: var(--mu);
+}
+.catRow {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sp-2);
+}
+.catRow > :first-child {
+  flex: 1;
+  min-width: 0;
+}
+.del {
+  min-height: 48px;
+  margin-top: var(--sp-6);
+  padding: 0 var(--sp-3);
+  border: 0;
+  border-radius: var(--r-md);
+  background: none;
+  color: var(--danger);
+  font: inherit;
+  font-size: var(--fs-14);
+  font-weight: var(--fw-bold);
+  cursor: pointer;
+}
+.del:focus-visible {
+  outline: 3px solid var(--primary);
+  outline-offset: 2px;
+}

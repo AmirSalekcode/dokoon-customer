@@ -1,0 +1,136 @@
+/* MenuItemRow (restaurant component library, 358×96). Switch on = orange, off = grey (no green). */
+.r {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: var(--sp-3);
+  border-radius: var(--r-xl);
+  background: var(--sf);
+  box-shadow: var(--sh-card);
+  color: var(--ink);
+}
+.ed {
+  flex: 1;
+  min-width: 0;
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: start;
+  cursor: pointer;
+}
+.ed:focus-visible {
+  outline: 3px solid var(--primary);
+  outline-offset: 2px;
+  border-radius: var(--r-md);
+}
+.ar {
+  width: 64px;
+  height: 64px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  border-radius: var(--r-md);
+  background: var(--soft);
+  overflow: hidden;
+}
+.ar svg {
+  width: 52px;
+  height: 52px;
+}
+.ar img {
+  width: 100%;
+  height: 100%;
+}
+.off .ar {
+  opacity: 0.45;
+  filter: grayscale(0.6);
+}
+.tx {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+.n {
+  font-size: var(--fs-15);
+  font-weight: var(--fw-bold);
+  line-height: 1.6;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.pr {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  font-size: var(--fs-14);
+  font-weight: var(--fw-xbold);
+  line-height: 1.6;
+}
+.pr s {
+  font-size: var(--fs-12);
+  font-weight: var(--fw-regular);
+  color: var(--mu);
+}
+.st {
+  font-size: var(--fs-12);
+  font-weight: var(--fw-bold);
+  color: var(--pr2);
+}
+.off .st {
+  color: var(--mu);
+}
+.sw {
+  position: relative;
+  width: 52px;
+  height: 32px;
+  flex: none;
+  padding: 0;
+  border: 0;
+  border-radius: var(--r-pill);
+  background: var(--ln);
+  cursor: pointer;
+  transition: background var(--t-med);
+}
+.sw::before {
+  content: '';
+  position: absolute;
+  inset: -8px 0;
+}
+.sw::after {
+  content: '';
+  position: absolute;
+  top: 4px;
+  inset-inline-start: 4px;
+  width: 24px;
+  height: 24px;
+  border-radius: var(--r-circle);
+  background: var(--white);
+  box-shadow: var(--sh-card-hi);
+  transition: inset-inline-start var(--t-med);
+}
+.on {
+  background: var(--primary);
+}
+.on::after {
+  inset-inline-start: 24px;
+}
+.sw:disabled {
+  cursor: progress;
+}
+.sw:focus-visible {
+  outline: 3px solid var(--primary);
+  outline-offset: 2px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .sw,
+  .sw::after {
+    transition: none;
+  }
+}
