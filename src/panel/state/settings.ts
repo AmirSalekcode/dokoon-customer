@@ -47,3 +47,22 @@ export const useSettings = create<SettingsState>((set, get) => ({
 
   reset: () => set({ settings: null, status: 'idle' }),
 }));
+
+/** Default prep range bounds (contract: 5..120), step 5. */
+export const ETA_MIN = 5;
+export const ETA_MAX = 120;
+const ETA_STEP = 5;
+
+/**
+ * One ± step of the default prep range that never leaves 5..120 and keeps max ≥ min: raising the
+ * minimum past the maximum pushes the maximum along, lowering the maximum below the minimum pulls it down.
+ */
+export function stepEta(min: number, max: number, which: 'min' | 'max', dir: 1 | -1) {
+  const clamp = (v: number) => Math.min(ETA_MAX, Math.max(ETA_MIN, v));
+  if (which === 'min') {
+    const etaMin = clamp(min + dir * ETA_STEP);
+    return { etaMin, etaMax: Math.max(max, etaMin) };
+  }
+  const etaMax = clamp(max + dir * ETA_STEP);
+  return { etaMin: Math.min(min, etaMax), etaMax };
+}
