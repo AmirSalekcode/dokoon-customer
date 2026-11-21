@@ -20,6 +20,8 @@ export default tseslint.config(
       'src/api/schema.d.ts',
       'src/panel/api/schema.d.ts',
       'public-panel/mockServiceWorker.js',
+      'src/courier/api/schema.d.ts',
+      'public-courier/mockServiceWorker.js',
       'test-results',
       'playwright-report',
     ],
