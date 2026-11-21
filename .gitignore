@@ -25,3 +25,11 @@ android/.idea/
 *.jks
 # k6 results
 perf/results/
+# Restaurant panel Android (KAN-71): same rules as android/
+android-panel/android/app/build/
+android-panel/android/build/
+android-panel/android/.gradle/
+android-panel/android/local.properties
+android-panel/android/app/src/main/assets/public/
+android-panel/android/capacitor-cordova-android-plugins/
+android-panel/android/.idea/

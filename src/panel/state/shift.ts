@@ -36,12 +36,13 @@ export const SHIFT_NO_SOUND = 'مرورگر اجازه‌ی پخش صدا ندا
 /**
  * «شروع شیفت و فعال‌سازی صدا» (KAN-61): must run inside the tap (the AudioContext is created
  * synchronously there), plays the test sound, keeps the screen on, then opens the orders tab.
+ * `navigate: false`: the caller already opened the orders tab (Android app auto start, KAN-71).
  */
-export async function beginShift() {
+export async function beginShift({ navigate = true } = {}) {
   const unlocking = soundEngine().unlock();
   const locking = wakeLock().acquire();
   useShift.getState().start();
-  usePanelNav.getState().resetTo('orders');
+  if (navigate) usePanelNav.getState().resetTo('orders');
   const [soundOn, screenOn] = await Promise.all([unlocking, locking]);
   useShift.setState({ soundOn, screenOn });
   toast(

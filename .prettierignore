@@ -4,6 +4,7 @@ dist-panel
 dev-dist
 storybook-static
 android
+android-panel/android
 prototype
 prototype-restaurant
 docs
