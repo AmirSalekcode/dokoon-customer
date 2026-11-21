@@ -23,13 +23,4 @@ export type RealtimeMessage =
   | { event: 'notification.created'; data: Notification }
   | { event: 'doc.required'; data: DocType };
 
-/** The part of the browser WebSocket the live client uses; mock builds pass a fake (D-71: no SW). */
-export interface SocketLike {
-  readonly readyState: number;
-  addEventListener(type: 'open' | 'message' | 'close' | 'error', listener: (e: Event) => void): void;
-  removeEventListener(type: 'open' | 'message' | 'close' | 'error', listener: (e: Event) => void): void;
-  send(data: string): void;
-  close(code?: number, reason?: string): void;
-}
-
-export type SocketFactory = (url: string) => SocketLike;
+export type { SocketFactory, SocketLike } from '@/lib/socket';

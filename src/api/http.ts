@@ -10,6 +10,11 @@ export interface HttpOptions {
   onUnauthorized?: () => Promise<boolean>;
   isOnline?: () => boolean;
   fetchImpl?: typeof fetch;
+  /**
+   * Statuses this request handles on the screen instead of a full page (e.g. 401 «wrong code» on an
+   * OTP verify): the Response is handed back like a 400/409 business error.
+   */
+  inlineStatus?: (status: number, request: Request) => boolean;
 }
 
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
@@ -60,6 +65,7 @@ export function createHttp(opts: HttpOptions = {}): typeof fetch {
         await sleep(backoffMs * 2 ** attempt);
         continue;
       }
+      if (!res.ok && opts.inlineStatus?.(res.status, request)) return res;
       if (res.status === 401 && !refreshed && opts.onUnauthorized) {
         refreshed = true;
         if (await opts.onUnauthorized()) continue;
