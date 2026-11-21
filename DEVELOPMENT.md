@@ -60,6 +60,7 @@ src/
   screens/      phase-1 demo screens only (home/restaurant/cart/account/settings lab); real screens come next
   app/          App shell: ScreenHost (keeps stack mounted for exact back), OverlayHost, BottomNav
   panel/        restaurant panel (second entry, see below)
+  courier/      courier app (third entry, see below)
 ```
 
 ## Restaurant panel (second entry, D-91)
@@ -122,6 +123,29 @@ built by `vite.panel.config.ts` into `dist-panel/` with its own PWA manifest («
   Mock builds: `__dkPanelMocks.stream.outage(true|false)`, `.dropAll()`, `.emit({event, data})`, `__dkPanelMocks.addOrder()`.
   Unit tests get an in-page stream from `src/panel/test/session.ts`.
 - **E2E locally:** `npm run e2e:panel` builds the mock panel and serves it on `127.0.0.1:5176`.
+
+## Courier app (third entry, D-125)
+
+The courier app (`courier.dokoonapp.ir`, D-124) is the third entry: `courier.html` → `src/courier/main.tsx`, built
+by `vite.courier.config.ts` into `dist-courier/` with its own PWA manifest («دکون پیک»), icons and `robots.txt`
+from `public-courier/` (icons: `node scripts/gen-icons.mjs courier`). Plan and progress: `TASKS-COURIER.md`
+(Epics KAN-76..84); specs in `courier/`, visual reference `prototype-courier/`.
+
+| Command | What it does |
+|---|---|
+| `npm run dev:courier:mock` | Courier app on http://localhost:5177 with mock data |
+| `npm run dev:courier` | Courier app against `VITE_API_BASE_URL` |
+| `npm run build:courier` / `build:courier:mock` | Typecheck + build into `dist-courier/` |
+| `npm run e2e:courier` | Playwright for the courier app (`e2e-courier/`, against a mock build on :5178) |
+| `npm run secrets:scan:dist-courier` | Secret scan of the courier bundle |
+| `docker build --build-arg APP=courier .` | Courier image (nginx `docker/nginx.courier.conf`); `docker compose up` serves it on :8082 |
+
+- **Boundary:** `dokoon/app-boundaries` has three app zones: `src/courier` imports neither the customer app nor
+  `src/panel`, neither of them imports `src/courier`, and shared code imports no app.
+- **Tokens:** `design-tokens/dokoon-courier-tokens.css` under `[data-app="courier"]`, loaded only by
+  `src/courier/styles/courier.css`: orange gradient header (`--hd-bg`, white logo in both themes), alert gradient
+  (`--alert-bg`), touch targets `--tap-main` 56 / `--tap-alert` 64, status colors `--status-ok|wait|bad|on|off`.
+  No green: `--success`/`--okbg` are repainted orange, and `npm run lint:design` applies `no-green` to `src/courier`.
 
 ## Rules enforced in code
 - Tokens only: components use `var(--…)` from `design-tokens/dokoon-tokens.css`; derived transparencies live in
