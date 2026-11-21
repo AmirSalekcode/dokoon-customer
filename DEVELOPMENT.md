@@ -24,6 +24,12 @@ locked to portrait and tablets rotate (MainActivity); the WebView plays sound wi
 `orders|menu|reports|account|notifs|sound|help`). Icons/splash: `node scripts/gen-android-panel-icons.mjs`.
 Never `npm install` inside `android-panel/` — its `package.json` only marks the Capacitor root.
 
+Native code shared by both apps (KAN-72): `native-android/dokoon-plugins` (our own Capacitor plugin
+`DokoonNative`, JS side `src/lib/native.ts`), included from each app's `settings.gradle` and registered in
+each `MainActivity`. It stores the session encrypted with an Android Keystore key (`src/lib/secureStore.ts`;
+the web keeps localStorage), keeps the screen on during the shift, vibrates, and posts the local «سفارش جدید»
+notification while the restaurant app is in the background (`src/panel/native/orderNotify.ts`).
+
 Android build needs `JAVA_HOME` (JDK 21) and `ANDROID_HOME` (Android SDK, platform 35).
 
 Store release: push a tag `vX.Y.Z` on main. `cd.yml` refuses to build without the four `ANDROID_KEY*`

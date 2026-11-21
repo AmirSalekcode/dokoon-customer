@@ -33,3 +33,5 @@ android-panel/android/local.properties
 android-panel/android/app/src/main/assets/public/
 android-panel/android/capacitor-cordova-android-plugins/
 android-panel/android/.idea/
+# Shared native plugin build output (KAN-72)
+native-android/dokoon-plugins/build/

@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import type { User } from '@/api/types';
-import { readJson, writeJson } from '@/lib/storage';
+import { hydrateSecure, readSecureJsonSync, secureBackend, writeSecureJson } from '@/lib/secureStore';
 
 const KEY = 'dk-session';
 
@@ -17,23 +17,29 @@ type Persisted = Pick<SessionState, 'accessToken' | 'refreshToken' | 'user'>;
 const empty: Persisted = { accessToken: null, refreshToken: null, user: null };
 
 /**
- * Session tokens. NOTE: persisted in localStorage for now (PWA). For the Android shell this should
- * move to secure native storage before release — tracked as an open item in the phase-1 report.
+ * Session tokens: localStorage in the PWA, the Android Keystore in the app (D-38, KAN-72;
+ * `hydrateSession()` runs before the first render there).
  */
 export const useSession = create<SessionState>((set, get) => ({
-  ...readJson<Persisted>(KEY, empty),
+  ...readSecureJsonSync<Persisted>(KEY, empty),
   setSession: ({ accessToken, refreshToken, user }) => {
     const next = { accessToken, refreshToken, user: user ?? get().user };
-    writeJson(KEY, next);
+    writeSecureJson(KEY, next);
     set(next);
   },
   setUser: (user) => {
     const { accessToken, refreshToken } = get();
-    writeJson(KEY, { accessToken, refreshToken, user });
+    writeSecureJson(KEY, { accessToken, refreshToken, user });
     set({ user });
   },
   clear: () => {
-    writeJson(KEY, empty);
+    writeSecureJson(KEY, empty);
     set(empty);
   },
 }));
+
+/** Android app: load the Keystore session before the first render (no-op on the web). */
+export async function hydrateSession(): Promise<void> {
+  if (!secureBackend().native) return;
+  useSession.setState(await hydrateSecure<Persisted>(KEY, empty));
+}

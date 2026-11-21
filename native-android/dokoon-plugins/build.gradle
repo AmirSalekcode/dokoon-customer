@@ -1,0 +1,22 @@
+// Dokoon's own Capacitor plugin, shared by both Android apps (KAN-72): customer android/ and restaurant
+// android-panel/android/. No third-party plugin: Keystore session storage, keep-screen-on, vibration and
+// the local new-order notification. Included from each app's settings.gradle.
+apply plugin: 'com.android.library'
+
+android {
+    namespace = "ir.dokoonapp.plugins"
+    compileSdk = rootProject.ext.compileSdkVersion
+    defaultConfig {
+        minSdkVersion rootProject.ext.minSdkVersion
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_21
+        targetCompatibility JavaVersion.VERSION_21
+    }
+}
+
+dependencies {
+    implementation project(':capacitor-android')
+    implementation "androidx.core:core:$androidxCoreVersion"
+    implementation "androidx.appcompat:appcompat:$androidxAppCompatVersion"
+}

@@ -1,3 +1,6 @@
+import { DokoonNative } from '@/lib/native';
+import { isNative } from '@/lib/platform';
+
 /**
  * Screen Wake Lock during the shift (D-98): the screen must stay on to hear new orders. The browser drops
  * the lock when the tab is hidden, so it is taken again when the panel becomes visible.
@@ -66,9 +69,25 @@ export function createWakeLock(
   };
 }
 
+/**
+ * Android app (KAN-72): the WebView has no Screen Wake Lock, so the shift keeps the activity window on
+ * (FLAG_KEEP_SCREEN_ON) through Dokoon's plugin; it survives going to the background and back.
+ */
+export function nativeWakeLockApi(
+  plugin: { keepAwake(o: { on: boolean }): Promise<unknown> } = DokoonNative,
+): WakeLockApi {
+  return {
+    async request() {
+      await plugin.keepAwake({ on: true });
+      return { release: async () => void (await plugin.keepAwake({ on: false })) };
+    },
+  };
+}
+
 export type WakeLock = ReturnType<typeof createWakeLock>;
 let shared: WakeLock | null = null;
-export const wakeLock = (): WakeLock => (shared ??= createWakeLock());
+export const wakeLock = (): WakeLock =>
+  (shared ??= isNative() ? createWakeLock(nativeWakeLockApi()) : createWakeLock());
 export const setWakeLock = (w: WakeLock | null) => {
   shared = w;
 };

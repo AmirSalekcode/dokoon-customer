@@ -3,6 +3,7 @@ package ir.dokoonapp.restaurant;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import com.getcapacitor.BridgeActivity;
+import ir.dokoonapp.plugins.DokoonNativePlugin;
 
 /**
  * Restaurant panel shell (KAN-71).
@@ -16,6 +17,8 @@ public class MainActivity extends BridgeActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // Dokoon's own plugin (KAN-72): Keystore session, keep-awake, vibration, new-order notification.
+        registerPlugin(DokoonNativePlugin.class);
         super.onCreate(savedInstanceState);
         boolean tablet = getResources().getConfiguration().smallestScreenWidthDp >= TABLET_MIN_DP;
         setRequestedOrientation(

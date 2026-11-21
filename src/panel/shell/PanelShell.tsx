@@ -6,6 +6,7 @@ import { ArtSprite } from '@/components/primitives/ArtSprite';
 import { formatDecimal, formatNumber, toFaDigits } from '@/lib/format';
 import { initConnectivity, initSystemBack } from '@/nav/systemBack';
 import { initPanelDeepLinks } from '../native/app';
+import { startNativeOrderNotifications } from '../native/orderNotify';
 import { checkPanelConfig } from '../api/appConfig';
 import { panelApi } from '../api/client';
 import { bootPanel, logout } from '../auth/flow';
@@ -136,6 +137,8 @@ export function PanelShell() {
     if (!shiftOn) return;
     startLive();
     const stopAlerts = startAlerts();
+    // Android app: a local notification for new orders while the app is in the background (KAN-72).
+    const stopNotify = startNativeOrderNotifications();
     // Dokoon's messages and newly required documents (KAN-70): a toast; the lists pick them up.
     const stopNotes = onLiveEvent((m) => {
       if (m.event === 'notification.created') {
@@ -149,6 +152,7 @@ export function PanelShell() {
     return () => {
       window.removeEventListener('online', reconnectLive);
       stopAlerts();
+      stopNotify();
       stopNotes();
       stopLive();
     };
