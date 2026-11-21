@@ -112,3 +112,8 @@ Nothing here is implemented as an invented endpoint; the frontend works around e
     to the status page and `active` to the shift screen. Registration then runs with the token of the
     verified phone (so `POST /r/registration` and the document uploads are authenticated and bound to
     that phone) instead of `security: []`. Declare `429` on `/r/auth/otp/verify` too.
+27. **Report trends (KAN-68).** `Report.deltas` are free texts («۱۲٪ بیشتر از دیروز»), so the panel cannot
+    colour a stat card as better/worse without parsing words (and must not compute it, D-94/D-95).
+    Proposal: `Report.trends: {revenue|orders|avgOrder|avgPrepMinutes: 'up' | 'down' | 'flat'}` where
+    `up` means better for the restaurant (for prep time: faster). Until then the cards show the text
+    without colour. Also declare `400 PERIOD_INVALID` on `GET /r/reports`.
