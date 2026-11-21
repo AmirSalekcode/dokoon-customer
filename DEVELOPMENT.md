@@ -37,6 +37,13 @@ secrets and `vars.VITE_API_BASE_URL`, sets `versionCode = X*10000 + Y*100 + Z`, 
 `apksigner verify` and attaches `app-release.apk` to the GitHub release. Everything else needed
 before a public release is tracked in `docs/release-checklist.md`.
 
+Restaurant app (KAN-73): every merge to main also puts `dokoon-restaurant-test.apk` (debug, demo data) in the
+same `test-build` prerelease. Store build: push a tag `panel-vX.Y.Z` on main; `cd.yml` job
+`android-panel-release` needs its **own** keystore secrets `PANEL_ANDROID_KEYSTORE_BASE64`,
+`PANEL_ANDROID_KEYSTORE_PASSWORD`, `PANEL_ANDROID_KEY_ALIAS`, `PANEL_ANDROID_KEY_PASSWORD` plus
+`vars.VITE_API_BASE_URL`, refuses without them, versions from the tag, verifies signature + package and attaches
+`dokoon-restaurant-X.Y.Z.apk`. Docker images are not rebuilt for `panel-v*` tags.
+
 ## Layout
 
 ```

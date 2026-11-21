@@ -196,13 +196,75 @@ describe('test APK for phones', () => {
     expect(job).toBeDefined();
     expect(job.if).toContain("github.ref == 'refs/heads/main'");
     expect(job.if).toContain("github.event_name == 'push'");
-    expect(job.needs).toBe('android');
+    expect(job.needs).toEqual(['android', 'android-panel']);
     expect(runs(ci.jobs.android)).toContain('npm run build:mock');
+    expect(runs(ci.jobs['android-panel'])).toContain('npm run build:panel:mock');
   });
 
   it('only this job can write releases; the workflow default stays read-only', () => {
     expect(ci.permissions).toEqual({ contents: 'read' });
     expect(job.permissions).toEqual({ contents: 'write' });
-    expect(runs(job)).toContain('gh release create test-build dokoon-test.apk');
+    expect(runs(job)).toContain('gh release create test-build dokoon-test.apk dokoon-restaurant-test.apk');
+  });
+});
+
+// KAN-73 (D-92): restaurant Android app CI/CD.
+describe('restaurant Android app', () => {
+  const ci = wf('.github/workflows/ci.yml');
+  const cd = wf('.github/workflows/cd.yml');
+
+  it('CI builds its mock-data debug APK from android-panel and checks id + name', () => {
+    const job = ci.jobs['android-panel'];
+    const r = runs(job);
+    expect(job.needs).toBe('quality');
+    expect(r).toContain('node scripts/panel-android-web.mjs');
+    expect(r).toMatch(/assembleDebug/);
+    expect(r).toContain("package: name='ir.dokoonapp.restaurant'");
+    expect(r).toContain("application-label:'دکون رستوران'");
+    expect(
+      job.steps.some(
+        (s) =>
+          s.run === 'npx cap sync android' &&
+          (s as { 'working-directory'?: string })['working-directory'] === 'android-panel',
+      ),
+    ).toBe(true);
+  });
+
+  it('store build runs only on panel-v* tags; images skip those tags', () => {
+    expect(JSON.stringify(cd.on)).toContain('panel-v*');
+    const job = cd.jobs['android-panel-release'] as Job & { if?: string };
+    expect(job.if).toBe("startsWith(github.ref, 'refs/tags/panel-v')");
+    expect(String((cd.jobs.image as Job & { if?: string }).if)).toContain(
+      "startsWith(github.ref, 'refs/tags/panel-v')",
+    );
+    expect(String((cd.jobs['android-release'] as Job & { if?: string }).if)).toBe(
+      "startsWith(github.ref, 'refs/tags/v')",
+    );
+  });
+
+  it('refuses without its own keystore or API URL, versions from the tag, verifies signature and package', () => {
+    const job = cd.jobs['android-panel-release'];
+    const r = runs(job);
+    for (const v of [
+      'PANEL_ANDROID_KEYSTORE_BASE64',
+      'PANEL_ANDROID_KEYSTORE_PASSWORD',
+      'PANEL_ANDROID_KEY_ALIAS',
+      'PANEL_ANDROID_KEY_PASSWORD',
+      'VITE_API_BASE_URL',
+    ])
+      expect(r).toContain(v);
+    expect(r).toContain(String.raw`^panel-v([0-9]+)\.([0-9]+)\.([0-9]+)$`);
+    expect(r).toContain('ANDROID_VERSION_CODE=$(( BASH_REMATCH[1] * 10000');
+    expect(r).toMatch(/apksigner"? verify/);
+    expect(r).toContain("package: name='ir.dokoonapp.restaurant' versionCode='$ANDROID_VERSION_CODE'");
+    expect(r).not.toMatch(/build:panel:mock|build:mock/);
+    expect(r).toContain('npm run build:panel');
+    expect(r).toContain('npm run secrets:scan:dist-panel');
+  });
+
+  it('never signs with the customer keystore', () => {
+    const text = JSON.stringify(cd.jobs['android-panel-release']);
+    expect(text).not.toMatch(/secrets\.ANDROID_/);
+    expect(text).toContain('secrets.PANEL_ANDROID_KEYSTORE_PASSWORD');
   });
 });
