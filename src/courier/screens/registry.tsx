@@ -1,10 +1,18 @@
 import type { ComponentType } from 'react';
 import type { CourierScreen } from '../nav/nav';
 import { ErrorScreen } from './ErrorScreen';
+import { BootScreen } from './auth/BootScreen';
+import { LoginScreen } from './auth/LoginScreen';
+import { WaitScreen } from './auth/WaitScreen';
+import { RegScreen } from './reg/RegScreen';
 import { AccountTab, EarnTab, OrdersTab } from './TabScreens';
 import type { CourierScreenProps } from './types';
 
 const SCREENS: Record<CourierScreen, ComponentType<CourierScreenProps>> = {
+  boot: BootScreen,
+  login: LoginScreen,
+  reg: RegScreen,
+  wait: WaitScreen,
   orders: OrdersTab,
   earn: EarnTab,
   account: AccountTab,

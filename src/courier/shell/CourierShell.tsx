@@ -2,7 +2,9 @@ import { useEffect, useRef } from 'react';
 import { ToastHost } from '@/components/base/Toast';
 import { RBottomNav, type RNavItem } from '@/components/library/RBottomNav';
 import { ArtSprite } from '@/components/primitives/ArtSprite';
+import { greeting } from '@/lib/format';
 import { initConnectivity, initSystemBack } from '@/nav/systemBack';
+import { useCourierSession } from '../api/session';
 import { CHeader } from '../components/CHeader';
 import { isCourierTab, useCourierNav, type CourierTab } from '../nav/nav';
 import { courierScreenFor, SHELL_SCREENS } from '../screens/registry';
@@ -60,12 +62,13 @@ function CourierScreenHost() {
 /**
  * Courier app shell (KAN-89): three tabs (bottom bar < 720, side rail ≥ 720), stack navigation with exact
  * back (Android back, «press again to exit»), one overlay at a time, toasts, global offline page, theme.
- * The orange header sits on the orders tab; the courier's name and earnings fill it after login (KAN-90+).
+ * The orange header sits on the orders tab with the greeting «سلام (name) عزیز»; earnings join it in KAN-98.
  */
 export function CourierShell() {
   const top = useCourierNav((st) => st.stack[st.stack.length - 1]);
   const stackLen = useCourierNav((st) => st.stack.length);
   const resetTo = useCourierNav((st) => st.resetTo);
+  const name = useCourierSession((st) => st.name);
 
   useEffect(() => {
     const stopBack = initSystemBack(useCourierNav);
@@ -92,7 +95,7 @@ export function CourierShell() {
         </div>
       ) : null}
       <div className={s.body}>
-        {onShell && top.screen === 'orders' ? <CHeader who="دکون پیک" /> : null}
+        {onShell && top.screen === 'orders' ? <CHeader who={name ? greeting(name) : 'دکون پیک'} /> : null}
         <div className={s.stage}>
           <CourierScreenHost />
         </div>

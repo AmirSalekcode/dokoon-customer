@@ -127,7 +127,7 @@ describe('overlays (one at a time)', () => {
     await userEvent.click(within(screen.getByRole('alertdialog')).getByRole('button', { name: 'خروج' }));
     expect(clear).toHaveBeenCalled();
     expect(screen.queryByRole('alertdialog')).toBeNull();
-    expect(nav().stack.map((r) => r.screen)).toEqual(['orders']);
+    expect(nav().stack.map((r) => r.screen)).toEqual(['login']);
   });
 
   it('a reason sheet needs a pick before confirming and hands the picked id over', async () => {

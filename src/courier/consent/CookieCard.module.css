@@ -1,0 +1,78 @@
+/* Cookie card (courier prototype `.ckb`): white card, 28 radius, sticks to the bottom of the login page. */
+.card {
+  position: sticky;
+  bottom: calc(var(--sp-4) + env(safe-area-inset-bottom));
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+  width: calc(100% - 2 * var(--gutter));
+  max-width: 480px;
+  margin: var(--sp-2) auto var(--sp-4);
+  padding: var(--sp-4);
+  box-sizing: border-box;
+  background: var(--sf);
+  color: var(--ink);
+  border-radius: var(--r-xl);
+  box-shadow: var(--sh-sheet);
+  animation: rise 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+.title {
+  margin: 0;
+  font-size: var(--fs-16);
+  font-weight: var(--fw-bold);
+}
+.text,
+.note {
+  margin: 0;
+  font-size: var(--fs-13);
+  line-height: 1.8;
+  color: var(--mu);
+}
+.actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--sp-2);
+}
+.rows {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+}
+.primary,
+.secondary,
+.ghost {
+  min-height: var(--touch);
+  border-radius: var(--r-pill);
+  font: inherit;
+  font-size: var(--fs-15);
+  font-weight: var(--fw-bold);
+  cursor: pointer;
+}
+.primary {
+  border: 0;
+  background: var(--primary);
+  color: var(--white);
+}
+.secondary {
+  border: 1.5px solid var(--primary);
+  background: var(--sf);
+  color: var(--pr2);
+}
+.ghost {
+  grid-column: 1 / -1;
+  border: 0;
+  background: none;
+  color: var(--pr2);
+}
+.primary:focus-visible,
+.secondary:focus-visible,
+.ghost:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: 2px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .card {
+    animation: none;
+  }
+}

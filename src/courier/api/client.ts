@@ -4,7 +4,7 @@ import { idempotencyMiddleware } from '@/api/idempotency';
 import { apiBaseUrl } from '@/lib/apiBase';
 import { isNative } from '@/lib/platform';
 import type { paths } from './schema';
-import { useCourierSession } from './session';
+import { markSignedOut, useCourierSession } from './session';
 import type { CourierStatus, VerifyResult } from './types';
 
 /**
@@ -68,17 +68,21 @@ export async function verifyOtp(api: CourierApi, phone: string, code: string) {
     useCourierSession.getState().setSession({
       accessToken: data.accessToken ?? null,
       status: (data.status ?? 'new') as CourierStatus,
+      name: data.name ?? '',
     });
+    markSignedOut(false);
   }
   return res;
 }
 
 /**
  * Sign out on this device. There is no logout endpoint yet (contract-notes 32): the app forgets its token;
- * on the web the HttpOnly cookie can only be cleared by the server, so it lives until it expires.
+ * on the web the HttpOnly cookie can only be cleared by the server, so it lives until it expires — the
+ * signed-out mark keeps the next start on the login page instead of silently reusing that cookie.
  */
 export function signOut(): void {
   useCourierSession.getState().clear();
+  markSignedOut(true);
 }
 
 export type OfferAction = 'accept' | 'reject';
