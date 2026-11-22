@@ -25,6 +25,9 @@ export const DEMO_STATUS_PHONES: Record<string, CourierStatus> = {
   '09120000003': 'suspended',
 };
 
+/** A national code that already belongs to another courier: registration answers 422 on it (demo/E2E). */
+export const TAKEN_NATIONAL_ID = '1234567891';
+
 const daysFromNow = (d: number) => new Date(Date.now() + d * 86_400_000).toISOString().slice(0, 10);
 
 export const seedDocs = (): CourierDoc[] => [

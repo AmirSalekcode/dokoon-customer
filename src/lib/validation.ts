@@ -48,3 +48,23 @@ export function shebaError(input: string): string | undefined {
 
 /** Display: «IR06 2960 0000 …» groups of four (left-to-right field). */
 export const groupSheba = (input: string) => normalizeSheba(input).replace(/(.{4})(?=.)/g, '$1 ');
+
+/** Iranian national code: 10 digits (Persian/Arabic digits, spaces and dashes allowed while typing). */
+export const normalizeNationalId = (input: string) => normalizeDigits(input).replace(/[\s-]/g, '');
+
+/** National code check digit (mod 11); ten equal digits are never valid. The server checks again. */
+export function isValidNationalId(input: string): boolean {
+  const v = normalizeNationalId(input);
+  if (!/^\d{10}$/.test(v) || /^(\d)\1{9}$/.test(v)) return false;
+  let sum = 0;
+  for (let i = 0; i < 9; i += 1) sum += Number(v[i]) * (10 - i);
+  const r = sum % 11;
+  const check = Number(v[9]);
+  return r < 2 ? check === r : check === 11 - r;
+}
+
+export function nationalIdError(input: string): string | undefined {
+  const v = normalizeNationalId(input);
+  if (v.length < 10) return undefined;
+  return isValidNationalId(v) ? undefined : 'کد ملی درست نیست';
+}

@@ -196,3 +196,12 @@ Nothing here is implemented as an invented endpoint; the frontend works around e
     `409 NOT_TRACKING` (location while offline with no active order, courier rule 3), `413` for a large
     document. Also: `servers` is `/api`; the other contracts use `/v1` (`https://api.dokoonapp.ir/v1`),
     which the client uses too.
+
+38. **Document rules and registration resume.** Courier `DocType` is `{id, label, sub, required}` with no
+    type/size rule (the restaurant one has `accept` and `maxMb`, D-99). The app allows JPG/PNG/WebP/PDF up to
+    10 MB (photos are shrunk to 1600 px first) until the server sends `accept`/`maxMb`. The registration
+    documents are sent one by one with `POST /c/documents/{type}` before `POST /c/registration`, which has no
+    `docs` field; please state that the server links the documents of the session's phone to the request.
+    `Me.docs` of a `new` courier should list what was already sent, so a courier who leaves the wizard can
+    resume. The mock answers `422 VALIDATION` with `fields.nationalId` for a national code that already
+    belongs to another courier (demo `1234567891`).
