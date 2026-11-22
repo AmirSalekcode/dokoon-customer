@@ -1,10 +1,11 @@
 import { createStackNav } from '@/nav/createStackNav';
 
 /**
- * Courier app screens. The three tabs and the full-page error exist now (KAN-89); login, registration,
- * offers, the order steps, history and account sub-pages join this list in their own tasks.
+ * Courier app screens. `boot` checks the session on start; `login` (phone → code), `reg` (registration,
+ * KAN-91) and `wait` (approval pending / suspended) come before the tabs (KAN-90). Offers, the order steps,
+ * history and account sub-pages join this list in their own tasks.
  */
-export const COURIER_SCREENS = ['orders', 'earn', 'account', 'error'] as const;
+export const COURIER_SCREENS = ['boot', 'login', 'reg', 'wait', 'orders', 'earn', 'account', 'error'] as const;
 export type CourierScreen = (typeof COURIER_SCREENS)[number];
 
 /** Root tabs (courier screen-specs): switching resets the stack; back on earn/account goes to orders first. */
@@ -19,7 +20,7 @@ export const COURIER_TABS: readonly CourierTab[] = ['orders', 'earn', 'account']
 export type CourierOverlay = 'dlg' | 'sheet' | 'alr';
 
 const nav = createStackNav<CourierScreen, CourierTab, CourierOverlay>({
-  initial: 'orders',
+  initial: 'boot',
   tabs: COURIER_TABS,
   home: 'orders',
   errorScreen: 'error',

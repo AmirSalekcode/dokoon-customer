@@ -10,6 +10,8 @@
   --hd-chip:color-mix(in srgb, #FFFFFF 18%, transparent);
   --hd-tag:#1F1A17; --hd-tag-ink:#FFFFFF;
   --hd-shadow:0 8px 24px rgba(194,65,12,.25);
+  /* Login / waiting hero (prototype `.lgh`): the deeper three-stop gradient, rounded bottom (2 × --r-xl). */
+  --hero-bg:linear-gradient(160deg,#8B2313,#C2410C 55%,#E4501E);
   /* New-offer alert: full-screen gradient, white card, white 64px accept button. */
   --alert-bg:linear-gradient(160deg,#8B2313,#C2410C 55%,#E4501E);
   --alert-card:#FFFFFF; --alert-ink:#1F1A17;

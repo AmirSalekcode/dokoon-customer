@@ -3,7 +3,7 @@ import { ToggleRow } from '@/components/library/ToggleRow';
 import { TopBar } from '@/components/library/TopBar';
 import { toFaDigits } from '@/lib/format';
 import { useTheme } from '@/theme/theme';
-import { signOut } from '../api/client';
+import { signOutToLogin } from '../auth/flow';
 import { useCourierNav } from '../nav/nav';
 import s from './screens.module.css';
 
@@ -50,8 +50,7 @@ export function AccountTab() {
         tone: 'danger',
         onConfirm: () => {
           closeOverlay();
-          signOut();
-          useCourierNav.getState().resetTo('orders');
+          signOutToLogin();
         },
       },
     });

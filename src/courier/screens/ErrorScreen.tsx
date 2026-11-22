@@ -4,7 +4,7 @@ import { config } from '@/config/env';
 import type { ErrorAction } from '@/errors/errorContent';
 import { runRetry } from '@/errors/retry';
 import { isNative } from '@/lib/platform';
-import { signOut } from '../api/client';
+import { signOutToLogin } from '../auth/flow';
 import { COURIER_ERROR_CONTENT } from '../errors/courierErrors';
 import { useCourierNav } from '../nav/nav';
 import type { CourierScreenProps } from './types';
@@ -12,7 +12,7 @@ import type { CourierScreenProps } from './types';
 /**
  * Full-page error (offline, 401, 403, 404, 5xx, maintenance, update). «تلاش دوباره» returns to the exact
  * previous screen and re-runs its request; «بازگشت به خانه» / «مشاهده‌ی سفارش‌ها» → orders tab;
- * 401 → the session ends (login arrives in KAN-90); «پشتیبانی» → the account tab for now (support: KAN-101).
+ * 401 → the session ends and the login page opens; «پشتیبانی» → the account tab for now (support: KAN-101).
  */
 export function ErrorScreen({ route }: CourierScreenProps) {
   const kind = (route.params.kind as ErrorKind) ?? 'e500';
@@ -31,8 +31,7 @@ export function ErrorScreen({ route }: CourierScreenProps) {
         nav().resetTo('orders');
         return;
       case 'login':
-        signOut();
-        nav().resetTo('orders');
+        signOutToLogin();
         return;
       case 'support':
         nav().resetTo('account');
