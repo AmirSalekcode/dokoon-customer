@@ -40,12 +40,13 @@
 - **توضیح:** CHeader، OnlineSwitch (role=switch)، OfferCard، OfferAlert، RouteMap، StageBar، PlaceCard، ItemCheckRow (role=checkbox)، CashPanel، TripSummary، HistoryRow، EarnBalance، DocStatusRow، PermissionCard — فقط props، story برای هر کدام، حالت تیره.
 - **پذیرش:** تست واحد/a11y هر کامپوننت؛ هیچ داده‌ی ثابت داخل کامپوننت؛ پالس/تایمر با reduced-motion خاموش.
 - **وابستگی:** CP-01
-- **وضعیت (2026-11-21):** ساخته شد، PR در انتظار مرج. `src/courier/components` + story در `src/courier/components/stories`؛ نقشه‌ی RouteMap فقط با توکن‌ها (پارک سبز پروتوتایپ حذف شد).
+- **وضعیت (2026-11-22):** مرج شد (PR #60). `src/courier/components` + story در `src/courier/components/stories`؛ نقشه‌ی RouteMap فقط با توکن‌ها (پارک سبز پروتوتایپ حذف شد).
 
 ### CP-05 (KAN-89): پوسته‌ی اپ پیک
 - **توضیح:** تب‌های سفارش‌ها/درآمد/حساب (<۷۲۰ نوار پایین، ≥۷۲۰ ریل)، ناوبری stack با back دقیق (اندروید هم)، یک overlay در هر لحظه (sheet/dlg/alr/Toast)، آفلاین سراسری، کلید تم.
 - **پذیرش:** E2E ناوبری و back؛ ۳۹۰×۸۴۴ و ۱۰۲۴؛ تیره.
 - **وابستگی:** CP-02، CP-03
+- **وضعیت (2026-11-22):** ساخته شد، PR در انتظار مرج. `src/courier/shell` (CourierShell، overlayها با `registerOverlay`) + `src/courier/nav` + سه تب موقت؛ صفحه‌های واقعی تب‌ها در تسک‌های بعدی.
 
 ## E1 (KAN-77) — احراز هویت و ثبت‌نام
 ### CP-06 (KAN-90): ورود OTP + کارت کوکی + مسیریابی وضعیت

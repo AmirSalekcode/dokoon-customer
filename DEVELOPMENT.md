@@ -166,6 +166,13 @@ from `public-courier/` (icons: `node scripts/gen-icons.mjs courier`). Plan and p
   delta tokens only, every animation off under `prefers-reduced-motion` (checked in `components.test.tsx`).
   Stories: `Courier/*` (`parameters: { app: 'courier' }`). Shared ones (TopBar, RBottomNav, ReasonSheet …) come
   from `src/components`.
+- **Shell (KAN-89):** `src/courier/shell/CourierShell.tsx` on the shared `createStackNav` (`src/courier/nav`):
+  tabs orders / earn / account (bottom bar < 720, side rail ≥ 720), exact back incl. Android/browser back and
+  «press again to exit», lower screens stay mounted (hidden + inert). One overlay at a time: `dlg`
+  (ConfirmDialog spec) and `sheet` (ReasonSheet with fixed reasons) are built in; `alr` is plugged in with
+  `registerOverlay('alr', View)` (KAN-94). Global offline page (`initConnectivity`), courier error texts
+  (`src/courier/errors`), theme switch on the account tab (`dk-theme`). New screens: add the id to
+  `COURIER_SCREENS` and the component to `screens/registry.tsx`.
 
 ## Rules enforced in code
 - Tokens only: components use `var(--…)` from `design-tokens/dokoon-tokens.css`; derived transparencies live in
