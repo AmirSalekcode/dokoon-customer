@@ -1,0 +1,133 @@
+.map {
+  position: relative;
+  height: 260px;
+  overflow: hidden;
+  border-radius: var(--r-xl);
+  background: var(--ln);
+  color: var(--ink);
+  box-shadow: var(--sh-card);
+}
+.art {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+/* Illustration in theme tokens only (owner colour rule: the prototype's park is drawn as a plain block). */
+.land {
+  fill: var(--ln);
+}
+.street {
+  stroke: var(--bg);
+  stroke-width: 14;
+}
+.avenue {
+  stroke: var(--sf);
+  stroke-width: 8;
+}
+.block {
+  fill: var(--soft);
+}
+.route {
+  fill: none;
+  stroke: var(--primary);
+  stroke-width: 6;
+  stroke-linecap: round;
+  stroke-dasharray: 10 8;
+  animation: route-dash 1.2s linear infinite;
+}
+@keyframes route-dash {
+  to {
+    stroke-dashoffset: -18;
+  }
+}
+.me {
+  fill: var(--dock);
+}
+.meDot {
+  fill: var(--white);
+}
+.pin {
+  fill: var(--primary);
+}
+.top {
+  position: absolute;
+  top: var(--sp-3);
+  inset-inline: var(--sp-3);
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--sp-2);
+}
+.chip {
+  margin: 0;
+  padding: var(--sp-2) var(--sp-4);
+  border-radius: var(--r-lg);
+  background: var(--sf);
+  box-shadow: var(--sh-card-hi);
+}
+.chip small {
+  display: block;
+  color: var(--mu);
+  font-size: var(--fs-12);
+}
+.chip b {
+  font-size: var(--fs-16);
+  font-weight: var(--fw-xbold);
+}
+.tracking {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  height: 28px;
+  padding: 0 var(--sp-3);
+  border-radius: var(--r-pill);
+  background: var(--dock);
+  color: var(--white);
+  font-size: var(--fs-12);
+  font-weight: var(--fw-bold);
+}
+.tracking i {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--r-circle);
+  background: var(--warning);
+  animation: pulse 2.4s ease-in-out infinite;
+}
+.buttons {
+  position: absolute;
+  bottom: var(--sp-3);
+  inset-inline: var(--sp-3);
+  display: flex;
+  gap: var(--sp-2);
+}
+.buttons button {
+  display: inline-flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-2);
+  min-height: var(--touch);
+  border: 0;
+  border-radius: var(--r-pill);
+  background: var(--sf);
+  color: var(--ink);
+  font: inherit;
+  font-size: var(--fs-14);
+  font-weight: var(--fw-xbold);
+  box-shadow: var(--sh-card-hi);
+  cursor: pointer;
+}
+.buttons button svg {
+  color: var(--primary);
+}
+.buttons button:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: 2px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .route,
+  .tracking i {
+    animation: none;
+  }
+}

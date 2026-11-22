@@ -34,11 +34,13 @@
 - **توضیح:** `RBottomNav` (با `rail`) و `ReasonSheet` الان داخل `src/panel` هستند؛ به کتابخانه‌ی مشترک منتقل می‌شوند تا پیک دوباره ننویسد. رفتار پنل عوض نمی‌شود. (نیاز به تأیید معماری — سؤال ۱.)
 - **پذیرش:** همه‌ی تست‌ها و E2E پنل سبز؛ story و تست a11y برای هر دو.
 - **وابستگی:** CP-01
+- **وضعیت (2026-11-21):** مرج شد (PR #59). `src/components/library/RBottomNav`، `ReasonSheet` و `SheetParts`؛ پارامتر `app` در Storybook.
 
 ### CP-04 (KAN-88): کامپوننت‌های اختصاصی پیک (۱۴ تا)
 - **توضیح:** CHeader، OnlineSwitch (role=switch)، OfferCard، OfferAlert، RouteMap، StageBar، PlaceCard، ItemCheckRow (role=checkbox)، CashPanel، TripSummary، HistoryRow، EarnBalance، DocStatusRow، PermissionCard — فقط props، story برای هر کدام، حالت تیره.
 - **پذیرش:** تست واحد/a11y هر کامپوننت؛ هیچ داده‌ی ثابت داخل کامپوننت؛ پالس/تایمر با reduced-motion خاموش.
 - **وابستگی:** CP-01
+- **وضعیت (2026-11-21):** ساخته شد، PR در انتظار مرج. `src/courier/components` + story در `src/courier/components/stories`؛ نقشه‌ی RouteMap فقط با توکن‌ها (پارک سبز پروتوتایپ حذف شد).
 
 ### CP-05 (KAN-89): پوسته‌ی اپ پیک
 - **توضیح:** تب‌های سفارش‌ها/درآمد/حساب (<۷۲۰ نوار پایین، ≥۷۲۰ ریل)، ناوبری stack با back دقیق (اندروید هم)، یک overlay در هر لحظه (sheet/dlg/alr/Toast)، آفلاین سراسری، کلید تم.

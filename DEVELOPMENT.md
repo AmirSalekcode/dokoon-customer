@@ -160,6 +160,12 @@ from `public-courier/` (icons: `node scripts/gen-icons.mjs courier`). Plan and p
   `09120000001` new, `…002` pending, `…003` suspended, any other approved; OTP `1234`. Dev tools in mock
   builds: `__dkCourierMocks.stream.takeByOther('of1')`, `.pushOffer()`, `.outage(true)`; localStorage
   `dkc-mock-offer-ms` (new offer interval, default 45 s, 0 = off) and `dkc-mock-status` (force a GET status).
+- **Components (KAN-88):** `src/courier/components/` — the 14 courier-only components (CHeader, OnlineSwitch,
+  OfferCard, OfferAlert, RouteMap, StageBar, PlaceCard, ItemCheckRow, CashPanel, TripSummary, HistoryRow,
+  EarnBalance, DocStatusRow, PermissionCard). Props only (the screen formats Persian digits and money), courier
+  delta tokens only, every animation off under `prefers-reduced-motion` (checked in `components.test.tsx`).
+  Stories: `Courier/*` (`parameters: { app: 'courier' }`). Shared ones (TopBar, RBottomNav, ReasonSheet …) come
+  from `src/components`.
 
 ## Rules enforced in code
 - Tokens only: components use `var(--…)` from `design-tokens/dokoon-tokens.css`; derived transparencies live in

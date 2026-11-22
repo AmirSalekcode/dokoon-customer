@@ -1,0 +1,51 @@
+.row {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  width: 100%;
+  min-height: 72px;
+  padding: var(--sp-3) var(--sp-4);
+  border: 0;
+  border-radius: var(--r-lg);
+  background: var(--sf);
+  color: var(--ink);
+  font: inherit;
+  text-align: start;
+  box-shadow: var(--sh-card);
+  cursor: pointer;
+}
+.row:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: 2px;
+}
+.text {
+  flex: 1;
+  min-width: 0;
+}
+.text b {
+  display: block;
+  overflow: hidden;
+  font-size: var(--fs-15);
+  font-weight: var(--fw-bold);
+  line-height: 1.6;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.text small {
+  display: block;
+  color: var(--mu);
+  font-size: var(--fs-12);
+}
+.earn {
+  flex: none;
+  color: var(--pr2);
+  font-size: var(--fs-16);
+  font-weight: var(--fw-xbold);
+  text-align: end;
+}
+.earn small {
+  display: block;
+  color: var(--mu);
+  font-size: var(--fs-12);
+  font-weight: var(--fw-bold);
+}
