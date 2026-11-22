@@ -6,15 +6,12 @@ import { Button } from '@/components/base/Button';
 import { TextField } from '@/components/base/TextField';
 import { TopBar } from '@/components/library/TopBar';
 import { config } from '@/config/env';
-import { formatPhone, toFaDigits } from '@/lib/format';
+import { formatMmss, formatPhone, toFaDigits } from '@/lib/format';
 import { readStorage, writeStorage } from '@/lib/storage';
 import { useNav } from '@/nav/nav';
 import { toast } from '@/ui/toast';
 import type { ScreenProps } from '../registry';
 import s from './auth.module.css';
-
-const mmss = (sec: number) =>
-  toFaDigits(`${String(Math.floor(sec / 60)).padStart(2, '0')}:${String(sec % 60).padStart(2, '0')}`);
 
 /** Stable per-install id sent with OTP verify (server binds refresh tokens / push to devices). */
 function deviceId(): string {
@@ -117,7 +114,7 @@ export function OtpScreen({ route }: ScreenProps) {
           ویرایش شماره
         </button>
         <p className={s.timer} aria-live="polite">
-          {left > 0 ? `ارسال مجدد کد تا ${mmss(left)} دیگر` : 'کد را دریافت نکردید؟'}
+          {left > 0 ? `ارسال مجدد کد تا ${formatMmss(left)} دیگر` : 'کد را دریافت نکردید؟'}
         </p>
         <Button variant="ghost" disabled={left > 0} onClick={() => void resend()}>
           ارسال مجدد کد
