@@ -1,4 +1,5 @@
 import { EmptyState } from '@/components/library/EmptyState';
+import { ListRow } from '@/components/library/ListRow';
 import { ToggleRow } from '@/components/library/ToggleRow';
 import { TopBar } from '@/components/library/TopBar';
 import { toFaDigits } from '@/lib/format';
@@ -58,6 +59,12 @@ export function AccountTab() {
   return (
     <div className={s.page}>
       <TopBar title="حساب" />
+      <ListRow
+        title="مجوزهای دستگاه"
+        sub="موقعیت مکانی، اعلان‌ها"
+        d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"
+        onTap={() => useCourierNav.getState().push('perm')}
+      />
       <ToggleRow
         title="حالت تیره"
         sub="مناسب کار در شب"

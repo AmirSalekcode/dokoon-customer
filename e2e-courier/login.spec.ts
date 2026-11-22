@@ -1,5 +1,5 @@
 import { expect, test, type Page } from '@playwright/test';
-import { dismissCookies, MOCK_CODE, signIn } from './helpers';
+import { allowDevice, dismissCookies, MOCK_CODE, signIn } from './helpers';
 
 // KAN-90 (CP-06): OTP login, wrong code, 429, routing by status, waiting page, cookie card, session on reload.
 const visibleScreen = (page: Page) => page.locator('main:not([hidden])');
@@ -25,6 +25,7 @@ test('first visit: login with the hero and the cookie card; a choice hides it fo
 });
 
 test('approved: phone → code → orders with the greeting; a reload keeps the session', async ({ page }) => {
+  await allowDevice(page);
   await page.goto('/');
   await signIn(page);
   await expect(page.getByRole('heading', { level: 1, name: 'سلام مهدی کریمی عزیز' })).toBeVisible();
@@ -37,6 +38,7 @@ test('approved: phone → code → orders with the greeting; a reload keeps the 
 });
 
 test('a wrong code stays on login with the message; the right one signs in', async ({ page }) => {
+  await allowDevice(page);
   await page.goto('/');
   await dismissCookies(page);
   await page.getByLabel('شماره‌ی موبایل').fill('09131234567');

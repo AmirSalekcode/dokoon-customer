@@ -133,7 +133,7 @@ export function LoginScreen({ route }: CourierScreenProps) {
         return;
       }
       const status = useCourierSession.getState().status;
-      enter(status);
+      await enter(status);
       void syncCourierConsent(api);
       if (register && status !== 'new') toast('این شماره قبلاً ثبت‌نام کرده است؛ وارد حساب شدید', 'info', 2600);
     } catch (e) {
