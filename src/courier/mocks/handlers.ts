@@ -130,6 +130,7 @@ export const courierHandlers = [
       const fields: Record<string, string> = {};
       if (typeof b.name !== 'string' || b.name.trim().length < 3) fields.name = 'نام و نام خانوادگی را کامل بنویسید';
       if (typeof b.nationalId !== 'string' || !/^\d{10}$/.test(b.nationalId)) fields.nationalId = 'کد ملی ۱۰ رقم است';
+      else if (b.nationalId === D.TAKEN_NATIONAL_ID) fields.nationalId = 'این کد ملی برای پیک دیگری ثبت شده است';
       if (typeof b.plate !== 'string' || b.plate.trim().length < 5) fields.plate = 'پلاک موتور را کامل بنویسید';
       if (typeof b.sheba !== 'string' || !/^IR\d{24}$/.test(b.sheba)) fields.sheba = 'شماره‌ی شبا درست نیست';
       if (Object.keys(fields).length)
