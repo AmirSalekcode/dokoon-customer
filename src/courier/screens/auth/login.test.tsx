@@ -1,7 +1,7 @@
 import { act, render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { http, HttpResponse } from 'msw';
-import { beforeEach, describe, expect, it } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { server } from '@/mocks/node';
 import { useToast } from '@/ui/toast';
 import { CourierApp } from '../../CourierApp';
@@ -10,6 +10,8 @@ import { routeFor } from '../../auth/flow';
 import { COURIER_CONSENT_KEY, reloadCourierConsent, useCourierConsent } from '../../consent/consent';
 import { courierHandlers, resetCourierMockDb } from '../../mocks/handlers';
 import { useCourierNav } from '../../nav/nav';
+import { setPermissionProvider, webPermissionProvider } from '../../permissions/provider';
+import { allGranted, fakePermissions } from '../../test/permissions';
 import { RATE_LIMIT_TEXT } from './LoginScreen';
 
 // KAN-90 (CP-06): OTP login, resend timer, 429, routing by `Me.status`, waiting page, boot from the
@@ -28,7 +30,22 @@ beforeEach(() => {
   useCourierSession.getState().clear();
   markSignedOut(false);
   useToast.setState({ toasts: [] });
+  // Location + notifications already allowed: approved couriers go straight to orders (KAN-92).
+  setPermissionProvider(allGranted());
   act(() => nav().resetTo('login'));
+});
+afterEach(() => setPermissionProvider(webPermissionProvider));
+
+describe('permissions step (KAN-92)', () => {
+  it('an approved courier without location/notifications lands on the permissions page first', async () => {
+    setPermissionProvider(fakePermissions({ location: 'granted' }));
+    render(<CourierApp />);
+    await userEvent.type(phoneField(), '09131234567');
+    await userEvent.click(screen.getByRole('button', { name: 'دریافت کد تأیید' }));
+    await userEvent.type(await screen.findByLabelText('کد ۴ رقمی'), '1234');
+    await waitFor(() => expect(screens()).toEqual(['perm']));
+    expect(nav().stack[0].params.first).toBe('1');
+  });
 });
 
 async function toCodeStep(phone = '09131234567') {

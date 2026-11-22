@@ -34,7 +34,7 @@ async function recheck(manual: boolean): Promise<void> {
     if (!data) return;
     const before = useCourierSession.getState().status;
     const next = applyMe(data);
-    if (next !== 'pending' && next !== 'suspended') enter(next);
+    if (next !== 'pending' && next !== 'suspended') await enter(next);
     else if (manual && next === before) toast('هنوز در حال بررسی است', 'info');
   } catch (e) {
     if (manual) showFullPageError(e, () => void recheck(true));

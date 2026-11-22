@@ -88,7 +88,7 @@ export function RegScreen({ route }: CourierScreenProps) {
 
   const finish = () => {
     useCourierSession.getState().setStatus('pending');
-    enter('pending');
+    void enter('pending');
   };
 
   /** One step back; at the first step leave the wizard (back to login). */

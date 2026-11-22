@@ -18,8 +18,15 @@ export async function signIn(page: Page, phone = '09131234567') {
   await page.getByLabel('کد ۴ رقمی').fill(MOCK_CODE);
 }
 
+/** Location + notifications allowed, so an approved courier skips the permissions page (KAN-92). */
+export async function allowDevice(page: Page) {
+  await page.context().grantPermissions(['geolocation', 'notifications']);
+  await page.context().setGeolocation({ latitude: 32.0105, longitude: 51.8664 });
+}
+
 /** Open the app at `path` and sign in as an approved courier → the orders tab. */
 export async function openCourier(page: Page, path = '/') {
+  await allowDevice(page);
   await page.goto(path);
   await signIn(page);
   await expect(page.locator('main:not([hidden])')).toHaveAttribute('data-screen', 'orders');
