@@ -1,6 +1,7 @@
 import {
   formatDecimal,
   formatEtaRange,
+  formatMmss,
   formatMoney,
   formatNumber,
   formatPhone,
@@ -14,6 +15,12 @@ describe('format', () => {
   it('converts to Persian digits', () => {
     expect(toFaDigits('0912')).toBe('۰۹۱۲');
     expect(toFaDigits(45)).toBe('۴۵');
+  });
+
+  it('formats a countdown as mm:ss with Persian digits', () => {
+    expect(formatMmss(75)).toBe('۰۱:۱۵');
+    expect(formatMmss(5)).toBe('۰۰:۰۵');
+    expect(formatMmss(0)).toBe('۰۰:۰۰');
   });
 
   it('normalizes Persian and Arabic digits to ASCII', () => {

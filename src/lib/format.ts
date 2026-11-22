@@ -54,3 +54,10 @@ export function greeting(name: string): string {
 export function formatEtaRange(etaMin: number, etaMax: number): string {
   return `${toFaDigits(etaMin)}–${toFaDigits(etaMax)}`;
 }
+
+/** Countdown as mm:ss with Persian digits (e.g. 75 → «۰۱:۱۵»). */
+export function formatMmss(sec: number): string {
+  const mm = String(Math.floor(sec / 60)).padStart(2, '0');
+  const ss = String(sec % 60).padStart(2, '0');
+  return toFaDigits(`${mm}:${ss}`);
+}
