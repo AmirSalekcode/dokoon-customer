@@ -1,20 +1,6 @@
-import { ArtSprite } from '@/components/primitives/ArtSprite';
-import { Logo } from '@/components/primitives/Logo';
-import s from './CourierApp.module.css';
+import { CourierShell } from './shell/CourierShell';
 
-/** Courier app shell (KAN-85 placeholder; header, tabs and screens come in KAN-88/KAN-89). */
+/** Courier app root (KAN-85 entry): the shell owns navigation, overlays, toasts and the offline page. */
 export function CourierApp() {
-  return (
-    <div className={s.shell}>
-      <ArtSprite />
-      <header className={s.header}>
-        <Logo height={26} />
-        <span className={s.tag}>پیک</span>
-      </header>
-      <main className={s.main}>
-        <h1 className={s.title}>دکون پیک</h1>
-        <p className={s.lead}>دریافت و تحویل سفارش‌های دکون.</p>
-      </main>
-    </div>
-  );
+  return <CourierShell />;
 }
