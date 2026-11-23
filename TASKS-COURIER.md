@@ -72,13 +72,13 @@
 - **توضیح:** `PUT /c/status`؛ ۴۰۹ (سفارش فعال) ← پیام، آفلاین ممنوع. `LocationTracker` فقط وقتی آنلاین یا سفارش فعال؛ `POST /c/location` با فاصله‌ی زمانی/مسافتی؛ نشانگر «ردیابی فعال» همیشه در UI؛ آفلاین = توقف کامل.
 - **پذیرش:** تست واحد «آفلاین ← هیچ ارسالی نیست»؛ E2E آنلاین/آفلاین.
 - **وابستگی:** CP-08
-- **وضعیت (2026-11-24):** ساخته شد (D-131). `src/courier/location/tracker.ts` (LocationTracker + GeoSource)، `src/courier/state/online.ts` (کلید، ۴۰۹، همگام‌سازی ردیابی)، `screens/orders/OrdersScreen.tsx` (کلید، خالی آفلاین/منتظر، خط ردیابی). یادداشت قرارداد ۳۹.
+- **وضعیت (2026-11-24):** ساخته شد (D-132). `src/courier/location/tracker.ts` (LocationTracker + GeoSource)، `src/courier/state/online.ts` (کلید، ۴۰۹، همگام‌سازی ردیابی)، `screens/orders/OrdersScreen.tsx` (کلید، خالی آفلاین/منتظر، خط ردیابی). یادداشت قرارداد ۴۰.
 
 ### CP-10 (KAN-94): اتصال زنده + لیست پیشنهادها + بنر سفارش در جریان
 - **توضیح:** WS پیشنهادها (اتصال دوباره، fallback به `GET /c/offers`)، OfferCard فقط محله، خالی/آفلاین، بنر سفارش فعال از `GET /c/orders/active`.
 - **پذیرش:** تست اتصال/قطع/اتصال دوباره؛ هیچ آدرس کامل در لیست.
 - **وابستگی:** CP-02، CP-09
-- **وضعیت (2026-11-24):** ساخته شد (D-132). `src/lib/liveClient.ts` (مشترک با پنل)، `src/courier/realtime/live.ts`، `state/offers.ts`، `state/active.ts`، `offers/present.ts`، بنر و صفحه‌ی موقت `order`.
+- **وضعیت (2026-11-24):** ساخته شد (D-133). `src/lib/liveClient.ts` (مشترک با پنل)، `src/courier/realtime/live.ts`، `state/offers.ts`، `state/active.ts`، `offers/present.ts`، بنر و صفحه‌ی موقت `order`.
 
 ### CP-11 (KAN-95): هشدار تمام‌صفحه + پذیرش اتمیک/رد
 - **توضیح:** OfferAlert با تایمر از `expiresAt` سرور (کلاینت فقط نمایش)، صدا بعد از gesture کاربر، پذیرش ← `ActiveOrder`؛ ۴۰۹ ← «پیک دیگری برداشت» و بستن؛ رد.
