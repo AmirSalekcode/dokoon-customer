@@ -6,6 +6,7 @@ import type { CourierStatus, Me } from '../api/types';
 import { showFullPageError } from '../errors/fullPage';
 import { useCourierNav, type CourierScreen } from '../nav/nav';
 import { canWork, checkAll } from '../permissions/provider';
+import { useOnline } from '../state/online';
 
 /**
  * Courier sign-in routing (KAN-90, courier screen specs «ورود»): after the code, `Me.status` decides —
@@ -79,6 +80,10 @@ export async function bootCourier(api: CourierApi = courierApi()): Promise<void>
 
 /** «خروج» (account tab, waiting page) and the e401 page's «ورود دوباره». */
 export function signOutToLogin() {
+  // Tracking ends with the session; the server is told when it is still listed as online (best effort).
+  const { online, hasActive } = useOnline.getState();
+  if (online && !hasActive) void courierApi().PUT('/c/status', { body: { online: false } }).catch(() => {});
+  useOnline.getState().reset();
   signOut();
   toLogin();
 }

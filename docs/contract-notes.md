@@ -205,3 +205,11 @@ Nothing here is implemented as an invented endpoint; the frontend works around e
     `Me.docs` of a `new` courier should list what was already sent, so a courier who leaves the wizard can
     resume. The mock answers `422 VALIDATION` with `fields.nationalId` for a national code that already
     belongs to another courier (demo `1234567891`).
+39. **Online state after a restart.** `PUT /c/status` sets online/offline, but nothing returns the current
+    state (`Me` has no `online`), so after a reload or app restart the client cannot tell whether the server
+    still lists the courier as online. The app (KAN-93) starts every session as offline in the UI and does not
+    track. Proposal: add `online: boolean` to `Me`, and let the server set a courier offline by itself when no
+    `POST /c/location` arrives for a while (the client reports at least once a minute while online or with an
+    active order, more often while moving: ≥10 s apart and ≥30 m moved). `POST /c/location` while neither
+    online nor on an order should be refused (`409 NOT_TRACKING` in the mock). Sign-out sends
+    `PUT /c/status {online:false}` when the courier is online without an order.

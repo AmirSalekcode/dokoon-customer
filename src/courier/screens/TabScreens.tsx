@@ -9,21 +9,10 @@ import { useCourierNav } from '../nav/nav';
 import s from './screens.module.css';
 
 /**
- * The three tab roots of the shell (KAN-89). Their real content arrives in later tasks: offers and the
- * online switch (KAN-93/94), earnings (KAN-97), the account pages (KAN-100/101). Until then each tab
- * says what it will hold, so navigation, back and theming can already be used and tested.
+ * Tab roots. The orders tab lives in `orders/OrdersScreen` (KAN-93); earnings (KAN-98) and the account pages
+ * (KAN-100/101) replace these placeholders in their own tasks.
  */
-export function OrdersTab() {
-  return (
-    <div className={s.page}>
-      <EmptyState
-        art="dk-fries"
-        title="سفارش‌ها"
-        text="با آنلاین شدن، پیشنهادهای نزدیک شما اینجا نمایش داده می‌شود."
-      />
-    </div>
-  );
-}
+export { OrdersScreen as OrdersTab } from './orders/OrdersScreen';
 
 export function EarnTab() {
   return (
