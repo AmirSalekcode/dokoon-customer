@@ -4,6 +4,7 @@ import { courierApi, signOut, type CourierApi } from '../api/client';
 import { isMarkedSignedOut, useCourierSession } from '../api/session';
 import type { CourierStatus, Me } from '../api/types';
 import { showFullPageError } from '../errors/fullPage';
+import { useEarnings } from '../money/earnings';
 import { useCourierNav, type CourierScreen } from '../nav/nav';
 import { canWork, checkAll } from '../permissions/provider';
 
@@ -45,7 +46,9 @@ export async function enter(status: CourierStatus | null, { keepErrors = false }
   for (const e of errors) useCourierNav.getState().push('error', e.params);
 }
 
+/** The login page; money figures of the previous courier on this device are forgotten. */
 export function toLogin() {
+  useEarnings.getState().reset();
   useCourierNav.getState().resetTo('login');
 }
 

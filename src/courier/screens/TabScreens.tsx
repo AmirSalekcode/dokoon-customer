@@ -10,7 +10,7 @@ import s from './screens.module.css';
 
 /**
  * The three tab roots of the shell (KAN-89). Their real content arrives in later tasks: offers and the
- * online switch (KAN-93/94), earnings (KAN-97), the account pages (KAN-100/101). Until then each tab
+ * online switch (KAN-93/94), the account pages (KAN-100/101). Until then each tab
  * says what it will hold, so navigation, back and theming can already be used and tested.
  */
 export function OrdersTab() {
@@ -21,15 +21,6 @@ export function OrdersTab() {
         title="سفارش‌ها"
         text="با آنلاین شدن، پیشنهادهای نزدیک شما اینجا نمایش داده می‌شود."
       />
-    </div>
-  );
-}
-
-export function EarnTab() {
-  return (
-    <div className={s.page}>
-      <TopBar title="درآمد" />
-      <EmptyState art="dk-cake" title="درآمد و تسویه" text="درآمد امروز، هفته و ماه و تسویه‌ها اینجا می‌آید." />
     </div>
   );
 }
