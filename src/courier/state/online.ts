@@ -14,7 +14,7 @@ import { permissionProvider } from '../permissions/provider';
  * tracker that follows it. Tracking runs exactly while `online || hasActive` (courier rule 3); going
  * offline with an active order is refused here and by the server (`409 ACTIVE_ORDER`).
  *
- * The contract cannot tell the app whether the server still counts it as online (contract-notes 39), so
+ * The contract cannot tell the app whether the server still counts it as online (contract-notes 40), so
  * every start shows «آفلاین» until the courier switches on.
  */
 export const COURIER_TOAST_MS = 2600;
