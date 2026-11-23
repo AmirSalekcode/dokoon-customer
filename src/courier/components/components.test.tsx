@@ -300,6 +300,11 @@ describe('EarnBalance', () => {
     expect(screen.getAllByRole('definition').map((d) => d.textContent)).toEqual(['۵۹۸٬۰۰۰ تومان', '۷۲۲٬۰۰۰ تومان']);
     expect(region).toHaveTextContent('اعداد نمونه است');
   });
+
+  it('hides «طلب از دکون» when it is not given', () => {
+    render(<EarnBalance balance="۱ تومان" cash="۲ تومان" note="نمونه" />);
+    expect(screen.getAllByRole('term').map((t) => t.textContent)).toEqual(['نقدی در دست شما']);
+  });
 });
 
 describe('DocStatusRow', () => {

@@ -99,6 +99,7 @@
 - **توضیح:** بازه امروز/هفته/ماه، StatCard، BarChart، EarnBalance (اعداد فقط از سرور؛ برچسب «نمونه» تا قانون تسویه).
 - **پذیرش:** هیچ محاسبه‌ای در کلاینت (تست با داده‌ی ناسازگار عمدی، مثل D-120).
 - **وابستگی:** CP-05
+- **وضعیت (2026-11-24):** ساخته شد (D-132). `src/courier/money` (store و نگاشت نمایش)، `src/courier/screens/earn`؛ `EarnBalance.dokoon` اختیاری شد؛ لینک تاریخچه/تسویه‌ها در CP-15.
 
 ### CP-15 (KAN-99): تاریخچه + جزئیات + تسویه‌ها
 - **توضیح:** `GET /c/orders/history` با cursor (IntersectionObserver + دکمه‌ی دسترس‌پذیر)، HistoryRow، جزئیات، `GET /c/settlements`.
