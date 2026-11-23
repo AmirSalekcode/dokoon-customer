@@ -20,6 +20,7 @@ export type OptionItem = S['OptionItem'];
 export type OptionGroup = S['OptionGroup'];
 export type Food = S['Food'];
 export type FoodInput = S['FoodInput'];
+export type FoodDiscount = S['FoodDiscount'];
 export type Report = S['Report'];
 export type Settlement = S['Settlement'];
 export type Notification = S['Notification'];

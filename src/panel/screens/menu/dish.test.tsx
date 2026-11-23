@@ -63,7 +63,13 @@ describe('dish editor', () => {
     await user.click(screen.getByRole('button', { name: 'ذخیره‌ی غذا' }));
 
     await waitFor(() => expect(route().screen).toBe('menu'));
-    expect(m1()).toMatchObject({ name: 'کوبیده‌ی ویژه', price: 299000, oldPrice: 320000 });
+    // D-131 contract: base price + discount (label and end kept from the loaded discount).
+    expect(m1()).toMatchObject({
+      name: 'کوبیده‌ی ویژه',
+      price: 320000,
+      discount: { price: 299000, label: 'special', endsAt: null },
+    });
+    expect(m1()).not.toHaveProperty('oldPrice');
     expect(toastText()).toBe('تغییرات غذا ذخیره شد');
     expect(screen.getByRole('button', { name: 'ویرایش کوبیده‌ی ویژه' })).toBeInTheDocument();
   });

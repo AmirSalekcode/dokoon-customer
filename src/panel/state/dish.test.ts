@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import {
   dishErrors,
   draftFromFood,
@@ -7,6 +7,7 @@ import {
   groupErrors,
   groupFromDraft,
   groupRule,
+  liveDiscount,
   optionPriceText,
   parseToman,
   type DishDraft,
@@ -61,10 +62,53 @@ describe('foodInput', () => {
     expect(foodInput(d, true)).toMatchObject({
       name: 'کباب برگ',
       price: 395000,
-      oldPrice: 0,
+      discount: null,
       groups: [{ title: 'x' }],
     });
+    expect(foodInput(d, true)).not.toHaveProperty('oldPrice');
     expect(foodInput(d, false)).not.toHaveProperty('groups');
+  });
+});
+
+// KAN-108: the current form fields map onto the D-131 `discount` contract.
+describe('draft ↔ FoodInput with discount', () => {
+  const NOW = Date.parse('2026-11-24T09:00:00+03:30');
+  const festival = { price: 270000, label: 'festival' as const, endsAt: '2026-11-27T09:00:00+03:30' };
+
+  it('loads a running discount as current price + price before discount', () => {
+    vi.useFakeTimers({ now: NOW });
+    try {
+      const d = draftFromFood({ id: 'x', name: 'برگ', price: 300000, discount: festival });
+      expect(d).toMatchObject({ price: '270000', oldPrice: '300000', discount: festival });
+      expect(foodInput(d, false)).toMatchObject({ price: 300000, discount: festival });
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+
+  it('ignores an ended discount', () => {
+    vi.useFakeTimers({ now: NOW });
+    try {
+      const ended = { ...festival, endsAt: '2026-11-23T09:00:00+03:30' };
+      expect(liveDiscount({ discount: ended })).toBeNull();
+      const d = draftFromFood({ id: 'x', name: 'برگ', price: 300000, discount: ended });
+      expect(d).toMatchObject({ price: '300000', oldPrice: '', discount: null });
+      expect(foodInput(d, false)).toMatchObject({ price: 300000, discount: null });
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+
+  it('a new price before discount creates a «تخفیف ویژه» without an end', () => {
+    expect(foodInput(dish({ price: '۲۸۵۰۰۰', oldPrice: '۳۲۰۰۰۰' }), false)).toMatchObject({
+      price: 320000,
+      discount: { price: 285000, label: 'special', endsAt: null },
+    });
+  });
+
+  it('clearing the price before discount removes the discount', () => {
+    const d = dish({ price: '300000', oldPrice: '', discount: festival });
+    expect(foodInput(d, false)).toMatchObject({ price: 300000, discount: null });
   });
 });
 

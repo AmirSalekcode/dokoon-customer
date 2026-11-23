@@ -7,6 +7,7 @@ import { SegTabs } from '@/components/library/SegTabs';
 import { formatMoney, formatNumber, toFaDigits } from '@/lib/format';
 import { MenuItemRow } from '../../components/MenuItemRow';
 import { usePanelNav } from '../../nav/nav';
+import { liveDiscount } from '../../state/dish';
 import { foodArt, foodsIn, useMenu } from '../../state/menu';
 import s from './menu.module.css';
 
@@ -66,8 +67,8 @@ export function MenuScreen() {
             <MenuItemRow
               item={{
                 name: f.name ?? '',
-                price: formatMoney(f.price ?? 0),
-                old: f.oldPrice ? formatNumber(f.oldPrice) : undefined,
+                price: formatMoney(liveDiscount(f)?.price ?? f.price ?? 0),
+                old: liveDiscount(f) ? formatNumber(f.price ?? 0) : undefined,
                 art: foodArt(f),
                 available: f.available !== false,
               }}

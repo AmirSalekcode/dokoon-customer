@@ -4,6 +4,7 @@ import { beforeEach, describe, expect, it } from 'vitest';
 import { parse } from 'yaml';
 import { server } from '@/mocks/node';
 import { validate } from '@/test/jsonSchema';
+import { db } from './db';
 import { panelHandlers, resetPanelMockDb } from './handlers';
 
 // KAN-56: the panel's MSW handlers answer every operation of the restaurant contract with bodies that
@@ -144,7 +145,13 @@ const OPS: Op[] = [
   },
   { method: 'delete', path: '/r/categories/{id}', url: '/r/categories/kebab', status: 409 },
   { method: 'post', path: '/r/foods', url: '/r/foods', body: food, status: 201 },
-  { method: 'put', path: '/r/foods/{id}', url: '/r/foods/m2', body: food, status: 200 },
+  {
+    method: 'put',
+    path: '/r/foods/{id}',
+    url: '/r/foods/m2',
+    body: { ...food, discount: { price: 279000, label: 'festival', endsAt: '2099-01-01T00:00:00Z' } },
+    status: 200,
+  },
   { method: 'patch', path: '/r/foods/{id}', url: '/r/foods/m2', body: { available: false }, status: 200 },
   { method: 'delete', path: '/r/foods/{id}', url: '/r/foods/m7', status: 204 },
   {
@@ -317,6 +324,66 @@ describe('restaurant mock API — server behaviour the panel relies on', () => {
     expect((await json(res)).code).toBe('CATEGORY_NOT_EMPTY');
     const created = await json(await call('POST', '/r/categories', { label: 'دسر' }));
     expect((await call('DELETE', `/r/categories/${created.id}`)).status).toBe(204);
+  });
+
+  // KAN-108 (D-131): per-food discount rules.
+  it('the sample menu has a «تخفیف ویژه» and a 3-day «جشنواره»', async () => {
+    const foods = (await json(await call('GET', '/r/menu'))).foods as {
+      id: string;
+      price: number;
+      discount: { price: number; label: string; endsAt: string | null } | null;
+    }[];
+    const m1 = foods.find((f) => f.id === 'm1')!;
+    expect(m1).toMatchObject({ price: 320000, discount: { price: 285000, label: 'special', endsAt: null } });
+    const m3 = foods.find((f) => f.id === 'm3')!;
+    expect(m3.discount).toMatchObject({ price: 355000, label: 'festival' });
+    const days = (Date.parse(m3.discount!.endsAt!) - Date.now()) / 86_400_000;
+    expect(days).toBeGreaterThan(2.9);
+    expect(days).toBeLessThanOrEqual(3);
+    expect(foods.filter((f) => f.discount)).toHaveLength(2);
+    expect(foods.some((f) => 'oldPrice' in f)).toBe(false);
+  });
+
+  it('a discount not below the price, above 90%, below 1% or already ended is 409 DISCOUNT_INVALID', async () => {
+    const put = (discount: unknown, price = 300000) =>
+      call('PUT', '/r/foods/m2', { ...food, price, discount });
+    const code = async (res: Response) => [res.status, (await json(res)).code];
+    expect(await code(await put({ price: 300000, label: 'special', endsAt: null }))).toEqual([
+      409,
+      'DISCOUNT_INVALID',
+    ]);
+    expect(await code(await put({ price: 26000, label: 'special', endsAt: null }))).toEqual([
+      409,
+      'DISCOUNT_INVALID',
+    ]);
+    expect(await code(await put({ price: 299000, label: 'special', endsAt: null }))).toEqual([
+      409,
+      'DISCOUNT_INVALID',
+    ]);
+    expect(
+      await code(await put({ price: 270000, label: 'special', endsAt: '2020-01-01T00:00:00Z' })),
+    ).toEqual([409, 'DISCOUNT_INVALID']);
+    // Lowering the base price below a kept discount is rejected too.
+    expect((await put({ price: 270000, label: 'special', endsAt: null })).status).toBe(200);
+    expect(await code(await put({ price: 270000, label: 'special', endsAt: null }, 260000))).toEqual([
+      409,
+      'DISCOUNT_INVALID',
+    ]);
+  });
+
+  it('«پایان تخفیف» (PATCH discount null) ends it; PUT without discount clears it', async () => {
+    expect((await call('PATCH', '/r/foods/m1', { discount: null })).status).toBe(200);
+    const menu = async () => (await json(await call('GET', '/r/menu'))).foods as Record<string, unknown>[];
+    expect((await menu()).find((f) => f.id === 'm1')).toMatchObject({ price: 320000, discount: null });
+    await call('PUT', '/r/foods/m3', { name: 'برگ', price: 395000, categoryId: 'kebab' });
+    expect((await menu()).find((f) => f.id === 'm3')?.discount).toBeNull();
+  });
+
+  it('an ended discount disappears from the menu by itself', async () => {
+    const m3 = db.foods.find((f) => f.id === 'm3')!;
+    m3.discount = { price: 355000, label: 'festival', endsAt: new Date(Date.now() - 1000).toISOString() };
+    const foods = (await json(await call('GET', '/r/menu'))).foods as Record<string, unknown>[];
+    expect(foods.find((f) => f.id === 'm3')?.discount).toBeNull();
   });
 
   it('availability toggle and open switch are kept', async () => {
