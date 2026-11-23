@@ -6,6 +6,7 @@ import { config } from '@/config/env';
 import { registerPwa } from '@/pwa';
 import { CourierApp } from './CourierApp';
 import { hydrateCourierSession } from './api/session';
+import { setCourierSocketFactory } from './realtime/live';
 
 // Apply the theme store (courier.html already set data-theme pre-paint).
 useTheme.getState();
@@ -16,7 +17,7 @@ async function start() {
     // (e.g. __dkCourierMocks.stream.takeByOther('of1')). Holds no data or secrets.
     const mocks = await (await import('./mocks/browser')).startCourierMocks();
     (window as unknown as { __dkCourierMocks?: typeof mocks }).__dkCourierMocks = mocks;
-    (await import('./realtime/live')).setCourierSocketFactory(mocks.stream.connect);
+    setCourierSocketFactory(mocks.stream.connect);
   } else {
     registerPwa();
   }

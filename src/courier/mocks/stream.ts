@@ -97,6 +97,11 @@ export function createCourierMockStream({ newOfferEveryMs = 0 }: CourierMockStre
     takeByOther: (offerId: string) => {
       if (takeByOther(offerId)) emit({ event: 'offer.gone', data: { offerId, reason: 'taken' } });
     },
+    /**
+     * Another courier wins, but the news has not reached this phone yet (a slow event): accepting now gets
+     * the server's `409 OFFER_TAKEN` (E2E of the race, KAN-95).
+     */
+    takeByOtherLate: (offerId: string) => takeByOther(offerId),
     /** A new offer right now (demo / E2E), if the courier is online and free. */
     pushOffer: () => {
       if (db.online && !db.active) emit({ event: 'offer.created', data: addOffer() });

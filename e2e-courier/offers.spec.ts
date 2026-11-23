@@ -35,6 +35,10 @@ test('online: nearby offers arrive, a taken one disappears, a new one appears; o
   await expect(top(page)).not.toContainText('کبابی سنتی زاگرس');
 
   await mocks(page, (m) => m.stream.pushOffer());
+  // A live offer opens the full-screen alert (KAN-95); back hides it and the offer waits in the list.
+  await expect(page.getByRole('alertdialog')).toBeVisible();
+  await page.goBack();
+  await expect(page.getByRole('alertdialog')).toBeHidden();
   await expect(cards(page)).toHaveCount(3);
 
   await sw(page).click();
