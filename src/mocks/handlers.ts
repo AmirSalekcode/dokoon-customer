@@ -140,7 +140,8 @@ const FINAL_STATUSES = ['DELIVERED', 'CANCELED_BY_CUSTOMER', 'REJECTED', 'EXPIRE
 function quote(draft: OrderDraft): Quote {
   const r = D.restaurants.find((x) => x.id === draft.restaurantId);
   const lines = draft.lines.map((l) => {
-    const f = D.foods.find((x) => x.id === l.foodId);
+    const found = D.foods.find((x) => x.id === l.foodId);
+    const f = found && D.liveFood(found);
     const opts = (f?.optionGroups ?? [])
       .flatMap((g) => g.options ?? [])
       .filter((o) => l.optionIds?.includes(o.id!));
@@ -282,7 +283,7 @@ export const handlers = [
       const meta = D.restaurantMeta[r.id!];
       if (category && meta.category !== category) return false;
       if (q.get('openNow') === 'true' && !r.open) return false;
-      if (q.get('hasDiscount') === 'true' && !r.offer) return false;
+      if (q.get('hasDiscount') === 'true' && !r.offer && !D.maxFoodDiscount(r.id!)) return false;
       if (minRating && (r.rating ?? 0) < minRating) return false;
       if (tags.length && !tags.some((t) => meta.tags.includes(t))) return false;
       return true;
@@ -323,10 +324,17 @@ export const handlers = [
     const r = D.restaurants.find((x) => x.id === params.id);
     return r ? HttpResponse.json(r) : err(404, 'NOT_FOUND', 'رستوران پیدا نشد');
   }),
-  http.get(p('/restaurants/:id/menu'), ({ params }) => HttpResponse.json(D.menus[String(params.id)] ?? [])),
+  http.get(p('/restaurants/:id/menu'), ({ params }) =>
+    HttpResponse.json(
+      (D.menus[String(params.id)] ?? []).map((c) => ({
+        ...c,
+        foods: (c.foods ?? []).map((f) => D.liveFood(f)),
+      })),
+    ),
+  ),
   http.get(p('/foods/:id'), ({ params }) => {
     const f = D.foods.find((x) => x.id === params.id);
-    return f ? HttpResponse.json(f) : err(404, 'NOT_FOUND', 'غذا پیدا نشد');
+    return f ? HttpResponse.json(D.liveFood(f)) : err(404, 'NOT_FOUND', 'غذا پیدا نشد');
   }),
   http.get(p('/foods/:id/reviews'), ({ params, request }) => {
     const f = D.foods.find((x) => x.id === params.id);
@@ -360,7 +368,10 @@ export const handlers = [
       restaurants: D.restaurantCards.filter((r) => r.name!.includes(q) || r.sub!.includes(q)),
       foods: D.foods
         .filter((f) => f.title!.includes(q))
-        .map((f) => ({ food: f, restaurant: D.restaurantCards.find((r) => r.id === f.restaurantId) })),
+        .map((f) => ({
+          food: D.liveFood(f),
+          restaurant: D.restaurantCards.find((r) => r.id === f.restaurantId),
+        })),
     });
   }),
   http.get(p('/search/suggestions'), () =>

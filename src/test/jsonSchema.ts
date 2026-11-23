@@ -1,6 +1,6 @@
 /**
  * Minimal JSON-Schema checker for contract tests (the subset our OpenAPI files use): $ref, type,
- * nullable, enum, required, properties (unknown keys are errors unless additionalProperties),
+ * nullable / type 'null' / type [x, 'null'], oneOf / anyOf (any branch), enum, required, properties (unknown keys are errors unless additionalProperties),
  * items, minimum/maximum, minItems/maxItems, minLength, pattern, format date-time / date.
  * Returns a list of "path: problem" strings (empty = valid).
  */
@@ -15,9 +15,17 @@ export function validate(value: unknown, schema: Schema, root: Schema, at = '$')
     if (!target) return [`${at}: unresolved ${schema.$ref}`];
     return validate(value, target, root, at);
   }
-  if (value === null) return schema.nullable ? [] : [`${at}: null`];
+  const branches = (schema.oneOf ?? schema.anyOf) as Schema[] | undefined;
+  if (Array.isArray(branches)) {
+    const tried = branches.map((b) => validate(value, b, root, at));
+    if (tried.some((e) => e.length === 0)) return [];
+    return tried.flat();
+  }
+  const types = (Array.isArray(schema.type) ? schema.type : [schema.type]).filter(Boolean) as string[];
+  if (value === null) return schema.nullable || types.includes('null') ? [] : [`${at}: null`];
   const out: string[] = [];
-  const type = schema.type as string | undefined;
+  const nonNull = types.filter((t) => t !== 'null');
+  const type = nonNull.length === 1 ? nonNull[0] : undefined;
   const is: Record<string, (v: unknown) => boolean> = {
     object: (v) => typeof v === 'object' && !Array.isArray(v),
     array: Array.isArray,
@@ -26,7 +34,8 @@ export function validate(value: unknown, schema: Schema, root: Schema, at = '$')
     number: (v) => typeof v === 'number' && Number.isFinite(v),
     boolean: (v) => typeof v === 'boolean',
   };
-  if (type && !is[type]?.(value)) return [`${at}: expected ${type}, got ${JSON.stringify(value)}`];
+  if (nonNull.length && !nonNull.some((t) => is[t]?.(value)))
+    return [`${at}: expected ${nonNull.join('|')}, got ${JSON.stringify(value)}`];
   if (Array.isArray(schema.enum) && !schema.enum.includes(value))
     out.push(`${at}: ${JSON.stringify(value)} not in ${JSON.stringify(schema.enum)}`);
 

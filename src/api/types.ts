@@ -15,9 +15,20 @@ export type Home = S['Home'];
 export type RestaurantCard = S['RestaurantCard'];
 export type Restaurant = S['Restaurant'];
 export type RestaurantPage = S['RestaurantPage'];
-export type MenuCategory = S['MenuCategory'];
-export type Food = S['Food'];
-export type FoodHit = S['FoodHit'];
+/**
+ * Per-food discount / festival (D-131). PROPOSAL in docs/contract-notes.md §39, not yet in
+ * contract/dokoon-openapi.yaml: typed locally until the backend agrees, then replaced by the generated type.
+ * While a discount runs, `Food.price` is what the customer pays and `Food.oldPrice` is the base price.
+ */
+export interface FoodDiscount {
+  /** Whole percent off, rounded down (1..90). */
+  percent: number;
+  label: 'special' | 'festival';
+  endsAt: string | null;
+}
+export type Food = S['Food'] & { discount?: FoodDiscount | null };
+export type MenuCategory = Omit<S['MenuCategory'], 'foods'> & { foods?: Food[] };
+export type FoodHit = Omit<S['FoodHit'], 'food'> & { food?: Food };
 export type OptionGroup = S['OptionGroup'];
 export type Review = S['Review'];
 export type ReviewPage = S['ReviewPage'];

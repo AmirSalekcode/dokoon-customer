@@ -1127,6 +1127,15 @@ export interface paths {
                     };
                 };
                 400: components["responses"]["Error"];
+                /** @description DISCOUNT_INVALID — discount.price not below price, percent outside 1..90, or endsAt in the past */
+                409: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ApiError"];
+                    };
+                };
             };
         };
         delete?: never;
@@ -1167,6 +1176,15 @@ export interface paths {
                         "application/json": components["schemas"]["Food"];
                     };
                 };
+                /** @description DISCOUNT_INVALID — also when a new price is no longer above discount.price */
+                409: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ApiError"];
+                    };
+                };
             };
         };
         post?: never;
@@ -1192,7 +1210,7 @@ export interface paths {
         };
         options?: never;
         head?: never;
-        /** Quick toggle of availability */
+        /** Quick toggle of availability, or end a discount now («پایان تخفیف», body {discount null}) */
         patch: {
             parameters: {
                 query?: never;
@@ -1206,6 +1224,8 @@ export interface paths {
                 content: {
                     "application/json": {
                         available?: boolean;
+                        /** @description null ends the discount immediately */
+                        discount?: null;
                     };
                 };
             };
@@ -1701,8 +1721,14 @@ export interface components {
             categoryId?: string;
             name?: string;
             description?: string;
+            /** @description base price (before any discount) */
             price?: number;
+            /**
+             * @deprecated
+             * @description replaced by discount (D-131); the panel no longer reads it
+             */
             oldPrice?: number;
+            discount?: components["schemas"]["FoodDiscountNullable"];
             /** @description default illustration key */
             art?: string;
             photo?: {
@@ -1714,11 +1740,30 @@ export interface components {
             available?: boolean;
             groups?: components["schemas"]["OptionGroup"][];
         };
+        /** @description Per-food discount or festival (D-131). Only the food's base price is discounted, never options. Rules (server-checked, 409 DISCOUNT_INVALID): 1 <= price < Food.price; percent = floor((Food.price - price) * 100 / Food.price) between 1 and 90; endsAt null (no end) or in the future. Starts immediately; the server removes it at endsAt. */
+        FoodDiscount: {
+            /** @description discounted price the customer pays (toman) */
+            price: number;
+            /**
+             * @description special = «تخفیف ویژه», festival = «جشنواره»
+             * @enum {string}
+             */
+            label: "special" | "festival";
+            /** Format: date-time */
+            endsAt: string | null;
+        };
+        FoodDiscountNullable: components["schemas"]["FoodDiscount"] | null;
         FoodInput: {
             name: string;
             description?: string;
+            /** @description base price (before any discount) */
             price: number;
+            /**
+             * @deprecated
+             * @description replaced by discount (D-131); the panel no longer sends it
+             */
             oldPrice?: number;
+            discount?: components["schemas"]["FoodDiscountNullable"];
             categoryId: string;
             art?: string;
             available?: boolean;
