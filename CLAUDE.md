@@ -47,6 +47,7 @@ Rules specific to this app:
 7. Responsive: phone <720 = bottom tabs, ≥720 = side rail + list/detail split. Use CSS media/container queries (the prototype's generated `AppTablet` copy is not a pattern to copy).
 8. Formerly open items are decided in `.cloud/decisions.md` D-90…D-104 (domain `panel.dokoonapp.ir`, Android `ir.dokoonapp.restaurant`, ETA, cash settlement, multi-device, printing, sound/push, uploads, courier call, holidays, history filter, wallet, load testing). Still open: D-49, D-50, D-51, D-54. Do not decide anything else silently.
 9. Work is run **epic by epic** (D-105): one chat per Jira epic (KAN-50..54); inside it, tasks in dependency order, each on its own `feature/KAN-xxx-…` branch with its own PR, and stop after each PR for the owner to review/merge. Order and which epics may run in parallel: `TASKS.md`.
+10. Per-food discounts / festival (D-131, Epic KAN-107, plan `TASKS-DISCOUNT.md`): base `price` + `discount {price, label special|festival, endsAt}`; the restaurant writes the new price, customers see the struck old price and a «X٪ تخفیف» badge. Only the server decides the final price (quote).
 
 ## graphify
 
