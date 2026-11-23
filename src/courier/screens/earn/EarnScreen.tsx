@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { BarChart } from '@/components/library/BarChart';
 import { ErrorState } from '@/components/library/ErrorState';
+import { ListRow } from '@/components/library/ListRow';
 import { LoadingState } from '@/components/library/LoadingState';
 import { SegTabs } from '@/components/library/SegTabs';
 import { StatCard } from '@/components/library/StatCard';
@@ -8,7 +9,17 @@ import { TopBar } from '@/components/library/TopBar';
 import type { EarningsPeriod } from '../../api/types';
 import { EarnBalance } from '../../components/EarnBalance';
 import { useEarnings } from '../../money/earnings';
-import { balanceView, CHART_TITLE, chartBars, PERIOD_LABEL, PERIODS, statCards } from '../../money/present';
+import {
+  balanceView,
+  CHART_TITLE,
+  chartBars,
+  D_CLOCK,
+  D_WALLET,
+  PERIOD_LABEL,
+  PERIODS,
+  statCards,
+} from '../../money/present';
+import { useCourierNav } from '../../nav/nav';
 import s from './earn.module.css';
 
 function PeriodView({ period }: { period: EarningsPeriod }) {
@@ -56,6 +67,20 @@ export function EarnScreen() {
         onPick={(k) => useEarnings.getState().setPeriod(k as EarningsPeriod)}
       />
       <PeriodView key={period} period={period} />
+      <div className={s.links}>
+        <ListRow
+          title="تاریخچه‌ی سفارش‌ها"
+          sub="همه‌ی سفارش‌های تحویل‌شده"
+          d={D_CLOCK}
+          onTap={() => useCourierNav.getState().push('hist')}
+        />
+        <ListRow
+          title="تسویه‌حساب‌ها"
+          sub="واریزهای دکون به حساب شما"
+          d={D_WALLET}
+          onTap={() => useCourierNav.getState().push('settle')}
+        />
+      </div>
     </div>
   );
 }

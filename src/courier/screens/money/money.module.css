@@ -1,0 +1,37 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+  width: 100%;
+  max-width: 720px;
+  margin-inline: auto;
+  padding: var(--sp-4) var(--gutter) var(--sp-8);
+  box-sizing: border-box;
+}
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.more {
+  display: flex;
+  justify-content: center;
+}
+.end,
+.note {
+  margin: 0;
+  color: var(--mu);
+  font-size: var(--fs-13);
+  line-height: 1.8;
+}
+.end {
+  text-align: center;
+}
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+}

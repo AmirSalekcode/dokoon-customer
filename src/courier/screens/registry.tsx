@@ -8,6 +8,7 @@ import { PermScreen } from './perm/PermScreen';
 import { RegScreen } from './reg/RegScreen';
 import { AccountTab, OrdersTab } from './TabScreens';
 import { EarnScreen } from './earn/EarnScreen';
+import { HistDetailScreen, HistScreen, SettleDetailScreen, SettleScreen } from './money/MoneyScreens';
 import type { CourierScreenProps } from './types';
 
 const SCREENS: Record<CourierScreen, ComponentType<CourierScreenProps>> = {
@@ -19,6 +20,10 @@ const SCREENS: Record<CourierScreen, ComponentType<CourierScreenProps>> = {
   orders: OrdersTab,
   earn: EarnScreen,
   account: AccountTab,
+  hist: HistScreen,
+  histd: HistDetailScreen,
+  settle: SettleScreen,
+  setd: SettleDetailScreen,
   error: ErrorScreen,
 };
 

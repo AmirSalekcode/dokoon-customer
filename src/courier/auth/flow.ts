@@ -5,6 +5,7 @@ import { isMarkedSignedOut, useCourierSession } from '../api/session';
 import type { CourierStatus, Me } from '../api/types';
 import { showFullPageError } from '../errors/fullPage';
 import { useEarnings } from '../money/earnings';
+import { useMoneyLists } from '../money/history';
 import { useCourierNav, type CourierScreen } from '../nav/nav';
 import { canWork, checkAll } from '../permissions/provider';
 
@@ -49,6 +50,7 @@ export async function enter(status: CourierStatus | null, { keepErrors = false }
 /** The login page; money figures of the previous courier on this device are forgotten. */
 export function toLogin() {
   useEarnings.getState().reset();
+  useMoneyLists.getState().reset();
   useCourierNav.getState().resetTo('login');
 }
 

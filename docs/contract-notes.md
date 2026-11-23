@@ -171,7 +171,8 @@ Nothing here is implemented as an invented endpoint; the frontend works around e
     server-computed integers; the cash rule is undecided, so the app never computes money);
     settlements `[{id, periodStart, periodEnd, amount, status: paid | pending, paidAt?, shebaMasked}]`;
     `PUT /c/status` → `{online}`. A history detail screen also needs the items and the restaurant
-    address of a past trip (`GET /c/orders/history/{id}`, or the same fields in the list).
+    address of a past trip (`GET /c/orders/history/{id}`, or the same fields in the list); until then the
+    app shows the list row's fields (KAN-99). Settlement details likewise come from the list row.
 35. **Sheba change body.** `POST /c/sheba-change` has no request body. It needs `{sheba, otpCode}` and a
     way to send the fresh code to the account's own phone (same proposal as note 28:
     `POST /c/sheba-change/otp`). `Me` should also carry `nationalIdMasked` and `shebaMasked` for «اطلاعات

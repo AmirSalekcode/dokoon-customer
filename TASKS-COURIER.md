@@ -105,6 +105,7 @@
 - **توضیح:** `GET /c/orders/history` با cursor (IntersectionObserver + دکمه‌ی دسترس‌پذیر)، HistoryRow، جزئیات، `GET /c/settlements`.
 - **پذیرش:** E2E لیست/جزئیات/back دقیق.
 - **وابستگی:** CP-05
+- **وضعیت (2026-11-24):** ساخته شد (D-133). `src/courier/money/history.ts` + `historyPresent.ts`، `src/courier/screens/money` (تاریخچه، جزئیات سفارش، تسویه‌ها، جزئیات تسویه)؛ ورود از تب درآمد و حساب. Epic E4 (KAN-80) با مرج این تسک کامل می‌شود.
 
 ## E5 (KAN-81) — حساب
 ### CP-16 (KAN-100): حساب + اطلاعات من + تغییر شبا
