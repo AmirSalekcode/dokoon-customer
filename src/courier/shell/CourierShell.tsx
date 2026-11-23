@@ -6,6 +6,7 @@ import { greeting } from '@/lib/format';
 import { initConnectivity, initSystemBack } from '@/nav/systemBack';
 import { useCourierSession } from '../api/session';
 import { CHeader } from '../components/CHeader';
+import { initCourierLive } from '../realtime/live';
 import { isCourierTab, useCourierNav, type CourierTab } from '../nav/nav';
 import { courierScreenFor, SHELL_SCREENS } from '../screens/registry';
 import { CourierOverlayHost } from './overlays';
@@ -73,9 +74,12 @@ export function CourierShell() {
   useEffect(() => {
     const stopBack = initSystemBack(useCourierNav);
     const stopNet = initConnectivity(useCourierNav);
+    // Live offers follow the online switch (KAN-94).
+    const stopLive = initCourierLive();
     return () => {
       stopBack();
       stopNet();
+      stopLive();
     };
   }, []);
 

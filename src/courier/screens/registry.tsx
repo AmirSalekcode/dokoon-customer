@@ -6,6 +6,7 @@ import { LoginScreen } from './auth/LoginScreen';
 import { WaitScreen } from './auth/WaitScreen';
 import { PermScreen } from './perm/PermScreen';
 import { RegScreen } from './reg/RegScreen';
+import { OrderScreen } from './orders/OrderScreen';
 import { AccountTab, EarnTab, OrdersTab } from './TabScreens';
 import type { CourierScreenProps } from './types';
 
@@ -16,6 +17,7 @@ const SCREENS: Record<CourierScreen, ComponentType<CourierScreenProps>> = {
   wait: WaitScreen,
   perm: PermScreen,
   orders: OrdersTab,
+  order: OrderScreen,
   earn: EarnTab,
   account: AccountTab,
   error: ErrorScreen,

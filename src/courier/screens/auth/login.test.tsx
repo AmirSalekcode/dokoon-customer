@@ -24,6 +24,8 @@ const meWith = (status: string | undefined, name = 'مهدی کریمی') =>
 
 beforeEach(() => {
   server.use(...courierHandlers);
+  // jsdom sends no session cookie: the orders tab's active-order check answers «none».
+  server.use(http.get('*/v1/c/orders/active', () => new HttpResponse(null, { status: 204 })));
   resetCourierMockDb();
   localStorage.clear();
   reloadCourierConsent();

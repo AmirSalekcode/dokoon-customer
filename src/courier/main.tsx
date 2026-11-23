@@ -16,6 +16,7 @@ async function start() {
     // (e.g. __dkCourierMocks.stream.takeByOther('of1')). Holds no data or secrets.
     const mocks = await (await import('./mocks/browser')).startCourierMocks();
     (window as unknown as { __dkCourierMocks?: typeof mocks }).__dkCourierMocks = mocks;
+    (await import('./realtime/live')).setCourierSocketFactory(mocks.stream.connect);
   } else {
     registerPwa();
   }

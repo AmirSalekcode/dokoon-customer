@@ -6,6 +6,8 @@ import type { CourierStatus, Me } from '../api/types';
 import { showFullPageError } from '../errors/fullPage';
 import { useCourierNav, type CourierScreen } from '../nav/nav';
 import { canWork, checkAll } from '../permissions/provider';
+import { useActiveOrder } from '../state/active';
+import { useOffers } from '../state/offers';
 import { useOnline } from '../state/online';
 
 /**
@@ -84,6 +86,8 @@ export function signOutToLogin() {
   const { online, hasActive } = useOnline.getState();
   if (online && !hasActive) void courierApi().PUT('/c/status', { body: { online: false } }).catch(() => {});
   useOnline.getState().reset();
+  useOffers.getState().clear();
+  useActiveOrder.getState().clear();
   signOut();
   toLogin();
 }

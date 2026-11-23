@@ -5,7 +5,7 @@ import { createStackNav } from '@/nav/createStackNav';
  * KAN-91) and `wait` (approval pending / suspended) come before the tabs (KAN-90). Offers, the order steps,
  * history and account sub-pages join this list in their own tasks.
  */
-export const COURIER_SCREENS = ['boot', 'login', 'reg', 'wait', 'perm', 'orders', 'earn', 'account', 'error'] as const;
+export const COURIER_SCREENS = ['boot', 'login', 'reg', 'wait', 'perm', 'orders', 'order', 'earn', 'account', 'error'] as const;
 export type CourierScreen = (typeof COURIER_SCREENS)[number];
 
 /** Root tabs (courier screen-specs): switching resets the stack; back on earn/account goes to orders first. */
