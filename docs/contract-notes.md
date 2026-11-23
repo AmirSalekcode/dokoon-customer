@@ -205,3 +205,21 @@ Nothing here is implemented as an invented endpoint; the frontend works around e
     `Me.docs` of a `new` courier should list what was already sent, so a courier who leaves the wizard can
     resume. The mock answers `422 VALIDATION` with `fields.nationalId` for a national code that already
     belongs to another courier (demo `1234567891`).
+
+## Food discounts / festival (D-131, Epic KAN-107)
+
+39. **Per-food discount.** Restaurants set a discounted price per food; customers see the old price struck
+    through and a «X٪ تخفیف» / «جشنواره X٪» badge.
+    - **Restaurant contract** (our draft, updated in KAN-108): `Food` and `FoodInput` get
+      `discount: {price: integer, label: 'special' | 'festival', endsAt: date-time | null} | null`.
+      `price` is the base price. `oldPrice` is deprecated: the panel stops sending it.
+      Server rules: `1 ≤ discount.price < price`, percent between 1 and 90, and `endsAt` in the future or
+      null. At `endsAt` the server removes the discount itself. Changing `price` revalidates the discount
+      (409 `DISCOUNT_INVALID` if it is no longer below the price).
+    - **Customer contract** (proposal for the backend): `Food.price` = the price the customer pays now,
+      `Food.oldPrice` = the base price while a discount is active (null otherwise), and a new
+      `Food.discount: {percent: integer, label: 'special' | 'festival', endsAt: date-time | null} | null`.
+      `GET /restaurants?hasDiscount=true` and `RestaurantCard.badge` («تا ۲۵٪ تخفیف») should include
+      restaurants with an active food discount. `POST /checkout/quote` always uses the discount that is
+      valid at quote time and reports `PRICE_CHANGED` when one ended since the cart was filled.
+    - Commission is computed on the price after the discount; the restaurant pays for the discount.
