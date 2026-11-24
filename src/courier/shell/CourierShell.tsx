@@ -6,6 +6,7 @@ import { greeting } from '@/lib/format';
 import { initConnectivity, initSystemBack } from '@/nav/systemBack';
 import { useCourierSession } from '../api/session';
 import { CHeader } from '../components/CHeader';
+import { initOfferAlerts } from '../alert/alerts';
 import { initCourierLive } from '../realtime/live';
 import { isCourierTab, useCourierNav, type CourierTab } from '../nav/nav';
 import { courierScreenFor, SHELL_SCREENS } from '../screens/registry';
@@ -70,16 +71,19 @@ export function CourierShell() {
   const stackLen = useCourierNav((st) => st.stack.length);
   const resetTo = useCourierNav((st) => st.resetTo);
   const name = useCourierSession((st) => st.name);
+  const alertOpen = useCourierNav((st) => st.overlay?.kind === 'alr');
 
   useEffect(() => {
     const stopBack = initSystemBack(useCourierNav);
     const stopNet = initConnectivity(useCourierNav);
     // Live offers follow the online switch (KAN-94).
     const stopLive = initCourierLive();
+    const stopAlerts = initOfferAlerts();
     return () => {
       stopBack();
       stopNet();
       stopLive();
+      stopAlerts();
     };
   }, []);
 
@@ -105,7 +109,10 @@ export function CourierShell() {
         </div>
       </div>
       <CourierOverlayHost />
-      <ToastHost />
+      {/* While the offer alert is open its buttons fill the bottom: toasts move to the top (KAN-95). */}
+      <div className={s.toasts} data-top={alertOpen || undefined}>
+        <ToastHost />
+      </div>
     </div>
   );
 }

@@ -162,8 +162,9 @@ describe('overlays (one at a time)', () => {
   });
 
   it('opening another overlay replaces the first; a registered view renders its kind', () => {
-    registerOverlay('alr', ({ props }) => <section role="alertdialog" aria-label={String(props.label)} />);
     render(<CourierApp />);
+    // After mount: the shell registers the real offer alert (KAN-95); this stands in for it.
+    registerOverlay('alr', ({ props }) => <section role="alertdialog" aria-label={String(props.label)} />);
     act(() => nav().openOverlay({ kind: 'dlg', props: { title: 'الف', confirmLabel: 'باشه', onConfirm: () => {} } }));
     act(() => nav().openOverlay({ kind: 'alr', props: { label: 'پیشنهاد تازه' } }));
     expect(screen.queryByRole('alertdialog', { name: 'الف' })).toBeNull();

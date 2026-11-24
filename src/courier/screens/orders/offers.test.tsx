@@ -13,7 +13,6 @@ import { offerView } from '../../offers/present';
 import { setPermissionProvider, webPermissionProvider } from '../../permissions/provider';
 import { LIVE_TIMING, setCourierSocketFactory, useCourierLive } from '../../realtime/live';
 import { useActiveOrder } from '../../state/active';
-import { useOfferAlert } from '../../state/alert';
 import { useOffers } from '../../state/offers';
 import { setGeoSource, useOnline } from '../../state/online';
 import { allGranted } from '../../test/permissions';
@@ -77,7 +76,6 @@ beforeEach(() => {
   useOnline.getState().reset();
   useOffers.getState().clear();
   useActiveOrder.getState().clear();
-  useOfferAlert.getState().close();
   useToast.setState({ toasts: [] });
   useCourierSession.getState().setSession({ status: 'approved', name: 'مهدی کریمی' });
   setPermissionProvider(allGranted());
@@ -139,7 +137,7 @@ describe('offers list', () => {
     await goOnline();
     await waitFor(() => expect(cards()).toHaveLength(2));
     await userEvent.click(cards()[1]);
-    expect(useOfferAlert.getState().offerId).toBe('of2');
+    expect(nav().overlay).toMatchObject({ kind: 'alr', props: { offerId: 'of2' } });
   });
 
   it('no offers: «منتظر سفارش باشید»; a failed list: retry', async () => {

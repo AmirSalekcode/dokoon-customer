@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { openOffer } from '../../alert/alerts';
 import { EmptyState } from '@/components/library/EmptyState';
 import { LoadingState } from '@/components/library/LoadingState';
 import { Icon } from '@/components/primitives/Icon';
@@ -8,7 +9,6 @@ import { useCourierNav } from '../../nav/nav';
 import { offerView } from '../../offers/present';
 import { useCourierLive } from '../../realtime/live';
 import { STAGE_LABEL, useActiveOrder } from '../../state/active';
-import { openOffer } from '../../state/alert';
 import { useOffers } from '../../state/offers';
 import { useOnline } from '../../state/online';
 import s from './orders.module.css';
