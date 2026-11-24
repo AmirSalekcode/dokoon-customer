@@ -1,13 +1,16 @@
 import { act, render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { server } from '@/mocks/node';
 import { EXIT_TOAST } from '@/nav/createStackNav';
 import { toast, useToast } from '@/ui/toast';
 import { useTheme } from '@/theme/theme';
 import { CourierApp } from './CourierApp';
 import { useCourierSession } from './api/session';
+import { courierHandlers } from './mocks/handlers';
 import { useCourierNav } from './nav/nav';
 import { registerOverlay } from './shell/overlays';
+import { signedInCourier } from './test/session';
 
 // KAN-89: courier shell — tabs (bar/rail), stack with exact back (Android/browser), one overlay at a time,
 // toasts, global offline page, theme switch.
@@ -26,6 +29,9 @@ const sysBack = () => {
 const topScreen = () => document.querySelector<HTMLElement>('main:not([hidden])')!;
 
 beforeEach(() => {
+  // The earnings tab loads its numbers (KAN-98): an approved courier on the mock.
+  server.use(...courierHandlers);
+  signedInCourier(undefined, '');
   act(() => {
     nav().resetTo('orders');
     useCourierNav.setState({ overlay: null, exitArmedAt: 0 });

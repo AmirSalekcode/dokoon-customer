@@ -65,6 +65,8 @@ export interface Earnings {
   balance: number;
   /** Cash collected from customers and not yet handed to Dokoon. */
   cashHeld: number;
+  /** What Dokoon owes the courier (server-computed; the balance card hides the line when absent). */
+  dokoonOwes?: number;
   chart: ChartBar[];
 }
 

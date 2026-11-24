@@ -1,4 +1,3 @@
-import { EmptyState } from '@/components/library/EmptyState';
 import { ListRow } from '@/components/library/ListRow';
 import { ToggleRow } from '@/components/library/ToggleRow';
 import { TopBar } from '@/components/library/TopBar';
@@ -9,19 +8,10 @@ import { useCourierNav } from '../nav/nav';
 import s from './screens.module.css';
 
 /**
- * Tab roots. The orders tab lives in `orders/OrdersScreen` (KAN-93); earnings (KAN-98) and the account pages
- * (KAN-100/101) replace these placeholders in their own tasks.
+ * Tab roots. The orders tab lives in `orders/OrdersScreen` (KAN-93), earnings in `earn/EarnScreen`
+ * (KAN-98); the account tab below grows with KAN-100/101.
  */
 export { OrdersScreen as OrdersTab } from './orders/OrdersScreen';
-
-export function EarnTab() {
-  return (
-    <div className={s.page}>
-      <TopBar title="درآمد" />
-      <EmptyState art="dk-cake" title="درآمد و تسویه" text="درآمد امروز، هفته و ماه و تسویه‌ها اینجا می‌آید." />
-    </div>
-  );
-}
 
 /** Account tab: the dark-mode switch (stored in `dk-theme`) and sign-out behind a confirmation. */
 export function AccountTab() {
@@ -48,6 +38,18 @@ export function AccountTab() {
   return (
     <div className={s.page}>
       <TopBar title="حساب" />
+      <ListRow
+        title="تاریخچه‌ی سفارش‌ها"
+        sub="سفارش‌های تحویل‌شده"
+        d="M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM12 7v5l3 2"
+        onTap={() => useCourierNav.getState().push('hist')}
+      />
+      <ListRow
+        title="تسویه‌حساب‌ها"
+        sub="واریزهای هفتگی"
+        d="M4 7h15a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h12M16 14h2"
+        onTap={() => useCourierNav.getState().push('settle')}
+      />
       <ListRow
         title="مجوزهای دستگاه"
         sub="موقعیت مکانی، اعلان‌ها"
