@@ -72,13 +72,13 @@
 - **توضیح:** `PUT /c/status`؛ ۴۰۹ (سفارش فعال) ← پیام، آفلاین ممنوع. `LocationTracker` فقط وقتی آنلاین یا سفارش فعال؛ `POST /c/location` با فاصله‌ی زمانی/مسافتی؛ نشانگر «ردیابی فعال» همیشه در UI؛ آفلاین = توقف کامل.
 - **پذیرش:** تست واحد «آفلاین ← هیچ ارسالی نیست»؛ E2E آنلاین/آفلاین.
 - **وابستگی:** CP-08
-- **وضعیت (2026-11-24):** ساخته شد (D-132). `src/courier/location/tracker.ts` (LocationTracker + GeoSource)، `src/courier/state/online.ts` (کلید، ۴۰۹، همگام‌سازی ردیابی)، `screens/orders/OrdersScreen.tsx` (کلید، خالی آفلاین/منتظر، خط ردیابی). یادداشت قرارداد ۴۰.
+- **وضعیت (2026-11-24):** ساخته شد (D-134). `src/courier/location/tracker.ts` (LocationTracker + GeoSource)، `src/courier/state/online.ts` (کلید، ۴۰۹، همگام‌سازی ردیابی)، `screens/orders/OrdersScreen.tsx` (کلید، خالی آفلاین/منتظر، خط ردیابی). یادداشت قرارداد ۴۰.
 
 ### CP-10 (KAN-94): اتصال زنده + لیست پیشنهادها + بنر سفارش در جریان
 - **توضیح:** WS پیشنهادها (اتصال دوباره، fallback به `GET /c/offers`)، OfferCard فقط محله، خالی/آفلاین، بنر سفارش فعال از `GET /c/orders/active`.
 - **پذیرش:** تست اتصال/قطع/اتصال دوباره؛ هیچ آدرس کامل در لیست.
 - **وابستگی:** CP-02، CP-09
-- **وضعیت (2026-11-24):** ساخته شد (D-133). `src/lib/liveClient.ts` (مشترک با پنل)، `src/courier/realtime/live.ts`، `state/offers.ts`، `state/active.ts`، `offers/present.ts`، بنر و صفحه‌ی موقت `order`.
+- **وضعیت (2026-11-24):** ساخته شد (D-135). `src/lib/liveClient.ts` (مشترک با پنل)، `src/courier/realtime/live.ts`، `state/offers.ts`، `state/active.ts`، `offers/present.ts`، بنر و صفحه‌ی موقت `order`.
 
 ### CP-11 (KAN-95): هشدار تمام‌صفحه + پذیرش اتمیک/رد
 - **توضیح:** OfferAlert با تایمر از `expiresAt` سرور (کلاینت فقط نمایش)، صدا بعد از gesture کاربر، پذیرش ← `ActiveOrder`؛ ۴۰۹ ← «پیک دیگری برداشت» و بستن؛ رد.
@@ -101,11 +101,13 @@
 - **توضیح:** بازه امروز/هفته/ماه، StatCard، BarChart، EarnBalance (اعداد فقط از سرور؛ برچسب «نمونه» تا قانون تسویه).
 - **پذیرش:** هیچ محاسبه‌ای در کلاینت (تست با داده‌ی ناسازگار عمدی، مثل D-120).
 - **وابستگی:** CP-05
+- **وضعیت (2026-11-24):** ساخته شد (D-132). `src/courier/money` (store و نگاشت نمایش)، `src/courier/screens/earn`؛ `EarnBalance.dokoon` اختیاری شد؛ لینک تاریخچه/تسویه‌ها در CP-15.
 
 ### CP-15 (KAN-99): تاریخچه + جزئیات + تسویه‌ها
 - **توضیح:** `GET /c/orders/history` با cursor (IntersectionObserver + دکمه‌ی دسترس‌پذیر)، HistoryRow، جزئیات، `GET /c/settlements`.
 - **پذیرش:** E2E لیست/جزئیات/back دقیق.
 - **وابستگی:** CP-05
+- **وضعیت (2026-11-24):** ساخته شد (D-133). `src/courier/money/history.ts` + `historyPresent.ts`، `src/courier/screens/money` (تاریخچه، جزئیات سفارش، تسویه‌ها، جزئیات تسویه)؛ ورود از تب درآمد و حساب. Epic E4 (KAN-80) با مرج این تسک کامل می‌شود.
 
 ## E5 (KAN-81) — حساب
 ### CP-16 (KAN-100): حساب + اطلاعات من + تغییر شبا
