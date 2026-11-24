@@ -1,10 +1,11 @@
 import { render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { beforeEach, describe, expect, it } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { useAuthFlow } from '@/auth/flow';
 import { useSession } from '@/auth/session';
 import { useCart } from '@/cart/cart';
 import { useNav } from '@/nav/nav';
+import { useToast } from '@/ui/toast';
 import type { Route } from '@/nav/types';
 import { CartScreen } from './CartScreen';
 
@@ -17,6 +18,7 @@ beforeEach(() => {
   useSession.getState().clear();
   useCart.getState().clear();
   useAuthFlow.getState().reset();
+  useToast.setState({ toasts: [] });
   useNav.getState().resetTo('cart');
 });
 
@@ -109,5 +111,42 @@ describe('<CartScreen /> — spec §3 cart', () => {
     useSession.getState().setSession({ accessToken: 'a', refreshToken: 'r' });
     await userEvent.click(go);
     expect(top().screen).toBe('checkout');
+  });
+});
+
+// KAN-110 (D-131): discounted line in the cart; a discount that ends while in the cart.
+describe('<CartScreen /> — food discount', () => {
+  const kubideh = {
+    foodId: 'n1',
+    title: 'چلو کباب کوبیده',
+    unitPrice: 285000,
+    oldUnitPrice: 320000,
+    options: [],
+  };
+  afterEach(() => localStorage.removeItem('dk-mock-ended-discounts'));
+
+  it('shows the struck old price while the discount runs; no price-change message', async () => {
+    useCart.getState().add(naghsh, { ...kubideh, qty: 2 });
+    render(<CartScreen route={route} />);
+    expect(screen.getByText('۶۴۰٬۰۰۰').closest('s')).not.toBeNull();
+    const s = await summary();
+    await waitFor(() => expect(s).toHaveTextContent('جمع غذاها۵۷۰٬۰۰۰ تومان'));
+    expect(useToast.getState().toasts).toHaveLength(0);
+  });
+
+  it('a discount that ended: «قیمت یا موجودی تغییر کرد», the line takes the server price', async () => {
+    useCart.getState().add(naghsh, kubideh);
+    localStorage.setItem('dk-mock-ended-discounts', 'n1');
+    render(<CartScreen route={route} />);
+    await waitFor(() =>
+      expect(useToast.getState().toasts[0]?.text).toBe(
+        'قیمت یا موجودی تغییر کرد؛ سفارش را دوباره بررسی کنید.',
+      ),
+    );
+    expect(useCart.getState().lines[0]).toMatchObject({ unitPrice: 320000 });
+    expect(useCart.getState().lines[0].oldUnitPrice).toBeUndefined();
+    await waitFor(() => expect(screen.queryByText('۳۲۰٬۰۰۰')?.closest('s') ?? null).toBeNull());
+    const s = await summary();
+    await waitFor(() => expect(s).toHaveTextContent('جمع غذاها۳۲۰٬۰۰۰ تومان'));
   });
 });

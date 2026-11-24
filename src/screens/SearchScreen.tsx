@@ -20,7 +20,8 @@ import {
   unsupportedFilters,
   useSearch,
 } from '@/features/discovery/search';
-import { formatDecimal, formatMoney, toFaDigits } from '@/lib/format';
+import { foodDiscountVM } from '@/features/viewmodels';
+import { formatDecimal, formatMoney, formatNumber, toFaDigits } from '@/lib/format';
 import { useNav } from '@/nav/nav';
 import type { ScreenProps } from './registry';
 import s from './search.module.css';
@@ -203,6 +204,8 @@ export function SearchScreen(_: ScreenProps) {
                     title={h.food!.title ?? ''}
                     sub={h.restaurant?.name}
                     meta={h.food!.price != null ? formatMoney(h.food!.price) : undefined}
+                    metaOld={foodDiscountVM(h.food!) ? formatNumber(h.food!.oldPrice ?? 0) : undefined}
+                    badge={foodDiscountVM(h.food!)?.badge}
                     art={h.food!.imageUrl}
                     onTap={() => openFood(h)}
                   />

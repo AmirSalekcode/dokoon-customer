@@ -17,6 +17,8 @@ export interface CartLine {
   imageUrl?: string;
   /** Base price + option deltas, integer toman (client-side estimate; server quote wins). */
   unitPrice: number;
+  /** Unit price before a food discount (D-131), struck through in the cart; absent without a discount. */
+  oldUnitPrice?: number;
   qty: number;
   options: CartOption[];
 }
@@ -49,6 +51,8 @@ export interface CartState extends CartData {
   /** Decrement; reaching zero removes the line (and empties the cart's restaurant when last). */
   dec: (lineId: string) => void;
   remove: (lineId: string) => void;
+  /** Server prices won (quote, D-66): set unit prices; an old price that is no longer higher is dropped. */
+  reprice: (updates: { lineId: string; unitPrice: number }[]) => void;
   setNote: (note: string) => void;
   setPromo: (code: string) => void;
   clear: () => void;
@@ -109,6 +113,17 @@ export const useCart = create<CartState>((set, get) => {
           .filter((l) => l.qty > 0),
       }),
     remove: (lineId) => commit({ lines: get().lines.filter((l) => l.lineId !== lineId) }),
+    reprice: (updates) => {
+      const byId = new Map(updates.map((u) => [u.lineId, u.unitPrice]));
+      commit({
+        lines: get().lines.map((l) => {
+          const unitPrice = byId.get(l.lineId);
+          if (unitPrice === undefined) return l;
+          const { oldUnitPrice, ...rest } = l;
+          return oldUnitPrice && oldUnitPrice > unitPrice ? { ...l, unitPrice } : { ...rest, unitPrice };
+        }),
+      });
+    },
     setNote: (note) => commit({ note }),
     setPromo: (promoCode) => commit({ promoCode }),
     clear: () => {

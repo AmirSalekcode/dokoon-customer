@@ -13,6 +13,8 @@ export interface FoodCardData {
   price: number;
   oldPrice?: number | null;
   badge?: string;
+  /** Running food discount (D-131): red «۱۰٪ تخفیف» / «جشنواره ۱۰٪», from the view model. */
+  discount?: { percent: number; badge: string };
   available?: boolean;
   /** false when the restaurant is closed — adding is not allowed. */
   orderable?: boolean;
@@ -53,10 +55,15 @@ export function FoodCard({ f, qtyText = '', onOpen, onAdd, onInc, onDec }: FoodC
     >
       <div className={s.fm}>
         <div className={s.ft}>
-          {f.badge ? <Badge text={f.badge} /> : null}
+          {f.badge || f.discount ? (
+            <span className={s.bgs}>
+              {f.discount ? <Badge text={f.discount.badge} /> : null}
+              {f.badge ? <Badge text={f.badge} /> : null}
+            </span>
+          ) : null}
           <h3 className={s.fn}>{f.name}</h3>
           {f.desc ? <p className={s.fx}>{f.desc}</p> : null}
-          <Price price={f.price} old={f.oldPrice} />
+          <Price price={f.price} old={f.oldPrice} percent={f.discount?.percent} />
           {hasQ && f.hasGroups ? (
             <div className={s.fc2}>
               <Badge text={`${qtyText} عدد در سبد`} tone="amber" />

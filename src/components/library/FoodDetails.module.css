@@ -386,3 +386,11 @@
 .tot {
   font-weight: var(--fw-xbold);
 }
+
+/* «تا ۳ روز دیگر» under the price (D-131). */
+.ends {
+  margin: 0;
+  font-size: var(--fs-13);
+  font-weight: var(--fw-bold);
+  color: var(--danger);
+}

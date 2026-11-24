@@ -10,6 +10,7 @@ import { TopBar } from '@/components/library/TopBar';
 import { ICONS } from '@/components/primitives/Icon';
 import { selectedAddress, useAddresses } from '@/features/addresses';
 import {
+  PRICE_CHANGED_TEXT,
   summaryRows,
   toDraft,
   unavailableFoods,
@@ -93,7 +94,7 @@ export function CheckoutScreen(_: ScreenProps) {
       });
       if (err !== undefined || !data?.order) {
         if (response.status === 409) {
-          toast('قیمت یا موجودی تغییر کرد؛ سفارش را دوباره بررسی کنید.', 'error');
+          toast(PRICE_CHANGED_TEXT, 'error');
           idem.current = null;
           retry();
         } else toast('ثبت سفارش انجام نشد. دوباره تلاش کنید.', 'error');

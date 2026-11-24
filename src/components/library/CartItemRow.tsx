@@ -10,6 +10,8 @@ export interface CartItemRowItem {
   optionsText?: string;
   /** Line total, integer toman. */
   total: number;
+  /** Line total before a food discount (D-131), struck through. */
+  oldTotal?: number;
   /** Server says this food is no longer available. */
   unavailable?: boolean;
 }
@@ -33,7 +35,7 @@ export function CartItemRow({ item, qtyText, onInc, onDec }: CartItemRowProps) {
         {item.unavailable ? <span className={s.na}>ناموجود</span> : null}
         {item.optionsText ? <p className={s.op}>{item.optionsText}</p> : null}
         <div className={s.bt}>
-          <Price price={item.total} />
+          <Price price={item.total} old={item.oldTotal} />
           <QuantityStepper value={qtyText} onInc={onInc} onDec={onDec} itemName={item.name} />
         </div>
       </div>
