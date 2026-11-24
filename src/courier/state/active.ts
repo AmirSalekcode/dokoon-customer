@@ -31,9 +31,32 @@ export interface TripInfo {
   minutes?: number;
 }
 
+/**
+ * What is left after delivery for the «تحویل شد» page (KAN-97): no name, address or phone of the customer —
+ * those leave memory the moment the order is delivered (courier rule 2).
+ */
+export interface TripDone {
+  no?: number;
+  rest?: string;
+  earn: number;
+  cash: boolean;
+  due?: number;
+  cashCollected?: number;
+  cashMismatch: boolean;
+  km?: number;
+}
+
 interface ActiveState {
   order: ActiveOrder | null;
   trip: TripInfo | null;
+  /** «مشتری در دسترس نیست» was reported for this order (the order stays open). */
+  reported: boolean;
+  /** The last delivered trip, until the courier leaves its summary. */
+  done: TripDone | null;
+  markReported: () => void;
+  /** Delivered: forget the order (customer PII) and keep only the summary. */
+  finish: (done: TripDone) => void;
+  clearDone: () => void;
   /** Dishes ticked at pickup (ids), kept while the courier moves between screens. */
   checked: string[];
   toggleItem: (id: string) => void;
@@ -52,11 +75,14 @@ export const useActiveOrder = create<ActiveState>((set, get) => ({
   order: null,
   trip: null,
   checked: [],
+  reported: false,
+  done: null,
   loaded: false,
 
   async load() {
     try {
-      const { data, error, response } = await courierApi().GET('/c/orders/active');
+      // Never from the HTTP cache: the body holds the customer's address and phone (courier rule 2).
+      const { data, error, response } = await courierApi().GET('/c/orders/active', { cache: 'no-store' });
       if (error !== undefined) return;
       get().set(response.status === 204 ? null : (data as ActiveOrder));
     } catch (e) {
@@ -65,6 +91,19 @@ export const useActiveOrder = create<ActiveState>((set, get) => ({
     } finally {
       set({ loaded: true });
     }
+  },
+
+  markReported() {
+    set({ reported: true });
+  },
+
+  finish(done) {
+    set({ order: null, trip: null, checked: [], reported: false, done });
+    useOnline.getState().setActive(false);
+  },
+
+  clearDone() {
+    set({ done: null });
   },
 
   toggleItem(id) {
@@ -79,6 +118,7 @@ export const useActiveOrder = create<ActiveState>((set, get) => ({
       order: next,
       trip: trip ?? (same ? get().trip : null),
       checked: same ? get().checked : [],
+      reported: same ? get().reported : false,
     });
     useOnline.getState().setActive(next !== null);
   },
@@ -94,6 +134,6 @@ export const useActiveOrder = create<ActiveState>((set, get) => ({
   },
 
   clear() {
-    set({ order: null, trip: null, checked: [], loaded: false });
+    set({ order: null, trip: null, checked: [], reported: false, done: null, loaded: false });
   },
 }));

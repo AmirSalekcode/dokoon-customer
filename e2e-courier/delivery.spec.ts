@@ -72,3 +72,58 @@ test('report a problem at pickup; withdraw before pickup returns to the offers',
   await expect(top(page).getByRole('button', { name: /سفارش در جریان/ })).toHaveCount(0);
   await expect(top(page).getByRole('switch')).toHaveAttribute('aria-checked', 'true');
 });
+
+// KAN-97 (CP-13): customer → handover → summary.
+async function toHandover(page: Page) {
+  await acceptFirst(page);
+  await top(page).getByRole('button', { name: 'به رستوران رسیدم' }).click();
+  const boxes = top(page).getByRole('checkbox');
+  await expect(boxes.first()).toBeVisible();
+  for (let i = 0; i < (await boxes.count()); i++) await boxes.nth(i).click();
+  await top(page).getByRole('button', { name: 'سفارش را تحویل گرفتم' }).click();
+  // The customer appears only now.
+  await expect(top(page)).toContainText('زهرا نوری');
+  await top(page).getByRole('button', { name: 'به مشتری رسیدم' }).click();
+  await expect(top(page).getByRole('button', { name: 'سفارش تحویل شد' })).toBeDisabled();
+}
+
+test('cash delivery, exact amount → summary, back to the offers, customer gone', async ({ page }) => {
+  await toHandover(page);
+  await top(page)
+    .getByRole('button', { name: /مبلغ دقیق/ })
+    .click();
+  await top(page).getByRole('button', { name: 'سفارش تحویل شد' }).click();
+  await expect(top(page).getByRole('heading', { name: /^سفارش تحویل شد،/ })).toBeVisible();
+  await expect(top(page)).not.toContainText('مغایرت');
+  await expect(page.locator('body')).not.toContainText('زهرا نوری');
+  await top(page).getByRole('button').last().click();
+  await expect(top(page)).toHaveAttribute('data-screen', 'orders');
+  await expect(top(page).getByRole('button', { name: /سفارش در جریان/ })).toHaveCount(0);
+  // Free again: the courier can go offline now.
+  await top(page).getByRole('switch').click();
+  await expect(top(page).getByRole('switch')).toHaveAttribute('aria-checked', 'false');
+});
+
+test('cash delivery with a different amount: warning, delivered, mismatch in the summary', async ({
+  page,
+}) => {
+  await toHandover(page);
+  await top(page).getByRole('textbox').fill('۴۰۰۰۰۰');
+  await expect(top(page)).toContainText('فرق دارد');
+  await top(page).getByRole('button', { name: 'سفارش تحویل شد' }).click();
+  await expect(top(page).getByRole('heading', { name: /^سفارش تحویل شد،/ })).toBeVisible();
+  await expect(top(page)).toContainText('گزارش شد');
+});
+
+test('customer unreachable: reported, the order stays open', async ({ page }) => {
+  await acceptFirst(page);
+  await top(page).getByRole('button', { name: 'به رستوران رسیدم' }).click();
+  const boxes = top(page).getByRole('checkbox');
+  await expect(boxes.first()).toBeVisible();
+  for (let i = 0; i < (await boxes.count()); i++) await boxes.nth(i).click();
+  await top(page).getByRole('button', { name: 'سفارش را تحویل گرفتم' }).click();
+  await top(page).getByRole('button', { name: 'مشتری در دسترس نیست' }).click();
+  await page.getByRole('button', { name: 'گزارش به مدیر شهر' }).click();
+  await expect(top(page)).toContainText('گزارش برای مدیر شهر ارسال شد');
+  await expect(top(page).getByRole('button', { name: 'به مشتری رسیدم' })).toBeEnabled();
+});

@@ -65,3 +65,12 @@
   bottom: 0;
   z-index: var(--z-sticky);
 }
+.warn {
+  margin: 0;
+  padding: var(--sp-3) var(--sp-4);
+  border-radius: var(--r-md);
+  background: var(--soft);
+  color: var(--ink);
+  font-size: var(--fs-13);
+  line-height: 1.8;
+}
