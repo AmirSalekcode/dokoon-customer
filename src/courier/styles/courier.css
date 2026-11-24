@@ -1,3 +1,11 @@
 /* Courier styles: the shared base (tokens, fonts, reset, keyframes) + the courier delta tokens. */
 @import '../../styles/global.css';
 @import '../../../design-tokens/dokoon-courier-tokens.css';
+
+/* Tablet (≥ 720, KAN-102): sheets and dialogs are centred windows 480–520 wide, not full-width panels. */
+@media (min-width: 720px) {
+  [data-app='courier'] {
+    --sheet-max: 520px;
+    --dialog-max: 480px;
+  }
+}
