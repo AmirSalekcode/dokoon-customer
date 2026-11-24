@@ -4,8 +4,8 @@ import s from './RouteMap.module.css';
 export interface RouteMapProps {
   /** Where the leg goes, e.g. «تا رستوران» / «تا مشتری». */
   label: string;
-  /** «۶ دقیقه» */
-  etaText: string;
+  /** «۶ دقیقه»; omitted while the server gives no time for this leg (only the distance is shown). */
+  etaText?: string;
   /** «۱٫۲ کیلومتر» */
   distText: string;
   /** Location is being shared (online or active order, courier rule 3): always shown in the UI. */
@@ -39,7 +39,7 @@ export function RouteMap({ label, etaText, distText, tracking, onNeshan, onBalad
         <p className={s.chip}>
           <small>{label}</small>
           <b>
-            {etaText} · {distText}
+            {etaText ? `${etaText} · ${distText}` : distText}
           </b>
         </p>
         {tracking ? (

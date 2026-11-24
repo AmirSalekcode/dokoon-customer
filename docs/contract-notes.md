@@ -240,3 +240,11 @@ Nothing here is implemented as an invented endpoint; the frontend works around e
     active order, more often while moving: ≥10 s apart and ≥30 m moved). `POST /c/location` while neither
     online nor on an order should be refused (`409 NOT_TRACKING` in the mock). Sign-out sends
     `PUT /c/status {online:false}` when the courier is online without an order.
+41. **Delivery steps (KAN-96).** `ActiveOrder` has no distance or time per leg, so the map chip only shows
+    the accepted offer's distances (`kmToRest`, `km`), kept in memory and gone after a restart, and no time:
+    `Offer.minutes` is for the whole trip. Proposal: `ActiveOrder.legs: {toRest: {km, minutes}, toCust: {km,
+    minutes}}`, updated by `order.updated`, plus the coordinates of note 36. `POST /c/orders/{id}/stage`
+    answers `200` with no schema; please return the updated `ActiveOrder` (the mock does) and declare the codes
+    the app handles: `409 INVALID_STAGE` (the order is no longer at that step → the app re-reads it) and
+    `400 ITEMS_UNCHECKED` (leaving pickup without every item in `checkedItems`). Neshan/Balad navigation links
+    are not verified with the providers yet (`src/courier/maps/navLinks.ts`).

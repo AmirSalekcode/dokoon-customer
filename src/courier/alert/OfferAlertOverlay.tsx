@@ -109,7 +109,9 @@ export function OfferAlertOverlay({ props }: { props: Record<string, unknown> })
       const { data, error } = await offerAction(courierApi(), offerId, 'accept');
       if (data) {
         useCourierNav.getState().closeOverlay();
-        useActiveOrder.getState().set(data as ActiveOrder);
+        useActiveOrder
+          .getState()
+          .set(data as ActiveOrder, { kmToRest: shown?.kmToRest, km: shown?.km, minutes: shown?.minutes });
         useCourierNav.getState().push('order', { id: (data as ActiveOrder).id ?? '' });
         toast(ALERT_MSG.accepted, 'info', COURIER_TOAST_MS);
         return;
