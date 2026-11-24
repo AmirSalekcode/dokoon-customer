@@ -24,6 +24,8 @@ interface MenuState {
   load: (api?: PanelApi) => Promise<void>;
   /** Optimistic `PATCH /r/foods/{id} {available}`; rolls back + toast on any failure. */
   setAvailable: (id: string, available: boolean, api?: PanelApi) => Promise<boolean>;
+  /** «پایان تخفیف»: optimistic `PATCH /r/foods/{id} {discount: null}`; rolls back + toast on failure. */
+  endDiscount: (id: string, api?: PanelApi) => Promise<boolean>;
   /** Saves renamed (`PATCH`) and new (`POST`) categories, then re-reads the menu. */
   saveCategories: (drafts: CatDraft[], api?: PanelApi) => Promise<boolean>;
   /** Only an empty category; otherwise a toast and no request (screen specs §3). */
@@ -105,6 +107,33 @@ export const useMenu = create<MenuState>((set, get) => {
         return false;
       }
       toast(`«${food.name ?? ''}» ${available ? 'موجود' : 'ناموجود'} شد`, 'info', TOAST_MS);
+      return true;
+    },
+
+    endDiscount: async (id, api = panelApi()) => {
+      const food = get().foods.find((f) => f.id === id);
+      if (!food?.discount || get().busy[`d:${id}`]) return false;
+      const before = food.discount;
+      set({ busy: { ...get().busy, [`d:${id}`]: true } });
+      patchFood(id, { discount: null });
+      let fail: string | null = null;
+      try {
+        const { error } = await api.PATCH('/r/foods/{id}', {
+          params: { path: { id } },
+          body: { discount: null },
+        });
+        if (error !== undefined) fail = businessError(error)?.message ?? '';
+      } catch {
+        fail = '';
+      }
+      const { [`d:${id}`]: _done, ...rest } = get().busy;
+      set({ busy: rest });
+      if (fail !== null) {
+        patchFood(id, { discount: before });
+        toast(fail || 'تخفیف برداشته نشد؛ دوباره تلاش کنید', 'error', TOAST_MS);
+        return false;
+      }
+      toast(`تخفیف «${food.name ?? ''}» تمام شد`, 'info', TOAST_MS);
       return true;
     },
 

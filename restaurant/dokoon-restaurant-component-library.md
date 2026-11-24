@@ -16,7 +16,8 @@ TopBar، Badge، EmptyState، ErrorPage، ErrorState، LoadingState، ToggleRow�
 | **PrepSheet** | انتخاب زمان آماده‌سازی (۱۵/۲۰/۳۰/۴۰/دلخواه) | `opts[{key,big,small,on}]`، `custom`، `customVal`، `preview`، `canConfirm` | `onPick`، `onStep(±5)`، `onConfirm`، `onClose` | 390×560 |
 | **ReasonSheet** | انتخاب دلیل (رد سفارش) | `title`، `text`، `items[{id,label,on}]`، `confirmLabel`، `canConfirm` | `onPick(id)`، `onConfirm`، `onClose` | 390×500 |
 | **OrderDetail** | جزئیات کامل سفارش (اقلام، توضیح، جمع، پرداخت، مشتری ماسک‌شده، پیک، اقدام‌ها) | `order{no,statusLabel,tone,placed,etaText,canAddTime,items,note,rows,total,pay,payText,customer,area,courier,primary{label,tone},secondaryLabel}` | `onPrimary`، `onSecondary`، `onAddTime`، `onPrint`، `onCall` | 358×900 |
-| **MenuItemRow** | ردیف غذا با کلید موجود/ناموجود | `item{name,price,old,art,available}` | `onToggle`، `onEdit` | 358×96 |
+| **MenuItemRow** | ردیف غذا با کلید موجود/ناموجود؛ با تخفیف یک خط نشان + مدت + «پایان تخفیف» | `item{name,price,old,art,available,discount?{badge,ends}}` | `onToggle`، `onEdit`، `onEndDiscount` | 358×96 (+۵۶ با تخفیف) |
+| **JalaliDatePicker** | تقویم شمسی ماه‌به‌ماه (شنبه اول)، روزهای گذشته غیرفعال، روز انتخابی نارنجی | `months` (از `calendarMonths`)، `value` (روز تهران `YYYY-MM-DD`)، `label` | `onPick(iso)` | 358×~۴۰۰ |
 | **StatCard** | کارت آمار | `label`، `value`، `sub`، `d` (آیکون)، `tone` (up/down) | — | 172×116 |
 | **BarChart** | نمودار میله‌ای ساده (دسترس‌پذیر با role=img) | `title`، `bars[{label,v,h,on}]` | — | 358×220 |
 | **HoursRow** | یک روز هفته: کلید، از/تا | `day`، `on`، `from`، `to`، `times[]` | `onFlip`، `onFrom`، `onTo` | 358×120 |

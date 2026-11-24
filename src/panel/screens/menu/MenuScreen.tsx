@@ -4,10 +4,10 @@ import { EmptyState } from '@/components/library/EmptyState';
 import { ErrorState } from '@/components/library/ErrorState';
 import { LoadingState } from '@/components/library/LoadingState';
 import { SegTabs } from '@/components/library/SegTabs';
-import { formatMoney, formatNumber, toFaDigits } from '@/lib/format';
+import { toFaDigits } from '@/lib/format';
 import { MenuItemRow } from '../../components/MenuItemRow';
 import { usePanelNav } from '../../nav/nav';
-import { liveDiscount } from '../../state/dish';
+import { menuPriceTexts as priceTexts } from '../../state/dish';
 import { foodArt, foodsIn, useMenu } from '../../state/menu';
 import s from './menu.module.css';
 
@@ -67,14 +67,14 @@ export function MenuScreen() {
             <MenuItemRow
               item={{
                 name: f.name ?? '',
-                price: formatMoney(liveDiscount(f)?.price ?? f.price ?? 0),
-                old: liveDiscount(f) ? formatNumber(f.price ?? 0) : undefined,
+                ...priceTexts(f),
                 art: foodArt(f),
                 available: f.available !== false,
               }}
               busy={!!busy[f.id ?? '']}
               onToggle={() => void useMenu.getState().setAvailable(f.id!, f.available === false)}
               onEdit={() => push('dish', { id: f.id! })}
+              onEndDiscount={() => void useMenu.getState().endDiscount(f.id!)}
             />
           </li>
         ))}

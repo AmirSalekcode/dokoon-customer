@@ -8,6 +8,7 @@ import { LoadingState } from '@/components/library/LoadingState';
 import { ToggleRow } from '@/components/library/ToggleRow';
 import { TopBar } from '@/components/library/TopBar';
 import { UploadTile } from '@/components/library/UploadTile';
+import { toFaDigits } from '@/lib/format';
 import { toast } from '@/ui/toast';
 import { panelApi } from '../../api/client';
 import { businessError } from '../../api/errors';
@@ -18,6 +19,7 @@ import { usePanelNav } from '../../nav/nav';
 import { askConfirm } from '../../shell/confirm';
 import { PANEL_TOAST_MS } from '../../shell/openSwitch';
 import {
+  discountCheck,
   DISH_ARTS,
   dishErrors,
   draftFromFood,
@@ -31,6 +33,7 @@ import { useMenu } from '../../state/menu';
 import { useSettings } from '../../state/settings';
 import { acceptAttr, PHOTO_RULE, prepareFile, uploadFile, UploadError } from '../../upload/upload';
 import type { PanelScreenProps } from '../StackScreens';
+import { DiscountSection } from './DiscountSection';
 import s from './menu.module.css';
 
 const D_CAMERA = 'M4 7h3l2-3h6l2 3h3v13H4zM12 17a4 4 0 1 0 0-8 4 4 0 0 0 0 8z';
@@ -64,7 +67,7 @@ async function submitPhoto(foodId: string, uploadId: string): Promise<boolean> {
 }
 
 /**
- * Add / edit a dish (KAN-67): name, price, old price, description, category, default art, real photo
+ * Add / edit a dish (KAN-67): name, price, «تخفیف ویژه» (KAN-109), description, category, default art, real photo
  * (admin review: pending → approved / rejected), availability, option groups (only with allowExtras),
  * delete with confirmation.
  */
@@ -152,9 +155,24 @@ export function DishScreen({ route }: PanelScreenProps) {
     }
   };
 
-  const save = async () => {
+  const save = () => {
     setTouched(true);
     if (Object.keys(errors).length || saving) return;
+    const check = discountCheck(draft);
+    if (check?.confirm)
+      askConfirm({
+        title: 'تخفیف بیش از ۵۰٪ است؛ مطمئنید؟',
+        text: `مشتری این غذا را با ${toFaDigits(check.percent)}٪ تخفیف می‌بیند. اگر عدد را اشتباه نوشته‌اید، «انصراف» را بزنید.`,
+        confirmLabel: 'بله، ذخیره کن',
+        tone: 'ok',
+        onConfirm: () => true,
+        after: () => void persist(),
+      });
+    else void persist();
+  };
+
+  const persist = async () => {
+    if (saving) return;
     setSaving(true);
     try {
       const body = foodInput(draft, allowExtras);
@@ -175,7 +193,7 @@ export function DishScreen({ route }: PanelScreenProps) {
       toast(draft.id ? 'تغییرات غذا ذخیره شد' : 'غذا به منو اضافه شد', 'success', PANEL_TOAST_MS);
       nav().back();
     } catch (e) {
-      if (!showFullPageError(e, () => void save()))
+      if (!showFullPageError(e, () => void persist()))
         toast('غذا ذخیره نشد؛ دوباره تلاش کنید', 'error', PANEL_TOAST_MS);
     } finally {
       setSaving(false);
@@ -229,27 +247,17 @@ export function DishScreen({ route }: PanelScreenProps) {
           error={show('name')}
           onChange={(v) => patch({ name: v })}
         />
-        <div className={s.two}>
-          <TextField
-            label="قیمت"
-            value={draft.price}
-            numeric
-            maxDigits={9}
-            suffix="تومان"
-            error={show('price')}
-            onChange={(v) => patch({ price: v })}
-          />
-          <TextField
-            label="قیمت قبل از تخفیف"
-            value={draft.oldPrice}
-            numeric
-            maxDigits={9}
-            suffix="تومان"
-            hint="اختیاری"
-            error={show('oldPrice')}
-            onChange={(v) => patch({ oldPrice: v })}
-          />
-        </div>
+        <TextField
+          label="قیمت"
+          value={draft.price}
+          numeric
+          maxDigits={9}
+          suffix="تومان"
+          hint="قیمت اصلی، بدون تخفیف"
+          error={show('price')}
+          onChange={(v) => patch({ price: v })}
+        />
+        <DiscountSection draft={draft} errors={errors} touched={touched} patch={patch} />
         <TextField
           label="توضیح کوتاه"
           value={draft.description}
@@ -379,7 +387,7 @@ export function DishScreen({ route }: PanelScreenProps) {
         ) : null}
       </div>
       <div className={s.dock}>
-        <ActionBar label="ذخیره‌ی غذا" disabled={saving || uploading} onTap={() => void save()} />
+        <ActionBar label="ذخیره‌ی غذا" disabled={saving || uploading} onTap={save} />
       </div>
     </div>
   );

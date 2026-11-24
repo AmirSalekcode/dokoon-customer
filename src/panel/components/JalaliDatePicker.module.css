@@ -1,0 +1,82 @@
+/* Jalali calendar (restaurant panel). Picked day = orange, never green. */
+.cal {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+  padding: var(--sp-3);
+  border-radius: var(--r-xl);
+  background: var(--sf);
+  box-shadow: var(--sh-card);
+  color: var(--ink);
+}
+.head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.title {
+  font-size: var(--fs-15);
+  font-weight: var(--fw-xbold);
+}
+.nav {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border: 0;
+  border-radius: var(--r-circle);
+  background: var(--bg);
+  color: var(--ink);
+  font: inherit;
+  font-size: var(--fs-20);
+  font-weight: var(--fw-bold);
+  cursor: pointer;
+}
+.nav:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: var(--sp-1);
+}
+.wd {
+  text-align: center;
+  font-size: var(--fs-12);
+  font-weight: var(--fw-bold);
+  color: var(--mu);
+}
+.day {
+  min-width: 0;
+  height: 48px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--r-md);
+  background: none;
+  color: var(--ink);
+  font: inherit;
+  font-size: var(--fs-14);
+  font-weight: var(--fw-medium);
+  cursor: pointer;
+}
+.day:disabled {
+  color: var(--ln);
+  cursor: not-allowed;
+}
+.on {
+  background: var(--primary);
+  color: var(--white);
+  font-weight: var(--fw-xbold);
+}
+.nav:focus-visible,
+.day:focus-visible {
+  outline: 3px solid var(--primary);
+  outline-offset: 2px;
+}
+.sel {
+  margin: 0;
+  font-size: var(--fs-13);
+  font-weight: var(--fw-bold);
+  color: var(--pr2);
+}

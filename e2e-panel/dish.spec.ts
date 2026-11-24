@@ -66,7 +66,7 @@ test('new dish from a category, then delete it with confirmation', async ({ page
   await visible(page).getByRole('button', { name: 'افزودن غذا' }).click();
   const v = visible(page);
   await v.getByLabel('نام غذا').fill('ماست موسیر');
-  await v.getByLabel(/^قیمت(?! قبل)/).fill('35000');
+  await v.getByLabel('قیمت', { exact: true }).fill('35000');
   await v.getByRole('button', { name: 'سالاد', exact: true }).click();
   await v.getByRole('button', { name: 'ذخیره‌ی غذا' }).click();
   await expect(visible(page)).toHaveAttribute('data-screen', 'menu');

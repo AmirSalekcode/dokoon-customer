@@ -1,11 +1,38 @@
 import { create } from 'zustand';
-import { isActive } from '@/lib/discount';
-import { formatMoney, normalizeDigits, toFaDigits } from '@/lib/format';
+import {
+  discountBadge,
+  discountEndsAt,
+  discountPercent,
+  endsText,
+  isActive,
+  priceForPercent,
+  validateDiscount,
+  type DiscountCheck,
+  type DiscountDuration,
+  type DiscountLabel,
+} from '@/lib/discount';
+import { endOfTehranDay } from '@/lib/jalali';
+import { formatMoney, formatNumber, normalizeDigits, toFaDigits } from '@/lib/format';
 import type { Food, FoodDiscount, FoodInput, OptionGroup } from '../api/types';
 
 /** The food's discount while it is running (D-131); the server also drops it at `endsAt`. */
 export function liveDiscount(f: Pick<Food, 'discount'>, now: number = Date.now()): FoodDiscount | null {
   return f.discount && isActive(f.discount.endsAt, now) ? f.discount : null;
+}
+
+/** MenuItemRow texts: discounted price, struck base price, «۱۰٪ تخفیف» and «تا ۳ روز دیگر». */
+export function menuPriceTexts(f: Food, now: number = Date.now()) {
+  const base = f.price ?? 0;
+  const d = liveDiscount(f, now);
+  if (!d) return { price: formatMoney(base) };
+  return {
+    price: formatMoney(d.price),
+    old: formatNumber(base),
+    discount: {
+      badge: discountBadge(discountPercent(base, d.price), d.label),
+      ends: endsText(d.endsAt, now) || undefined,
+    },
+  };
 }
 
 /** Default illustrations a dish can use until (or instead of) a real photo. */
@@ -26,17 +53,30 @@ export const DISH_ARTS: readonly { art: string; label: string }[] = [
 export const GROUP_MAX_MIN = 1;
 export const GROUP_MAX_MAX = 8;
 
-/**
- * Editable copy of a food (prices are strings while typing).
- * Until the «تخفیف ویژه» section lands (KAN-109), the form keeps its old fields on top of `discount`:
- * `price` = what the customer pays now, `oldPrice` = the base price while discounted (D-131 contract).
- */
+/** «مدت» of a discount: presets, a picked Jalali day, or (editing) the end it already has. */
+export type DiscountDurationPick = DiscountDuration | 'date' | 'keep';
+
+/** Quick chips that fill «قیمت با تخفیف» (D-131). */
+export const DISCOUNT_CHIPS = [10, 15, 20, 25, 30] as const;
+
+export const DISCOUNT_LABELS: readonly { label: DiscountLabel; text: string }[] = [
+  { label: 'special', text: 'تخفیف ویژه' },
+  { label: 'festival', text: 'جشنواره' },
+];
+
+/** Editable copy of a food (prices are strings while typing). `price` is always the base price. */
 export interface DishDraft {
   id?: string;
   name: string;
   price: string;
-  oldPrice: string;
-  /** Discount as loaded, so its label and end survive an edit. */
+  /** «تخفیف ویژه» section (D-131). */
+  discountOn: boolean;
+  discountPrice: string;
+  discountLabel: DiscountLabel;
+  discountDuration: DiscountDurationPick;
+  /** Tehran day `YYYY-MM-DD` for `discountDuration === 'date'`. */
+  discountDay: string;
+  /** Discount as loaded: its `endsAt` is kept with «پایان فعلی». */
   discount?: FoodDiscount | null;
   description: string;
   categoryId: string;
@@ -48,7 +88,9 @@ export interface DishDraft {
   pendingUploadId?: string;
 }
 
-export type DishErrors = Partial<Record<'name' | 'price' | 'oldPrice' | 'categoryId', string>>;
+export type DishErrors = Partial<
+  Record<'name' | 'price' | 'discountPrice' | 'discountDay' | 'categoryId', string>
+>;
 
 /** Digits only (Persian/Arabic digits and separators accepted) → integer, or null when empty/invalid. */
 export function parseToman(input: string): number | null {
@@ -57,25 +99,55 @@ export function parseToman(input: string): number | null {
   return /^\d+$/.test(v) ? Number(v) : NaN;
 }
 
-/** Dish rules (screen specs §3): name ≥ 2, price > 0, old price optional but above the price, a category. */
+const toman = (v: string) => {
+  const n = parseToman(v);
+  return n === null || Number.isNaN(n) ? 0 : n;
+};
+
+/** Discount check against the current base price (also re-run whenever the base price changes). */
+export function discountCheck(d: DishDraft): DiscountCheck | null {
+  if (!d.discountOn) return null;
+  return validateDiscount(toman(d.price), toman(d.discountPrice));
+}
+
+/**
+ * Dish rules (screen specs §3): name ≥ 2, price > 0, a category; with «تخفیف ویژه» on, a discounted price
+ * below the price (1..90%) and, for «تاریخ دلخواه», a day.
+ */
 export function dishErrors(d: DishDraft): DishErrors {
   const e: DishErrors = {};
   if (d.name.trim().length < 2) e.name = 'نام غذا حداقل ۲ حرف است';
   const price = parseToman(d.price);
   if (price === null || Number.isNaN(price) || price <= 0) e.price = 'قیمت را به تومان بنویسید';
-  const old = parseToman(d.oldPrice);
-  if (old !== null && (Number.isNaN(old) || (price && old > 0 && old <= price)))
-    e.oldPrice = 'باید از قیمت فعلی بیشتر باشد';
+  const disc = discountCheck(d);
+  if (disc?.error) e.discountPrice = disc.error;
+  if (d.discountOn && d.discountDuration === 'date' && !d.discountDay)
+    e.discountDay = 'روز پایان تخفیف را انتخاب کنید';
   if (!d.categoryId) e.categoryId = 'یک دسته انتخاب کنید';
   return e;
 }
+
+/** A chip fills «قیمت با تخفیف» for that percent of the current price (empty without a price). */
+export function chipPrice(d: DishDraft, percent: number): string {
+  const p = priceForPercent(toman(d.price), percent);
+  return p ? String(p) : '';
+}
+
+const emptyDiscount = {
+  discountOn: false,
+  discountPrice: '',
+  discountLabel: 'special' as DiscountLabel,
+  discountDuration: 'none' as DiscountDurationPick,
+  discountDay: '',
+  discount: null,
+};
 
 export function draftFromFood(f: Food | undefined, cat?: string): DishDraft {
   if (!f)
     return {
       name: '',
       price: '',
-      oldPrice: '',
+      ...emptyDiscount,
       description: '',
       categoryId: cat ?? '',
       art: DISH_ARTS[0].art,
@@ -86,9 +158,17 @@ export function draftFromFood(f: Food | undefined, cat?: string): DishDraft {
   return {
     id: f.id,
     name: f.name ?? '',
-    price: disc ? String(disc.price) : f.price ? String(f.price) : '',
-    oldPrice: disc && f.price ? String(f.price) : '',
-    discount: disc,
+    price: f.price ? String(f.price) : '',
+    ...emptyDiscount,
+    ...(disc
+      ? {
+          discountOn: true,
+          discountPrice: String(disc.price),
+          discountLabel: disc.label,
+          discountDuration: disc.endsAt ? 'keep' : 'none',
+          discount: disc,
+        }
+      : {}),
     description: f.description ?? '',
     categoryId: f.categoryId ?? '',
     art: f.art || DISH_ARTS[0].art,
@@ -98,17 +178,26 @@ export function draftFromFood(f: Food | undefined, cat?: string): DishDraft {
   };
 }
 
+/** `endsAt` sent for the chosen «مدت»; starts are always immediate. */
+export function discountEnd(d: DishDraft, now: number = Date.now()): string | null {
+  switch (d.discountDuration) {
+    case 'keep':
+      return d.discount?.endsAt ?? null;
+    case 'date':
+      return d.discountDay ? endOfTehranDay(d.discountDay) : null;
+    default:
+      return discountEndsAt(d.discountDuration, now);
+  }
+}
+
 /** Request body; groups are sent only when extras are on for the restaurant (server ignores them otherwise). */
-export function foodInput(d: DishDraft, withGroups: boolean): FoodInput {
-  const price = parseToman(d.price) ?? 0;
-  const old = parseToman(d.oldPrice);
-  const discounted = !!old && !Number.isNaN(old) && old > price && price > 0;
+export function foodInput(d: DishDraft, withGroups: boolean, now: number = Date.now()): FoodInput {
   return {
     name: d.name.trim(),
     description: d.description.trim(),
-    price: discounted ? old : price,
-    discount: discounted
-      ? { price, label: d.discount?.label ?? 'special', endsAt: d.discount?.endsAt ?? null }
+    price: toman(d.price),
+    discount: d.discountOn
+      ? { price: toman(d.discountPrice), label: d.discountLabel, endsAt: discountEnd(d, now) }
       : null,
     categoryId: d.categoryId,
     art: d.art,
