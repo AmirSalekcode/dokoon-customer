@@ -17,11 +17,24 @@ export interface ListRowProps {
   d?: string;
   /** Unread dot. */
   dot?: boolean;
+  /** What the dot means for screen readers (default «خوانده‌نشده»). */
+  dotLabel?: string;
   onTap?: () => void;
 }
 
 /** Generic tappable row (account, notifications, settings). */
-export function ListRow({ title, sub, meta, metaOld, badge, art, d, dot, onTap }: ListRowProps) {
+export function ListRow({
+  title,
+  sub,
+  meta,
+  metaOld,
+  badge,
+  art,
+  d,
+  dot,
+  dotLabel = 'خوانده‌نشده',
+  onTap,
+}: ListRowProps) {
   return (
     <button type="button" className={s.r} onClick={onTap}>
       <span className={s.ib}>
@@ -29,7 +42,7 @@ export function ListRow({ title, sub, meta, metaOld, badge, art, d, dot, onTap }
         {dot ? (
           <>
             <i className={s.dt} aria-hidden="true" />
-            <span className="visually-hidden">خوانده‌نشده</span>
+            <span className="visually-hidden">{dotLabel}</span>
           </>
         ) : null}
       </span>

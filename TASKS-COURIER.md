@@ -91,13 +91,13 @@
 - **توضیح:** StageBar، PlaceCard رستوران، RouteMap با دیپ‌لینک نشان/بلد (کاربر انتخاب می‌کند، fallback به دیگری)، تیک غذاها، `POST /c/orders/{id}/stage`، گزارش مشکل (`/issue`)، انصراف با ReasonSheet فقط قبل از تحویل‌گیری (`/withdraw`، ۴۰۹).
 - **پذیرش:** E2E تا تحویل‌گیری و انصراف.
 - **وابستگی:** CP-11
-- **وضعیت (2026-11-24):** ساخته شد (D-138). `screens/orders/OrderScreen.tsx` (مراحل رستوران و تحویل‌گیری)، `order/actions.ts` (stage، issue، withdraw)، `maps/navLinks.ts` (لینک نشان/بلد، تأییدنشده). یادداشت قرارداد ۴۱.
+- **وضعیت (2026-11-24):** ساخته شد (D-139). `screens/orders/OrderScreen.tsx` (مراحل رستوران و تحویل‌گیری)، `order/actions.ts` (stage، issue، withdraw)، `maps/navLinks.ts` (لینک نشان/بلد، تأییدنشده). یادداشت قرارداد ۴۱.
 
 ### CP-13 (KAN-97): مشتری ← تحویل ← خلاصه
 - **توضیح:** PlaceCard مشتری (آدرس/تلفن فقط اینجا)، «مشتری در دسترس نیست» = ConfirmDialog + `/unreachable` (سفارش باز می‌ماند)، تحویل: آنلاین یا CashPanel (`cashCollected` همیشه، مغایرت = هشدار نه مانع)، TripSummary. بعد از تحویل اطلاعات مشتری از حافظه و کش پاک می‌شود.
 - **پذیرش:** E2E تحویل نقد با/بدون مغایرت؛ تست پاک‌شدن PII.
 - **وابستگی:** CP-12
-- **وضعیت (2026-11-24):** ساخته شد (D-139). مراحل مشتری، تحویل (CashPanel) و خلاصه در `screens/orders/OrderScreen.tsx`؛ `order/actions.ts` (unreachable، deliver)؛ پاک شدن اطلاعات مشتری بعد از تحویل. یادداشت قرارداد ۴۲. Epic E3 (KAN-79) با مرج این تسک کامل می‌شود.
+- **وضعیت (2026-11-24):** ساخته شد (D-140). مراحل مشتری، تحویل (CashPanel) و خلاصه در `screens/orders/OrderScreen.tsx`؛ `order/actions.ts` (unreachable، deliver)؛ پاک شدن اطلاعات مشتری بعد از تحویل. یادداشت قرارداد ۴۲. Epic E3 (KAN-79) با مرج این تسک کامل می‌شود.
 
 ## E4 (KAN-80) — درآمد و تاریخچه
 ### CP-14 (KAN-98): درآمد
@@ -122,6 +122,7 @@
 - **توضیح:** DocStatusRow (ok/wait/bad، تمدید با `POST /c/documents/{type}`)، پشتیبانی (تماس مدیر شهر، FAQ)، کوکی‌ها (`PUT /c/consent`)، کلید تیره.
 - **پذیرش:** E2E تمدید مدرک.
 - **وابستگی:** CP-07، CP-16
+- **وضعیت (2026-11-24):** ساخته شد (D-138). `src/courier/account/docs.ts`، `src/courier/support/content.ts`، `src/courier/screens/account/MoreScreens.tsx` (مدارک، پشتیبانی، کوکی‌ها)؛ حالت تیره از قبل در تب حساب بود. Epic E5 (KAN-81) با مرج این تسک کامل می‌شود.
 
 ## E6 (KAN-82) — تبلت و دسترس‌پذیری
 ### CP-18 (KAN-102): چیدمان ≥۷۲۰ + a11y + آفلاین
