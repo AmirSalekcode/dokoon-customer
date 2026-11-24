@@ -70,6 +70,7 @@ export function CartScreen(_: ScreenProps) {
                   art: l.imageUrl,
                   optionsText: l.options.map((o) => o.title).join('، '),
                   total: l.unitPrice * l.qty,
+                  oldTotal: l.oldUnitPrice ? l.oldUnitPrice * l.qty : undefined,
                   unavailable: off.has(l.foodId),
                 }}
                 qtyText={toFaDigits(l.qty)}

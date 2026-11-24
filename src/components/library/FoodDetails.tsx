@@ -3,6 +3,7 @@ import { Sheet, SheetHandle } from '../base/Sheet';
 import { Art } from '../primitives/Art';
 import { Icon } from '../primitives/Icon';
 import { toFaDigits } from '@/lib/format';
+import { Badge } from './Badge';
 import { Price } from './Price';
 import { QuantityStepper } from './QuantityStepper';
 import { Rating } from './Rating';
@@ -48,6 +49,8 @@ export interface FoodDetailsData {
   reviewCount?: string;
   price: number;
   oldPrice?: number | null;
+  /** Running food discount (D-131): badge next to the price, end text («تا ۳ روز دیگر») below it. */
+  discount?: { percent: number; badge: string; ends?: string };
   serving?: string;
   includes?: { n: string; w: string }[];
   desc?: string;
@@ -112,9 +115,11 @@ export function FoodDetails({
           {f.rating ? <Rating value={f.rating} count={f.reviewCount} /> : null}
         </div>
         <div className={s.pr}>
-          <Price price={f.price} old={f.oldPrice} />
+          <Price price={f.price} old={f.oldPrice} percent={f.discount?.percent} />
+          {f.discount ? <Badge text={f.discount.badge} /> : null}
           {f.serving ? <span className={s.sv}>{f.serving}</span> : null}
         </div>
+        {f.discount?.ends ? <p className={s.ends}>{f.discount.ends}</p> : null}
         {f.includes?.length ? (
           <>
             <h3 className={s.h}>این پرس شامل</h3>

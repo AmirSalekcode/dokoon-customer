@@ -64,3 +64,25 @@ export default meta;
 type S = StoryObj<typeof meta>;
 export const Default: S = {};
 export const RequiredMissing: S = { args: { canAdd: false, ctaLabel: 'گزینه‌ی الزامی را انتخاب کنید' } };
+/** D-131: «تخفیف ویژه» without an end. */
+export const Discount: S = {
+  args: {
+    food: {
+      ...meta.args.food,
+      price: 234000,
+      oldPrice: 260000,
+      discount: { percent: 10, badge: '۱۰٪ تخفیف' },
+    },
+  },
+};
+/** D-131: «جشنواره» with its end text under the price. */
+export const Festival: S = {
+  args: {
+    food: {
+      ...meta.args.food,
+      price: 208000,
+      oldPrice: 260000,
+      discount: { percent: 20, badge: 'جشنواره ۲۰٪', ends: 'تا ۳ روز دیگر' },
+    },
+  },
+};

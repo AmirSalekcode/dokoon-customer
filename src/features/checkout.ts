@@ -2,10 +2,30 @@ import { useEffect, useState } from 'react';
 import { create } from 'zustand';
 import { api } from '@/api/client';
 import type { OrderDraft, Quote } from '@/api/types';
-import { useCart, type CartState } from '@/cart/cart';
+import { useCart, type CartLine, type CartState } from '@/cart/cart';
 import { formatMoney } from '@/lib/format';
+import { toast } from '@/ui/toast';
 
 export type PayMethod = 'online' | 'cash';
+
+/** Shown when the server price differs from the cart (quote) or POST /orders answers 409. */
+export const PRICE_CHANGED_TEXT = 'قیمت یا موجودی تغییر کرد؛ سفارش را دوباره بررسی کنید.';
+
+/**
+ * Lines whose server unit price differs from the cart (e.g. a food discount ended, D-131/D-66). The quote
+ * lists lines in cart order; a quote that does not line up with the cart (stale) is ignored.
+ */
+export function repricedLines(
+  lines: Pick<CartLine, 'lineId' | 'foodId' | 'unitPrice'>[],
+  quote: Quote | null | undefined,
+): { lineId: string; unitPrice: number }[] {
+  const q = quote?.lines ?? [];
+  if (q.length !== lines.length || lines.some((l, i) => q[i].foodId !== l.foodId)) return [];
+  return lines.flatMap((l, i) => {
+    const unit = q[i].unitPrice;
+    return typeof unit === 'number' && unit !== l.unitPrice ? [{ lineId: l.lineId, unitPrice: unit }] : [];
+  });
+}
 
 /** Cart → contract OrderDraft. Server prices win; clientUnitPrice is only for mismatch detection. */
 export function toDraft(
@@ -64,6 +84,15 @@ export function useQuote(addressId = '') {
       alive = false;
     };
   }, [key, fullKey]);
+
+  // A food discount that ended (or any server price change) while the food sat in the cart: take the
+  // server price and say so with the same message as a 409 on POST /orders (D-66, D-131).
+  useEffect(() => {
+    const changes = repricedLines(useCart.getState().lines, settled?.quote);
+    if (!changes.length) return;
+    useCart.getState().reprice(changes);
+    toast(PRICE_CHANGED_TEXT, 'error');
+  }, [settled]);
 
   const loading = !!key && settled?.key !== fullKey;
   const lastGood = settled?.quote ?? null;

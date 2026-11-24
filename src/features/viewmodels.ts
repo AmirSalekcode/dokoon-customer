@@ -7,6 +7,7 @@ import type { RestaurantCardData } from '@/components/library/RestaurantCard';
 import type { RestaurantHeaderData } from '@/components/library/RestaurantHeader';
 import type { FoodCardData } from '@/components/library/FoodCard';
 import type { FoodGroupVM } from '@/components/library/FoodDetails';
+import { discountBadge, discountPercent, endsText, isActive } from '@/lib/discount';
 import { formatDecimal, formatEtaRange, formatNumber, toFaDigits } from '@/lib/format';
 
 export function feeText(fee: number | undefined): { text: string; free: boolean } {
@@ -51,6 +52,36 @@ export function visibleGroups(f: Food, allowExtras: boolean): OptionGroup[] {
   return (f.optionGroups ?? []).filter((g) => allowExtras || !g.isExtra);
 }
 
+/** Running food discount (D-131) as shown to the customer; undefined when there is none. */
+export interface FoodDiscountVM {
+  percent: number;
+  /** «۱۰٪ تخفیف» / «جشنواره ۱۰٪» — built from `discount`, never hard-coded. */
+  badge: string;
+  /** «تا پایان امروز» / «تا ۳ روز دیگر» when the discount has an end. */
+  ends?: string;
+}
+
+export function foodDiscountVM(f: Food, now: number = Date.now()): FoodDiscountVM | undefined {
+  const d = f.discount;
+  const price = f.price ?? 0;
+  const old = f.oldPrice ?? 0;
+  if (!d || !isActive(d.endsAt, now) || !price || old <= price) return undefined;
+  const percent = d.percent || discountPercent(old, price);
+  const ends = endsText(d.endsAt, now);
+  return { percent, badge: discountBadge(percent, d.label), ...(ends ? { ends } : {}) };
+}
+
+/** Unit price before the discount (base + options) for the cart's struck price; undefined without one. */
+export function oldUnitPriceWith(
+  f: Food,
+  groups: OptionGroup[],
+  sel: Selection,
+  now: number = Date.now(),
+): number | undefined {
+  if (!foodDiscountVM(f, now)) return undefined;
+  return unitPriceWith(f, groups, sel) - (f.price ?? 0) + (f.oldPrice ?? 0);
+}
+
 export function toFoodCardVM(f: Food, opts: { orderable: boolean; allowExtras: boolean }): FoodCardData {
   return {
     name: f.title ?? '',
@@ -58,6 +89,7 @@ export function toFoodCardVM(f: Food, opts: { orderable: boolean; allowExtras: b
     art: f.imageUrl,
     price: f.price ?? 0,
     oldPrice: f.oldPrice,
+    discount: foodDiscountVM(f),
     available: f.available,
     orderable: opts.orderable,
     hasGroups: visibleGroups(f, opts.allowExtras).length > 0,

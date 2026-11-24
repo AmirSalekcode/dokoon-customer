@@ -15,7 +15,7 @@
 | **ActionBar** | دکمه‌ی اصلی چسبان پایین صفحه با مبلغ (CTA). | `label`, `valueText`, `disabled` | `onTap` | 3 |
 | **Badge** | نشان کوچک رنگی (قرمز پیش‌فرض، amber، green، ink). | `text`, `tone` | — | 1 |
 | **BottomNav** | نوار ناوبری پایین: خانه، رستوران‌ها، سبد (مرکز، با نشان تعداد)، پیشنهادها، حساب. | `active`, `cartBadge` | `onPick` | 4 |
-| **CartItemRow** | ردیف آیتم سبد با نام، گزینه‌ها، قیمت و استپر تعداد. | `item`, `qtyText` | `onInc`, `onDec` | 1 |
+| **CartItemRow** | ردیف آیتم سبد با نام، گزینه‌ها، قیمت (و قیمت قبلی خط‌خورده با تخفیف غذا) و استپر تعداد. | `item{…, oldTotal?}`, `qtyText` | `onInc`, `onDec` | 1 |
 | **CartSummary** | نوار شناور خلاصه‌ی سبد (تعداد و جمع) روی صفحه‌ی رستوران؛ رنگ ثابت dock. | `count`, `total` | `onOpen` | 1 |
 | **CategoryItem** | آیتم دایره‌ای/کارتی دسته‌بندی با هنر و عنوان. | `title`, `art`, `selected` | `onPick` | 2 |
 | **ChoiceSheet** | شیت انتخاب از فهرست (آدرس، شهر...) با دکمه‌ی افزودن اختیاری. | `title`, `options`, `addLabel` | `onClose`, `onAdd` | 1 |
@@ -27,17 +27,17 @@
 | **FaqItem** | آکاردئون پرسش و پاسخ. | `q`, `a`, `open` | `onToggle` | 2 |
 | **FilterChip** | چیپ قابل انتخاب (با آیکون اختیاری). | `label`, `selected`, `art` | `onPick` | 6 |
 | **FilterSheet** | شیت فیلتر: مرتب‌سازی، کلیدها، برچسب‌ها، امتیاز، پاک‌کردن/اعمال با شمارنده‌ی نتایج. | `sort`, `toggles`, `tags`, `ratings`, `countText` | `onClear`, `onApply` | 1 |
-| **FoodCard** | کارت غذا با تصویر، قیمت، تخفیف، افزودن و استپر. | `f`, `qtyText` | `onOpen`, `onAdd`, `onInc`, `onDec` | 1 |
-| **FoodDetails** | شیت جزئیات غذا: گزینه‌ها، تعداد، امتیاز و نظرات، دکمه‌ی افزودن به سبد. | `food`, `qtyText`, `totalText`, `canAdd`, `ctaLabel`, `noteValue` | `onClose`, `onInc`, `onDec`, `onNote`, `onAdd`, `onReview`, `onScroll` | 1 |
+| **FoodCard** | کارت غذا با تصویر، قیمت، تخفیف (نشان «۱۰٪ تخفیف»/«جشنواره ۱۰٪» از `f.discount`)، افزودن و استپر. | `f{…, discount?{percent,badge}}`, `qtyText` | `onOpen`, `onAdd`, `onInc`, `onDec` | 1 |
+| **FoodDetails** | شیت جزئیات غذا: گزینه‌ها، تعداد، امتیاز و نظرات، نشان تخفیف و مدت آن، دکمه‌ی افزودن به سبد. | `food{…, discount?{percent,badge,ends}}`, `qtyText`, `totalText`, `canAdd`, `ctaLabel`, `noteValue` | `onClose`, `onInc`, `onDec`, `onNote`, `onAdd`, `onReview`, `onScroll` | 1 |
 | **Header** | هدر خانه: همبرگری (راست)، چیپ آدرس (وسط)، لوگو (چپ)، سبد. | `cartCount`, `hasCart`, `address` | `onMenu`, `onCart`, `onAddress` | 1 |
 | **InfoList** | فهرست کلید/مقدار برای اطلاعات سفارش و رستوران. | `rows` | — | 3 |
-| **ListRow** | ردیف عمومی با آیکون/هنر، عنوان، زیرعنوان، متا و نقطه‌ی اعلان. | `title`, `sub`, `meta`, `art`, `d`, `dot` | `onTap` | 11 |
+| **ListRow** | ردیف عمومی با آیکون/هنر، عنوان، زیرعنوان، متا (با متای قدیمی خط‌خورده)، نشان و نقطه‌ی اعلان. | `title`, `sub`, `meta`, `metaOld`, `badge`, `art`, `d`, `dot` | `onTap` | 11 |
 | **LoadingState** | اسکلتون shimmer. | — | — | 1 |
 | **MapPicker** | انتخاب نقطه روی نقشه با پین، بررسی محدوده‌ی سرویس و دکمه‌ی موقعیت من. | `pinX`, `pinY`, `inZone`, `locating` | `onPick`, `onLocate` | 1 |
 | **MenuDrawer** | منوی همبرگری کشویی: سلام {نام} عزیز، شهر، گروه‌ها، نسخه. | `user`, `city`, `groups`, `version` | `onClose` | 1 |
 | **MenuList** | فهرست گروه‌بندی‌شده‌ی منو/حساب (data-driven). | `groups` | — | 1 |
 | **OrderCard** | کارت سفارش با وضعیت، آیتم‌ها، مبلغ و دکمه‌ی اقدام. | `order` | `onOpen`, `onAction` | 1 |
-| **Price** | قیمت با قیمت قبلی خط‌خورده (ارقام فارسی + تومان). | `price`, `old` | — | 0 |
+| **Price** | قیمت با قیمت قبلی خط‌خورده (ارقام فارسی + تومان)؛ با `percent` صفحه‌خوان «قیمت قبلی …، قیمت با X٪ تخفیف … تومان» را می‌خواند. | `price`, `old`, `percent` | — | 0 |
 | **PriceSummary** | جدول جمع: ردیف‌ها و جمع کل. | `rows`, `totalLabel`, `totalValue` | — | 3 |
 | **PromoCodeInput** | ورودی کد تخفیف با وضعیت ok/err و پیام. | `value`, `status`, `message` | `onInput`, `onApply` | 2 |
 | **QuantityStepper** | استپر تعداد − / +. | `value` | `onInc`, `onDec` | 0 |
@@ -232,7 +232,7 @@
 ### Price
 - هدف: قیمت با قیمت قبلی خط‌خورده (ارقام فارسی + تومان).
 - مصرف: همه‌جا
-- props: price, old؛ رویدادها: —
+- props: price, old, percent (تخفیف غذا، D-131: جمله‌ی کامل برای صفحه‌خوان)؛ رویدادها: —
 - توکن‌های استفاده‌شده: --ink, --mu
 
 ### PriceSummary

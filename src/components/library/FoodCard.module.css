@@ -103,3 +103,10 @@
 .fc2 {
   margin-top: var(--sp-2);
 }
+
+/* Discount + server badge side by side (D-131). */
+.bgs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-1);
+}

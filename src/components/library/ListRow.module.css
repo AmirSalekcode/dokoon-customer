@@ -62,3 +62,13 @@
 .cv {
   color: var(--mu);
 }
+
+.b {
+  margin-top: var(--sp-1);
+}
+.mo {
+  display: block;
+  font-size: var(--fs-12);
+  font-weight: var(--fw-regular);
+  color: var(--mu);
+}

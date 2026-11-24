@@ -79,3 +79,31 @@ describe('single shared cart', () => {
     expect(JSON.parse(localStorage.getItem('dk-cart')!).lines).toHaveLength(1);
   });
 });
+
+// KAN-110: a discount that ended while the food was in the cart (server quote wins, D-66).
+describe('reprice', () => {
+  beforeEach(() => useCart.getState().clear());
+
+  it('takes the server unit price and drops the old price once it is no longer lower', () => {
+    useCart.getState().add(naghsh, { ...kebab, unitPrice: 270000, oldUnitPrice: 300000, qty: 2 });
+    const [line] = useCart.getState().lines;
+    expect(line.oldUnitPrice).toBe(300000);
+    useCart.getState().reprice([{ lineId: line.lineId, unitPrice: 300000 }]);
+    const after = useCart.getState().lines[0];
+    expect(after).toMatchObject({ unitPrice: 300000, qty: 2 });
+    expect(after.oldUnitPrice).toBeUndefined();
+    expect(cartItemsTotal(useCart.getState())).toBe(600000);
+  });
+
+  it('keeps the old price while still discounted, and ignores unknown lines', () => {
+    useCart.getState().add(naghsh, { ...kebab, unitPrice: 270000, oldUnitPrice: 300000 });
+    const id = useCart.getState().lines[0].lineId;
+    useCart.getState().reprice([
+      { lineId: id, unitPrice: 280000 },
+      { lineId: 'x', unitPrice: 1 },
+    ]);
+    expect(useCart.getState().lines).toEqual([
+      expect.objectContaining({ unitPrice: 280000, oldUnitPrice: 300000 }),
+    ]);
+  });
+});

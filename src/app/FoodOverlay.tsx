@@ -8,6 +8,8 @@ import { LoadingState } from '@/components/library/LoadingState';
 import { Sheet } from '@/components/base/Sheet';
 import { ErrorState } from '@/components/library/ErrorState';
 import {
+  foodDiscountVM,
+  oldUnitPriceWith,
   requiredSatisfied,
   toFoodGroupsVM,
   toggleOption,
@@ -66,6 +68,7 @@ export function FoodOverlay({ foodId, restaurantId }: { foodId: string; restaura
         reviewCount: f.reviews ? formatNumber(f.reviews) : undefined,
         price: f.price ?? 0,
         oldPrice: f.oldPrice,
+        discount: foodDiscountVM(f),
         desc: f.desc,
         groups: toFoodGroupsVM(groups, sel, (g, id) => setSel((cur) => toggleOption(g, cur, id))),
         reviews: reviews.initial ? undefined : reviews.items.map(toReviewVM),
@@ -108,7 +111,15 @@ export function FoodOverlay({ foodId, restaurantId }: { foodId: string; restaura
         closeOverlay();
         addToCart(
           { id: r.id!, name: r.name! },
-          { foodId: f.id!, title: f.title!, imageUrl: f.imageUrl, unitPrice: unit, qty, options },
+          {
+            foodId: f.id!,
+            title: f.title!,
+            imageUrl: f.imageUrl,
+            unitPrice: unit,
+            oldUnitPrice: oldUnitPriceWith(f, groups, sel),
+            qty,
+            options,
+          },
         );
       }}
     />

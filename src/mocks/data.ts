@@ -242,11 +242,23 @@ export const foods: Food[] = [
 ];
 
 /**
+ * Dev/E2E only: localStorage `dk-mock-ended-discounts` = comma-separated food ids whose discount the mock
+ * treats as ended (to show «قیمت یا موجودی تغییر کرد» when a discount ends while the food is in the cart).
+ */
+function forcedEnded(): string[] {
+  try {
+    return (globalThis.localStorage?.getItem('dk-mock-ended-discounts') ?? '').split(',').filter(Boolean);
+  } catch {
+    return [];
+  }
+}
+
+/**
  * A food as the server sends it now: a discount that has ended is gone (D-131), so the customer pays the
  * base price again. The cart learns about it from POST /checkout/quote (PRICE_CHANGED).
  */
 export function liveFood(f: Food, now: number = Date.now()): Food {
-  if (!f.discount || isActive(f.discount.endsAt, now)) return f;
+  if (!f.discount || (isActive(f.discount.endsAt, now) && !forcedEnded().includes(f.id!))) return f;
   return { ...f, price: f.oldPrice ?? f.price, oldPrice: null, discount: null };
 }
 
