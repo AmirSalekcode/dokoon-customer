@@ -111,16 +111,24 @@ const askIssue = () =>
     },
   });
 
-function RestaurantLeg({ order, trip, tracking }: { order: ActiveOrder; trip: TripInfo | null; tracking: boolean }) {
+/** The leg's map: to the restaurant before pickup, to the customer after it; none at pickup / handover. */
+function LegMap({ order, trip, tracking }: { order: ActiveOrder; trip: TripInfo | null; tracking: boolean }) {
+  const toCust = order.stage === 'toCust';
+  const address = toCust ? order.custAddress : order.restAddress;
+  return (
+    <RouteMap
+      label={toCust ? 'تا مشتری' : 'تا رستوران'}
+      distText={km(toCust ? trip?.km : trip?.kmToRest)}
+      tracking={tracking}
+      onNeshan={() => navigate('neshan', address)}
+      onBalad={() => navigate('balad', address)}
+    />
+  );
+}
+
+function RestaurantLeg({ order }: { order: ActiveOrder }) {
   return (
     <>
-      <RouteMap
-        label="تا رستوران"
-        distText={km(trip?.kmToRest)}
-        tracking={tracking}
-        onNeshan={() => navigate('neshan', order.restAddress)}
-        onBalad={() => navigate('balad', order.restAddress)}
-      />
       <PlaceCard
         title={order.rest ?? ''}
         kind="رستوران"
@@ -153,17 +161,10 @@ function Pickup({ order }: { order: ActiveOrder }) {
   );
 }
 
-function CustomerLeg({ order, trip, tracking }: { order: ActiveOrder; trip: TripInfo | null; tracking: boolean }) {
+function CustomerLeg({ order }: { order: ActiveOrder }) {
   const reported = useActiveOrder((st) => st.reported);
   return (
     <>
-      <RouteMap
-        label="تا مشتری"
-        distText={km(trip?.km)}
-        tracking={tracking}
-        onNeshan={() => navigate('neshan', order.custAddress)}
-        onBalad={() => navigate('balad', order.custAddress)}
-      />
       <CustomerCard order={order} />
       {reported ? (
         <p className={s.warn} role="status">
@@ -304,6 +305,7 @@ export function OrderScreen() {
   const allTicked = items.every((it) => checked.includes(it.id ?? ''));
   const dock = DOCK[stage];
   const canWithdraw = stage === 'toRest' || stage === 'pickup';
+  const hasMap = stage === 'toRest' || stage === 'toCust';
 
   const cashMissing = stage === 'handover' && order.cash === true && parseToman(cash) === undefined;
   const dockLabel = stage === 'handover' ? 'سفارش تحویل شد' : dock?.label;
@@ -321,9 +323,17 @@ export function OrderScreen() {
       <TopBar title={`سفارش #${toFaDigits(order.no ?? '')}`} onBack={back} level={1} />
       <div className={s.body}>
         <StageBar stages={stagesOf(stage)} />
-        {stage === 'toRest' ? <RestaurantLeg order={order} trip={trip} tracking={tracking} /> : null}
+        {/* Phone: map, then the step. ≥720: the step and the map side by side (KAN-102). */}
+        <div className={[s.split, hasMap && s.withMap].filter(Boolean).join(' ')}>
+          {hasMap ? (
+            <div className={s.mapCol}>
+              <LegMap order={order} trip={trip} tracking={tracking} />
+            </div>
+          ) : null}
+          <div className={s.stepCol}>
+        {stage === 'toRest' ? <RestaurantLeg order={order} /> : null}
         {stage === 'pickup' ? <Pickup order={order} /> : null}
-        {stage === 'toCust' ? <CustomerLeg order={order} trip={trip} tracking={tracking} /> : null}
+        {stage === 'toCust' ? <CustomerLeg order={order} /> : null}
         {stage === 'handover' ? <Handover order={order} cash={cash} setCash={setCash} /> : null}
         <div className={s.links}>
           {stage === 'pickup' ? (
@@ -342,14 +352,18 @@ export function OrderScreen() {
             </button>
           ) : null}
         </div>
+          </div>
+        </div>
       </div>
       {dockLabel ? (
         <div className={s.dock}>
-          <ActionBar
-            label={busy ? 'در حال ثبت…' : dockLabel}
-            disabled={busy || (stage === 'pickup' && !allTicked) || cashMissing}
-            onTap={() => void next()}
-          />
+          <div className={s.dockInner}>
+            <ActionBar
+              label={busy ? 'در حال ثبت…' : dockLabel}
+              disabled={busy || (stage === 'pickup' && !allTicked) || cashMissing}
+              onTap={() => void next()}
+            />
+          </div>
         </div>
       ) : null}
     </div>

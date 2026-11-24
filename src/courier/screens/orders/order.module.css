@@ -54,7 +54,7 @@
   cursor: pointer;
 }
 .danger {
-  color: var(--status-bad);
+  color: var(--status-bad-text);
 }
 .link:focus-visible {
   outline: var(--focus-ring);
@@ -73,4 +73,42 @@
   color: var(--ink);
   font-size: var(--fs-13);
   line-height: 1.8;
+}
+.split,
+.stepCol {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+}
+.dockInner {
+  width: 100%;
+  max-width: 720px;
+  margin-inline: auto;
+}
+
+/* Tablet (KAN-102): the step beside its map; the bottom button keeps a readable width. */
+@media (min-width: 720px) {
+  .body {
+    max-width: 1040px;
+  }
+  .withMap {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: start;
+  }
+  .withMap .stepCol {
+    grid-column: 1;
+    grid-row: 1;
+  }
+  .withMap .mapCol {
+    grid-column: 2;
+    grid-row: 1;
+    position: sticky;
+    top: var(--sp-4);
+  }
+  .split:not(.withMap) {
+    width: 100%;
+    max-width: 720px;
+    margin-inline: auto;
+  }
 }

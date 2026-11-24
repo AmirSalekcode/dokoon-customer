@@ -24,6 +24,8 @@
   --status-ok:#1F1A17; --status-ok-ink:#FFFFFF;
   --status-wait:#F5B32F; --status-wait-ink:#1F1A17;
   --status-bad:#C8281E; --status-bad-ink:#FFFFFF;
+  /* Red used as text (errors, warnings, sign-out): its own token so dark mode can lighten it to stay readable. */
+  --status-bad-text:var(--status-bad);
   --status-on:var(--primary); --status-on-ink:#FFFFFF;
   --status-off:var(--ln); --status-off-ink:var(--mu);
   /* Logo is white on the orange header, in both themes. */
@@ -37,6 +39,8 @@
   /* A black "approved" badge would vanish on the dark surface: invert it. */
   --status-ok:#F6EEE8; --status-ok-ink:#1F1A17;
   --status-wait-ink:#1F1A17;
+  /* #C8281E on the dark card is 3.0:1; text needs 4.5:1 (WCAG AA). Badges keep --status-bad with white ink. */
+  --status-bad-text:#FF6B5E;
   --alert-card:#241C17; --alert-ink:#F6EEE8;
   --logo1:#FFFFFF; --logo2:#FFF3EA;
   --okbg:var(--soft);

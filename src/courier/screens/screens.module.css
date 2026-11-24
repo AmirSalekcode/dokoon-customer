@@ -15,7 +15,7 @@
   border: 0;
   border-radius: var(--r-md);
   background: none;
-  color: var(--status-bad);
+  color: var(--status-bad-text);
   font: inherit;
   font-size: var(--fs-15);
   font-weight: var(--fw-bold);
