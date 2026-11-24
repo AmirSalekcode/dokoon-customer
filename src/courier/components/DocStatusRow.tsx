@@ -11,6 +11,8 @@ export interface DocStatusView {
   statusLabel: string;
   /** Expired, expiring or rejected: show «بارگذاری مجدد». */
   canRenew: boolean;
+  /** Button text; «بارگذاری» for a document never sent (default «بارگذاری مجدد»). */
+  actionLabel?: string;
 }
 
 export interface DocStatusRowProps {
@@ -28,8 +30,13 @@ export function DocStatusRow({ doc: d, onRenew }: DocStatusRowProps) {
       </p>
       <span className={[s.badge, s[d.status]].join(' ')}>{d.statusLabel}</span>
       {d.canRenew ? (
-        <button type="button" className={s.renew} onClick={onRenew} aria-label={`بارگذاری مجدد ${d.label}`}>
-          بارگذاری مجدد
+        <button
+          type="button"
+          className={s.renew}
+          onClick={onRenew}
+          aria-label={`${d.actionLabel ?? 'بارگذاری مجدد'} ${d.label}`}
+        >
+          {d.actionLabel ?? 'بارگذاری مجدد'}
         </button>
       ) : null}
     </div>

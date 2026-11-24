@@ -120,6 +120,7 @@
 - **توضیح:** DocStatusRow (ok/wait/bad، تمدید با `POST /c/documents/{type}`)، پشتیبانی (تماس مدیر شهر، FAQ)، کوکی‌ها (`PUT /c/consent`)، کلید تیره.
 - **پذیرش:** E2E تمدید مدرک.
 - **وابستگی:** CP-07، CP-16
+- **وضعیت (2026-11-24):** ساخته شد (D-138). `src/courier/account/docs.ts`، `src/courier/support/content.ts`، `src/courier/screens/account/MoreScreens.tsx` (مدارک، پشتیبانی، کوکی‌ها)؛ حالت تیره از قبل در تب حساب بود. Epic E5 (KAN-81) با مرج این تسک کامل می‌شود.
 
 ## E6 (KAN-82) — تبلت و دسترس‌پذیری
 ### CP-18 (KAN-102): چیدمان ≥۷۲۰ + a11y + آفلاین
