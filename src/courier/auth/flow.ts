@@ -4,6 +4,7 @@ import { courierApi, signOut, type CourierApi } from '../api/client';
 import { isMarkedSignedOut, useCourierSession } from '../api/session';
 import type { CourierStatus, Me } from '../api/types';
 import { showFullPageError } from '../errors/fullPage';
+import { useCourierMe } from '../account/me';
 import { useEarnings } from '../money/earnings';
 import { useMoneyLists } from '../money/history';
 import { useCourierNav, type CourierScreen } from '../nav/nav';
@@ -28,6 +29,7 @@ export function routeFor(status: CourierStatus | null | undefined): CourierScree
 export function applyMe(me: Me): CourierStatus {
   const status = (me.status ?? 'new') as CourierStatus;
   useCourierSession.getState().setSession({ status, name: me.name ?? '' });
+  useCourierMe.getState().set(me);
   return status;
 }
 
@@ -54,6 +56,7 @@ export async function enter(status: CourierStatus | null, { keepErrors = false }
 export function toLogin() {
   useEarnings.getState().reset();
   useMoneyLists.getState().reset();
+  useCourierMe.getState().reset();
   useCourierNav.getState().resetTo('login');
 }
 

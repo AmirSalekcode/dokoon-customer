@@ -7,6 +7,7 @@ import type {
   EarningsPeriod,
   HistoryItem,
   Me,
+  MeProfile,
   Offer,
   Settlement,
 } from '../api/types';
@@ -38,12 +39,27 @@ export const seedDocs = (): CourierDoc[] => [
   { type: 'ins', status: 'bad', expiresAt: daysFromNow(9) },
 ];
 
-export const me = (phone: string, status: CourierStatus, docs: CourierDoc[]): Me => ({
+export const me = (
+  phone: string,
+  status: CourierStatus,
+  docs: CourierDoc[],
+  shebaChangePending = false,
+): MeProfile => ({
   name: status === 'new' ? '' : 'مهدی کریمی',
   phone,
   // 'new' is the proposed extra status of contract-notes 31.
   status: status as Me['status'],
   docs: status === 'new' ? [] : docs,
+  // Proposed masked profile fields (contract-notes 35).
+  ...(status === 'new'
+    ? {}
+    : {
+        nationalIdMasked: '007*****12',
+        plate: '12 345 67',
+        shebaMasked: 'IR** **** **** **** **** **42 10',
+        shebaChangePending,
+        city: 'شهرضا',
+      }),
 });
 
 export const docTypes: DocType[] = [

@@ -11,7 +11,10 @@ import {
   setPermissionProvider,
   webPermissionProvider,
 } from '../../permissions/provider';
+import { server } from '@/mocks/node';
+import { courierHandlers } from '../../mocks/handlers';
 import { fakePermissions } from '../../test/permissions';
+import { signedInCourier } from '../../test/session';
 
 // KAN-92 (CP-08): device permissions — location + notifications required, battery recommended (Android),
 // denied / unsupported states, iOS PWA note, entry from the account tab.
@@ -121,6 +124,9 @@ describe('first visit (after approval)', () => {
 describe('from the account tab', () => {
   it('opens as a normal page with back and no «ادامه»', async () => {
     setPermissionProvider(fakePermissions({ location: 'granted', notifications: 'granted' }));
+    // The account tab loads the profile (KAN-100): an approved courier on the mock.
+    server.use(...courierHandlers);
+    signedInCourier();
     act(() => nav().resetTo('account'));
     render(<CourierApp />);
     await userEvent.click(screen.getByRole('button', { name: /مجوزهای دستگاه/ }));

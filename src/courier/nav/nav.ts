@@ -4,7 +4,8 @@ import { createStackNav } from '@/nav/createStackNav';
  * Courier app screens. `boot` checks the session on start; `login` (phone → code), `reg` (registration,
  * KAN-91) and `wait` (approval pending / suspended) come before the tabs (KAN-90). Offers, the order steps,
  * and account sub-pages join this list in their own tasks; `hist`/`histd`/`settle`/`setd` = history, trip details,
- * settlements and one settlement (KAN-99).
+ * settlements and one settlement (KAN-99);
+ * `info`/`sheba` = «اطلاعات من» and the Sheba change request (KAN-100).
  */
 export const COURIER_SCREENS = [
   'boot',
@@ -20,6 +21,8 @@ export const COURIER_SCREENS = [
   'histd',
   'settle',
   'setd',
+  'info',
+  'sheba',
   'error',
 ] as const;
 export type CourierScreen = (typeof COURIER_SCREENS)[number];
