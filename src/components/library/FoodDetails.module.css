@@ -369,7 +369,7 @@
   padding: 0 var(--sp-6);
   border: 0;
   border-radius: var(--r-pill);
-  background: var(--primary);
+  background: var(--primary-strong);
   color: var(--white);
   font-size: var(--fs-15);
   font-weight: var(--fw-bold);

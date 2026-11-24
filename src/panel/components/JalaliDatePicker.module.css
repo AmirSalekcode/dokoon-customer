@@ -65,7 +65,7 @@
   cursor: not-allowed;
 }
 .on {
-  background: var(--primary);
+  background: var(--primary-strong);
   color: var(--white);
   font-weight: var(--fw-xbold);
 }

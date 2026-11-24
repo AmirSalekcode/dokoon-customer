@@ -19,14 +19,6 @@ interface AxeViolation {
   nodes: { target: string[]; html: string; any: { message: string }[] }[];
 }
 
-/**
- * Known design-system exception (D-141, owner decision pending): light text on the brand orange #E4501E is
- * 3.84:1 (AA wants 4.5:1 below 18.7px bold). Every other contrast failure still fails the test.
- */
-const onBrand = (n: AxeViolation['nodes'][number]) =>
-  /background color: #e4501e/.test(n.any[0]?.message ?? '') &&
-  /foreground color: #(ffffff|fbe5dd)/.test(n.any[0]?.message ?? '');
-
 /** WCAG 2.1 A/AA violations on the visible page (hidden lower stack screens are excluded by axe). */
 async function axe(page: Page, where: string) {
   await page.addScriptTag({ path: AXE });
@@ -36,13 +28,10 @@ async function axe(page: Page, where: string) {
     ).axe.run(document, { runOnly: { type: 'tag', values: ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'] } });
     return r.violations;
   });
-  const list = (violations as AxeViolation[])
-    .map((v) => (v.id === 'color-contrast' ? { ...v, nodes: v.nodes.filter((n) => !onBrand(n)) } : v))
-    .filter((v) => v.nodes.length)
-    .map(
-      (v) =>
-        `${where}: ${v.id} (${v.impact}) ${v.help} → ${v.nodes.map((n) => `${n.html.slice(0, 80)} ${n.any[0]?.message ?? ''}`).join(' | ')}`,
-    );
+  const list = (violations as AxeViolation[]).map(
+    (v) =>
+      `${where}: ${v.id} (${v.impact}) ${v.help} → ${v.nodes.map((n) => `${n.html.slice(0, 80)} ${n.any[0]?.message ?? ''}`).join(' | ')}`,
+  );
   expect(list, list.join('\n')).toEqual([]);
 }
 

@@ -223,7 +223,7 @@
   display: inline-block;
   padding: 0 var(--sp-3);
   border-radius: var(--r-pill);
-  background: var(--primary);
+  background: var(--primary-strong);
   color: var(--white);
   font-size: var(--fs-12);
   font-weight: var(--fw-bold);

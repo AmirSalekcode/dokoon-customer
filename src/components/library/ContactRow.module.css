@@ -44,7 +44,7 @@
   height: var(--touch);
   flex: none;
   border-radius: var(--r-circle);
-  background: var(--primary);
+  background: var(--primary-strong);
   color: var(--white);
   display: grid;
   place-items: center;

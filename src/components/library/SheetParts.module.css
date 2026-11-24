@@ -46,7 +46,7 @@
   min-height: 56px;
   border: 0;
   border-radius: var(--r-pill);
-  background: var(--primary);
+  background: var(--primary-strong);
   color: var(--white);
   font: inherit;
   font-size: var(--fs-16);
