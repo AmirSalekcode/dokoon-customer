@@ -8,6 +8,7 @@ import { PermScreen } from './perm/PermScreen';
 import { RegScreen } from './reg/RegScreen';
 import { OrderScreen } from './orders/OrderScreen';
 import { InfoScreen } from './account/InfoScreen';
+import { CookiesScreen, DocsScreen, SupportScreen } from './account/MoreScreens';
 import { ShebaScreen } from './account/ShebaScreen';
 import { AccountTab, OrdersTab } from './TabScreens';
 import { EarnScreen } from './earn/EarnScreen';
@@ -30,6 +31,9 @@ const SCREENS: Record<CourierScreen, ComponentType<CourierScreenProps>> = {
   setd: SettleDetailScreen,
   info: InfoScreen,
   sheba: ShebaScreen,
+  docs: DocsScreen,
+  support: SupportScreen,
+  cookies: CookiesScreen,
   error: ErrorScreen,
 };
 
