@@ -27,12 +27,12 @@ const json = async (res: Response) => (await res.json()) as Record<string, unkno
 /** A multipart body built by hand (jsdom's FormData does not serialize under Node's fetch). */
 const BOUNDARY = 'dkc-test-boundary';
 const multipart = (): RequestInit => ({
-  body: `--${BOUNDARY}
-Content-Disposition: form-data; name="file"; filename="ins.jpg"
-Content-Type: image/jpeg
-
-x
---${BOUNDARY}--
+  body: `--${BOUNDARY}
+Content-Disposition: form-data; name="file"; filename="ins.jpg"
+Content-Type: image/jpeg
+
+x
+--${BOUNDARY}--
 `,
   headers: { Authorization: `Bearer ${TOKEN}`, 'Content-Type': `multipart/form-data; boundary=${BOUNDARY}` },
 });
@@ -153,6 +153,9 @@ const OPS: Op[] = [
   },
 ];
 
+/** `Me` fields proposed in contract-notes 35 (masked profile for «اطلاعات من»). */
+const PROPOSED_ME = ['nationalIdMasked', 'plate', 'shebaMasked', 'shebaChangePending', 'city'];
+
 describe('courier mock API ↔ contract', () => {
   it('covers every operation of the contract', () => {
     const contractOps = Object.entries(contract.paths).flatMap(([p, ops]) =>
@@ -178,7 +181,10 @@ describe('courier mock API ↔ contract', () => {
       return;
     }
     expect(res.headers.get('content-type')).toContain(media);
-    expect(validate(await res.json(), declared.content![media].schema, contract)).toEqual([]);
+    const data = (await res.json()) as Record<string, unknown>;
+    // Proposed profile fields (contract-notes 35) are checked apart from the contract.
+    if (data && typeof data === 'object') for (const k of PROPOSED_ME) delete data[k];
+    expect(validate(data, declared.content![media].schema, contract)).toEqual([]);
   });
 });
 

@@ -117,7 +117,9 @@ export const courierHandlers = [
   // ---- profile & registration ----
   http.get(
     p('/c/me'),
-    authed((_, phone) => HttpResponse.json(D.me(phone, statusOf(phone), db().docs))),
+    authed((_, phone) =>
+      HttpResponse.json(D.me(phone, statusOf(phone), db().docs, db().shebaChangeRequested)),
+    ),
   ),
   http.get(
     p('/c/doc-types'),
