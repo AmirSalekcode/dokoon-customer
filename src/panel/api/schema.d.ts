@@ -1224,8 +1224,8 @@ export interface paths {
                 content: {
                     "application/json": {
                         available?: boolean;
-                        /** @description null ends the discount immediately */
-                        discount?: null;
+                        /** @description only null is accepted here: it ends the discount immediately */
+                        discount?: components["schemas"]["FoodDiscountNullable"];
                     };
                 };
             };

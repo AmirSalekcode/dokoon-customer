@@ -243,7 +243,7 @@ paths:
       tags: [menu]
       summary: Quick toggle of availability, or end a discount now («پایان تخفیف», body {discount null})
       parameters: [{name: id, in: path, required: true, schema: {type: string}}]
-      requestBody: {required: true, content: {application/json: {schema: {type: object, properties: {available: {type: boolean}, discount: {type: 'null', description: 'null ends the discount immediately'}}}}}}
+      requestBody: {required: true, content: {application/json: {schema: {type: object, properties: {available: {type: boolean}, discount: {description: 'only null is accepted here: it ends the discount immediately', allOf: [{$ref: '#/components/schemas/FoodDiscountNullable'}]}}}}}}
       responses:
         '200': {description: ok}
     delete:
