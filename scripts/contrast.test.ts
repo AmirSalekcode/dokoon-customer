@@ -49,6 +49,13 @@ describe('text token contrast ≥ 4.5:1 (WCAG AA)', () => {
     });
   }
 
+  it('white text on filled brand controls uses --primary-strong (D-142)', () => {
+    const brand = tokens(css);
+    expect(ratio('#FFFFFF', brand['primary-strong']), 'white on --primary-strong').toBeGreaterThanOrEqual(4.5);
+    // The brand orange itself stays for dots, bars and icons: it is below AA for text.
+    expect(ratio('#FFFFFF', brand.primary)).toBeLessThan(4.5);
+  });
+
   it('the JSON tokens match the CSS tokens', () => {
     const light = tokens(block(':root,.app{'));
     const j = JSON.stringify(json).toUpperCase();

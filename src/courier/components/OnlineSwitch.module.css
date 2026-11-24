@@ -62,10 +62,14 @@
   box-shadow: var(--sh-card-hi);
   transition: transform var(--t-med);
 }
+/* Text on the filled card: the stronger brand orange keeps AA contrast (D-142). */
 .on {
-  background: var(--status-on);
+  background: var(--primary-strong);
   color: var(--status-on-ink);
   animation: glow 2.6s ease-in-out infinite;
+}
+.on .text span {
+  opacity: 1;
 }
 .on .knob {
   background: var(--on-primary-soft);
