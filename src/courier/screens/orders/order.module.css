@@ -74,3 +74,27 @@
   font-size: var(--fs-13);
   line-height: 1.8;
 }
+/* Map + place card of a leg; one column on phones. */
+.split,
+.side {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+}
+/* Tablet (≥ 720, KAN-102): map | details side by side; the action bar keeps the page width. */
+@media (min-width: 720px) {
+  /* Only the legs with a map widen; pickup and handover stay one readable column. */
+  .body:has(.split) {
+    max-width: 1080px;
+  }
+  .split {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    align-items: start;
+  }
+  .dock {
+    width: 100%;
+    max-width: 720px;
+    margin-inline: auto;
+  }
+}

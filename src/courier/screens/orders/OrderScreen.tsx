@@ -113,7 +113,7 @@ const askIssue = () =>
 
 function RestaurantLeg({ order, trip, tracking }: { order: ActiveOrder; trip: TripInfo | null; tracking: boolean }) {
   return (
-    <>
+    <div className={s.split}>
       <RouteMap
         label="تا رستوران"
         distText={km(trip?.kmToRest)}
@@ -129,7 +129,7 @@ function RestaurantLeg({ order, trip, tracking }: { order: ActiveOrder; trip: Tr
         onCall={() => call(order.restPhone)}
         onCopy={() => void copy(order.restAddress ?? '')}
       />
-    </>
+    </div>
   );
 }
 
@@ -156,7 +156,7 @@ function Pickup({ order }: { order: ActiveOrder }) {
 function CustomerLeg({ order, trip, tracking }: { order: ActiveOrder; trip: TripInfo | null; tracking: boolean }) {
   const reported = useActiveOrder((st) => st.reported);
   return (
-    <>
+    <div className={s.split}>
       <RouteMap
         label="تا مشتری"
         distText={km(trip?.km)}
@@ -164,13 +164,15 @@ function CustomerLeg({ order, trip, tracking }: { order: ActiveOrder; trip: Trip
         onNeshan={() => navigate('neshan', order.custAddress)}
         onBalad={() => navigate('balad', order.custAddress)}
       />
-      <CustomerCard order={order} />
-      {reported ? (
-        <p className={s.warn} role="status">
-          گزارش برای مدیر شهر ارسال شد. منتظر راهنمایی او بمانید؛ سفارش باز می‌ماند.
-        </p>
-      ) : null}
-    </>
+      <div className={s.side}>
+        <CustomerCard order={order} />
+        {reported ? (
+          <p className={s.warn} role="status">
+            گزارش برای مدیر شهر ارسال شد. منتظر راهنمایی او بمانید؛ سفارش باز می‌ماند.
+          </p>
+        ) : null}
+      </div>
+    </div>
   );
 }
 

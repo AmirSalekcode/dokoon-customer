@@ -151,3 +151,14 @@
   grid-template-columns: 1fr;
   gap: var(--sp-3);
 }
+
+/* Tablet (≥ 720, KAN-102): offers in two columns on a wider page. */
+@media (min-width: 720px) {
+  .body {
+    max-width: 960px;
+  }
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: start;
+  }
+}
