@@ -5,8 +5,8 @@ export interface EarnBalanceProps {
   balance: string;
   /** Cash collected and still with the courier. */
   cash: string;
-  /** Owed by Dokoon to the courier. */
-  dokoon: string;
+  /** Owed by Dokoon to the courier; omitted when the server does not send it (the line is hidden). */
+  dokoon?: string;
   /** Explanation, e.g. that the numbers are samples until the cash settlement rule is decided. */
   note: string;
 }
@@ -27,10 +27,12 @@ export function EarnBalance({ balance, cash, dokoon, note }: EarnBalanceProps) {
           <dt>نقدی در دست شما</dt>
           <dd>{cash}</dd>
         </div>
-        <div>
-          <dt>طلب از دکون</dt>
-          <dd>{dokoon}</dd>
-        </div>
+        {dokoon ? (
+          <div>
+            <dt>طلب از دکون</dt>
+            <dd>{dokoon}</dd>
+          </div>
+        ) : null}
       </dl>
       <p className={s.note}>{note}</p>
     </section>

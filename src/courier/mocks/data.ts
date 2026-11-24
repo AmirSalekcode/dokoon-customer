@@ -252,6 +252,7 @@ export const earnings: Record<EarningsPeriod, Earnings> = {
     avg: 80000,
     balance: 1_320_000,
     cashHeld: 598000,
+    dokoonOwes: 1_918_000,
     chart: bars(['۱۰', '۱۲', '۱۴', '۱۶', '۱۸'], [40000, 120000, 150000, 60000, 110000]),
   },
   week: {
@@ -262,6 +263,7 @@ export const earnings: Record<EarningsPeriod, Earnings> = {
     avg: 75000,
     balance: 1_320_000,
     cashHeld: 598000,
+    dokoonOwes: 1_918_000,
     chart: bars(
       ['ش', 'ی', 'د', 'س', 'چ', 'پ', 'ج'],
       [420000, 380000, 510000, 300000, 450000, 480000, 320000],
@@ -275,6 +277,7 @@ export const earnings: Record<EarningsPeriod, Earnings> = {
     avg: 75000,
     balance: 1_320_000,
     cashHeld: 598000,
+    dokoonOwes: 1_918_000,
     chart: bars(['هفته ۱', 'هفته ۲', 'هفته ۳', 'هفته ۴'], [2_600_000, 2_890_000, 3_050_000, 2_860_000]),
   },
 };
