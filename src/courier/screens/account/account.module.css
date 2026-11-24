@@ -99,3 +99,24 @@
   font-size: var(--fs-12);
   text-align: center;
 }
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.sh {
+  margin: var(--sp-2) 0 0;
+  font-size: var(--fs-16);
+  font-weight: var(--fw-xbold);
+}
+.file {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
