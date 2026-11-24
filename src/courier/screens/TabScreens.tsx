@@ -1,4 +1,3 @@
-import { EmptyState } from '@/components/library/EmptyState';
 import { ListRow } from '@/components/library/ListRow';
 import { ToggleRow } from '@/components/library/ToggleRow';
 import { TopBar } from '@/components/library/TopBar';
@@ -9,21 +8,10 @@ import { useCourierNav } from '../nav/nav';
 import s from './screens.module.css';
 
 /**
- * The three tab roots of the shell (KAN-89). Their real content arrives in later tasks: offers and the
- * online switch (KAN-93/94), the account pages (KAN-100/101). Until then each tab
- * says what it will hold, so navigation, back and theming can already be used and tested.
+ * Tab roots. The orders tab lives in `orders/OrdersScreen` (KAN-93), earnings in `earn/EarnScreen`
+ * (KAN-98); the account tab below grows with KAN-100/101.
  */
-export function OrdersTab() {
-  return (
-    <div className={s.page}>
-      <EmptyState
-        art="dk-fries"
-        title="سفارش‌ها"
-        text="با آنلاین شدن، پیشنهادهای نزدیک شما اینجا نمایش داده می‌شود."
-      />
-    </div>
-  );
-}
+export { OrdersScreen as OrdersTab } from './orders/OrdersScreen';
 
 /** Account tab: the dark-mode switch (stored in `dk-theme`) and sign-out behind a confirmation. */
 export function AccountTab() {

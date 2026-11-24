@@ -229,3 +229,14 @@ Nothing here is implemented as an invented endpoint; the frontend works around e
       restaurants with an active food discount. `POST /checkout/quote` always uses the discount that is
       valid at quote time and reports `PRICE_CHANGED` when one ended since the cart was filled.
     - Commission is computed on the price after the discount; the restaurant pays for the discount.
+
+## Courier app — online and offers (Epic KAN-78)
+
+40. **Online state after a restart.** `PUT /c/status` sets online/offline, but nothing returns the current
+    state (`Me` has no `online`), so after a reload or app restart the client cannot tell whether the server
+    still lists the courier as online. The app (KAN-93) starts every session as offline in the UI and does not
+    track. Proposal: add `online: boolean` to `Me`, and let the server set a courier offline by itself when no
+    `POST /c/location` arrives for a while (the client reports at least once a minute while online or with an
+    active order, more often while moving: ≥10 s apart and ≥30 m moved). `POST /c/location` while neither
+    online nor on an order should be refused (`409 NOT_TRACKING` in the mock). Sign-out sends
+    `PUT /c/status {online:false}` when the courier is online without an order.
