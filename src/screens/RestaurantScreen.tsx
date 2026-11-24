@@ -14,7 +14,7 @@ import { RestaurantHeader } from '@/components/library/RestaurantHeader';
 import { SearchBar } from '@/components/library/SearchBar';
 import { Icon } from '@/components/primitives/Icon';
 import { isFavorite, toggleFavorite, useFavorites } from '@/features/favorites';
-import { toFoodCardVM, toRestaurantHeaderVM, visibleGroups } from '@/features/viewmodels';
+import { oldUnitPriceWith, toFoodCardVM, toRestaurantHeaderVM, visibleGroups } from '@/features/viewmodels';
 import { formatNumber, normalizeDigits, toFaDigits } from '@/lib/format';
 import { restaurantLink } from '@/nav/deepLink';
 import { useNav } from '@/nav/nav';
@@ -148,6 +148,7 @@ export function RestaurantScreen({ route }: ScreenProps) {
                                   title: f.title!,
                                   imageUrl: f.imageUrl,
                                   unitPrice: f.price!,
+                                  oldUnitPrice: oldUnitPriceWith(f, [], {}),
                                   options: [],
                                 },
                               )
