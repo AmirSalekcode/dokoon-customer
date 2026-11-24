@@ -6,6 +6,7 @@ import { LoginScreen } from './auth/LoginScreen';
 import { WaitScreen } from './auth/WaitScreen';
 import { PermScreen } from './perm/PermScreen';
 import { RegScreen } from './reg/RegScreen';
+import { OrderScreen } from './orders/OrderScreen';
 import { AccountTab, OrdersTab } from './TabScreens';
 import { EarnScreen } from './earn/EarnScreen';
 import { HistDetailScreen, HistScreen, SettleDetailScreen, SettleScreen } from './money/MoneyScreens';
@@ -18,6 +19,7 @@ const SCREENS: Record<CourierScreen, ComponentType<CourierScreenProps>> = {
   wait: WaitScreen,
   perm: PermScreen,
   orders: OrdersTab,
+  order: OrderScreen,
   earn: EarnScreen,
   account: AccountTab,
   hist: HistScreen,

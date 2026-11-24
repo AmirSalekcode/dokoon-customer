@@ -51,3 +51,11 @@
     min-width: 0;
   }
 }
+/* Toast position: the shared host sits above the tab bar; over the offer alert it moves to the top. */
+.toasts {
+  display: contents;
+}
+.toasts[data-top] > * {
+  top: calc(var(--sp-4) + env(safe-area-inset-top));
+  bottom: auto;
+}

@@ -6,7 +6,22 @@ import { createStackNav } from '@/nav/createStackNav';
  * and account sub-pages join this list in their own tasks; `hist`/`histd`/`settle`/`setd` = history, trip details,
  * settlements and one settlement (KAN-99).
  */
-export const COURIER_SCREENS = ['boot', 'login', 'reg', 'wait', 'perm', 'orders', 'earn', 'account', 'hist', 'histd', 'settle', 'setd', 'error'] as const;
+export const COURIER_SCREENS = [
+  'boot',
+  'login',
+  'reg',
+  'wait',
+  'perm',
+  'orders',
+  'order',
+  'earn',
+  'account',
+  'hist',
+  'histd',
+  'settle',
+  'setd',
+  'error',
+] as const;
 export type CourierScreen = (typeof COURIER_SCREENS)[number];
 
 /** Root tabs (courier screen-specs): switching resets the stack; back on earn/account goes to orders first. */

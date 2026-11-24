@@ -5,6 +5,7 @@ import { courierApi } from '../api/client';
 import { hasActiveOrder } from '../api/errors';
 import { showFullPageError } from '../errors/fullPage';
 import { LocationTracker, type GeoSource, type TrackState } from '../location/tracker';
+import { offerSound } from '../alert/sound';
 import { useCourierNav } from '../nav/nav';
 import { permissionProvider } from '../permissions/provider';
 
@@ -77,6 +78,8 @@ export const useOnline = create<OnlineState>((set, get) => ({
   async flip() {
     const { online, busy, hasActive } = get();
     if (busy) return;
+    // The online tap is the user gesture browsers need before the offer alert may make a sound.
+    if (!online) offerSound().unlock();
     if (online && hasActive) {
       toast(MSG.activeOrder, 'warn', COURIER_TOAST_MS);
       return;

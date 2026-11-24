@@ -8,7 +8,9 @@ import { CourierApp } from '../../CourierApp';
 import { useCourierSession } from '../../api/session';
 import { signOutToLogin } from '../../auth/flow';
 import type { GeoErrorKind, GeoFix, GeoSource } from '../../location/tracker';
+import { createCourierMockStream } from '../../mocks/stream';
 import { useCourierNav } from '../../nav/nav';
+import { setCourierSocketFactory } from '../../realtime/live';
 import { setPermissionProvider, webPermissionProvider } from '../../permissions/provider';
 import { MSG, setGeoSource, useOnline } from '../../state/online';
 import { allGranted, fakePermissions } from '../../test/permissions';
@@ -45,12 +47,15 @@ beforeEach(() => {
       statusCalls.push(((await request.json()) as { online: boolean }).online);
       return statusReply();
     }),
+    http.get('*/v1/c/offers', () => HttpResponse.json([])),
+    http.get('*/v1/c/orders/active', () => new HttpResponse(null, { status: 204 })),
     http.post('*/v1/c/location', async ({ request }) => {
       locations.push((await request.json()) as (typeof locations)[number]);
       return new HttpResponse(null, { status: 204 });
     }),
   );
   setGeoSource(geo);
+  setCourierSocketFactory(createCourierMockStream().connect);
   useOnline.getState().reset();
   useToast.setState({ toasts: [] });
   useCourierSession.getState().setSession({ status: 'approved', name: 'مهدی کریمی' });
@@ -69,7 +74,7 @@ describe('orders tab', () => {
     expect(screen.getByRole('heading', { name: 'سلام مهدی کریمی عزیز' })).toBeInTheDocument();
     expect(sw()).toHaveAttribute('aria-checked', 'false');
     expect(within(top()).getByText('آفلاین هستید', { selector: 'h4' })).toBeInTheDocument();
-    expect(within(top()).getByRole('status')).toHaveTextContent('ردیابی خاموش');
+    expect(within(top()).getByTestId('tracking')).toHaveTextContent('ردیابی خاموش');
     expect(fix).toBeNull();
   });
 
@@ -80,7 +85,7 @@ describe('orders tab', () => {
     expect(statusCalls).toEqual([true]);
     expect(toasts()).toContain(MSG.online);
     expect(within(top()).getByText('منتظر سفارش باشید')).toBeInTheDocument();
-    expect(within(top()).getByRole('status')).toHaveTextContent('ردیابی فعال');
+    expect(within(top()).getByTestId('tracking')).toHaveTextContent('ردیابی فعال');
     act(() => fix!({ lat: 32.0105, lng: 51.8664, at: Date.parse('2026-11-23T10:00:00Z') }));
     await waitFor(() => expect(locations).toHaveLength(1));
     expect(locations[0]).toEqual({ lat: 32.0105, lng: 51.8664, at: '2026-11-23T10:00:00.000Z' });
@@ -94,7 +99,7 @@ describe('orders tab', () => {
     await waitFor(() => expect(sw()).toHaveAttribute('aria-checked', 'false'));
     expect(statusCalls).toEqual([true, false]);
     expect(fix).toBeNull();
-    expect(within(top()).getByRole('status')).toHaveTextContent('ردیابی خاموش');
+    expect(within(top()).getByTestId('tracking')).toHaveTextContent('ردیابی خاموش');
     expect(locations).toHaveLength(0);
   });
 
@@ -145,7 +150,7 @@ describe('orders tab', () => {
     await userEvent.click(sw());
     await waitFor(() => expect(sw()).toHaveAttribute('aria-checked', 'true'));
     act(() => geoErr!('denied'));
-    expect(within(top()).getByRole('status')).toHaveTextContent('موقعیت در دسترس نیست');
+    expect(within(top()).getByTestId('tracking')).toHaveTextContent('موقعیت در دسترس نیست');
     await userEvent.click(within(top()).getByRole('button', { name: 'مجوزها' }));
     expect(nav().stack.at(-1)!.screen).toBe('perm');
   });

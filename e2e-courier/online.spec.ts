@@ -5,7 +5,7 @@ import { openCourier } from './helpers';
 // only while online.
 const top = (page: Page) => page.locator('main:not([hidden])');
 const sw = (page: Page) => top(page).getByRole('switch');
-const track = (page: Page) => top(page).getByRole('status');
+const track = (page: Page) => top(page).getByTestId('tracking');
 
 function countLocations(page: Page) {
   const seen: string[] = [];
