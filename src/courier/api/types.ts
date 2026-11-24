@@ -26,6 +26,19 @@ export interface ApiErrorBody {
   fields?: Record<string, string>;
 }
 
+/**
+ * `GET /c/me` plus the proposed fields of contract-notes 35 for «اطلاعات من». The server masks: the app never
+ * receives the full national code or Sheba. Every extra field is optional; the page hides what is missing.
+ */
+export interface MeProfile extends Me {
+  nationalIdMasked?: string;
+  plate?: string;
+  shebaMasked?: string;
+  /** A Sheba change is waiting for the city manager's review. */
+  shebaChangePending?: boolean;
+  city?: string;
+}
+
 // ---- Proposed shapes for responses the contract leaves untyped (contract-notes 34) ----
 
 /** One finished trip (`GET /c/orders/history`). */
