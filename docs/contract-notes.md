@@ -250,3 +250,11 @@ Nothing here is implemented as an invented endpoint; the frontend works around e
     the app handles: `409 INVALID_STAGE` (the order is no longer at that step → the app re-reads it) and
     `400 ITEMS_UNCHECKED` (leaving pickup without every item in `checkedItems`). Neshan/Balad navigation links
     are not verified with the providers yet (`src/courier/maps/navLinks.ts`).
+42. **Handover and customer data (KAN-97).** The app always sends `cashCollected` for cash orders and keeps
+    the summary from the `deliver` response (`{earn, cashMismatch}`). Please declare `400 CASH_REQUIRED` (cash
+    order without an amount) and `409 INVALID_STAGE` for `deliver` and `unreachable`, and send
+    `Cache-Control: no-store` on `GET /c/orders/active` and on every response that holds the customer's name,
+    address or phone (the client already asks with `cache: 'no-store'`, and the service worker caches no API
+    response). After `/unreachable` the order stays open; how the city manager's guidance reaches the courier
+    is not defined. Proposal: an `order.updated` with `guidance: string`, or the order cancelled
+    (`order.cancelled`).
