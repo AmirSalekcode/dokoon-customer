@@ -217,6 +217,11 @@ Nothing here is implemented as an invented endpoint; the frontend works around e
       Server rules: `1 ≤ discount.price < price`, percent between 1 and 90, and `endsAt` in the future or
       null. At `endsAt` the server removes the discount itself. Changing `price` revalidates the discount
       (409 `DISCOUNT_INVALID` if it is no longer below the price).
+      Percent is always `floor((price − discount.price) × 100 / price)` (۳۲۰٬۰۰۰ → ۲۸۵٬۰۰۰ is ۱۰٪), and the
+      1..90 range is checked on that same rounded percent, so the server, the panel form and the customer
+      badge agree. «پایان تخفیف» from the menu list is `PATCH /r/foods/{id}` with `{discount: null}`.
+      Done in KAN-108: `FoodDiscount` schema, 409 responses, `oldPrice` marked deprecated; shared logic in
+      `src/lib/discount.ts`.
     - **Customer contract** (proposal for the backend): `Food.price` = the price the customer pays now,
       `Food.oldPrice` = the base price while a discount is active (null otherwise), and a new
       `Food.discount: {percent: integer, label: 'special' | 'festival', endsAt: date-time | null} | null`.

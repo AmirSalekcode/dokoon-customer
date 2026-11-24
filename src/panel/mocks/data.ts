@@ -2,6 +2,7 @@ import type {
   DayHours,
   DocType,
   Food,
+  FoodDiscount,
   MenuCategory,
   Notification,
   OptionGroup,
@@ -147,7 +148,7 @@ const dish = (
   categoryId: string,
   name: string,
   price: number,
-  oldPrice: number,
+  discount: FoodDiscount | null,
   art: string,
   description: string,
   groups: OptionGroup[],
@@ -157,7 +158,7 @@ const dish = (
   categoryId,
   name,
   price,
-  oldPrice,
+  discount,
   art,
   description,
   groups,
@@ -165,29 +166,38 @@ const dish = (
   photo: { status: id === 'm1' ? 'approved' : 'none' },
 });
 
+/** Sample festival (D-131): ends three days after the mock starts; the mock drops it once ended. */
+const festivalEnds = new Date(Date.now() + 3 * 86_400_000).toISOString();
+
 export const foods: Food[] = [
   dish(
     'm1',
     'kebab',
     'چلوکباب کوبیده',
-    285000,
     320000,
+    { price: 285000, label: 'special', endsAt: null },
     'dk-kebab',
     'دو سیخ کوبیده‌ی گوسفندی با برنج ایرانی و گوجه کبابی',
     [rice, extras, drink],
   ),
-  dish('m2', 'kebab', 'جوجه‌کباب با استخوان', 265000, 0, 'dk-kebab', 'سینه و ران مرغ زعفرانی با برنج', [
+  dish('m2', 'kebab', 'جوجه‌کباب با استخوان', 265000, null, 'dk-kebab', 'سینه و ران مرغ زعفرانی با برنج', [
     rice,
     drink,
   ]),
-  dish('m3', 'kebab', 'چلوکباب برگ', 395000, 0, 'dk-kebab', 'برگ گوسفندی ممتاز با برنج و کره', [
-    rice,
-    extras,
-  ]),
-  dish('m4', 'chelo', 'قورمه‌سبزی', 240000, 0, 'dk-stew', 'خورش سنتی با گوشت و لوبیا قرمز', [rice]),
-  dish('m5', 'chelo', 'قیمه‌ی نثار', 255000, 0, 'dk-stew', 'قیمه با زرشک و پسته', [rice], false),
-  dish('m6', 'side', 'سالاد شیرازی', 45000, 0, 'dk-salad', 'خیار، گوجه و پیاز', []),
-  dish('m7', 'side', 'دوغ محلی', 25000, 0, 'dk-drink', 'دوغ گازدار', []),
+  dish(
+    'm3',
+    'kebab',
+    'چلوکباب برگ',
+    395000,
+    { price: 355000, label: 'festival', endsAt: festivalEnds },
+    'dk-kebab',
+    'برگ گوسفندی ممتاز با برنج و کره',
+    [rice, extras],
+  ),
+  dish('m4', 'chelo', 'قورمه‌سبزی', 240000, null, 'dk-stew', 'خورش سنتی با گوشت و لوبیا قرمز', [rice]),
+  dish('m5', 'chelo', 'قیمه‌ی نثار', 255000, null, 'dk-stew', 'قیمه با زرشک و پسته', [rice], false),
+  dish('m6', 'side', 'سالاد شیرازی', 45000, null, 'dk-salad', 'خیار، گوجه و پیاز', []),
+  dish('m7', 'side', 'دوغ محلی', 25000, null, 'dk-drink', 'دوغ گازدار', []),
 ];
 
 const item = (qty: number, name: string, optionsText: string, price: number) => ({

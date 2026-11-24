@@ -230,6 +230,7 @@ paths:
       responses:
         '201': {description: ok, content: {application/json: {schema: {$ref: '#/components/schemas/Food'}}}}
         '400': {$ref: '#/components/responses/Error'}
+        '409': {description: 'DISCOUNT_INVALID — discount.price not below price, percent outside 1..90, or endsAt in the past', content: {application/json: {schema: {$ref: '#/components/schemas/ApiError'}}}}
   /r/foods/{id}:
     put:
       tags: [menu]
@@ -237,11 +238,12 @@ paths:
       requestBody: {required: true, content: {application/json: {schema: {$ref: '#/components/schemas/FoodInput'}}}}
       responses:
         '200': {description: ok, content: {application/json: {schema: {$ref: '#/components/schemas/Food'}}}}
+        '409': {description: 'DISCOUNT_INVALID — also when a new price is no longer above discount.price', content: {application/json: {schema: {$ref: '#/components/schemas/ApiError'}}}}
     patch:
       tags: [menu]
-      summary: Quick toggle of availability
+      summary: Quick toggle of availability, or end a discount now («پایان تخفیف», body {discount null})
       parameters: [{name: id, in: path, required: true, schema: {type: string}}]
-      requestBody: {required: true, content: {application/json: {schema: {type: object, properties: {available: {type: boolean}}}}}}
+      requestBody: {required: true, content: {application/json: {schema: {type: object, properties: {available: {type: boolean}, discount: {type: 'null', description: 'null ends the discount immediately'}}}}}}
       responses:
         '200': {description: ok}
     delete:
@@ -430,20 +432,37 @@ components:
         categoryId: {type: string}
         name: {type: string}
         description: {type: string}
-        price: {type: integer}
-        oldPrice: {type: integer}
+        price: {type: integer, description: base price (before any discount)}
+        oldPrice: {type: integer, deprecated: true, description: 'replaced by discount (D-131); the panel no longer reads it'}
+        discount: {$ref: '#/components/schemas/FoodDiscountNullable'}
         art: {type: string, description: default illustration key}
         photo: {type: object, properties: {status: {type: string, enum: [none, pending, approved, rejected]}, url: {type: string}, rejectReason: {type: string}}}
         available: {type: boolean}
         groups: {type: array, items: {$ref: '#/components/schemas/OptionGroup'}}
+    FoodDiscount:
+      type: object
+      description: >-
+        Per-food discount or festival (D-131). Only the food's base price is discounted, never options.
+        Rules (server-checked, 409 DISCOUNT_INVALID): 1 <= price < Food.price; percent = floor((Food.price - price) * 100 / Food.price)
+        between 1 and 90; endsAt null (no end) or in the future. Starts immediately; the server removes it at endsAt.
+      required: [price, label, endsAt]
+      properties:
+        price: {type: integer, minimum: 1, description: discounted price the customer pays (toman)}
+        label: {type: string, enum: [special, festival], description: 'special = «تخفیف ویژه», festival = «جشنواره»'}
+        endsAt: {type: [string, 'null'], format: date-time}
+    FoodDiscountNullable:
+      oneOf:
+        - $ref: '#/components/schemas/FoodDiscount'
+        - type: 'null'
     FoodInput:
       type: object
       required: [name, price, categoryId]
       properties:
         name: {type: string, minLength: 2}
         description: {type: string}
-        price: {type: integer, minimum: 1}
-        oldPrice: {type: integer, minimum: 0}
+        price: {type: integer, minimum: 1, description: base price (before any discount)}
+        oldPrice: {type: integer, minimum: 0, deprecated: true, description: 'replaced by discount (D-131); the panel no longer sends it'}
+        discount: {$ref: '#/components/schemas/FoodDiscountNullable'}
         categoryId: {type: string}
         art: {type: string}
         available: {type: boolean}

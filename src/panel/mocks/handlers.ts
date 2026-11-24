@@ -1,4 +1,5 @@
 import { delay, http, HttpResponse } from 'msw';
+import { isActive, validateDiscount } from '@/lib/discount';
 import type {
   ApiErrorBody,
   DayHours,
@@ -22,6 +23,18 @@ const err = (status: number, code: string, message: string) =>
   HttpResponse.json<ApiErrorBody>({ code, message }, { status });
 const noContent = () => new HttpResponse(null, { status: 204 });
 const latency = () => delay(import.meta.env.MODE === 'test' ? 0 : 250);
+
+/** D-131: the server ends a discount at `endsAt` by itself. */
+function dropEndedDiscounts() {
+  for (const f of db.foods) if (f.discount && !isActive(f.discount.endsAt)) f.discount = null;
+}
+/** Server rules for `discount` (409 DISCOUNT_INVALID); null when valid. */
+function discountError(price: number, discount: FoodInput['discount']) {
+  if (!discount) return null;
+  const bad =
+    validateDiscount(price, discount.price).error ?? (!isActive(discount.endsAt) && 'زمان پایان گذشته است');
+  return bad ? err(409, 'DISCOUNT_INVALID', bad) : null;
+}
 
 function readLocal(key: string): string | null {
   try {
@@ -249,7 +262,10 @@ export const panelHandlers = [
   http.get(p('/r/reject-reasons'), () => HttpResponse.json(D.rejectReasons)),
 
   // ---- menu ----
-  http.get(p('/r/menu'), () => HttpResponse.json({ categories: db.categories, foods: db.foods })),
+  http.get(p('/r/menu'), () => {
+    dropEndedDiscounts();
+    return HttpResponse.json({ categories: db.categories, foods: db.foods });
+  }),
   http.post(p('/r/categories'), async ({ request }) => {
     const { label } = (await request.json()) as { label?: string };
     if (!label?.trim()) return err(400, 'VALIDATION', 'نام دسته را بنویسید');
@@ -275,14 +291,17 @@ export const panelHandlers = [
     const input = (await request.json()) as FoodInput;
     if (!input.name || input.name.length < 2 || !(input.price >= 1) || !input.categoryId)
       return err(400, 'VALIDATION', 'نام، قیمت و دسته لازم است');
+    const bad = discountError(input.price, input.discount);
+    if (bad) return bad;
     db.seq += 1;
+    const { oldPrice: _deprecated, ...rest } = input;
     const food = {
       id: `f${db.seq}`,
-      oldPrice: 0,
+      discount: null,
       description: '',
       art: 'dk-kebab',
       available: true,
-      ...input,
+      ...rest,
       groups: db.settings.allowExtras ? (input.groups ?? []) : [],
       photo: { status: 'none' as const },
     };
@@ -292,15 +311,21 @@ export const panelHandlers = [
   http.put(p('/r/foods/:id'), async ({ params, request }) => {
     const food = db.foods.find((f) => f.id === params.id);
     if (!food) return err(404, 'NOT_FOUND', 'غذا پیدا نشد');
-    const input = (await request.json()) as FoodInput;
-    Object.assign(food, input, { groups: db.settings.allowExtras ? (input.groups ?? []) : food.groups });
+    const { oldPrice: _deprecated, ...input } = (await request.json()) as FoodInput;
+    const bad = discountError(input.price, input.discount ?? null);
+    if (bad) return bad;
+    Object.assign(food, input, {
+      discount: input.discount ?? null,
+      groups: db.settings.allowExtras ? (input.groups ?? []) : food.groups,
+    });
     return HttpResponse.json(food);
   }),
   http.patch(p('/r/foods/:id'), async ({ params, request }) => {
     const food = db.foods.find((f) => f.id === params.id);
     if (!food) return err(404, 'NOT_FOUND', 'غذا پیدا نشد');
-    const { available } = (await request.json()) as { available?: boolean };
-    if (typeof available === 'boolean') food.available = available;
+    const body = (await request.json()) as { available?: boolean; discount?: null };
+    if (typeof body.available === 'boolean') food.available = body.available;
+    if ('discount' in body && body.discount === null) food.discount = null;
     return new HttpResponse(null, { status: 200 });
   }),
   http.delete(p('/r/foods/:id'), ({ params }) => {

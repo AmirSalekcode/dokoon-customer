@@ -1,6 +1,12 @@
 import { create } from 'zustand';
+import { isActive } from '@/lib/discount';
 import { formatMoney, normalizeDigits, toFaDigits } from '@/lib/format';
-import type { Food, FoodInput, OptionGroup } from '../api/types';
+import type { Food, FoodDiscount, FoodInput, OptionGroup } from '../api/types';
+
+/** The food's discount while it is running (D-131); the server also drops it at `endsAt`. */
+export function liveDiscount(f: Pick<Food, 'discount'>, now: number = Date.now()): FoodDiscount | null {
+  return f.discount && isActive(f.discount.endsAt, now) ? f.discount : null;
+}
 
 /** Default illustrations a dish can use until (or instead of) a real photo. */
 export const DISH_ARTS: readonly { art: string; label: string }[] = [
@@ -20,12 +26,18 @@ export const DISH_ARTS: readonly { art: string; label: string }[] = [
 export const GROUP_MAX_MIN = 1;
 export const GROUP_MAX_MAX = 8;
 
-/** Editable copy of a food (prices are strings while typing). */
+/**
+ * Editable copy of a food (prices are strings while typing).
+ * Until the «تخفیف ویژه» section lands (KAN-109), the form keeps its old fields on top of `discount`:
+ * `price` = what the customer pays now, `oldPrice` = the base price while discounted (D-131 contract).
+ */
 export interface DishDraft {
   id?: string;
   name: string;
   price: string;
   oldPrice: string;
+  /** Discount as loaded, so its label and end survive an edit. */
+  discount?: FoodDiscount | null;
   description: string;
   categoryId: string;
   art: string;
@@ -70,11 +82,13 @@ export function draftFromFood(f: Food | undefined, cat?: string): DishDraft {
       available: true,
       groups: [],
     };
+  const disc = liveDiscount(f);
   return {
     id: f.id,
     name: f.name ?? '',
-    price: f.price ? String(f.price) : '',
-    oldPrice: f.oldPrice ? String(f.oldPrice) : '',
+    price: disc ? String(disc.price) : f.price ? String(f.price) : '',
+    oldPrice: disc && f.price ? String(f.price) : '',
+    discount: disc,
     description: f.description ?? '',
     categoryId: f.categoryId ?? '',
     art: f.art || DISH_ARTS[0].art,
@@ -86,12 +100,16 @@ export function draftFromFood(f: Food | undefined, cat?: string): DishDraft {
 
 /** Request body; groups are sent only when extras are on for the restaurant (server ignores them otherwise). */
 export function foodInput(d: DishDraft, withGroups: boolean): FoodInput {
+  const price = parseToman(d.price) ?? 0;
   const old = parseToman(d.oldPrice);
+  const discounted = !!old && !Number.isNaN(old) && old > price && price > 0;
   return {
     name: d.name.trim(),
     description: d.description.trim(),
-    price: parseToman(d.price) ?? 0,
-    oldPrice: old && !Number.isNaN(old) ? old : 0,
+    price: discounted ? old : price,
+    discount: discounted
+      ? { price, label: d.discount?.label ?? 'special', endsAt: d.discount?.endsAt ?? null }
+      : null,
     categoryId: d.categoryId,
     art: d.art,
     available: d.available,

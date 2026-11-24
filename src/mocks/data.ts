@@ -17,6 +17,8 @@ import type {
   ReviewPage,
   User,
 } from '@/api/types';
+import { isActive } from '@/lib/discount';
+import { toFaDigits } from '@/lib/format';
 
 export const appConfig: AppConfig = {
   minVersion: '0.1.0',
@@ -138,11 +140,15 @@ export const restaurantMeta: Record<string, { category: string; tags: string[] }
 const food = (f: Food): Food => ({
   available: true,
   oldPrice: null,
+  discount: null,
   optionGroups: [],
   rating: 0,
   reviews: 0,
   ...f,
 });
+
+/** Sample festival (D-131): ends three days after the mock starts. */
+const festivalEnds = new Date(Date.now() + 3 * 86_400_000).toISOString();
 
 export const foods: Food[] = [
   food({
@@ -152,6 +158,7 @@ export const foods: Food[] = [
     desc: 'دو سیخ کوبیده‌ی گوشت گوسفندی با برنج ایرانی، گوجه و پیاز کبابی',
     price: 285000,
     oldPrice: 320000,
+    discount: { percent: 10, label: 'special', endsAt: null },
     imageUrl: 'art:dk-chelo',
     rating: 4.8,
     reviews: 124,
@@ -195,6 +202,8 @@ export const foods: Food[] = [
     title: 'چیزبرگر دوبل',
     desc: 'دو لایه گوشت، پنیر چدار، سس مخصوص',
     price: 260000,
+    oldPrice: 325000,
+    discount: { percent: 20, label: 'festival', endsAt: festivalEnds },
     imageUrl: 'art:dk-burger',
     rating: 4.6,
     reviews: 61,
@@ -231,6 +240,32 @@ export const foods: Food[] = [
     imageUrl: 'art:dk-cake',
   }),
 ];
+
+/**
+ * A food as the server sends it now: a discount that has ended is gone (D-131), so the customer pays the
+ * base price again. The cart learns about it from POST /checkout/quote (PRICE_CHANGED).
+ */
+export function liveFood(f: Food, now: number = Date.now()): Food {
+  if (!f.discount || isActive(f.discount.endsAt, now)) return f;
+  return { ...f, price: f.oldPrice ?? f.price, oldPrice: null, discount: null };
+}
+
+/** Highest running food discount of a restaurant (0 = none). */
+export function maxFoodDiscount(restaurantId: string, now: number = Date.now()): number {
+  return Math.max(
+    0,
+    ...foods
+      .filter((f) => f.restaurantId === restaurantId)
+      .map((f) => liveFood(f, now).discount?.percent ?? 0),
+  );
+}
+
+// Restaurants with a discounted food get the server badge «تا X٪ تخفیف» (contract-notes §39).
+for (const list of [restaurants, restaurantCards])
+  for (const r of list) {
+    const pct = maxFoodDiscount(r.id!);
+    if (pct) r.badge = { text: `تا ${toFaDigits(pct)}٪ تخفیف`, tone: 'red' };
+  }
 
 export const menus: Record<string, MenuCategory[]> = {
   naghsh: [
