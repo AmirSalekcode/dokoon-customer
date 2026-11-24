@@ -175,8 +175,10 @@ Nothing here is implemented as an invented endpoint; the frontend works around e
     app shows the list row's fields (KAN-99). Settlement details likewise come from the list row.
 35. **Sheba change body.** `POST /c/sheba-change` has no request body. It needs `{sheba, otpCode}` and a
     way to send the fresh code to the account's own phone (same proposal as note 28:
-    `POST /c/sheba-change/otp`). `Me` should also carry `nationalIdMasked` and `shebaMasked` for «اطلاعات
-    من» (the app must never receive the full Sheba).
+    `POST /c/sheba-change/otp`). `Me` should also carry `nationalIdMasked`, `plate`, `shebaMasked`, `city` and
+    `shebaChangePending` for «اطلاعات من» (the app must never receive the full Sheba; KAN-100 shows only
+    the fields that are present). The app sends the fresh code with `POST /c/auth/otp` to the courier's own
+    `Me.phone` and then `POST /c/sheba-change {sheba, otpCode}`.
 36. **Support and map data.** The support page needs the city manager's call number and the FAQ, and
     calling the customer/restaurant should go through a proxy number (open decision «safe-call number»),
     but the contract has neither: proposal `GET /c/support` → `{cityManagerPhone, supportPhone, faqs:
