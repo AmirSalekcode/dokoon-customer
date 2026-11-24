@@ -21,12 +21,27 @@ export const STAGE_LABEL: Record<OrderStage, string> = {
   done: 'تحویل شد',
 };
 
+/**
+ * Distances and time of the accepted offer (`Offer.kmToRest/km/minutes`), kept in memory for the map chip:
+ * `ActiveOrder` carries none of them (contract-notes 41). Unknown after a restart.
+ */
+export interface TripInfo {
+  kmToRest?: number;
+  km?: number;
+  minutes?: number;
+}
+
 interface ActiveState {
   order: ActiveOrder | null;
+  trip: TripInfo | null;
+  /** Dishes ticked at pickup (ids), kept while the courier moves between screens. */
+  checked: string[];
+  toggleItem: (id: string) => void;
   /** The first answer from the server arrived. */
   loaded: boolean;
   load: () => Promise<void>;
-  set: (order: ActiveOrder | null) => void;
+  /** `trip`: on accept only; a different order forgets the old trip and ticks. */
+  set: (order: ActiveOrder | null, trip?: TripInfo) => void;
   apply: (msg: CourierRealtimeMessage) => void;
   clear: () => void;
 }
@@ -35,6 +50,8 @@ const isOpen = (o: ActiveOrder | null | undefined): o is ActiveOrder => !!o?.id 
 
 export const useActiveOrder = create<ActiveState>((set, get) => ({
   order: null,
+  trip: null,
+  checked: [],
   loaded: false,
 
   async load() {
@@ -50,9 +67,19 @@ export const useActiveOrder = create<ActiveState>((set, get) => ({
     }
   },
 
-  set(order) {
+  toggleItem(id) {
+    const c = get().checked;
+    set({ checked: c.includes(id) ? c.filter((x) => x !== id) : [...c, id] });
+  },
+
+  set(order, trip) {
     const next = isOpen(order) ? order : null;
-    set({ order: next });
+    const same = !!next && next.id === get().order?.id;
+    set({
+      order: next,
+      trip: trip ?? (same ? get().trip : null),
+      checked: same ? get().checked : [],
+    });
     useOnline.getState().setActive(next !== null);
   },
 
@@ -67,6 +94,6 @@ export const useActiveOrder = create<ActiveState>((set, get) => ({
   },
 
   clear() {
-    set({ order: null, loaded: false });
+    set({ order: null, trip: null, checked: [], loaded: false });
   },
 }));
